@@ -12,6 +12,9 @@ import { colors, radius, space, type } from '../../theme/tokens';
 import { useLayout } from '../../theme/responsive';
 import { euro, shortDate, thousands } from '../../lib/format';
 import { nextHomeMatch, stadium } from '../../lib/data';
+import {
+  clearPresence, declarePresence, myPresence, presenceOf, useFanplay,
+} from '../../lib/fanplay';
 
 export default function StadiumScreen() {
   const insets = useSafeAreaInsets();
@@ -20,6 +23,20 @@ export default function StadiumScreen() {
   // di default gli spalti sono pieni: uno stadio vuoto non racconta la partita
   const [mode, setMode] = useState<SeatMode>('occupancy');
   const match = nextHomeMatch();
+  useFanplay();
+
+  // il modello si riempie in proporzione a chi ha dichiarato di esserci:
+  // e l'unico numero vero che questa app puo avere sullo stadio
+  const declared = match
+    ? Object.fromEntries(stadium.sectors.map((s) => {
+        const { total } = presenceOf(match.id, s.id, s.capacity);
+        return [s.id, Math.min(1, total / s.capacity)];
+      }))
+    : undefined;
+  const totalDeclared = match
+    ? stadium.sectors.reduce((a, s) => a + presenceOf(match.id, s.id, s.capacity).total, 0)
+    : 0;
+  const mySector = match ? myPresence(match.id) : null;
 
   const pad = { paddingHorizontal: space.lg + gutter };
   const canvasHeight = Math.max(280, Math.min(height * 0.46, 460));
@@ -32,6 +49,7 @@ export default function StadiumScreen() {
           selectedId={selected?.id ?? null}
           onSelect={(s) => setSelected((cur) => (cur?.id === s.id ? null : s))}
           mode={mode}
+          fill={declared}
         />
 
         {/* tutto in alto: in basso il modello 3D finisce sotto al foglio dei settori */}
@@ -77,7 +95,38 @@ export default function StadiumScreen() {
           </View>
         ) : null}
 
-        {selected ? <View style={pad}><SectorCard sector={selected} /></View> : null}
+        {match ? (
+          <View style={[styles.presence, pad]}>
+            <View style={styles.presenceHead}>
+              <Ionicons name="people" size={17} color={colors.accentBright} />
+              <Text style={styles.presenceTitle}>
+                {thousands(totalDeclared)} hanno detto che ci sono
+              </Text>
+              <View style={styles.sampleTag}><Text style={styles.sampleText}>esempio</Text></View>
+            </View>
+            <Text style={styles.presenceNote}>
+              {mySector
+                ? `Ci sei anche tu, in ${stadium.sectors.find((s) => s.id === mySector)?.name}.`
+                : 'Scegli il tuo settore qui sotto: gli spalti nel modello si riempiono di conseguenza.'}
+            </Text>
+            {mySector ? (
+              <Pressable onPress={() => clearPresence(match.id)} hitSlop={8}>
+                <Text style={styles.presenceUndo}>Non ci vado più</Text>
+              </Pressable>
+            ) : null}
+          </View>
+        ) : null}
+
+        {selected ? (
+          <View style={pad}>
+            <SectorCard
+              sector={selected}
+              matchId={match?.id ?? null}
+              onDeclare={() => match && declarePresence(match.id, selected.id)}
+              mine={mySector === selected.id}
+            />
+          </View>
+        ) : null}
 
         <Text style={[styles.listTitle, pad]}>SETTORI</Text>
         <View style={pad}>
@@ -97,6 +146,11 @@ export default function StadiumScreen() {
                 </View>
                 <View style={styles.rowRight}>
                   <Text style={styles.rowPrice}>da {euro(s.priceFrom)}</Text>
+                  {match ? (
+                    <Text style={[styles.rowGoing, mySector === s.id && styles.rowGoingMine]}>
+                      {thousands(presenceOf(match.id, s.id, s.capacity).total)} vanno
+                    </Text>
+                  ) : null}
                 </View>
               </Pressable>
             );
@@ -105,14 +159,18 @@ export default function StadiumScreen() {
 
         <Text style={[styles.note, pad]}>
           {stadium.priceNote} Le capienze per settore sono stime nostre. Il riempimento degli
-          spalti nel modello è una resa grafica, non la disponibilità dei biglietti.
+          spalti nel modello segue le presenze dichiarate qui dentro, non i biglietti venduti:
+          quelli li conosce solo la biglietteria. In questa dimostrazione i numeri di partenza
+          sono di esempio.
         </Text>
       </ScrollView>
     </View>
   );
 }
 
-function SectorCard({ sector }: { sector: StadiumSector }) {
+function SectorCard({ sector, matchId, onDeclare, mine }: {
+  sector: StadiumSector; matchId: string | null; onDeclare: () => void; mine: boolean;
+}) {
   return (
     <View style={styles.card}>
       <View style={styles.cardHead}>
@@ -131,6 +189,23 @@ function SectorCard({ sector }: { sector: StadiumSector }) {
         Disponibilità e prezzo aggiornati sul canale ufficiale.
       </Text>
 
+      {matchId ? (
+        <Pressable
+          onPress={onDeclare}
+          disabled={mine}
+          style={({ pressed }) => [styles.going, mine && styles.goingOn, pressed && { opacity: 0.85 }]}
+        >
+          <Ionicons
+            name={mine ? 'checkmark-circle' : 'hand-right-outline'}
+            size={16}
+            color={mine ? colors.win : colors.text}
+          />
+          <Text style={[styles.goingText, mine && styles.goingTextOn]}>
+            {mine ? 'CI SEI, IN QUESTO SETTORE' : "CI SONO ANCH'IO, QUI"}
+          </Text>
+        </Pressable>
+      ) : null}
+
       <Pressable
         style={({ pressed }) => [styles.cta, pressed && { opacity: 0.85 }]}
         onPress={() => sector.ticketUrl && Linking.openURL(sector.ticketUrl)}
@@ -144,6 +219,26 @@ function SectorCard({ sector }: { sector: StadiumSector }) {
 
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: colors.bg },
+
+  presence: { gap: 6, marginBottom: space.lg },
+  presenceHead: { flexDirection: 'row', alignItems: 'center', gap: space.sm },
+  presenceTitle: { ...type.headline, color: colors.text, flex: 1 },
+  sampleTag: { backgroundColor: colors.surfaceHi, borderRadius: radius.sm, paddingHorizontal: 6, paddingVertical: 2 },
+  sampleText: { ...type.captionBold, fontSize: 9, color: colors.textDim },
+  presenceNote: { ...type.caption, color: colors.textDim, lineHeight: 17 },
+  presenceUndo: { ...type.captionBold, color: colors.accentBright, marginTop: 2 },
+
+  rowGoing: { ...type.caption, color: colors.textFaint },
+  rowGoingMine: { color: colors.win },
+
+  going: {
+    flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 7,
+    backgroundColor: colors.surfaceHi, borderRadius: radius.lg, paddingVertical: 12,
+    marginTop: space.md,
+  },
+  goingOn: { backgroundColor: 'rgba(48,209,88,0.14)' },
+  goingText: { ...type.footnoteBold, color: colors.text, letterSpacing: 0.4 },
+  goingTextOn: { color: colors.win },
   canvas: { backgroundColor: '#070709' },
   overlay: { position: 'absolute', left: 0, right: 0, top: 0 },
   titleRow: { flexDirection: 'row', alignItems: 'flex-start', gap: space.sm },

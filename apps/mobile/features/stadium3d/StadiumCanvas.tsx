@@ -14,12 +14,14 @@ type Props = {
   selectedId: string | null;
   onSelect: (sector: StadiumSector) => void;
   mode: SeatMode;
+  /** quota di riempimento per settore, da 0 a 1 */
+  fill?: Record<string, number>;
 };
 
 /** Stato della camera in coordinate sferiche, condiviso fra i gesti e il render loop. */
 type Orbit = { azimuth: number; polar: number; distance: number; fitted?: boolean };
 
-export function StadiumCanvas({ stadium, selectedId, onSelect, mode }: Props) {
+export function StadiumCanvas({ stadium, selectedId, onSelect, mode, fill }: Props) {
   // camera sopra la Tribuna Centrale, che guarda dall'altra parte: e il punto di
   // vista delle foto aeree, ed e l'unico da cui la scritta sulla gradinata di
   // fronte si legge nel verso giusto
@@ -105,9 +107,9 @@ export function StadiumCanvas({ stadium, selectedId, onSelect, mode }: Props) {
     () => stadium.sectors.map((s) => ({
       sector: s,
       shell: buildSectorMesh(s),
-      seats: buildSeating(s, mode),
+      seats: buildSeating(s, mode, fill?.[s.id] ?? 1),
     })),
-    [stadium, mode],
+    [stadium, mode, fill],
   );
 
   const covered = stadium.sectors.find((s) => s.covered);

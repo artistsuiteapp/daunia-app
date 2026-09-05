@@ -68,7 +68,12 @@ export type SeatingResult = {
   cols: number;
 };
 
-export function buildSeating(sector: StadiumSector, mode: SeatMode): SeatingResult {
+export function buildSeating(
+  sector: StadiumSector,
+  mode: SeatMode,
+  /** quota di gradinata occupata, da 0 a 1. Serve alle presenze dichiarate. */
+  fill = 1,
+): SeatingResult {
   const { length, depth, rows, baseHeight, topHeight } = sector.geometry;
   // celle piu strette sulle curve: servono abbastanza colonne perche la scritta
   // "FOGGIA" entri a scala doppia e si legga come nelle foto
@@ -83,11 +88,11 @@ export function buildSeating(sector: StadiumSector, mode: SeatMode): SeatingResu
   // alla Tribuna Centrale, non su una curva
   const mask = sector.id === 'tribuna-est' ? makeWordMask('FOGGIA', cols, rows) : null;
 
-  // In modalita "tifosi" si riempie tutto: e una resa grafica, non una
-  // previsione di quanti biglietti sono venduti. La disponibilita vera sta solo
-  // su Vivaticket, e questa app non la conosce.
+  // In modalita "tifosi" si riempie in proporzione a quanti hanno dichiarato di
+  // esserci. Non e una previsione di biglietti venduti, che questa app non
+  // conosce: e il conto di chi si e segnato qui dentro.
   const filledRows = mode === 'occupancy'
-    ? rows
+    ? Math.round(rows * Math.max(0, Math.min(1, fill)))
     : 0;
 
   const positions = new Float32Array(rows * cols * 6 * 3);

@@ -15,13 +15,15 @@ import { Countdown } from '../../components/Countdown';
 import { colors, radius, space, type } from '../../theme/tokens';
 import { longDate, thousands } from '../../lib/format';
 import { matchById, matches } from '../../lib/data';
+import { Pagelle } from '../../components/Pagelle';
+import { Pronostico } from '../../components/Pronostico';
 
-type View3 = 'formazione' | 'eventi' | 'dati';
+type Tab = 'formazione' | 'gioco' | 'eventi' | 'dati';
 
 export default function MatchDetail() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const gutter = useGutter();
-  const [view, setView] = useState<View3>('formazione');
+  const [view, setView] = useState<Tab>('formazione');
   const lineup = useMemo(() => probableLineup(), []);
   const match = matchById(String(id));
 
@@ -69,12 +71,36 @@ export default function MatchDetail() {
           value={view}
           onChange={setView}
           items={[
-            { key: 'formazione', label: 'Formazione' },
-            { key: 'eventi', label: 'Eventi' },
-            { key: 'dati', label: 'Dati' },
+            { key: 'formazione' as Tab, label: 'Formazione' },
+            // prima della partita si pronostica, dopo si danno i voti:
+            // la stessa casella cambia mestiere al fischio finale
+            { key: 'gioco' as Tab, label: played ? 'Pagelle' : 'Pronostico' },
+            { key: 'eventi' as Tab, label: 'Eventi' },
+            { key: 'dati' as Tab, label: 'Dati' },
           ]}
         />
       </View>
+
+      {view === 'gioco' ? (
+        <>
+          <GroupLabel>{played ? 'Le pagelle della Curva' : 'Il pronostico'}</GroupLabel>
+          <View style={gutter}>
+            {played ? (
+              <Pagelle
+                matchId={match.id}
+                players={lineup.slots.map((sl) => sl.player).filter((pl): pl is NonNullable<typeof pl> => !!pl)}
+              />
+            ) : (
+              <Pronostico match={match} />
+            )}
+          </View>
+          <GroupNote>
+            {played
+              ? 'I voti restano su questo dispositivo. Con gli account veri fanno una media sola per tutti.'
+              : 'Il pronostico resta su questo dispositivo. Con gli account veri entra in una classifica vera.'}
+          </GroupNote>
+        </>
+      ) : null}
 
       {view === 'formazione' ? (
         <>
