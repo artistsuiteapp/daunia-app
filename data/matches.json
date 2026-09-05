@@ -163,11 +163,11 @@
     "venue": "Stadio Pino Zaccheria",
     "city": "Foggia",
     "attendance": null,
-    "referee": null,
+    "referee": "Mastrodomenico",
     "goals": [],
     "foggiaHome": true,
     "foggiaResult": null,
-    "reportUrl": null,
+    "reportUrl": "https://www.transfermarkt.it/spielbericht/index/spielbericht/4979188",
     "source": "wikipedia",
     "home": {
       "id": "foggia",
