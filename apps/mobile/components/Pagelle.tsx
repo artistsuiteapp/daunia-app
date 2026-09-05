@@ -5,6 +5,8 @@ import type { Player } from '@satanelli/core';
 import { Avatar } from './Avatar';
 import { colors, radius, space, type } from '../theme/tokens';
 import { medieVere, myRating, myRatingCount, rate, ratingOf, useFanplay } from '../lib/fanplay';
+import { useOspite } from '../lib/ospite';
+import { SoloConAccount } from './SoloConAccount';
 
 const VOTES = [4, 5, 6, 7, 8, 9, 10];
 
@@ -20,10 +22,13 @@ const tint = (avg: number) =>
  */
 export function Pagelle({ matchId, players }: { matchId: string; players: Player[] }) {
   useFanplay();
+  const ospite = useOspite();
   const given = myRatingCount(matchId);
 
   return (
     <View style={styles.wrap}>
+      {ospite ? <SoloConAccount cosa="Per dare i voti serve un account. Le medie le vedi lo stesso." /> : null}
+
       <View style={styles.head}>
         <Text style={styles.headText}>
           {given === 0
@@ -50,6 +55,7 @@ export function Pagelle({ matchId, players }: { matchId: string; players: Player
               </View>
             </View>
 
+            {!ospite ? (
             <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.scale}>
               {VOTES.map((v) => {
                 const on = mine === v;
@@ -67,6 +73,7 @@ export function Pagelle({ matchId, players }: { matchId: string; players: Player
                 <View style={styles.done}><Ionicons name="checkmark" size={13} color={colors.win} /></View>
               ) : null}
             </ScrollView>
+            ) : null}
           </View>
         );
       })}

@@ -9,12 +9,22 @@ import { Badge, ListGroup, ListRow, GroupLabel, GroupNote, Button, Segmented, us
 import { Crest } from '../../components/Crest';
 import { colors, radius, space, type } from '../../theme/tokens';
 import { useLayout } from '../../theme/responsive';
+import { useOspite } from '../../lib/ospite';
+import { SoloConAccount } from '../../components/SoloConAccount';
 import { euro, shortDate, thousands } from '../../lib/format';
 import { nextHomeMatch, stadium } from '../../lib/data';
 import { useSafeInsets } from '../../lib/viewport';
 import {
   clearPresence, declarePresence, myPresence, presenceOf, presenzeVere, useDatiPartita, useFanplay,
 } from '../../lib/fanplay';
+
+/** Un settore esaurito non ha un prezzo: mostrarne uno sarebbe fuorviante. */
+function prezzoDi(s: StadiumSector): string {
+  if (s.soldOut) return 'esaurito';
+  if (s.priceFrom == null) return 'n.d.';
+  if (s.priceTo && s.priceTo !== s.priceFrom) return `${euro(s.priceFrom)}–${euro(s.priceTo)}`;
+  return `da ${euro(s.priceFrom)}`;
+}
 
 export default function StadiumScreen() {
   const insets = useSafeInsets();
@@ -24,6 +34,7 @@ export default function StadiumScreen() {
   const [mode, setMode] = useState<SeatMode>('occupancy');
   const match = nextHomeMatch();
   useFanplay();
+  const ospite = useOspite();
   useDatiPartita(match?.id ?? null);
 
   // il modello si riempie in proporzione a chi ha dichiarato di esserci:
@@ -117,6 +128,11 @@ export default function StadiumScreen() {
                 <Text style={styles.presenceUndo}>Non ci vado più</Text>
               </Pressable>
             ) : null}
+            {ospite ? (
+              <View style={{ marginTop: space.sm }}>
+                <SoloConAccount cosa="Per dire che ci sei anche tu serve un account." compatto />
+              </View>
+            ) : null}
           </View>
         ) : null}
 
@@ -124,7 +140,7 @@ export default function StadiumScreen() {
           <View style={pad}>
             <SectorCard
               sector={selected}
-              matchId={match?.id ?? null}
+              matchId={ospite ? null : match?.id ?? null}
               onDeclare={() => match && declarePresence(match.id, selected.id)}
               mine={mySector === selected.id}
             />
@@ -148,7 +164,7 @@ export default function StadiumScreen() {
                   </Text>
                 </View>
                 <View style={styles.rowRight}>
-                  <Text style={styles.rowPrice}>da {euro(s.priceFrom)}</Text>
+                  <Text style={[styles.rowPrice, s.soldOut && styles.rowPriceOut]}>{prezzoDi(s)}</Text>
                   {match ? (
                     <Text style={[styles.rowGoing, mySector === s.id && styles.rowGoingMine]}>
                       {thousands(presenceOf(match.id, s.id, s.capacity).total)} vanno
@@ -183,8 +199,10 @@ function SectorCard({ sector, matchId, onDeclare, mine }: {
             {thousands(sector.capacity)} posti · {sector.covered ? 'coperto' : 'scoperto'}
           </Text>
         </View>
-        <Text style={styles.cardPrice}>da {euro(sector.priceFrom)}</Text>
+        <Text style={[styles.cardPrice, sector.soldOut && styles.rowPriceOut]}>{prezzoDi(sector)}</Text>
       </View>
+
+      {sector.note ? <Text style={styles.cardNota}>{sector.note}</Text> : null}
 
       {/* niente percentuali di venduto: la disponibilità reale la conosce solo
           la biglietteria, e un numero inventato qui sarebbe fuorviante */}
@@ -192,7 +210,7 @@ function SectorCard({ sector, matchId, onDeclare, mine }: {
         Disponibilità e prezzo aggiornati sul canale ufficiale.
       </Text>
 
-      {matchId ? (
+      {matchId && !sector.soldOut ? (
         <Pressable
           onPress={onDeclare}
           disabled={mine}
@@ -209,13 +227,20 @@ function SectorCard({ sector, matchId, onDeclare, mine }: {
         </Pressable>
       ) : null}
 
-      <Pressable
-        style={({ pressed }) => [styles.cta, pressed && { opacity: 0.85 }]}
-        onPress={() => sector.ticketUrl && Linking.openURL(sector.ticketUrl)}
-      >
-        <Ionicons name="ticket-outline" size={16} color={colors.onAccent} />
-        <Text style={styles.ctaText}>BIGLIETTI PER QUESTO SETTORE</Text>
-      </Pressable>
+      {sector.soldOut ? (
+        <View style={[styles.cta, styles.ctaSpenta]}>
+          <Ionicons name="close-circle-outline" size={16} color={colors.textDim} />
+          <Text style={[styles.ctaText, { color: colors.textDim }]}>BIGLIETTI ESAURITI</Text>
+        </View>
+      ) : (
+        <Pressable
+          style={({ pressed }) => [styles.cta, pressed && { opacity: 0.85 }]}
+          onPress={() => sector.ticketUrl && Linking.openURL(sector.ticketUrl)}
+        >
+          <Ionicons name="ticket-outline" size={16} color={colors.onAccent} />
+          <Text style={styles.ctaText}>BIGLIETTI PER QUESTO SETTORE</Text>
+        </Pressable>
+      )}
     </View>
   );
 }
@@ -283,6 +308,9 @@ const styles = StyleSheet.create({
   barWrap: { gap: 6 },
   barTrack: { height: 6, borderRadius: 3, backgroundColor: colors.surfaceHi, overflow: 'hidden' },
   barFill: { height: 6, borderRadius: 3 },
+  rowPriceOut: { color: colors.textFaint },
+  ctaSpenta: { backgroundColor: colors.surfaceHi },
+  cardNota: { ...type.caption, color: colors.textDim, lineHeight: 17 },
   cardNote: { ...type.caption, color: colors.textFaint, marginTop: space.sm },
   barLabel: { ...type.caption, color: colors.textFaint },
 

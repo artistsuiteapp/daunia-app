@@ -9,6 +9,8 @@ import { BrandMark } from '../../components/BrandMark';
 import { Reveal } from '../../components/Reveal';
 import { colors, radius, space, type } from '../../theme/tokens';
 import { relative } from '../../lib/format';
+import { useOspite } from '../../lib/ospite';
+import { SoloConAccount } from '../../components/SoloConAccount';
 import { useLayout } from '../../theme/responsive';
 import {
   TOPICS, TOPIC_ICON, lastActivity, mineCount, useDiscussions, type Discussion, type Topic,
@@ -24,6 +26,7 @@ export default function Curva() {
   const gutter = useGutter();
   const { gutter: g } = useLayout();
   const all = useDiscussions();
+  const ospite = useOspite();
   const [topic, setTopic] = useState<string>(ALL);
 
   const list = useMemo(
@@ -40,14 +43,22 @@ export default function Curva() {
           <Text style={styles.title}>Curva</Text>
           <Text style={styles.sub}>Lo spazio dei tifosi</Text>
         </View>
-        <Pressable
-          onPress={() => router.push('/curva/nuovo' as never)}
-          style={({ pressed }) => [styles.write, pressed && { opacity: 0.85 }]}
-        >
-          <Ionicons name="create-outline" size={16} color={colors.onAccent} />
-          <Text style={styles.writeText}>Apri</Text>
-        </Pressable>
+        {!ospite ? (
+          <Pressable
+            onPress={() => router.push('/curva/nuovo' as never)}
+            style={({ pressed }) => [styles.write, pressed && { opacity: 0.85 }]}
+          >
+            <Ionicons name="create-outline" size={16} color={colors.onAccent} />
+            <Text style={styles.writeText}>Apri</Text>
+          </Pressable>
+        ) : null}
       </View>
+
+      {ospite ? (
+        <View style={gutter}>
+          <SoloConAccount cosa="Per aprire una discussione o rispondere serve un account." />
+        </View>
+      ) : null}
 
       <View style={[styles.notice, gutter]}>
         <View style={styles.noticeDot} />

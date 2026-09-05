@@ -128,6 +128,14 @@ export interface StadiumSector {
   capacity: number;
   covered: boolean;
   priceFrom: number | null;
+  /** estremo alto quando il settore raccoglie piu fasce di prezzo */
+  priceTo?: number | null;
+  /** prezzo ridotto, dove il club lo pubblica */
+  reduced?: number | null;
+  /** true quando i biglietti non sono in vendita, per esempio perche presi dagli abbonamenti */
+  soldOut?: boolean;
+  /** una riga di spiegazione mostrata sotto il settore */
+  note?: string | null;
   currency: 'EUR';
   /** La capienza per settore non e pubblicata dal club: e una stima. */
   capacityIsEstimated: boolean;

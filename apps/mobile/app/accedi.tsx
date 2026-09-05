@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -7,7 +7,7 @@ import { Screen, useGutter } from '../components/ui';
 import { BackBar } from '../components/BackBar';
 import { BrandMark } from '../components/BrandMark';
 import { colors, radius, space, type } from '../theme/tokens';
-import { accedi, recuperaPassword, registrati, validaRegistrazione } from '../lib/auth';
+import { accedi, nonRicordare, recuperaPassword, registrati, validaRegistrazione } from '../lib/auth';
 import { backendAttivo } from '../lib/supabase';
 
 type Modo = 'accesso' | 'registrazione' | 'recupero';
@@ -22,11 +22,13 @@ type Modo = 'accesso' | 'registrazione' | 'recupero';
  */
 export default function Accedi() {
   const gutter = useGutter();
-  const [modo, setModo] = useState<Modo>('accesso');
+  const { modo: modoIniziale } = useLocalSearchParams<{ modo?: string }>();
+  const [modo, setModo] = useState<Modo>(modoIniziale === 'registrazione' ? 'registrazione' : 'accesso');
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [mostraPassword, setMostraPassword] = useState(false);
+  const [resta, setResta] = useState(true);
   const [errore, setErrore] = useState<string | null>(null);
   const [avviso, setAvviso] = useState<string | null>(null);
   const [inCorso, setInCorso] = useState(false);
@@ -57,6 +59,7 @@ export default function Accedi() {
       } else {
         const r = await accedi(email, password);
         if (r.errore) return setErrore(r.errore);
+        if (!resta) await nonRicordare();
         router.back();
       }
     } finally {
@@ -164,6 +167,15 @@ export default function Accedi() {
           </Text>
         </Pressable>
 
+        {modo !== 'recupero' ? (
+          <Pressable onPress={() => setResta((v) => !v)} style={styles.resta} hitSlop={6}>
+            <View style={[styles.spunta, resta && styles.spuntaOn]}>
+              {resta ? <Ionicons name="checkmark" size={13} color={colors.onAccent} /> : null}
+            </View>
+            <Text style={styles.restaTesto}>Resta connesso su questo dispositivo</Text>
+          </Pressable>
+        ) : null}
+
         {modo === 'registrazione' ? (
           <Text style={styles.legale}>
             Creando l’account accetti le{' '}
@@ -240,6 +252,14 @@ const styles = StyleSheet.create({
   ctaTesto: { ...type.headline, color: colors.onAccent },
   ctaTestoOff: { color: colors.textFaint },
 
+  resta: { flexDirection: 'row', alignItems: 'center', gap: space.sm },
+  spunta: {
+    width: 21, height: 21, borderRadius: 6,
+    borderWidth: 1.5, borderColor: colors.borderStrong,
+    alignItems: 'center', justifyContent: 'center',
+  },
+  spuntaOn: { backgroundColor: colors.accent, borderColor: colors.accent },
+  restaTesto: { ...type.footnote, color: colors.textDim },
   legale: { ...type.caption, color: colors.textFaint, lineHeight: 17 },
   link: { color: colors.accentBright },
 

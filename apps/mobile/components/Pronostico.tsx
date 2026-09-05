@@ -8,6 +8,8 @@ import {
   clearPrediction, leaderboard, myPrediction, myPredictionTotals, predict, useFanplay,
 } from '../lib/fanplay';
 import { playedMatches } from '../lib/data';
+import { useOspite } from '../lib/ospite';
+import { SoloConAccount } from './SoloConAccount';
 
 const RANGE = [0, 1, 2, 3, 4];
 
@@ -20,6 +22,7 @@ const RANGE = [0, 1, 2, 3, 4];
  */
 export function Pronostico({ match }: { match: Match }) {
   useFanplay();
+  const ospite = useOspite();
   const guess = myPrediction(match.id);
   const totals = myPredictionTotals(playedMatches());
   const table = leaderboard(totals.points, totals.exact);
@@ -28,13 +31,15 @@ export function Pronostico({ match }: { match: Match }) {
 
   return (
     <View style={styles.wrap}>
+      {ospite ? <SoloConAccount cosa="Per giocare il pronostico ed entrare in classifica serve un account." /> : null}
+
       <View style={styles.card}>
         <Text style={styles.label}>IL TUO PRONOSTICO</Text>
 
         <View style={styles.board}>
-          <Side team={match.home} value={guess?.[0] ?? null} onPick={(v) => set(v, guess?.[1] ?? 0)} />
+          <Side team={match.home} value={guess?.[0] ?? null} onPick={(v) => !ospite && set(v, guess?.[1] ?? 0)} />
           <Text style={styles.colon}>:</Text>
-          <Side team={match.away} value={guess?.[1] ?? null} onPick={(v) => set(guess?.[0] ?? 0, v)} />
+          <Side team={match.away} value={guess?.[1] ?? null} onPick={(v) => !ospite && set(guess?.[0] ?? 0, v)} />
         </View>
 
         {guess ? (

@@ -80,6 +80,18 @@ export async function registrati(nome: string, email: string, password: string) 
   return { errore: null, confermaRichiesta: !data.session };
 }
 
+/**
+ * Con "resta connesso" tolto la sessione dura finche l'app resta aperta: si
+ * cancella quello che e salvato sul dispositivo appena si e entrati.
+ */
+export async function nonRicordare() {
+  if (!supabase) return;
+  try {
+    const chiavi = Object.keys(globalThis.localStorage ?? {});
+    for (const k of chiavi) if (k.startsWith('sb-')) globalThis.localStorage.removeItem(k);
+  } catch { /* su telefono resta salvata: la si toglie con Esci */ }
+}
+
 export async function accedi(email: string, password: string) {
   if (!supabase) return { errore: 'Le iscrizioni non sono ancora aperte.' };
   const { error } = await supabase.auth.signInWithPassword({

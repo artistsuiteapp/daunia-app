@@ -54,6 +54,7 @@ export default function RootLayout() {
           <Stack.Screen name="privacy" />
           <Stack.Screen name="profilo" />
           <Stack.Screen name="accedi" />
+          <Stack.Screen name="benvenuto" options={{ animation: 'fade' }} />
           <Stack.Screen name="tickets" />
           </Stack>
         </AppShell>

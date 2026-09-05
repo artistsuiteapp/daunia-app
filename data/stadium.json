@@ -8,15 +8,17 @@
     "width": 68
   },
   "ticketUrl": "https://calciofoggia1920.vivaticket.it/",
-  "priceNote": "Prezzi indicativi: cambiano a ogni partita. Il prezzo valido e quello su Vivaticket.",
+  "priceNote": "I prezzi cambiano a ogni partita: questi sono quelli dell'ultima gara in casa. Quello valido e sempre il prezzo su Vivaticket.",
   "sectors": [
     {
       "id": "tribuna-centrale",
-      "name": "Tribuna Centrale",
+      "name": "Tribuna Ovest",
       "side": "west",
       "capacity": 3200,
       "covered": true,
-      "priceFrom": 31.5,
+      "priceFrom": 28,
+      "priceTo": 50,
+      "note": "Si divide in Centralissima, Centrale e Laterale Superiore, Inferiore Centrale e Laterale.",
       "geometry": {
         "length": 112,
         "depth": 22,
@@ -38,7 +40,8 @@
       "side": "east",
       "capacity": 4100,
       "covered": false,
-      "priceFrom": 16,
+      "priceFrom": 22,
+      "reduced": 17,
       "geometry": {
         "length": 112,
         "depth": 19,
@@ -60,7 +63,9 @@
       "side": "north",
       "capacity": 3800,
       "covered": false,
-      "priceFrom": 11,
+      "priceFrom": null,
+      "soldOut": true,
+      "note": "Esaurita con gli abbonamenti: mille posti andati in prelazione.",
       "geometry": {
         "length": 74,
         "depth": 21,
@@ -82,7 +87,9 @@
       "side": "south",
       "capacity": 2400,
       "covered": false,
-      "priceFrom": 11,
+      "priceFrom": null,
+      "soldOut": true,
+      "note": "Esaurita con gli abbonamenti: duemila posti andati in prelazione.",
       "geometry": {
         "length": 52,
         "depth": 21,
@@ -105,7 +112,8 @@
       "side": "south",
       "capacity": 1030,
       "covered": false,
-      "priceFrom": 11,
+      "priceFrom": 12,
+      "note": "Riservato ai tifosi ospiti, in vendita solo nella loro citta.",
       "geometry": {
         "length": 22,
         "depth": 21,

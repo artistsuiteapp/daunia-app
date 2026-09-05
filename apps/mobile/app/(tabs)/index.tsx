@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { router } from 'expo-router';
 import { Image } from 'expo-image';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
@@ -18,6 +19,7 @@ import { coverOf } from '../../lib/editorial';
 import { ArticleCover } from '../../components/ArticleCover';
 import { photo } from '../../lib/media';
 import { useSafeInsets } from '../../lib/viewport';
+import { useBenvenuto } from '../../lib/ospite';
 import {
   FOGGIA, foggiaRow, lastMatch, meta, news, nextMatch, recentForm,
   standingsWindow, topScorers, upcomingMatches,
@@ -26,6 +28,13 @@ import {
 export default function Home() {
   const gutter = useGutter();
   const insets = useSafeInsets();
+  // Alla prima apertura si sceglie: account o solo guardare. La scelta si
+  // ricorda, cosi chi ha detto "guardo e basta" non se lo sente richiedere.
+  const benvenuto = useBenvenuto();
+
+  useEffect(() => {
+    if (benvenuto.mostra) router.replace('/benvenuto' as never);
+  }, [benvenuto.mostra]);
   const next = nextMatch();
   const last = lastMatch();
   const row = foggiaRow();

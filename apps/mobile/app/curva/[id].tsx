@@ -8,6 +8,8 @@ import { BackBar } from '../../components/BackBar';
 import { Avatar } from '../../components/Avatar';
 import { colors, radius, space, type } from '../../theme/tokens';
 import { relative, shortDate } from '../../lib/format';
+import { useOspite } from '../../lib/ospite';
+import { SoloConAccount } from '../../components/SoloConAccount';
 import { useKeyboardInset } from '../../lib/viewport';
 import {
   TOPIC_ICON, addReply, discussionById, like, removeDiscussion, useDiscussions,
@@ -25,6 +27,7 @@ export default function DiscussionPage() {
   const [draft, setDraft] = useState('');
   const [liked, setLiked] = useState(false);
   const keyboard = useKeyboardInset();
+  const ospite = useOspite();
 
   const d = discussionById(String(id));
   if (!d) return <Screen><Empty text="Discussione non trovata." /></Screen>;
@@ -101,6 +104,9 @@ export default function DiscussionPage() {
           </View>
         ))}
 
+        {ospite ? <SoloConAccount cosa="Per rispondere in questa discussione serve un account." /> : null}
+
+        {!ospite ? (
         <View style={styles.composer}>
           <TextInput
             value={draft}
@@ -118,10 +124,13 @@ export default function DiscussionPage() {
             <Ionicons name="arrow-up" size={18} color={draft.trim() ? colors.onAccent : colors.textFaint} />
           </Pressable>
         </View>
+        ) : null}
 
         {/* con la tastiera aperta la nota finirebbe sotto i tasti */}
         <Text style={[styles.footNote, keyboard > 0 && { marginBottom: space.xl }]}>
-          La risposta resta in questo browser. Con gli account veri finisce sul filo per tutti.
+          {ospite
+            ? 'Puoi leggere tutto. Per scrivere serve un account.'
+            : 'La tua risposta compare nel filo per tutti.'}
         </Text>
       </View>
     </Screen>
