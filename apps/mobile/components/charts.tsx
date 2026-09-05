@@ -86,7 +86,7 @@ export function PositionChart({ points, teams = 20, height = 120 }: {
       <View style={[styles.chartEmpty, { height }]}>
         <Text style={styles.chartEmptyText}>
           {data.length === 1
-            ? `Una sola giornata giocata: il Foggia e ${data[0]!.position}°.`
+            ? `Una sola giornata giocata: il Foggia è ${data[0]!.position}°.`
             : 'Ancora nessuna giornata in archivio.'}
         </Text>
       </View>

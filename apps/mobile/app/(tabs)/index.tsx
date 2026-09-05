@@ -60,7 +60,7 @@ export default function Home() {
       ) : null}
 
       {/* le partite successive impilate sotto quella di riferimento, come nella
-          reference: stessa scheda, ma scura, cosi si legge subito quale conta */}
+          reference: stessa scheda, ma scura, così si legge subito quale conta */}
       {upcoming.length > 1 ? (
         <View style={[gutter, styles.stack]}>
           {upcoming.slice(1, 3).map((m, i) => (

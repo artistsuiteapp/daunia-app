@@ -79,12 +79,14 @@ export function hueFrom(seed: string): string {
  * Una griglia di rosa con venti tinte diverse sembrava una tavolozza, non una squadra.
  */
 export function avatarTone(seed: string): string {
+  // Tutti nella famiglia del rosso, solo con saturazione e luminosita diverse.
+  // Prima un seme su tre cadeva su un blu-grigio, e in mezzo agli altri sembrava
+  // un errore invece di una variazione.
   let h = 0;
   for (let i = 0; i < seed.length; i++) h = (h * 33 + seed.charCodeAt(i)) % 997;
-  const lightness = 16 + (h % 5) * 4;
-  const sat = h % 3 === 0 ? 8 : 46 + (h % 4) * 7;
-  const hue = h % 3 === 0 ? 220 : 352 + (h % 7);
-  return `hsl(${hue % 360}, ${sat}%, ${lightness}%)`;
+  const lightness = 17 + (h % 5) * 4;
+  const sat = 20 + (h % 5) * 9;
+  return `hsl(${354 + (h % 7)}, ${sat}%, ${lightness}%)`;
 }
 
 export function euro(n: number | null): string {

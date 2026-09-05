@@ -16,6 +16,8 @@ export default function Post() {
 
   if (!post) return <Screen><Empty text="Articolo non trovato." /></Screen>;
 
+  const fromClub = post.kind === 'club';
+
   return (
     <Screen>
       <BackBar label="Notizie" />
@@ -25,15 +27,23 @@ export default function Post() {
       ) : null}
 
       <View style={[styles.body, gutter]}>
-        <Badge label={post.kind === 'club' ? 'comunicato ufficiale' : 'redazione'} tone="accent" />
+        <Badge label={fromClub ? 'dal sito ufficiale' : 'redazione'} tone="accent" />
         <Text style={styles.title}>{post.title}</Text>
         <Text style={styles.date}>{longDate(post.date)}</Text>
-        <Text style={styles.text}>{post.body || post.excerpt}</Text>
+
+        {/* Di un comunicato del club si riportano titolo ed estratto breve, mai il
+            testo intero: i collegamenti e gli estratti molto brevi sono esclusi dal
+            diritto degli editori (art. 43-bis L. 633/1941), la riproduzione no.
+            Il testo pieno si mostra solo quando l'articolo e nostro. */}
+        <Text style={styles.text}>{fromClub ? post.excerpt : post.body || post.excerpt}</Text>
       </View>
 
       {post.url ? (
-        <View style={[gutter, { marginTop: space.xl }]}>
-          <Button label="Leggi sul sito ufficiale" tone="plain" onPress={() => Linking.openURL(post.url)} />
+        <View style={[gutter, { marginTop: space.xl, gap: space.sm }]}>
+          <Button label="Leggi l'articolo sul sito ufficiale" onPress={() => Linking.openURL(post.url)} />
+          <Text style={[styles.source, gutter]}>
+            Fonte: {new URL(post.url).hostname.replace(/^www\./, '')} · {longDate(post.date)}
+          </Text>
         </View>
       ) : null}
     </Screen>
@@ -46,4 +56,5 @@ const styles = StyleSheet.create({
   title: { ...type.title1, color: colors.text },
   date: { ...type.footnote, color: colors.textFaint, marginTop: -space.sm },
   text: { ...type.body, color: colors.textDim, marginTop: space.sm },
+  source: { ...type.caption, color: colors.textFaint, paddingHorizontal: 0, textAlign: 'center' },
 });

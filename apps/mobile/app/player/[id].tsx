@@ -72,7 +72,7 @@ export default function PlayerDetail() {
 
       {!player.photo ? (
         <GroupNote>
-          Foto non disponibile: la fototeca sul sito del club e ferma alla stagione precedente.
+          Foto non disponibile: la fototeca sul sito del club è ferma alla stagione precedente.
         </GroupNote>
       ) : null}
 

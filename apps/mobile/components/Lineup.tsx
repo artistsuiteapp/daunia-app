@@ -101,7 +101,7 @@ export function Lineup({
             fill="none" stroke="#fff" strokeOpacity={0.62} strokeWidth={0.7}
           />
 
-          {/* aree: quella vicina piu larga sullo schermo, ed e giusto cosi */}
+          {/* aree: quella vicina più larga sullo schermo, ed e giusto così */}
           <Polygon points={poly([[0.2, 0], [0.8, 0], [0.8, 0.15], [0.2, 0.15]])} fill="none" stroke="#fff" strokeOpacity={0.62} strokeWidth={0.7} />
           <Polygon points={poly([[0.34, 0], [0.66, 0], [0.66, 0.055], [0.34, 0.055]])} fill="none" stroke="#fff" strokeOpacity={0.5} strokeWidth={0.6} />
           <Polygon points={poly([[0.2, 1], [0.8, 1], [0.8, 0.85], [0.2, 0.85]])} fill="none" stroke="#fff" strokeOpacity={0.62} strokeWidth={0.7} />

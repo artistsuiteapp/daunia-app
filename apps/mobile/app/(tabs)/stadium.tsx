@@ -105,7 +105,7 @@ export default function StadiumScreen() {
 
         <Text style={[styles.note, pad]}>
           {stadium.priceNote} Le capienze per settore sono stime nostre. Il riempimento degli
-          spalti nel modello e una resa grafica, non la disponibilita dei biglietti.
+          spalti nel modello è una resa grafica, non la disponibilità dei biglietti.
         </Text>
       </ScrollView>
     </View>
@@ -125,10 +125,10 @@ function SectorCard({ sector }: { sector: StadiumSector }) {
         <Text style={styles.cardPrice}>da {euro(sector.priceFrom)}</Text>
       </View>
 
-      {/* niente percentuali di venduto: la disponibilita reale la conosce solo
+      {/* niente percentuali di venduto: la disponibilità reale la conosce solo
           la biglietteria, e un numero inventato qui sarebbe fuorviante */}
       <Text style={styles.cardNote}>
-        Disponibilita e prezzo aggiornati sul canale ufficiale.
+        Disponibilità e prezzo aggiornati sul canale ufficiale.
       </Text>
 
       <Pressable

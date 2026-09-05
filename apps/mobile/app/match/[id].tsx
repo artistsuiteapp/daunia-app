@@ -101,7 +101,7 @@ export default function MatchDetail() {
             ))}
           </View>
           <GroupNote>
-            Le formazioni della Serie C non sono pubblicate da nessuna fonte aperta: questa e
+            Le formazioni della Serie C non sono pubblicate da nessuna fonte aperta: questa è
             costruita dalla rosa reale e va letta come probabile.
           </GroupNote>
         </>

@@ -63,8 +63,8 @@ export default function Tickets() {
       </View>
 
       <GroupNote>
-        Il biglietto qui sopra e un esempio, non un titolo d'ingresso. La vendita resta su
-        {' '}{brand.ticketProvider.name}. Prezzi e disponibilita sono stime finche il club non apre
+        Il biglietto qui sopra è un esempio, non un titolo d'ingresso. La vendita resta su
+        {' '}{brand.ticketProvider.name}. Prezzi e disponibilità sono stime finché il club non apre
         i dati di biglietteria.
       </GroupNote>
     </Screen>
@@ -111,7 +111,7 @@ function TicketStub({ homeName, awayName, homeCrest, awayCrest, kickoff, matchda
 
       <View style={styles.stubBottom}>
         <View style={styles.stubFields}>
-          {/* il nome del settore e piu lungo degli altri campi: gli si da piu spazio */}
+          {/* il nome del settore e più lungo degli altri campi: gli si da più spazio */}
           <Field label="Settore" value={sector} grow={2.2} />
           <Field label="Fila" value="12" />
           <Field label="Posto" value="47" />
