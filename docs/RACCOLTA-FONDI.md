@@ -129,31 +129,31 @@ che segue il Foggia, mandagliela: mi serve quasi quanto i soldi.
 
 ## Versione per Facebook (corta)
 
-> Da incollare così com'è. Il link va nelle prime righe, prima del taglio.
+> Da incollare così com'è. Sostituisci [LINK GOFUNDME] con l'indirizzo della
+> raccolta quando l'hai creata.
 
 ---
 
 Per lavoro ho dovuto lasciare Foggia. La squadra la seguo lo stesso, ma quello
 che si perde sono gli altri tifosi.
 
-Così ho fatto un'app per ritrovarli.
+Così ho fatto un'app per ritrovarli: IL TIFO DELLA DAUNIA.
 
-IL TIFO DELLA DAUNIA
-daunia.vercel.app
-
-Si apre dal telefono senza installare niente. Dentro c'è tutto il Foggia in un
-posto solo: partite, classifica, rosa, statistiche e lo Zaccheria in tre
-dimensioni. E poi la Curva, dove i tifosi discutono, dici in che settore vai,
-voti i giocatori dopo il fischio finale e fai i pronostici.
+C'è tutto quello che cerchi in una sola app. Partite, classifica, rosa,
+statistiche e lo Zaccheria in tre dimensioni. E poi la Curva, dove i tifosi
+discutono, dici in che settore vai, voti i giocatori dopo il fischio finale e fai
+i pronostici.
 
 È una prima versione e si vede: qualche prezzo dei biglietti e qualche dato sono
 ancora da sistemare, e alcune cose girano solo come dimostrazione. Per portarle
 avanti sul serio sto raccogliendo fondi.
 
+[LINK GOFUNDME]
+
 Non è l'app ufficiale del Calcio Foggia 1920. È un progetto indipendente di
 tifosi, la società non c'entra niente e non lo approva.
 
-Aprila, provala, e scrivimi qui sotto cosa non va.
+Si accettano consigli: scrivetemi qui sotto cosa aggiungereste.
 
 #Foggia #CalcioFoggia1920 #SerieC
 
