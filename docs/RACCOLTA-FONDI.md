@@ -19,8 +19,7 @@ Alternative, se vuoi qualcosa di più diretto:
 
 ## Racconta la tua storia
 
-Sono di Foggia e il Foggia lo seguo da sempre. Allo Zaccheria ci vado, e quando
-non posso andarci passo la domenica a seguirlo da casa.
+Sono foggiano e tifoso del Foggia. Questa app l'ho fatta per noi.
 
 Di app che danno risultati, classifica e formazioni ce ne sono già, e funzionano
 bene. Le uso anch'io. Però sono uguali per tutte e sessanta le squadre della
@@ -116,6 +115,30 @@ Questa raccolta però non lo presuppone.
 
 Aprila e provala. Scrivimi cosa non va, che poi lo sistemo. E se conosci qualcuno
 che segue il Foggia, mandagliela: mi serve quasi quanto i soldi.
+
+---
+
+## Aperture alternative
+
+[Scegli quella vera e sostituisci la prima riga. Quella nel testo dice solo
+quello che mi hai detto: sei foggiano e tifoso. Tutto il resto lo devi mettere
+tu, perche riguarda te.]
+
+**A — quella che c'e adesso, minima**
+> Sono foggiano e tifoso del Foggia. Questa app l'ho fatta per noi.
+
+**B — se allo stadio ci vai**
+> Sono foggiano, e al Foggia ci vado da quando mio padre mi ci portava. [oppure
+> l'anno, o il primo ricordo: piu e specifico, piu funziona]
+
+**C — se lo segui da lontano**
+> Sono di Foggia ma non ci vivo piu. Il Foggia lo seguo lo stesso, e da fuori si
+> sente ancora di piu quanto manchi un posto dove stiamo tutti.
+
+**D — se preferisci partire dal problema**
+> Di app che danno risultati e classifica della Serie C ce ne sono, e funzionano.
+> Quello che non c'e e un posto dove stiano i tifosi del Foggia. Sono foggiano,
+> e me lo sono fatto.
 
 ---
 
