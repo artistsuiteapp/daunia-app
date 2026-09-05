@@ -33,6 +33,10 @@ jobs:
       - name: Scarica e normalizza
         env:
           NO_CACHE: '1'
+          # Piano gratuito, cento chiamate al giorno. L'ingest le spende solo
+          # nella finestra di una partita e per recuperare le formazioni
+          # arretrate, quindi la maggior parte dei giri costa zero.
+          API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
         run: node services/ingest/run.mjs
 
       - name: Committa se cambiato

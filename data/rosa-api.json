@@ -1,0 +1,189 @@
+{
+  "fetchedAt": "2026-09-05T17:21:21.306Z",
+  "rosa": [
+    {
+      "apiId": 91423,
+      "name": "D. Marfella",
+      "number": 12,
+      "position": "Goalkeeper",
+      "age": 26,
+      "photo": "https://media.api-sports.io/football/players/91423.png"
+    },
+    {
+      "apiId": 31038,
+      "name": "G. Saro",
+      "number": 22,
+      "position": "Goalkeeper",
+      "age": 25,
+      "photo": "https://media.api-sports.io/football/players/31038.png"
+    },
+    {
+      "apiId": 558788,
+      "name": "A. Testa",
+      "number": 80,
+      "position": "Goalkeeper",
+      "age": 17,
+      "photo": "https://media.api-sports.io/football/players/558788.png"
+    },
+    {
+      "apiId": 616243,
+      "name": "Timurs Azarovs",
+      "number": 33,
+      "position": "Defender",
+      "age": 19,
+      "photo": "https://media.api-sports.io/football/players/616243.png"
+    },
+    {
+      "apiId": 56185,
+      "name": "F. Berra",
+      "number": 21,
+      "position": "Defender",
+      "age": 30,
+      "photo": "https://media.api-sports.io/football/players/56185.png"
+    },
+    {
+      "apiId": 551063,
+      "name": "M. Demeter",
+      "number": 20,
+      "position": "Defender",
+      "age": 20,
+      "photo": "https://media.api-sports.io/football/players/551063.png"
+    },
+    {
+      "apiId": 31920,
+      "name": "D. Di Pasquale",
+      "number": 6,
+      "position": "Defender",
+      "age": 29,
+      "photo": "https://media.api-sports.io/football/players/31920.png"
+    },
+    {
+      "apiId": 676829,
+      "name": "C. Parisy",
+      "number": 51,
+      "position": "Defender",
+      "age": 22,
+      "photo": "https://media.api-sports.io/football/players/676829.png"
+    },
+    {
+      "apiId": 626713,
+      "name": "M. Seck",
+      "number": 3,
+      "position": "Defender",
+      "age": 19,
+      "photo": "https://media.api-sports.io/football/players/626713.png"
+    },
+    {
+      "apiId": 128483,
+      "name": "G. Todisco",
+      "number": 2,
+      "position": "Defender",
+      "age": 23,
+      "photo": "https://media.api-sports.io/football/players/128483.png"
+    },
+    {
+      "apiId": 30988,
+      "name": "F. Valietti",
+      "number": 24,
+      "position": "Defender",
+      "age": 26,
+      "photo": "https://media.api-sports.io/football/players/30988.png"
+    },
+    {
+      "apiId": 635390,
+      "name": "E. Chiara",
+      "number": 56,
+      "position": "Midfielder",
+      "age": 18,
+      "photo": "https://media.api-sports.io/football/players/635390.png"
+    },
+    {
+      "apiId": 31236,
+      "name": "M. Coulibaly",
+      "number": 8,
+      "position": "Midfielder",
+      "age": 26,
+      "photo": "https://media.api-sports.io/football/players/31236.png"
+    },
+    {
+      "apiId": 329675,
+      "name": "A. Gallo",
+      "number": 4,
+      "position": "Midfielder",
+      "age": 28,
+      "photo": "https://media.api-sports.io/football/players/329675.png"
+    },
+    {
+      "apiId": 553261,
+      "name": "E. Oviszach",
+      "number": 7,
+      "position": "Midfielder",
+      "age": 24,
+      "photo": "https://media.api-sports.io/football/players/553261.png"
+    },
+    {
+      "apiId": 591778,
+      "name": "Michele Bigonzoni",
+      "number": 27,
+      "position": "Attacker",
+      "age": 21,
+      "photo": "https://media.api-sports.io/football/players/591778.png"
+    },
+    {
+      "apiId": 266083,
+      "name": "H. Haoudi",
+      "number": 16,
+      "position": "Attacker",
+      "age": 24,
+      "photo": "https://media.api-sports.io/football/players/266083.png"
+    },
+    {
+      "apiId": 199085,
+      "name": "P. Luciani",
+      "number": 18,
+      "position": "Attacker",
+      "age": 23,
+      "photo": "https://media.api-sports.io/football/players/199085.png"
+    },
+    {
+      "apiId": 20872,
+      "name": "Y. Merdji",
+      "number": 29,
+      "position": "Attacker",
+      "age": 32,
+      "photo": "https://media.api-sports.io/football/players/20872.png"
+    },
+    {
+      "apiId": 30666,
+      "name": "G. Panico",
+      "number": 17,
+      "position": "Attacker",
+      "age": 28,
+      "photo": "https://media.api-sports.io/football/players/30666.png"
+    },
+    {
+      "apiId": 558666,
+      "name": "F. Petito",
+      "number": 11,
+      "position": "Attacker",
+      "age": 22,
+      "photo": "https://media.api-sports.io/football/players/558666.png"
+    },
+    {
+      "apiId": 581930,
+      "name": "Andrea Smeraldi",
+      "number": 32,
+      "position": "Attacker",
+      "age": 18,
+      "photo": "https://media.api-sports.io/football/players/581930.png"
+    },
+    {
+      "apiId": 580278,
+      "name": "I. Toure",
+      "number": 28,
+      "position": "Attacker",
+      "age": 25,
+      "photo": "https://media.api-sports.io/football/players/580278.png"
+    }
+  ]
+}

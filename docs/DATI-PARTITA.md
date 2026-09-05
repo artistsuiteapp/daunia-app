@@ -1,74 +1,90 @@
 # Da dove arrivano i dati delle partite
 
-Verificato il 5 settembre 2026 con una chiave vera, non dedotto dalla documentazione.
+Verificato il 5 settembre 2026 chiamando le API a mano, non leggendo le pagine
+di marketing. Le pagine di marketing dicono altro.
 
-## Cosa dà API-Football sulla Serie C
+## Il punto di partenza sbagliato
 
-Girone C, lega **943** (A = 138, B = 942). Foggia = squadra **521**.
+API-Football sul piano gratuito risponde così a una richiesta sulla stagione in
+corso:
 
-| Dato | Serie C | Coppa Italia Serie C |
+```
+"Free plans do not have access to this season, try from 2022 to 2024."
+```
+
+Da lì sembrava che per le formazioni della Serie C servissero 19 dollari al
+mese. Non è così.
+
+## Il limite è sui parametri, non sui dati
+
+Il piano gratuito rifiuta tre parametri: `season`, `last`, `next`. Le chiamate
+che non li usano rispondono con la stagione in corso, gratis.
+
+| Chiamata | Piano gratuito | Cosa dà |
 |---|---|---|
-| Formazioni | **sì** | no |
-| Eventi: gol, cartellini, sostituzioni col minuto | **sì** | sì |
-| Statistiche partita: possesso, tiri, falli | **no** | no |
-| Modulo (4-3-3 ecc.) | no, torna vuoto | no |
-| Ruolo del giocatore | no, torna vuoto | no |
-| Dati sui singoli giocatori | no | no |
+| `fixtures?season=2026&league=943` | ❌ rifiutata | — |
+| `fixtures?team=521&last=3` | ❌ rifiutata | — |
+| `fixtures?date=2026-09-06` | ✅ | tutte le partite del giorno, si filtra a valle |
+| `fixtures?id=1609005` | ✅ | una partita, stato e punteggio dal vivo |
+| `fixtures/lineups?fixture=N` | ✅ | undici titolari con numero, panchina |
+| `fixtures/events?fixture=N` | ✅ | gol, assist, cartellini, cambi, col minuto |
+| `players/squads?team=521` | ✅ | la rosa di oggi, 23 uomini con foto |
+| `standings?league=943&season=2026` | ❌ rifiutata | (la classifica resta Wikipedia) |
 
-Provato davvero: su Guidonia–Foggia del 27 aprile 2024 tornano gli undici titolari
-con numero e cognome, tredici in panchina, l'allenatore, e tredici eventi.
+`fixtures?date=` ha un limite suo: copre solo ieri, oggi e domani. Fuori da lì
+risponde `"Free plans do not have access to this date"`. Per le partite più
+vecchie serve l'id, e `fixtures?id=` quel limite non ce l'ha.
 
-**Le statistiche di fine partita non arrivano nemmeno pagando.** La Serie C non
-è coperta per quelle. Chi le vuole deve guardare altrove, per esempio Sportmonks,
-che dichiara statistiche complete sui tre gironi.
+## Il ponte per le partite vecchie
 
-## Il vincolo che decide tutto
+Gli id delle partite arrivano da **TheSportsDB**, chiave pubblica `123`, senza
+limiti di data. Ogni evento porta il campo `idAPIfootball`:
 
-Il piano gratuito arriva alla **stagione 2024**. Sulla stagione in corso risponde:
+```
+eventsround.php?id=4398&r=2&s=2026-2027
+  → Foggia vs Salernitana, 2026-08-29, idAPIfootball = 1609005
+```
 
-> Free plans do not have access to this season, try from 2022 to 2024.
+Con quell'id si scaricano formazioni ed eventi di qualsiasi giornata.
 
-Quindi, per quanto la Serie C sia coperta, con il piano gratuito questa app non
-vede niente della stagione che sta giocando. Servono **19 dollari al mese**.
+TheSportsDB ha anche calendario, orari, punteggi e classifica della stagione in
+corso, gratis. Le formazioni no: per la Serie C il campo `lineup` torna vuoto
+mentre per la Serie B è pieno, quindi è un buco di copertura, non un paywall.
 
-Il piano gratuito non dà nemmeno il parametro `last`, quindi le partite recenti
-si prendono scaricando la stagione e filtrando a mano.
+## Cosa non esiste, a nessun prezzo
 
-## Quanto costerebbe usarlo
+Il campo `coverage` della lega 943 dice:
 
-Cento chiamate al giorno sul gratuito, settemilacinquecento sul piano da 19 dollari.
+```
+season 2026 | current true | lineups true | statistics_fixtures false | events true
+```
 
-| A cosa serve | Chiamate |
-|---|---|
-| Formazioni ed eventi di una partita | 1 per l'elenco + 2 per partita |
-| Notifica al gol, controllo ogni 90 secondi per due ore | 80 in quel giorno |
-| Notifica al gol, controllo ogni 30 secondi | 240 in quel giorno |
+`statistics_fixtures: false` significa che possesso palla, tiri, falli e pagelle
+per la Serie C non ci sono nemmeno pagando. `fixtures/statistics` risponde con
+zero risultati. Anche `formation` e `coach` tornano vuoti: il modulo non lo
+pubblica nessuno, quindi la disposizione in campo la decidiamo noi dai ruoli.
 
-Il limite è **al giorno**, e il Foggia gioca una o due volte a settimana: anche
-il gratuito basterebbe come numero di chiamate. È la stagione il problema, non la quota.
+## Quanto costa in quota
 
-## Com'è collegato adesso
+Cento chiamate al giorno, e il cron gira ogni mezz'ora: 48 giri. Le regole che
+tengono i conti in ordine stanno in `services/ingest/src/sources/apifootball.mjs`
+e in `run.mjs`:
 
-`services/ingest/src/sources/apifootball.mjs` è scritto e provato. Nell'ingest è
-**spento**, e si accende con `API_FOOTBALL_ENABLED=1`.
+- **fuori dalla finestra di una partita, zero chiamate.** La finestra è da due
+  ore prima del calcio d'inizio a sei ore dopo.
+- **partita già completa (finita, con formazioni ed eventi salvati), zero chiamate.**
+- **arretrati: due partite per giro al massimo,** tre chiamate ciascuna.
+- **rosa: una chiamata a settimana.**
 
-È spento apposta: il cron gira ogni mezz'ora, quindi lasciarlo acceso farebbe
-quarantotto tentativi al giorno che il piano gratuito rifiuta, consumando quota
-per niente.
+Giornata senza partite: 0 o 1 chiamata. Giornata di partita: una quarantina.
 
-La chiave sta nei segreti di GitHub come `API_FOOTBALL_KEY`, non nel codice.
+## Riepilogo delle fonti
 
-## Cosa fare quando si sottoscrive il piano
-
-1. Aggiungere al workflow `.github/workflows/ingest.yml`, nel passo dell'ingest:
-
-   ```yaml
-   env:
-     API_FOOTBALL_ENABLED: '1'
-     API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
-   ```
-
-2. La formazione probabile passa da "costruita per ruolo" a "gli undici che
-   hanno giocato l'ultima volta", che è quello che indovinerebbe un tifoso.
-
-3. Restano fuori le statistiche di fine partita: quelle la Serie C non le ha.
+| Dato | Fonte | Costo |
+|---|---|---|
+| Calendario, classifica, rosa | Wikipedia | 0 |
+| Stemmi, foto, comunicati | sito del club (WordPress REST) | 0 |
+| Id delle partite, orari, punteggi | TheSportsDB (chiave `123`) | 0 |
+| Formazioni, eventi, punteggio dal vivo | API-Football (piano gratuito) | 0 |
+| Rosa aggiornata | API-Football (piano gratuito) | 0 |
+| Statistiche di fine partita | **non esistono per la Serie C** | — |

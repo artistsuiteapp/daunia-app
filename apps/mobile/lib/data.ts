@@ -46,6 +46,38 @@ export const stadium = base.stadium as Stadium;
 export const tickets = base.tickets as TicketOffer[];
 export const stats = base.stats as TeamStats;
 
+/**
+ * Formazioni vere delle partite gia giocate.
+ *
+ * Arrivano da API-Football sul piano gratuito: le chiamate senza il parametro
+ * `season` rispondono con la stagione in corso, e le partite vecchie si
+ * raggiungono per id. Non e una supposizione, e l'undici sceso in campo.
+ */
+export const lineups = ((base as unknown as { lineups?: MatchLineup[] }).lineups ?? []);
+
+export type LineupPlayer = { number: number | null; name: string | null; pos: string | null };
+export type MatchLineup = {
+  fixtureId: number;
+  date: string;
+  kickoff: string;
+  status: string | null;
+  competition: string | null;
+  round: string | null;
+  home: { id: number; name: string; goals: number | null };
+  away: { id: number; name: string; goals: number | null };
+  lineups: Array<{
+    teamId: number | null;
+    teamName: string | null;
+    isFoggia: boolean;
+    startXI: LineupPlayer[];
+    bench: LineupPlayer[];
+  }>;
+  events: Array<{
+    minute: number | null; extra: number | null; type: string | null; detail: string | null;
+    player: string | null; assist: string | null; teamId: number | null; teamName: string | null;
+  }>;
+};
+
 export const FOGGIA = teams.find((t) => t.isFoggia) ?? null;
 
 // ---------------------------------------------------------------- selettori

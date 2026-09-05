@@ -7,7 +7,7 @@
  *   node services/ingest/run.mjs --dry-run  stampa il riassunto e non scrive
  *   NO_CACHE=1 node ...                     ignora la cache su disco
  */
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -15,7 +15,8 @@ import * as wp from './src/sources/foggia-wp.mjs';
 import * as wiki from './src/sources/wikipedia.mjs';
 import { fetchEditorial } from './src/sources/blog.mjs';
 import * as shopSrc from './src/sources/shop.mjs';
-import { fetchFormazioni } from './src/sources/apifootball.mjs';
+import { fetchPartita, fetchPartitaPerId, fetchRosa, dentroLaFinestra } from './src/sources/apifootball.mjs';
+import { fetchIdPartite } from './src/sources/thesportsdb.mjs';
 import { buildStadium } from './src/stadium.mjs';
 import { normalize, validate } from './src/normalize.mjs';
 
@@ -44,22 +45,43 @@ async function main() {
   ]);
 
   /*
-   * Formazioni ed eventi da API-Football.
+   * Formazioni, eventi e punteggio dal vivo da API-Football.
    *
-   * Spento se non c'e la chiave o se non e stato acceso a mano. Il motivo e la
-   * quota: cento chiamate al giorno, e con il cron ogni mezz'ora sarebbero
-   * quarantotto tentativi che sulla stagione in corso vengono rifiutati dal
-   * piano gratuito. Meglio non consumarla per niente.
-   *
-   * Si accende con API_FOOTBALL_ENABLED=1 quando il piano arriva alla stagione
-   * giusta.
+   * Il piano gratuito basta: le chiamate senza il parametro `season` rispondono
+   * con la stagione in corso. Il vincolo vero e la quota, cento al giorno, e il
+   * cron gira ogni mezz'ora. Quindi si chiama solo dentro la finestra di una
+   * partita e solo finche manca qualcosa: gli altri giorni costa zero.
    */
-  const lineup = process.env.API_FOOTBALL_ENABLED === '1'
-    ? await step('formazioni (API-Football)', () => fetchFormazioni({
-        chiave: process.env.API_FOOTBALL_KEY,
-        season: SEASON,
-      }))
-    : { formazioni: [], eventi: [], warnings: [] };
+  const live = await step('partita dal vivo (API-Football)', () => aggiornaPartita({
+    chiave: process.env.API_FOOTBALL_KEY,
+    matches: wikiSeason.matches,
+  }));
+
+  const storico = await step('formazioni gia giocate (TheSportsDB + API-Football)', () => aggiornaArchivio({
+    chiave: process.env.API_FOOTBALL_KEY,
+    matches: wikiSeason.matches,
+    archivio: live.archivio,
+  }));
+
+  const rosaApi = await step('rosa di oggi (API-Football)', () => aggiornaRosa({
+    chiave: process.env.API_FOOTBALL_KEY,
+  }));
+
+  /*
+   * La rosa di Wikipedia tiene dentro chi e andato via. Quella di API-Football
+   * e la lista buona per la partita, e si aggiorna da sola. Si incrociano sul
+   * numero di maglia: chi non ha un numero in entrambe resta, perche togliere
+   * un giocatore vero e peggio che tenerne uno di troppo.
+   */
+  if (rosaApi.rosa.length >= 18) {
+    const numeriVeri = new Set(rosaApi.rosa.map((p) => p.number).filter((n) => n !== null));
+    const prima = wikiSeason.squad.length;
+    wikiSeason.squad = wikiSeason.squad.filter(
+      (p) => p.number === null || p.number === undefined || numeriVeri.has(p.number),
+    );
+    const tolti = prima - wikiSeason.squad.length;
+    if (tolti) log(`  rosa: tolti ${tolti} giocatori non piu in distinta`);
+  }
 
   // un unico feed, i post redazionali si mescolano ai comunicati per data
   const news = [...clubNews, ...editorial].sort((a, b) => Date.parse(b.date) - Date.parse(a.date));
@@ -73,9 +95,10 @@ async function main() {
     season: SEASON, competition: COMPETITION,
   });
 
-  // le formazioni vere, quando ci sono, viaggiano accanto al resto
-  bundle.lineups = lineup.formazioni;
-  bundle.meta.warnings.push(...lineup.warnings);
+  // la partita dal vivo e le formazioni vere viaggiano accanto al resto
+  bundle.live = live.partita;
+  bundle.lineups = storico.archivio;
+  bundle.meta.warnings.push(...live.warnings, ...storico.warnings, ...rosaApi.warnings);
 
   const errors = validate(bundle);
   summary(bundle, nextHome, Date.now() - t0);
@@ -102,12 +125,141 @@ async function main() {
     'shop.json': bundle.shop,
     'tickets.json': bundle.tickets,
     'stats.json': bundle.stats,
+    'live.json': bundle.live,
+    'lineups.json': bundle.lineups,
     'bundle.json': bundle,
   };
   for (const [name, payload] of Object.entries(files)) {
     await writeFile(path.join(OUT, name), `${JSON.stringify(payload, null, 2)}\n`);
   }
   console.log(`scritti ${Object.keys(files).length} file in ${path.relative(process.cwd(), OUT)}/`);
+}
+
+/** Legge un file gia scritto in data/, o null se non c'e ancora. */
+async function letto(nome) {
+  try { return JSON.parse(await readFile(path.join(OUT, nome), 'utf8')); }
+  catch { return null; }
+}
+
+const GIORNI_ROSA = 7 * 24 * 60 * 60 * 1000;
+
+/**
+ * Aggiorna la partita in corso, se ce n'e una nella finestra utile.
+ *
+ * Fuori dalla finestra non spende niente e restituisce quello che c'e gia su
+ * disco: e la regola che tiene i consumi sotto le cento chiamate al giorno.
+ */
+async function aggiornaPartita({ chiave, matches }) {
+  const archivio = (await letto('lineups.json')) ?? [];
+  const salvata = await letto('live.json');
+  const warnings = [];
+
+  if (!chiave) return { partita: salvata, archivio, warnings: ['API-Football: nessuna chiave, formazioni vere non disponibili.'] };
+
+  const adesso = Date.now();
+  const inCorso = matches
+    .filter((m) => m.kickoff && dentroLaFinestra(m.kickoff, adesso))
+    .sort((a, b) => Date.parse(a.kickoff) - Date.parse(b.kickoff))[0];
+
+  if (!inCorso) {
+    log('  nessuna partita nella finestra: zero chiamate');
+    return { partita: salvata, archivio, warnings };
+  }
+
+  const date = new Date(inCorso.kickoff).toISOString().slice(0, 10);
+  const stessa = salvata && salvata.date === date ? salvata : null;
+
+  if (stessa && ['FT', 'AET', 'PEN'].includes(stessa.status) && stessa.lineups.length && stessa.events.length) {
+    log('  partita gia completa: zero chiamate');
+    return { partita: stessa, archivio, warnings };
+  }
+
+  const r = await fetchPartita({ chiave, date, salvata: stessa });
+  warnings.push(...r.warnings);
+  log(`  chiamate spese: ${r.chiamate}`);
+  if (!r.partita) return { partita: salvata, archivio, warnings };
+
+  return { partita: r.partita, archivio: inArchivio(archivio, r.partita), warnings };
+}
+
+/** Mette una partita finita in archivio, senza duplicarla. */
+function inArchivio(archivio, partita) {
+  if (!['FT', 'AET', 'PEN'].includes(partita.status) || !partita.lineups.length) return archivio;
+  const senza = archivio.filter((x) => x.fixtureId !== partita.fixtureId);
+  senza.push(partita);
+  senza.sort((a, b) => String(b.date).localeCompare(String(a.date)));
+  return senza.slice(0, 20);
+}
+
+/**
+ * Recupera le formazioni delle partite gia giocate.
+ *
+ * `fixtures?date=` sul piano gratuito vede solo tre giorni, quindi le partite
+ * vecchie si prendono per id. Gli id arrivano da TheSportsDB, che pubblica il
+ * campo idAPIfootball ed e gratis senza limiti di data.
+ *
+ * Al massimo due partite per giro: la quota e cento chiamate al giorno e a
+ * inizio stagione l'arretrato si smaltisce comunque in pochi giri.
+ */
+async function aggiornaArchivio({ chiave, matches, archivio }) {
+  const warnings = [];
+  if (!chiave) return { archivio, warnings };
+
+  const giocate = matches
+    .filter((m) => m.status === 'finished' && m.competition === COMPETITION && m.kickoff)
+    .sort((a, b) => Date.parse(a.kickoff) - Date.parse(b.kickoff));
+  const mancanti = giocate.filter(
+    (m) => !archivio.some((x) => x.date === m.kickoff.slice(0, 10) && x.lineups?.length),
+  );
+  if (!mancanti.length) {
+    log('  archivio formazioni completo: zero chiamate');
+    return { archivio, warnings };
+  }
+
+  const gia = (await letto('fixture-ids.json')) ?? {};
+  const ponte = await fetchIdPartite({ season: SEASON, finoA: giocate.length, gia });
+  warnings.push(...ponte.warnings);
+  if (!dryRun && Object.keys(ponte.mappa).length > Object.keys(gia).length) {
+    await mkdir(OUT, { recursive: true });
+    await writeFile(path.join(OUT, 'fixture-ids.json'), `${JSON.stringify(ponte.mappa, null, 2)}\n`);
+  }
+
+  let aggiornato = archivio;
+  let spese = 0;
+  for (const m of mancanti.slice(0, 2)) {
+    const voce = ponte.mappa[m.kickoff.slice(0, 10)];
+    if (!voce) { warnings.push(`Nessun id API-Football per la partita del ${m.kickoff.slice(0, 10)}.`); continue; }
+    const r = await fetchPartitaPerId({ chiave, fixtureId: voce.fixtureId });
+    spese += r.chiamate;
+    warnings.push(...r.warnings);
+    if (r.partita) aggiornato = inArchivio(aggiornato, r.partita);
+  }
+  log(`  archivio: recuperate ${mancanti.slice(0, 2).length} partite, ${spese} chiamate`);
+  return { archivio: aggiornato, warnings };
+}
+
+/** La rosa vera si muove di rado: una chiamata alla settimana basta. */
+async function aggiornaRosa({ chiave }) {
+  const salvata = await letto('rosa-api.json');
+  if (!chiave) return { rosa: salvata?.rosa ?? [], warnings: [] };
+
+  const fresca = salvata?.fetchedAt && Date.now() - Date.parse(salvata.fetchedAt) < GIORNI_ROSA;
+  if (fresca) {
+    log('  rosa ancora fresca: zero chiamate');
+    return { rosa: salvata.rosa, warnings: [] };
+  }
+
+  const r = await fetchRosa({ chiave });
+  if (!r.rosa.length) return { rosa: salvata?.rosa ?? [], warnings: r.warnings };
+
+  if (!dryRun) {
+    await mkdir(OUT, { recursive: true });
+    await writeFile(
+      path.join(OUT, 'rosa-api.json'),
+      `${JSON.stringify({ fetchedAt: new Date().toISOString(), rosa: r.rosa }, null, 2)}\n`,
+    );
+  }
+  return { rosa: r.rosa, warnings: r.warnings };
 }
 
 function pickNextHome(matches) {

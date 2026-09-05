@@ -14,3 +14,5 @@ services/ingest/.cache/
 # la CLI di Supabase ci mette dentro lo stato della sessione
 supabase/.temp/
 supabase/.branches/
+.vercel
+.env*

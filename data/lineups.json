@@ -1,0 +1,836 @@
+[
+  {
+    "fixtureId": 1609005,
+    "date": "2026-08-29",
+    "kickoff": "2026-08-29T16:00:00+00:00",
+    "status": "FT",
+    "minute": 90,
+    "competition": "Serie C - Girone C",
+    "round": "Girone C - 2",
+    "home": {
+      "id": 521,
+      "name": "Foggia",
+      "goals": 1
+    },
+    "away": {
+      "id": 514,
+      "name": "Salernitana",
+      "goals": 1
+    },
+    "lineups": [
+      {
+        "teamId": 521,
+        "teamName": "Foggia",
+        "isFoggia": true,
+        "startXI": [
+          {
+            "number": 22,
+            "name": "G. Saro",
+            "pos": "G"
+          },
+          {
+            "number": 2,
+            "name": "G. Todisco",
+            "pos": "D"
+          },
+          {
+            "number": 21,
+            "name": "F. Berra",
+            "pos": "D"
+          },
+          {
+            "number": 16,
+            "name": "H. Haoudi",
+            "pos": "F"
+          },
+          {
+            "number": 17,
+            "name": "G. Panico",
+            "pos": "F"
+          },
+          {
+            "number": 51,
+            "name": "C. Parisy",
+            "pos": null
+          },
+          {
+            "number": 32,
+            "name": "A. Smeraldi",
+            "pos": null
+          },
+          {
+            "number": 4,
+            "name": "A. Gallo",
+            "pos": null
+          },
+          {
+            "number": 28,
+            "name": "I. Toure",
+            "pos": null
+          },
+          {
+            "number": 11,
+            "name": "F. Petito",
+            "pos": null
+          },
+          {
+            "number": 18,
+            "name": "P. Luciani",
+            "pos": null
+          }
+        ],
+        "bench": [
+          {
+            "number": 12,
+            "name": "D. Marfella",
+            "pos": "G"
+          },
+          {
+            "number": 80,
+            "name": "A. Testa",
+            "pos": null
+          },
+          {
+            "number": 3,
+            "name": "M. Seck",
+            "pos": null
+          },
+          {
+            "number": 6,
+            "name": "D. Di Pasquale",
+            "pos": "D"
+          },
+          {
+            "number": 7,
+            "name": "E. Oviszach",
+            "pos": "M"
+          },
+          {
+            "number": 8,
+            "name": "M. Coulibaly",
+            "pos": "M"
+          },
+          {
+            "number": 19,
+            "name": "M. Rinaldo",
+            "pos": null
+          },
+          {
+            "number": 20,
+            "name": "M. Demeter",
+            "pos": null
+          },
+          {
+            "number": 27,
+            "name": "M. Bigonzoni",
+            "pos": null
+          },
+          {
+            "number": 29,
+            "name": "Y. Merdji",
+            "pos": "F"
+          },
+          {
+            "number": 33,
+            "name": "T. Azarovs",
+            "pos": "D"
+          },
+          {
+            "number": 37,
+            "name": "V. Ngana",
+            "pos": null
+          },
+          {
+            "number": 56,
+            "name": "E. Chiara",
+            "pos": null
+          }
+        ]
+      },
+      {
+        "teamId": 514,
+        "teamName": "Salernitana",
+        "isFoggia": false,
+        "startXI": [
+          {
+            "number": 33,
+            "name": "A. Anastasio",
+            "pos": "D"
+          },
+          {
+            "number": 19,
+            "name": "M. Capuano",
+            "pos": "D"
+          },
+          {
+            "number": 73,
+            "name": "S. Pieraccini",
+            "pos": "D"
+          },
+          {
+            "number": 14,
+            "name": "L. Villa",
+            "pos": "D"
+          },
+          {
+            "number": 4,
+            "name": "M. Gyabuaa",
+            "pos": "M"
+          },
+          {
+            "number": 32,
+            "name": "M. Vitale",
+            "pos": "M"
+          },
+          {
+            "number": 10,
+            "name": "F. Lescano",
+            "pos": "F"
+          },
+          {
+            "number": 12,
+            "name": "C. Galeotti",
+            "pos": null
+          },
+          {
+            "number": 8,
+            "name": "M. Tascone",
+            "pos": null
+          },
+          {
+            "number": 16,
+            "name": "M. T. Llano Massa",
+            "pos": null
+          },
+          {
+            "number": 7,
+            "name": "I. Achik",
+            "pos": null
+          }
+        ],
+        "bench": [
+          {
+            "number": 1,
+            "name": "L. Cevers",
+            "pos": null
+          },
+          {
+            "number": 27,
+            "name": "A. Del Pin",
+            "pos": null
+          },
+          {
+            "number": 36,
+            "name": "E. Matino",
+            "pos": "D"
+          },
+          {
+            "number": 11,
+            "name": "E. D'Ursi",
+            "pos": null
+          },
+          {
+            "number": 25,
+            "name": "M. Djibril",
+            "pos": null
+          },
+          {
+            "number": 99,
+            "name": "M. Bevilacqua",
+            "pos": null
+          },
+          {
+            "number": 41,
+            "name": "C. Maglione",
+            "pos": null
+          },
+          {
+            "number": 28,
+            "name": "G. Longobardi",
+            "pos": "D"
+          },
+          {
+            "number": 3,
+            "name": "R. Zoia",
+            "pos": null
+          },
+          {
+            "number": 45,
+            "name": "R. Di Vico",
+            "pos": null
+          },
+          {
+            "number": 23,
+            "name": "M. Mastrovito",
+            "pos": null
+          },
+          {
+            "number": 21,
+            "name": "L. Boncori",
+            "pos": null
+          },
+          {
+            "number": 77,
+            "name": "K. Cardoni",
+            "pos": null
+          },
+          {
+            "number": 20,
+            "name": "A. La Gumina",
+            "pos": "F"
+          }
+        ]
+      }
+    ],
+    "events": [
+      {
+        "minute": 1,
+        "extra": null,
+        "type": "Goal",
+        "detail": "Normal Goal",
+        "player": "P. Luciani",
+        "assist": "F. Petito",
+        "teamId": 521,
+        "teamName": "Foggia"
+      },
+      {
+        "minute": 41,
+        "extra": null,
+        "type": "subst",
+        "detail": "Substitution 1",
+        "player": "G. Saro",
+        "assist": "D. Marfella",
+        "teamId": 521,
+        "teamName": "Foggia"
+      },
+      {
+        "minute": 43,
+        "extra": null,
+        "type": "Card",
+        "detail": "Yellow Card",
+        "player": "M. Gyabuaa",
+        "assist": null,
+        "teamId": 514,
+        "teamName": "Salernitana"
+      },
+      {
+        "minute": 45,
+        "extra": 3,
+        "type": "Card",
+        "detail": "Yellow Card",
+        "player": "M. Tascone",
+        "assist": null,
+        "teamId": 514,
+        "teamName": "Salernitana"
+      },
+      {
+        "minute": 46,
+        "extra": null,
+        "type": "subst",
+        "detail": "Substitution 1",
+        "player": "I. Achik",
+        "assist": "E. D'Ursi",
+        "teamId": 514,
+        "teamName": "Salernitana"
+      },
+      {
+        "minute": 46,
+        "extra": null,
+        "type": "subst",
+        "detail": "Substitution 2",
+        "player": "F. Lescano",
+        "assist": "A. La Gumina",
+        "teamId": 514,
+        "teamName": "Salernitana"
+      },
+      {
+        "minute": 52,
+        "extra": null,
+        "type": "Goal",
+        "detail": "Normal Goal",
+        "player": "A. La Gumina",
+        "assist": "L. Villa",
+        "teamId": 514,
+        "teamName": "Salernitana"
+      },
+      {
+        "minute": 58,
+        "extra": null,
+        "type": "subst",
+        "detail": "Substitution 2",
+        "player": "F. Berra",
+        "assist": "M. Seck",
+        "teamId": 521,
+        "teamName": "Foggia"
+      },
+      {
+        "minute": 58,
+        "extra": null,
+        "type": "subst",
+        "detail": "Substitution 3",
+        "player": "G. Panico",
+        "assist": "Y. Merdji",
+        "teamId": 521,
+        "teamName": "Foggia"
+      },
+      {
+        "minute": 75,
+        "extra": null,
+        "type": "subst",
+        "detail": "Substitution 3",
+        "player": "M. Gyabuaa",
+        "assist": "R. Di Vico",
+        "teamId": 514,
+        "teamName": "Salernitana"
+      },
+      {
+        "minute": 81,
+        "extra": null,
+        "type": "subst",
+        "detail": "Substitution 4",
+        "player": "M. Vitale",
+        "assist": "M. Djibril",
+        "teamId": 514,
+        "teamName": "Salernitana"
+      },
+      {
+        "minute": 86,
+        "extra": null,
+        "type": "subst",
+        "detail": "Substitution 5",
+        "player": "S. Pieraccini",
+        "assist": "R. Zoia",
+        "teamId": 514,
+        "teamName": "Salernitana"
+      },
+      {
+        "minute": 89,
+        "extra": null,
+        "type": "subst",
+        "detail": "Substitution 4",
+        "player": "A. Gallo",
+        "assist": "M. Bigonzoni",
+        "teamId": 521,
+        "teamName": "Foggia"
+      },
+      {
+        "minute": 89,
+        "extra": null,
+        "type": "subst",
+        "detail": "Substitution 5",
+        "player": "F. Petito",
+        "assist": "V. Ngana",
+        "teamId": 521,
+        "teamName": "Foggia"
+      }
+    ],
+    "fetchedAt": "2026-09-05T17:21:21.044Z"
+  },
+  {
+    "fixtureId": 1608996,
+    "date": "2026-08-24",
+    "kickoff": "2026-08-24T19:00:00+00:00",
+    "status": "FT",
+    "minute": 90,
+    "competition": "Serie C - Girone C",
+    "round": "Girone C - 1",
+    "home": {
+      "id": 501,
+      "name": "Crotone",
+      "goals": 0
+    },
+    "away": {
+      "id": 521,
+      "name": "Foggia",
+      "goals": 1
+    },
+    "lineups": [
+      {
+        "teamId": 501,
+        "teamName": "Crotone",
+        "isFoggia": false,
+        "startXI": [
+          {
+            "number": 1,
+            "name": "D. Merelli",
+            "pos": null
+          },
+          {
+            "number": 63,
+            "name": "A. Veltri",
+            "pos": null
+          },
+          {
+            "number": 13,
+            "name": "N. Armini",
+            "pos": null
+          },
+          {
+            "number": 26,
+            "name": "G. J. Tanco",
+            "pos": null
+          },
+          {
+            "number": 23,
+            "name": "F. Groppelli",
+            "pos": null
+          },
+          {
+            "number": 99,
+            "name": "F. Crapisto",
+            "pos": null
+          },
+          {
+            "number": 8,
+            "name": "I. Torres",
+            "pos": null
+          },
+          {
+            "number": 83,
+            "name": "Z. Ruggiero",
+            "pos": null
+          },
+          {
+            "number": 90,
+            "name": "A. Spadoni",
+            "pos": null
+          },
+          {
+            "number": 10,
+            "name": "A. Musso",
+            "pos": null
+          },
+          {
+            "number": 96,
+            "name": "M. Zunno",
+            "pos": null
+          }
+        ],
+        "bench": [
+          {
+            "number": 12,
+            "name": "A. Pio Martino",
+            "pos": null
+          },
+          {
+            "number": 22,
+            "name": "A. Lucano",
+            "pos": null
+          },
+          {
+            "number": 9,
+            "name": "B. Stauciuc",
+            "pos": null
+          },
+          {
+            "number": 17,
+            "name": "D. Russo",
+            "pos": null
+          },
+          {
+            "number": 18,
+            "name": "M. Tordini",
+            "pos": null
+          },
+          {
+            "number": 19,
+            "name": "W. Feola",
+            "pos": null
+          },
+          {
+            "number": 25,
+            "name": "W. Guerra",
+            "pos": null
+          },
+          {
+            "number": 31,
+            "name": "P. Rodriguez",
+            "pos": null
+          },
+          {
+            "number": 44,
+            "name": "L. Pierangeli",
+            "pos": null
+          },
+          {
+            "number": 77,
+            "name": "M. Vrenna",
+            "pos": null
+          },
+          {
+            "number": 79,
+            "name": "G. Terrasi",
+            "pos": null
+          }
+        ]
+      },
+      {
+        "teamId": 521,
+        "teamName": "Foggia",
+        "isFoggia": true,
+        "startXI": [
+          {
+            "number": 22,
+            "name": "G. Saro",
+            "pos": null
+          },
+          {
+            "number": 2,
+            "name": "G. Todisco",
+            "pos": null
+          },
+          {
+            "number": 6,
+            "name": "D. Di Pasquale",
+            "pos": null
+          },
+          {
+            "number": 3,
+            "name": "M. Seck",
+            "pos": null
+          },
+          {
+            "number": 4,
+            "name": "A. Gallo",
+            "pos": null
+          },
+          {
+            "number": 11,
+            "name": "F. Petito",
+            "pos": null
+          },
+          {
+            "number": 16,
+            "name": "H. Haoudi",
+            "pos": null
+          },
+          {
+            "number": 7,
+            "name": "E. Oviszach",
+            "pos": null
+          },
+          {
+            "number": 32,
+            "name": "A. Smeraldi",
+            "pos": null
+          },
+          {
+            "number": 17,
+            "name": "G. Panico",
+            "pos": null
+          },
+          {
+            "number": 18,
+            "name": "P. Luciani",
+            "pos": null
+          }
+        ],
+        "bench": [
+          {
+            "number": 12,
+            "name": "D. Marfella",
+            "pos": null
+          },
+          {
+            "number": 80,
+            "name": "A. Testa",
+            "pos": null
+          },
+          {
+            "number": 19,
+            "name": "M. Rinaldo",
+            "pos": null
+          },
+          {
+            "number": 20,
+            "name": "M. Demeter",
+            "pos": null
+          },
+          {
+            "number": 27,
+            "name": "M. Bigonzoni",
+            "pos": null
+          },
+          {
+            "number": 28,
+            "name": "I. Toure",
+            "pos": null
+          },
+          {
+            "number": 29,
+            "name": "Y. Merdji",
+            "pos": null
+          },
+          {
+            "number": 33,
+            "name": "T. Azarovs",
+            "pos": null
+          },
+          {
+            "number": 51,
+            "name": "C. Parisy",
+            "pos": null
+          },
+          {
+            "number": 56,
+            "name": "E. Chiara",
+            "pos": null
+          }
+        ]
+      }
+    ],
+    "events": [
+      {
+        "minute": 6,
+        "extra": null,
+        "type": "Card",
+        "detail": "Yellow Card",
+        "player": "G. Panico",
+        "assist": null,
+        "teamId": 521,
+        "teamName": "Foggia"
+      },
+      {
+        "minute": 24,
+        "extra": null,
+        "type": "Goal",
+        "detail": "Normal Goal",
+        "player": "F. Petito",
+        "assist": "H. Haoudi",
+        "teamId": 521,
+        "teamName": "Foggia"
+      },
+      {
+        "minute": 46,
+        "extra": null,
+        "type": "subst",
+        "detail": "Substitution 1",
+        "player": "D. Di Pasquale",
+        "assist": "C. Parisy",
+        "teamId": 521,
+        "teamName": "Foggia"
+      },
+      {
+        "minute": 49,
+        "extra": null,
+        "type": "Card",
+        "detail": "Yellow Card",
+        "player": "A. Gallo",
+        "assist": null,
+        "teamId": 521,
+        "teamName": "Foggia"
+      },
+      {
+        "minute": 56,
+        "extra": null,
+        "type": "subst",
+        "detail": "Substitution 2",
+        "player": "E. Oviszach",
+        "assist": "M. Bigonzoni",
+        "teamId": 521,
+        "teamName": "Foggia"
+      },
+      {
+        "minute": 56,
+        "extra": null,
+        "type": "subst",
+        "detail": "Substitution 3",
+        "player": "F. Petito",
+        "assist": "I. Toure",
+        "teamId": 521,
+        "teamName": "Foggia"
+      },
+      {
+        "minute": 60,
+        "extra": null,
+        "type": "subst",
+        "detail": "Substitution 1",
+        "player": "A. Spadoni",
+        "assist": "P. Rodriguez",
+        "teamId": 501,
+        "teamName": "Crotone"
+      },
+      {
+        "minute": 62,
+        "extra": null,
+        "type": "subst",
+        "detail": "Substitution 4",
+        "player": "G. Panico",
+        "assist": "Y. Merdji",
+        "teamId": 521,
+        "teamName": "Foggia"
+      },
+      {
+        "minute": 73,
+        "extra": null,
+        "type": "subst",
+        "detail": "Substitution 2",
+        "player": "Z. Ruggiero",
+        "assist": "M. Tordini",
+        "teamId": 501,
+        "teamName": "Crotone"
+      },
+      {
+        "minute": 73,
+        "extra": null,
+        "type": "subst",
+        "detail": "Substitution 3",
+        "player": "G. J. Tanco",
+        "assist": "W. Feola",
+        "teamId": 501,
+        "teamName": "Crotone"
+      },
+      {
+        "minute": 77,
+        "extra": null,
+        "type": "Card",
+        "detail": "Yellow Card",
+        "player": "N. Armini",
+        "assist": null,
+        "teamId": 501,
+        "teamName": "Crotone"
+      },
+      {
+        "minute": 83,
+        "extra": null,
+        "type": "subst",
+        "detail": "Substitution 4",
+        "player": "I. Torres",
+        "assist": "B. Stauciuc",
+        "teamId": 501,
+        "teamName": "Crotone"
+      },
+      {
+        "minute": 83,
+        "extra": null,
+        "type": "subst",
+        "detail": "Substitution 5",
+        "player": "F. Groppelli",
+        "assist": "W. Guerra",
+        "teamId": 501,
+        "teamName": "Crotone"
+      },
+      {
+        "minute": 88,
+        "extra": null,
+        "type": "subst",
+        "detail": "Substitution 5",
+        "player": "A. Smeraldi",
+        "assist": "T. Azarovs",
+        "teamId": 521,
+        "teamName": "Foggia"
+      },
+      {
+        "minute": 90,
+        "extra": null,
+        "type": "Card",
+        "detail": "Yellow Card",
+        "player": "F. Crapisto",
+        "assist": null,
+        "teamId": 501,
+        "teamName": "Crotone"
+      }
+    ],
+    "fetchedAt": "2026-09-05T17:21:20.745Z"
+  }
+]

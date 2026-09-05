@@ -8,7 +8,7 @@ import {
 } from '../../components/ui';
 import { Lineup } from '../../components/Lineup';
 import { Avatar } from '../../components/Avatar';
-import { probableLineup } from '../../lib/lineup';
+import { lineupPerPartita } from '../../lib/lineup';
 import { BackBar } from '../../components/BackBar';
 import { Crest } from '../../components/Crest';
 import { Countdown } from '../../components/Countdown';
@@ -25,8 +25,11 @@ export default function MatchDetail() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const gutter = useGutter();
   const [view, setView] = useState<Tab>('formazione');
-  const lineup = useMemo(() => probableLineup(), []);
   const match = matchById(String(id));
+  const lineup = useMemo(
+    () => lineupPerPartita(match?.kickoff ? match.kickoff.slice(0, 10) : undefined),
+    [match?.kickoff],
+  );
   useDatiPartita(match?.id ?? null, true);
 
   if (!match) return <Screen><Empty text="Partita non trovata." /></Screen>;
@@ -106,7 +109,7 @@ export default function MatchDetail() {
 
       {view === 'formazione' ? (
         <>
-          <GroupLabel>Formazione probabile</GroupLabel>
+          <GroupLabel>{lineup.vera ? 'Formazione ufficiale' : 'Formazione probabile'}</GroupLabel>
           <View style={gutter}>
             <Lineup
               slots={lineup.slots}
@@ -129,8 +132,9 @@ export default function MatchDetail() {
             ))}
           </View>
           <GroupNote>
-            Le formazioni della Serie C non sono pubblicate da nessuna fonte aperta: questa è
-            costruita dalla rosa reale e va letta come probabile.
+            {lineup.vera
+              ? 'Undici sceso in campo, da API-Football. La disposizione è la nostra: il modulo per la Serie C non lo pubblica nessuno.'
+              : 'La partita non si è ancora giocata: questa formazione è costruita dalla rosa reale e va letta come probabile.'}
           </GroupNote>
         </>
       ) : null}
