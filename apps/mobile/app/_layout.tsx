@@ -46,7 +46,6 @@ export default function RootLayout() {
           <Stack.Screen name="player/[id]" />
           <Stack.Screen name="post/[slug]" />
           <Stack.Screen name="curva/[id]" />
-          <Stack.Screen name="curva/stanza/[room]" />
           <Stack.Screen name="curva/nuovo" options={{ presentation: 'modal' }} />
           <Stack.Screen name="standings" />
           <Stack.Screen name="stats" />

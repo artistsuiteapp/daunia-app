@@ -6,7 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Screen, useGutter } from '../../components/ui';
 import { BackBar } from '../../components/BackBar';
 import { colors, radius, space, type } from '../../theme/tokens';
-import { TOPICS, addPost, type Topic } from '../../lib/community';
+import { TOPICS, addDiscussion, type Topic } from '../../lib/community';
 
 /**
  * Scrittura di un post nella demo.
@@ -26,8 +26,8 @@ export default function NuovoPost() {
 
   const publish = () => {
     if (!ready) return;
-    const post = addPost({ author, title, body, topic });
-    router.replace(`/curva/${post.id}` as never);
+    const d = addDiscussion({ author, title, body, topic });
+    router.replace(`/curva/${d.id}` as never);
   };
 
   return (
@@ -35,12 +35,12 @@ export default function NuovoPost() {
       <BackBar label="Curva" />
 
       <View style={[styles.wrap, gutter]}>
-        <Text style={styles.heading}>Scrivi alla Curva</Text>
+        <Text style={styles.heading}>Apri una discussione</Text>
 
         <View style={styles.notice}>
           <Ionicons name="phone-portrait-outline" size={16} color={colors.accentBright} />
           <Text style={styles.noticeText}>
-            Questo post resta nella memoria di questo browser. Non viene inviato, non lo vede
+            Questa discussione resta nella memoria di questo browser. Non viene inviato, non lo vede
             nessun altro, e sparisce se cancelli i dati del sito.
           </Text>
         </View>
@@ -98,7 +98,7 @@ export default function NuovoPost() {
           style={({ pressed }) => [styles.cta, !ready && styles.ctaOff, pressed && ready && { opacity: 0.85 }]}
         >
           <Text style={[styles.ctaText, !ready && styles.ctaTextOff]}>
-            {ready ? 'Pubblica nella demo' : 'Servono un titolo e qualche riga'}
+            {ready ? 'Apri la discussione' : 'Servono un titolo e qualche riga'}
           </Text>
         </Pressable>
       </View>

@@ -1,228 +1,342 @@
 import { useSyncExternalStore } from 'react';
+import type { Ionicons } from '@expo/vector-icons';
 
 /**
- * Blog dei tifosi, versione dimostrativa.
+ * La Curva, con un modello solo: la discussione.
  *
- * Non c'e nessun server e nessun account: i post di esempio sono scritti dentro
- * questo file, e quelli che scrive chi prova l'app restano nel suo browser e non
- * partono da li. E una scelta, non una scorciatoia: finche non si raccolgono
- * dati di persone non si e titolari di un trattamento, quindi durante la
- * raccolta fondi il progetto non ha obblighi GDPR ne obblighi da prestatore di
- * hosting. Quando arriva il backend, cambia solo questo file.
+ * Prima c'erano due cose da capire prima di scrivere — la bacheca per i pezzi
+ * lunghi, le stanze per i messaggi brevi — e nessuno sapeva quale usare. Ora un
+ * contributo e sempre lo stesso oggetto: titolo, testo, risposte sotto. Un
+ * articolo e una discussione con un testo lungo, un "chi c'e domenica?" e una
+ * discussione con due righe. Gli argomenti sono etichette, non stanze.
+ *
+ * La chat perdeva tutto il giorno dopo: niente ricerca, nessuno che risponde a
+ * un messaggio di tre giorni prima, e all'arrivo degli account niente su cui
+ * moderare. Il filo di discussione regge da trent'anni perche una tifoseria non
+ * e mai tutta collegata nello stesso momento.
+ *
+ * Nessun server: gli esempi stanno qui sotto, quello che scrive chi prova l'app
+ * resta nel suo browser.
  */
 
-export type FanComment = {
-  id: string;
-  author: string;
-  body: string;
-  date: string;
+export const TOPICS = [
+  'Partita', 'Formazione', 'Mercato', 'Trasferte', 'Zaccheria', 'Giovanili', 'Memoria', 'Fuori tema',
+] as const;
+export type Topic = (typeof TOPICS)[number];
+
+export const TOPIC_ICON: Record<Topic, keyof typeof Ionicons.glyphMap> = {
+  Partita: 'football',
+  Formazione: 'grid',
+  Mercato: 'swap-horizontal',
+  Trasferte: 'car-sport',
+  Zaccheria: 'location',
+  Giovanili: 'school',
+  Memoria: 'time',
+  'Fuori tema': 'chatbubbles',
 };
 
-export type FanPost = {
+export type Reply = {
   id: string;
   author: string;
-  title: string;
-  excerpt: string;
   body: string;
   date: string;
-  topic: Topic;
-  likes: number;
-  comments: FanComment[];
-  /** true = esempio scritto per la dimostrazione, non un post di un utente vero */
   sample: boolean;
 };
 
-export const TOPICS = ['Partita', 'Curva', 'Mercato', 'Trasferte', 'Memoria'] as const;
-export type Topic = (typeof TOPICS)[number];
+export type Discussion = {
+  id: string;
+  author: string;
+  title: string;
+  body: string;
+  topic: Topic;
+  date: string;
+  replies: Reply[];
+  likes: number;
+  /** true = esempio, non scritto da una persona vera */
+  sample: boolean;
+};
+
+/** Ultima attivita: serve a tenere in cima i fili vivi. */
+export function lastActivity(d: Discussion): string {
+  return d.replies.length ? d.replies[d.replies.length - 1]!.date : d.date;
+}
 
 /* ------------------------------------------------------------------ esempi */
 
-const SAMPLES: FanPost[] = [
+let n = 0;
+const r = (author: string, body: string, date: string): Reply =>
+  ({ id: `r${++n}`, author, body, date, sample: true });
+
+const SAMPLES: Discussion[] = [
   {
     id: 's1',
     author: 'Michele P.',
+    topic: 'Partita',
+    date: '2026-09-01',
     title: 'Una rete subita in centottanta minuti',
-    excerpt: 'Il dato di inizio stagione che nessuno sta guardando non è quanti gol facciamo.',
-    body: `Quattro punti in due giornate si commentano da soli e non dicono granché. Il numero che mi ha fatto rileggere due volte il tabellino e un altro: una rete subita in centottanta minuti.
+    body: `Quattro punti in due giornate si commentano da soli e non dicono granché. Il numero che mi ha fatto rileggere due volte il tabellino è un altro: una rete subita in centottanta minuti.
 
 Chi va allo stadio da un po' sa cosa vuol dire. Non è che siamo diventati una corazzata, è che finalmente la squadra torna dietro tutta insieme. Il centrocampo scala, i due centrali non restano mai da soli, e quando ripartono gli avversari trovano gente davanti.
 
 Poi certo, davanti si fa fatica. Ma preferisco una squadra che impara a non prenderle e poi trova il gol, che il contrario. Il contrario l'abbiamo già visto e sappiamo come finisce.`,
-    date: '2026-09-01',
-    topic: 'Partita',
     likes: 34,
-    comments: [
-      { id: 'c1', author: 'Antonio', body: 'Concordo. Aggiungo che anche i terzini stanno più bassi rispetto all\'anno scorso.', date: '2026-09-01' },
-      { id: 'c2', author: 'Rita', body: 'Speriamo regga anche quando alzeremo il baricentro.', date: '2026-09-02' },
-    ],
     sample: true,
+    replies: [
+      r('Antonio', "Concordo. Aggiungo che anche i terzini stanno più bassi rispetto all'anno scorso.", '2026-09-01'),
+      r('Rita', 'Speriamo regga anche quando alzeremo il baricentro.', '2026-09-02'),
+      r('Nicola', 'Basta un gol e poi la difendiamo. Dietro stiamo messi bene davvero.', '2026-09-03'),
+    ],
   },
   {
     id: 's2',
     author: 'Giuseppe L.',
+    topic: 'Zaccheria',
+    date: '2026-08-28',
     title: 'Il rumore della Est quando entra la squadra',
-    excerpt: 'Ci sono cose che non finiscono nelle statistiche e valgono il biglietto lo stesso.',
     body: `Ho portato mio figlio la prima volta a maggio. Aveva sette anni e per tutta la settimana mi aveva chiesto se era vero che si sente da fuori.
 
-Siamo entrati venti minuti prima. Lui guardava il campo vuoto e non capiva perché fossimo arrivati così presto. Poi la gradinata ha cominciato a riempirsi, e quando e uscita la squadra per il riscaldamento si e girato verso di me con gli occhi larghi e non ha detto niente.
+Siamo entrati venti minuti prima. Lui guardava il campo vuoto e non capiva perché fossimo arrivati così presto. Poi la gradinata ha cominciato a riempirsi, e quando è uscita la squadra per il riscaldamento si è girato verso di me con gli occhi larghi e non ha detto niente.
 
 Ecco, quello. Nessun dato sulla percentuale di riempimento riesce a spiegarlo, e va bene così.`,
-    date: '2026-08-28',
-    topic: 'Curva',
     likes: 61,
-    comments: [
-      { id: 'c3', author: 'Salvo', body: 'La prima volta di mio nipote è stata identica. Non ha parlato per dieci minuti.', date: '2026-08-29' },
-    ],
     sample: true,
+    replies: [
+      r('Salvo', 'La prima volta di mio nipote è stata identica. Non ha parlato per dieci minuti.', '2026-08-29'),
+      r('Francesca D.', 'Il bello è che poi ci tornano da soli, a vent\'anni, senza che glielo dica nessuno.', '2026-08-30'),
+    ],
   },
   {
     id: 's3',
     author: 'Francesca D.',
+    topic: 'Partita',
+    date: '2026-09-02',
     title: 'Perché il Cerignola non è una partita come le altre',
-    excerpt: 'Non è questione di classifica. Sono quaranta chilometri e ci si conosce tutti.',
     body: `Ogni volta che spiego questa partita a qualcuno che non è di qua devo partire dalla geografia. Quaranta chilometri. Molti di noi hanno parenti là, o ci lavorano, o ci hanno studiato.
 
 Non è una rivalità costruita a tavolino né una di quelle inventate dai social negli ultimi anni. È semplicemente che il lunedì mattina qualcuno in ufficio ha da dire qualcosa, e per una settimana la partita continua fuori dal campo.
 
 Per questo il risultato pesa il doppio anche a settembre, quando la classifica non vuol dire ancora niente.`,
-    date: '2026-09-02',
-    topic: 'Partita',
     likes: 48,
-    comments: [
-      { id: 'c4', author: 'Michele P.', body: 'Confermo, mia moglie è di Cerignola. In casa è una settimana complicata.', date: '2026-09-03' },
-      { id: 'c5', author: 'Nicola', body: 'E poi vinciamo e non se ne parla più.', date: '2026-09-03' },
-    ],
     sample: true,
+    replies: [
+      r('Michele P.', 'Confermo, mia moglie è di Cerignola. In casa è una settimana complicata.', '2026-09-03'),
+      r('Nicola', 'E poi vinciamo e non se ne parla più.', '2026-09-03'),
+      r('Giuseppe L.', "Ricordati che l'hai scritto, poi te lo rileggiamo lunedì.", '2026-09-04'),
+    ],
   },
   {
     id: 's4',
     author: 'Nicola R.',
-    title: 'Monopoli in trasferta: come ci organizziamo',
-    excerpt: 'Due ore di macchina, e conviene mettersi d\'accordo prima invece che il sabato sera.',
+    topic: 'Trasferte',
+    date: '2026-08-30',
+    title: 'Monopoli il 13: chi si organizza in macchina?',
     body: `Apro il discorso adesso così c'è tempo. Per Monopoli si va in macchina, sono poco più di due ore, e da soli non ha senso.
 
 Io parto dal centro e ho tre posti. Se qualcuno viene dalla zona di via Napoli conviene trovarsi lì e fare due macchine invece di quattro.
 
 Sul settore ospiti aspettiamo la comunicazione ufficiale prima di dire cavolate: appena esce la mettiamo qui.`,
-    date: '2026-08-30',
-    topic: 'Trasferte',
     likes: 22,
-    comments: [
-      { id: 'c6', author: 'Pasquale', body: 'Io ho due posti e parto dalla zona università.', date: '2026-08-30' },
-    ],
     sample: true,
+    replies: [
+      r('Pasquale', 'Io ho due posti e parto dalla zona università.', '2026-08-30'),
+      r('Rita', 'Aspettiamo la comunicazione sul settore ospiti prima di prenotare qualsiasi cosa.', '2026-08-31'),
+    ],
   },
   {
     id: 's5',
     author: 'Antonio V.',
-    title: 'Quello che chiedo a questa squadra',
-    excerpt: 'Non promesse. Solo che si veda che ci tengono quanto ci teniamo noi.',
-    body: `Ho smesso da un pezzo di fare previsioni a settembre. Le ho sbagliate tutte, e quelle azzeccate erano fortuna.
+    topic: 'Formazione',
+    date: '2026-09-04',
+    title: 'Ravasio dentro subito o si aspetta?',
+    body: `È arrivato da tre giorni. Io lo terrei in panchina e lo farei entrare nella ripresa, quando gli altri sono stanchi.
 
-Quindi non chiedo la promozione né dieci vittorie di fila. Chiedo una cosa sola, che poi è quella che si vede dalla gradinata anche quando si perde: che alla fine dei novanta minuti si capisca che hanno dato tutto.
+Del Sole invece lo vedo titolare: serve uno che salti l'uomo, e finora non ne abbiamo avuti.
 
-Quando succede, il risultato lo accetti. Quando non succede, non c'è classifica che tenga.`,
-    date: '2026-08-25',
-    topic: 'Curva',
-    likes: 73,
-    comments: [],
+A centrocampo con Zuccon cambia parecchio: è la prima volta quest'anno che c'è una vera alternativa in mezzo.`,
+    likes: 29,
     sample: true,
+    replies: [
+      r('Giuseppe L.', 'Io non toccherei la difesa. Una rete presa in centottanta minuti non si tocca.', '2026-09-04'),
+      r('Francesca D.', "D'accordo su Del Sole. Ma Ravasio ha bisogno di minuti, non di panchina.", '2026-09-04'),
+    ],
   },
   {
     id: 's6',
     author: 'Rita C.',
-    title: 'Per chi non c\'era negli anni di Zeman',
-    excerpt: 'Me lo chiedono spesso i più giovani. Provo a spiegarlo senza fare il vecchio nostalgico.',
-    body: `Mi capita spesso che qualcuno più giovane mi chieda com'era davvero. È una domanda difficile, perché il rischio e raccontarla come una favola.
+    topic: 'Memoria',
+    date: '2026-08-20',
+    title: "Per chi non c'era negli anni di Zeman",
+    body: `Mi capita spesso che qualcuno più giovane mi chieda com'era davvero. È una domanda difficile, perché il rischio è raccontarla come una favola.
 
 La verità è che era una squadra che giocava in un modo che a quei tempi non faceva nessuno, e che perdeva anche parecchio proprio per quello. Ma allo stadio ci andavi sapendo che qualcosa sarebbe successo, in un senso o nell'altro.
 
-Non credo che si possa rifare, e non credo nemmeno che serva. Però quella cosa lì, uscire di casa sapendo che ti divertirai comunque vada, quella si che me la riprenderei.`,
-    date: '2026-08-20',
-    topic: 'Memoria',
+Non credo che si possa rifare, e non credo nemmeno che serva. Però quella cosa lì, uscire di casa sapendo che ti divertirai comunque vada, quella sì che me la riprenderei.`,
     likes: 95,
-    comments: [
-      { id: 'c7', author: 'Giuseppe L.', body: 'Ben detto. Non rifacciamola, raccontiamola e basta.', date: '2026-08-21' },
-    ],
     sample: true,
+    replies: [
+      r('Giuseppe L.', 'Ben detto. Non rifacciamola, raccontiamola e basta.', '2026-08-21'),
+      r('Nicola', 'Il punto non era vincere. Era che uscivi di casa sapendo che ti saresti divertito.', '2026-08-22'),
+    ],
+  },
+  {
+    id: 's7',
+    author: 'Nicola R.',
+    topic: 'Mercato',
+    date: '2026-09-01',
+    title: 'Chiuso con tre arrivi: bilancio onesto',
+    body: `Del Sole, Ravasio e Zuccon. Onestamente meglio di come temevo a luglio, quando sembrava che non arrivasse nessuno.
+
+Due davanti erano l'urgenza vera e sono arrivati. Adesso resta da vedere se si incastrano con chi c'era già, e quella è una cosa che si capisce a novembre, non adesso.
+
+Il giudizio vero si dà a gennaio.`,
+    likes: 18,
+    sample: true,
+    replies: [
+      r('Rita', 'Sono d\'accordo. A settembre le pagelle di mercato non le ho mai capite.', '2026-09-02'),
+    ],
+  },
+  {
+    id: 's8',
+    author: 'Francesca D.',
+    topic: 'Zaccheria',
+    date: '2026-09-04',
+    title: '5.329 abbonati: per la Serie C è tanta roba',
+    body: `Vuol dire mezza gradinata già impegnata prima ancora di cominciare, e in questa categoria è un numero che poche piazze fanno.
+
+Il punto adesso è un altro: riempirla anche a novembre, quando piove e siamo a metà classifica. Quello è il momento in cui si vede chi c'è davvero.`,
+    likes: 41,
+    sample: true,
+    replies: [
+      r('Antonio', 'Novembre è sempre il mese della verità, ogni anno.', '2026-09-04'),
+      r('Michele P.', 'Con questi numeri qualche partita in più la reggiamo anche sotto la pioggia.', '2026-09-05'),
+    ],
+  },
+  {
+    id: 's9',
+    author: 'Rita C.',
+    topic: 'Giovanili',
+    date: '2026-09-03',
+    title: 'Qualcuno segue la Primavera?',
+    body: `Mi hanno parlato di un centrocampista del 2008 che sta facendo bene. Qualcuno li vede giocare?
+
+Se cresce uno di qui vale il doppio, sempre, e mi sembra che nessuno ne parli mai.`,
+    likes: 12,
+    sample: true,
+    replies: [
+      r('Michele P.', 'Vero. Se cresce uno di qui vale il doppio.', '2026-09-03'),
+    ],
+  },
+  {
+    id: 's10',
+    author: 'Pasquale M.',
+    topic: 'Fuori tema',
+    date: '2026-09-05',
+    title: 'Domenica c\'è la navetta dal centro?',
+    body: `L'anno scorso c'era, quest'anno non ho visto nessuna comunicazione. Qualcuno sa qualcosa?`,
+    likes: 6,
+    sample: true,
+    replies: [
+      r('Antonio', "Non ho visto niente nemmeno io. Se scopro qualcosa lo scrivo qui.", '2026-09-05'),
+    ],
   },
 ];
 
-/* ---------------------------------------------------- post di chi prova l'app */
+/* ---------------------------------------------------- quello che scrivi tu */
 
-const KEY = 'daunia.curva.v1';
+const KEY = 'daunia.curva.v2';
 
-/**
- * Su web si usa la memoria del browser. Su telefono non c'e localStorage e non
- * si aggiunge una dipendenza per una demo: i post restano finche l'app e aperta.
- */
-function readStored(): FanPost[] {
+type Stored = { discussions: Discussion[]; replies: Array<Reply & { on: string }> };
+
+function read(): Stored {
   try {
     const raw = globalThis.localStorage?.getItem(KEY);
-    return raw ? (JSON.parse(raw) as FanPost[]) : [];
+    return raw ? (JSON.parse(raw) as Stored) : { discussions: [], replies: [] };
   } catch {
-    return [];
+    return { discussions: [], replies: [] };
   }
 }
 
-let mine: FanPost[] = readStored();
+let mine = read();
 const listeners = new Set<() => void>();
-let snapshot: FanPost[] = [...mine, ...SAMPLES];
+let all: Discussion[] = [];
+
+function rebuild() {
+  const merged = [...mine.discussions, ...SAMPLES].map((d) => ({
+    ...d,
+    replies: [...d.replies, ...mine.replies.filter((x) => x.on === d.id)],
+  }));
+  all = merged.sort((a, b) => lastActivity(b).localeCompare(lastActivity(a)));
+}
+rebuild();
 
 function commit() {
-  snapshot = [...mine, ...SAMPLES];
+  rebuild();
   try {
     globalThis.localStorage?.setItem(KEY, JSON.stringify(mine));
   } catch {
-    /* memoria non disponibile: il post vive solo in questa sessione */
+    /* niente memoria: resta solo per questa sessione */
   }
   listeners.forEach((l) => l());
 }
 
-export function usePosts(): FanPost[] {
+export function useDiscussions(): Discussion[] {
   return useSyncExternalStore(
-    (l) => {
-      listeners.add(l);
-      return () => listeners.delete(l);
-    },
-    () => snapshot,
-    () => snapshot,
+    (l) => { listeners.add(l); return () => listeners.delete(l); },
+    () => all,
+    () => all,
   );
 }
 
-export function postById(id: string): FanPost | null {
-  return snapshot.find((p) => p.id === id) ?? null;
+export function discussionById(id: string): Discussion | null {
+  return all.find((d) => d.id === id) ?? null;
 }
 
-export function addPost(input: { author: string; title: string; body: string; topic: Topic }) {
-  const body = input.body.trim();
-  const post: FanPost = {
+const today = () => new Date().toISOString().slice(0, 10);
+
+export function addDiscussion(input: { author: string; title: string; body: string; topic: Topic }) {
+  const d: Discussion = {
     id: `mine-${Date.now()}`,
     author: input.author.trim() || 'Tu',
     title: input.title.trim(),
-    excerpt: body.length > 120 ? `${body.slice(0, 117)}...` : body,
-    body,
-    date: new Date().toISOString().slice(0, 10),
+    body: input.body.trim(),
     topic: input.topic,
+    date: today(),
+    replies: [],
     likes: 0,
-    comments: [],
     sample: false,
   };
-  mine = [post, ...mine];
+  mine = { ...mine, discussions: [d, ...mine.discussions] };
   commit();
-  return post;
+  return d;
 }
 
-export function removePost(id: string) {
-  mine = mine.filter((p) => p.id !== id);
+export function addReply(on: string, author: string, body: string) {
+  const text = body.trim();
+  if (!text) return;
+  mine = {
+    ...mine,
+    replies: [...mine.replies, {
+      id: `mine-r-${Date.now()}`, on, author: author.trim() || 'Tu', body: text,
+      date: today(), sample: false,
+    }],
+  };
   commit();
 }
 
-export function toggleLike(id: string) {
-  const target = snapshot.find((p) => p.id === id);
-  if (!target) return;
-  target.likes += 1;
+export function removeDiscussion(id: string) {
+  mine = {
+    discussions: mine.discussions.filter((d) => d.id !== id),
+    replies: mine.replies.filter((r) => r.on !== id),
+  };
   commit();
 }
 
-export const sampleCount = SAMPLES.length;
+export function like(id: string) {
+  const target = all.find((d) => d.id === id);
+  if (target) { target.likes += 1; listeners.forEach((l) => l()); }
+}
+
+/** Quante ne ho scritte io, fra discussioni e risposte. */
+export function mineCount() {
+  return mine.discussions.length + mine.replies.length;
+}
