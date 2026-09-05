@@ -127,6 +127,67 @@ che segue il Foggia, mandagliela: mi serve quasi quanto i soldi.
 
 ---
 
+## Versione per Facebook
+
+> Da incollare così com'è. Le prime tre righe sono quelle che si vedono prima
+> del "Vedi altro": è lì che uno decide se aprire il resto.
+
+---
+
+Per lavoro ho dovuto lasciare Foggia, e da allora allo Zaccheria ci torno poche
+volte all'anno.
+
+Chi è partito sa come funziona. La squadra la segui lo stesso, certe volte pure
+di più. Quello che si perde sono gli altri: il discorso al bar il lunedì mattina,
+la faccia di chi ti sta accanto quando entra il gol, uno che ti scrive due minuti
+dopo il fischio finale solo per dirti che partita è stata.
+
+Volevo un posto dove ritrovarli. Non l'ho trovato, così me lo sono fatto.
+
+Si chiama IL TIFO DELLA DAUNIA e si apre dal telefono senza installare niente:
+
+daunia.vercel.app
+
+Dentro c'è tutto il Foggia in un posto solo. Calendario e risultati con i
+marcatori, la classifica del girone, la rosa con la formazione probabile, le
+statistiche, le notizie. E lo Zaccheria in tre dimensioni: lo giri, tocchi un
+settore e vai alla biglietteria ufficiale.
+
+Ma la parte per cui l'ho fatta è un'altra.
+
+LA CURVA, dove si discute per argomento e le discussioni restano. Chi risponde
+fra tre giorni trova ancora il filo dov'era, non un commento sepolto in fondo a
+un post.
+
+CI SONO ANCH'IO, dove dici in che settore vai e lo stadio si riempie. Prima della
+partita vedi quanti saranno in Curva Nord.
+
+LE PAGELLE, che dopo il fischio finale voti i giocatori e vedi la media di tutti.
+Non quella di un giornalista: la nostra.
+
+I PRONOSTICI, con la classifica di chi ne prende di più per tutta la stagione.
+
+Adesso la parte onesta.
+
+È una prima versione, e si vede. Qualche prezzo dei biglietti non è aggiornato,
+qualche dato è ancora da sistemare, e certe cose funzionano solo come
+dimostrazione: le provi, ma i numeri accanto sono di esempio e l'app te lo scrive
+ogni volta. Diventano veri quando si potranno fare gli account, e per quello sto
+raccogliendo fondi. Il resto degli errori li correggo mano a mano che il progetto
+va avanti.
+
+Una cosa da dire chiara: questo è un progetto indipendente di tifosi. NON è l'app
+ufficiale del Calcio Foggia 1920. La società non c'entra niente, non lo sostiene
+e non lo approva. I dati arrivano da fonti pubbliche e i marchi appartengono ai
+rispettivi titolari.
+
+Se ti va, aprila e provala. Scrivimi qui sotto cosa non funziona, che poi lo
+sistemo. E se conosci qualcuno che segue il Foggia, mandagliela.
+
+#Foggia #CalcioFoggia1920 #SerieC #Zaccheria #Satanelli
+
+---
+
 ## Note operative
 
 [Non pubblicare da qui in giù.]
