@@ -2,7 +2,7 @@ import { Image } from 'expo-image';
 import { StyleSheet, Text, View } from 'react-native';
 import { colors, type } from '../theme/tokens';
 import { avatarTone, initials } from '../lib/format';
-import { remote } from '../lib/media';
+import { photo } from '../lib/media';
 
 type Props = { uri: string | null; name: string; number?: number | null; size?: number };
 
@@ -12,7 +12,7 @@ type Props = { uri: string | null; name: string; number?: number | null; size?: 
  * iniziali su una tinta della gamma del club invece di un buco grigio.
  */
 export function Avatar({ uri, name, number, size = 64 }: Props) {
-  const src = remote(uri);
+  const src = photo(uri);
   if (src) {
     return (
       <Image

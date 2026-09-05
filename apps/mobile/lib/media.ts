@@ -1,16 +1,32 @@
 /**
- * Interruttore unico per le immagini ospitate da terzi.
+ * Cosa si carica dai server di terzi, distinto per tipo.
  *
- * Il prototipo per la societa caricava stemmi, foto giocatori, immagini degli
- * articoli e foto prodotto dai server del club: 350 indirizzi, tutti su
- * calciofoggia1920.net e .store. In una demo mostrata di persona regge; in
- * un'app pubblica non affiliata, con una raccolta fondi sopra, no.
+ * La differenza non e di gusto ma di rischio, e i due casi non sono uguali:
  *
- * Qui si spegne in un punto solo. Crest e Avatar hanno gia il ripiego a
- * monogramma, quindi l'interfaccia non si rompe: cambia aspetto e basta.
+ * - Gli STEMMI servono a dire quale squadra gioca. Mostrare il marchio altrui
+ *   per identificare quel soggetto e uso descrittivo, ammesso dall'art. 21 del
+ *   Codice della Proprieta Industriale quando e necessario a indicare la
+ *   destinazione del servizio. Restano collegati, non copiati: la Corte UE ha
+ *   distinto il collegamento a contenuto gia liberamente accessibile (BestWater,
+ *   C-348/13) dalla ripubblicazione di una copia (Renckhoff, C-161/17). Copiarli
+ *   sul nostro server sarebbe la seconda, ed e la cosa piu rischiosa delle due.
+ *
+ * - Le FOTO di giocatori e articoli sono opere fotografiche di chi le ha
+ *   scattate, e non c'e nessun uso descrittivo che le giustifichi: una foto non
+ *   serve a identificare la squadra, serve a illustrare. Restano spente finche
+ *   non ci sono immagini nostre o di una fototeca autorizzata.
  */
-export const ALLOW_REMOTE_IMAGES = false;
+export const REMOTE = {
+  crests: true,
+  photos: false,
+} as const;
 
-export function remote(uri: string | null | undefined): string | null {
-  return ALLOW_REMOTE_IMAGES ? uri ?? null : null;
+/** Stemma di una squadra: passa. */
+export function crest(uri: string | null | undefined): string | null {
+  return REMOTE.crests ? uri ?? null : null;
+}
+
+/** Foto di persone o di articoli: passa solo se esplicitamente consentito. */
+export function photo(uri: string | null | undefined): string | null {
+  return REMOTE.photos ? uri ?? null : null;
 }

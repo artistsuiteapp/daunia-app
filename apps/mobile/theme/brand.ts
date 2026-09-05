@@ -17,10 +17,12 @@ export const brand = {
   /** false = versione pubblica non affiliata. Qui non deve mai diventare true. */
   official: false,
 
-  name: 'Daunia',
+  name: 'Il Tifo della Daunia',
+  /** forma corta, per gli spazi stretti */
+  shortName: 'Il Tifo',
   /** Nominato solo in testi descrittivi, mai come marchio del prodotto. */
   clubName: 'Calcio Foggia 1920',
-  tagline: 'La squadra, ogni giorno',
+  tagline: "L'app dei tifosi rossoneri",
   city: 'Foggia',
 
   colors: {

@@ -6,7 +6,7 @@ import { Screen, LargeTitle, ListGroup, ListRow, GroupLabel, useGutter } from '.
 import { colors, radius, space, type } from '../../theme/tokens';
 import { relative } from '../../lib/format';
 import {FOGGIA, news } from '../../lib/data';
-import { remote } from '../../lib/media';
+import { photo } from '../../lib/media';
 
 export default function News() {
   const gutter = useGutter();
@@ -16,7 +16,7 @@ export default function News() {
 
   return (
     <Screen>
-      <LargeTitle crest={FOGGIA?.crest ?? null} title="Notizie" subtitle="Comunicati ufficiali e approfondimenti" />
+      <LargeTitle crest={FOGGIA?.crest ?? null} title="Notizie" subtitle="Scritte dalla nostra redazione" />
 
       {lead ? (
         <View style={gutter}>
@@ -24,7 +24,7 @@ export default function News() {
             onPress={() => router.push(`/post/${lead.slug}` as never)}
             style={({ pressed }) => [styles.lead, pressed && { opacity: 0.85 }]}
           >
-            {lead.image ? <Image source={{ uri: remote(lead.image)! }} style={styles.leadImg} contentFit="cover" transition={220} /> : null}
+            {photo(lead.image) ? <Image source={{ uri: photo(lead.image)! }} style={styles.leadImg} contentFit="cover" transition={220} /> : null}
             <View style={styles.leadBody}>
               <Text style={styles.kicker}>{lead.kind === 'club' ? 'Ufficiale' : 'Redazione'}</Text>
               <Text style={styles.leadTitle} numberOfLines={3}>{lead.title}</Text>
@@ -40,11 +40,9 @@ export default function News() {
         <ListGroup>
           {rest.map((n) => (
             <ListRow key={n.id} onPress={() => router.push(`/post/${n.slug}` as never)} chevron height={68}>
-              {remote(n.image) ? (
-                <Image source={{ uri: remote(n.image)! }} style={styles.thumb} contentFit="cover" transition={160} />
-              ) : (
-                <View style={[styles.thumb, styles.thumbEmpty]} />
-              )}
+              {photo(n.image) ? (
+                <Image source={{ uri: photo(n.image)! }} style={styles.thumb} contentFit="cover" transition={160} />
+              ) : null}
               <View style={{ flex: 1, gap: 2 }}>
                 <Text style={styles.rowTitle} numberOfLines={2}>{n.title}</Text>
                 <Text style={styles.meta}>{relative(n.date)}</Text>
@@ -67,6 +65,5 @@ const styles = StyleSheet.create({
   meta: { ...type.caption, color: colors.textFaint },
 
   thumb: { width: 60, height: 44, borderRadius: radius.sm, backgroundColor: colors.surfaceHi },
-  thumbEmpty: {},
   rowTitle: { ...type.subhead, color: colors.text },
 });

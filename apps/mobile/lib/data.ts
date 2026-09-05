@@ -12,6 +12,7 @@ import type {
 } from '@satanelli/core';
 
 import bundled from '../../../data/bundle.json';
+import { editorial } from './editorial';
 
 /** Vuoto = solo dati inclusi nel bundle. In produzione: il raw del repo o un CDN. */
 export const REMOTE_BASE = '';
@@ -24,7 +25,18 @@ export const matches = base.matches as Match[];
 export const standings = base.standings as StandingRow[];
 export const squad = base.squad as Player[];
 export const staff = base.staff as StaffMember[];
-export const news = base.news as NewsItem[];
+/**
+ * Le notizie sono solo quelle scritte da noi.
+ *
+ * I comunicati presi dal sito del club sono usciti dal flusso: erano testi di
+ * terzi riprodotti per intero. Restano nel bundle perche l'ingest continua a
+ * raccoglierli, ma non finiscono piu davanti a chi apre l'app.
+ */
+export const news: NewsItem[] = [...editorial]
+  .sort((a, b) => String(b.date).localeCompare(String(a.date)));
+
+/** Comunicati del club, tenuti da parte: non si pubblicano, si consultano. */
+export const clubReleases = (base.news as NewsItem[]).filter((n) => n.kind === 'club');
 export const stadium = base.stadium as Stadium;
 export const tickets = base.tickets as TicketOffer[];
 export const stats = base.stats as TeamStats;

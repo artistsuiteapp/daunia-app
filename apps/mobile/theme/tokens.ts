@@ -16,12 +16,31 @@ import { brand } from './brand';
  *    attivi e per pochi numeri, non per campire interi blocchi.
  */
 
-/** Su web react-native-web ha bisogno della pila esplicita per avere l'aspetto di sistema. */
-const SYSTEM = Platform.select({
-  ios: undefined,
-  android: undefined,
-  default: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif',
-}) as string | undefined;
+/**
+ * Carattere di marca: Montserrat, geometrico, con i pesi alti e il corsivo che
+ * riprendono la scritta del logo. Sostituisce il carattere di sistema ovunque.
+ *
+ * Con un carattere caricato a mano fontWeight non basta: React Native sceglie
+ * il file dal nome della famiglia, quindi ogni peso ha il suo nome e il peso
+ * numerico serve solo come ripiego sul web finche il file non e pronto.
+ */
+export const font = {
+  regular: 'Montserrat_400Regular',
+  medium: 'Montserrat_500Medium',
+  semibold: 'Montserrat_600SemiBold',
+  bold: 'Montserrat_700Bold',
+  black: 'Montserrat_800ExtraBold',
+  /** i numeri sportivi e i titoli d'impatto: corsivo, come sul logo */
+  displayItalic: 'Montserrat_800ExtraBold_Italic',
+  boldItalic: 'Montserrat_700Bold_Italic',
+} as const;
+
+const FAMILY: Record<'400' | '500' | '600' | '700', string> = {
+  '400': font.regular,
+  '500': font.medium,
+  '600': font.semibold,
+  '700': font.bold,
+};
 
 export const colors = {
   /** fondo pagina: nero pieno, come le app di sistema in modalita scura */
@@ -67,18 +86,10 @@ export const radius = {
   sm: 6, md: 10, lg: 14, xl: 20, xxl: 28, pill: 999,
 } as const;
 
-/** Solo per numeri e punteggi: e la firma sportiva che resta. */
-export const font = {
-  display: 'BarlowCondensed_700Bold',
-  displayBlack: 'BarlowCondensed_800ExtraBold',
-  displayMedium: 'BarlowCondensed_600SemiBold',
-  system: SYSTEM,
-} as const;
 
 const sys = (size: number, weight: '400' | '500' | '600' | '700', lineHeight: number, letterSpacing = 0) => ({
-  fontFamily: SYSTEM,
+  fontFamily: FAMILY[weight],
   fontSize: size,
-  fontWeight: weight,
   lineHeight,
   letterSpacing,
 });
@@ -104,11 +115,13 @@ export const type = {
   /** etichetta minuscola tutta maiuscola sopra un gruppo di lista */
   groupLabel: { ...sys(13, '400', 18, 0.5) },
 
-  /** numeri sportivi: condensata, per punteggi e contatori */
-  score: { fontFamily: font.displayBlack, fontSize: 44, lineHeight: 46, letterSpacing: -1 },
-  scoreSm: { fontFamily: font.displayBlack, fontSize: 24, lineHeight: 26 },
-  number: { fontFamily: font.displayBlack, fontSize: 30, lineHeight: 32 },
-  numberSm: { fontFamily: font.display, fontSize: 19, lineHeight: 22 },
+  /** numeri sportivi e cifre d'impatto: corsivo pesante, come la scritta del logo */
+  score: { fontFamily: font.displayItalic, fontSize: 40, lineHeight: 46, letterSpacing: -0.5 },
+  scoreSm: { fontFamily: font.displayItalic, fontSize: 22, lineHeight: 26 },
+  number: { fontFamily: font.displayItalic, fontSize: 27, lineHeight: 32 },
+  numberSm: { fontFamily: font.boldItalic, fontSize: 18, lineHeight: 22 },
+  /** titolo d'apertura di una schermata: corsivo, per staccare dal corpo */
+  displayTitle: { fontFamily: font.displayItalic, fontSize: 34, lineHeight: 40, letterSpacing: -0.4 },
 } as const;
 
 /** Le ombre in modalita scura non si vedono: la profondita la fa il colore della superficie. */

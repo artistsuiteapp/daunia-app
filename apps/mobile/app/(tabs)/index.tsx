@@ -14,7 +14,7 @@ import { Crest } from '../../components/Crest';
 import { brand } from '../../theme/brand';
 import { colors, radius, space, type } from '../../theme/tokens';
 import { relative } from '../../lib/format';
-import { remote } from '../../lib/media';
+import { photo } from '../../lib/media';
 import {
   FOGGIA, foggiaRow, lastMatch, meta, news, nextMatch, recentForm,
   standingsWindow, topScorers, upcomingMatches,
@@ -130,7 +130,7 @@ export default function Home() {
             onPress={() => router.push(`/post/${lead.slug}` as never)}
             style={({ pressed }) => [styles.lead, pressed && { opacity: 0.85 }]}
           >
-            {lead.image ? <Image source={{ uri: remote(lead.image)! }} style={styles.leadImg} contentFit="cover" transition={220} /> : null}
+            {photo(lead.image) ? <Image source={{ uri: photo(lead.image)! }} style={styles.leadImg} contentFit="cover" transition={220} /> : null}
             <View style={styles.leadBody}>
               <Text style={styles.leadKicker}>{lead.kind === 'club' ? 'Ufficiale' : 'Redazione'}</Text>
               <Text style={styles.leadTitle} numberOfLines={3}>{lead.title}</Text>
@@ -144,8 +144,8 @@ export default function Home() {
         <ListGroup>
           {rest.map((n) => (
             <ListRow key={n.id} onPress={() => router.push(`/post/${n.slug}` as never)} chevron height={64}>
-              {remote(n.image) ? (
-                <Image source={{ uri: remote(n.image)! }} style={styles.thumb} contentFit="cover" transition={160} />
+              {photo(n.image) ? (
+                <Image source={{ uri: photo(n.image)! }} style={styles.thumb} contentFit="cover" transition={160} />
               ) : (
                 <View style={[styles.thumb, styles.thumbEmpty]} />
               )}

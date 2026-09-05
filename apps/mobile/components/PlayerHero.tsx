@@ -5,7 +5,7 @@ import type { Player } from '@satanelli/core';
 
 import { colors, gradients, radius, roleTint, space, type } from '../theme/tokens';
 import { useLayout } from '../theme/responsive';
-import { remote } from '../lib/media';
+import { photo } from '../lib/media';
 
 /**
  * Ritratto grande del giocatore, costruito come nelle reference: il cognome
@@ -37,8 +37,8 @@ export function PlayerHero({ player, goals }: { player: Player; goals: number })
       </Text>
 
       <View style={styles.figure}>
-        {remote(player.photo) ? (
-          <Image source={{ uri: remote(player.photo)! }} style={styles.photo} contentFit="contain" transition={260} />
+        {photo(player.photo) ? (
+          <Image source={{ uri: photo(player.photo)! }} style={styles.photo} contentFit="contain" transition={260} />
         ) : (
           <View style={styles.shirt}>
             <Text style={[styles.shirtNumber, { fontSize: scale(96, 136) }]}>{player.number ?? '–'}</Text>

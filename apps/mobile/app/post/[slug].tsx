@@ -7,7 +7,7 @@ import { BackBar } from '../../components/BackBar';
 import { colors, space, type } from '../../theme/tokens';
 import { longDate } from '../../lib/format';
 import { newsBySlug } from '../../lib/data';
-import { remote } from '../../lib/media';
+import { photo } from '../../lib/media';
 
 export default function Post() {
   const { slug } = useLocalSearchParams<{ slug: string }>();
@@ -17,13 +17,14 @@ export default function Post() {
   if (!post) return <Screen><Empty text="Articolo non trovato." /></Screen>;
 
   const fromClub = post.kind === 'club';
+  const link = post.url;
 
   return (
     <Screen>
       <BackBar label="Notizie" />
 
-      {remote(post.image) ? (
-        <Image source={{ uri: remote(post.image)! }} style={styles.image} contentFit="cover" transition={220} />
+      {photo(post.image) ? (
+        <Image source={{ uri: photo(post.image)! }} style={styles.image} contentFit="cover" transition={220} />
       ) : null}
 
       <View style={[styles.body, gutter]}>
@@ -38,11 +39,11 @@ export default function Post() {
         <Text style={styles.text}>{fromClub ? post.excerpt : post.body || post.excerpt}</Text>
       </View>
 
-      {post.url ? (
+      {link ? (
         <View style={[gutter, { marginTop: space.xl, gap: space.sm }]}>
-          <Button label="Leggi l'articolo sul sito ufficiale" onPress={() => Linking.openURL(post.url)} />
-          <Text style={[styles.source, gutter]}>
-            Fonte: {new URL(post.url).hostname.replace(/^www\./, '')} · {longDate(post.date)}
+          <Button label="Leggi l'articolo sul sito ufficiale" onPress={() => Linking.openURL(link)} />
+          <Text style={styles.source}>
+            Fonte: {new URL(link).hostname.replace(/^www\./, '')} · {longDate(post.date)}
           </Text>
         </View>
       ) : null}

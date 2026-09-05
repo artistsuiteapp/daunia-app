@@ -109,7 +109,8 @@ export interface NewsItem {
   date: Iso;
   title: string;
   excerpt: string;
-  url: string;
+  /** null per un pezzo nostro: non rimanda da nessuna parte */
+  url: string | null;
   image: string | null;
   /** 'club' = comunicato ufficiale, 'editorial' = post nostro */
   kind: 'club' | 'editorial';

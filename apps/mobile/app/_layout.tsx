@@ -5,8 +5,10 @@ import * as SplashScreen from 'expo-splash-screen';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useFonts } from 'expo-font';
 import {
-  BarlowCondensed_600SemiBold, BarlowCondensed_700Bold, BarlowCondensed_800ExtraBold,
-} from '@expo-google-fonts/barlow-condensed';
+  Montserrat_400Regular, Montserrat_500Medium, Montserrat_600SemiBold,
+  Montserrat_700Bold, Montserrat_700Bold_Italic,
+  Montserrat_800ExtraBold, Montserrat_800ExtraBold_Italic,
+} from '@expo-google-fonts/montserrat';
 
 import { colors } from '../theme/tokens';
 import { AppShell } from '../components/AppShell';
@@ -14,10 +16,12 @@ import { AppShell } from '../components/AppShell';
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
 export default function RootLayout() {
-  // il testo dell'interfaccia usa il carattere di sistema: si carica solo la
-  // condensata, che serve a punteggi e contatori
+  // Montserrat regge tutta l'interfaccia: i pesi bassi per il corpo, i corsivi
+  // pesanti per numeri e titoli, come nella scritta del logo
   const [loaded, error] = useFonts({
-    BarlowCondensed_600SemiBold, BarlowCondensed_700Bold, BarlowCondensed_800ExtraBold,
+    Montserrat_400Regular, Montserrat_500Medium, Montserrat_600SemiBold,
+    Montserrat_700Bold, Montserrat_700Bold_Italic,
+    Montserrat_800ExtraBold, Montserrat_800ExtraBold_Italic,
   });
 
   useEffect(() => {
@@ -42,6 +46,7 @@ export default function RootLayout() {
           <Stack.Screen name="player/[id]" />
           <Stack.Screen name="post/[slug]" />
           <Stack.Screen name="curva/[id]" />
+          <Stack.Screen name="curva/stanza/[room]" />
           <Stack.Screen name="curva/nuovo" options={{ presentation: 'modal' }} />
           <Stack.Screen name="standings" />
           <Stack.Screen name="stats" />

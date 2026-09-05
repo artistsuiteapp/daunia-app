@@ -47,12 +47,12 @@ export function BrandHeader({ crest, competition, season, form, position, points
 
       <View style={styles.row}>
         <Animated.View style={{ transform: [{ scale }], opacity: enter }}>
-          <BrandMark size={104} />
+          <BrandMark size={96} />
         </Animated.View>
 
         <View style={styles.titleCol}>
           <Text style={styles.line1}>Il tifo della</Text>
-          <Text style={styles.line2}>{brand.name}</Text>
+          <Text style={styles.line2}>Daunia</Text>
           <Text style={styles.meta} numberOfLines={1}>
             {competition} · Girone C · {season.replace('-', '/')}
           </Text>
@@ -99,10 +99,7 @@ const styles = StyleSheet.create({
   crest: { width: 104, height: 104 },
   titleCol: { flex: 1 },
   line1: { ...type.title3, fontWeight: '400', color: colors.textDim },
-  line2: {
-    fontFamily: type.score.fontFamily, fontSize: 46, lineHeight: 48,
-    color: colors.text, letterSpacing: -0.5,
-  },
+  line2: { ...type.displayTitle, fontSize: 42, lineHeight: 46, color: colors.text },
   meta: { ...type.footnote, color: colors.textFaint, marginTop: 4 },
 
   stats: {
