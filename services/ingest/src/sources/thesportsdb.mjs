@@ -46,9 +46,42 @@ export async function fetchIdPartite({ season, finoA, gia = {} }) {
       mappa[e.dateEvent] = {
         round: r,
         fixtureId: Number(e.idAPIfootball),
+        eventId: e.idEvent ? Number(e.idEvent) : null,
         label: e.strEvent,
       };
     }
   }
   return { mappa, warnings: avvisi };
+}
+
+/**
+ * La prossima partita del Foggia, con l'id che serve al punteggio dal vivo.
+ *
+ * `lookupevent.php?id=<idEvent>` pesa un chilo e mezzo e porta punteggio e
+ * stato aggiornati mentre si gioca, quindi e quello che l'app interroga durante
+ * la partita. Qui si prende l'id una volta e lo si scrive nei dati: cosi il
+ * telefono non deve cercarlo da solo.
+ */
+export async function fetchProssima() {
+  let dati;
+  try {
+    dati = await getJson(`${BASE}/eventsnext.php?id=${FOGGIA_TEAM_ID}`, { ttl: 3 * ORE });
+  } catch (err) {
+    return { prossima: null, warnings: [`TheSportsDB prossima partita: ${err.message}`] };
+  }
+  const e = (dati?.events ?? [])[0];
+  if (!e?.idEvent || !e?.strTimestamp) return { prossima: null, warnings: [] };
+
+  return {
+    prossima: {
+      eventId: Number(e.idEvent),
+      fixtureId: e.idAPIfootball ? Number(e.idAPIfootball) : null,
+      kickoff: `${e.strTimestamp}Z`,
+      label: e.strEvent ?? null,
+      competition: e.strLeague ?? null,
+      home: e.strHomeTeam ?? null,
+      away: e.strAwayTeam ?? null,
+    },
+    warnings: [],
+  };
 }

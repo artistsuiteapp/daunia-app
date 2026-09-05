@@ -16,7 +16,7 @@ import * as wiki from './src/sources/wikipedia.mjs';
 import { fetchEditorial } from './src/sources/blog.mjs';
 import * as shopSrc from './src/sources/shop.mjs';
 import { fetchPartita, fetchPartitaPerId, fetchRosa, dentroLaFinestra } from './src/sources/apifootball.mjs';
-import { fetchIdPartite } from './src/sources/thesportsdb.mjs';
+import { fetchIdPartite, fetchProssima } from './src/sources/thesportsdb.mjs';
 import { buildStadium } from './src/stadium.mjs';
 import { normalize, validate } from './src/normalize.mjs';
 
@@ -68,6 +68,16 @@ async function main() {
   }));
 
   /*
+   * L'id TheSportsDB della prossima partita.
+   *
+   * Serve al telefono: durante la gara interroga lookupevent.php con questo id
+   * e riceve punteggio e stato in un chilo e mezzo di JSON, gratis e senza
+   * quota giornaliera. Se lo cercasse da solo servirebbe una chiamata in piu a
+   * ogni apertura dell'app.
+   */
+  const prossima = await step('prossima partita (TheSportsDB)', () => fetchProssima());
+
+  /*
    * La rosa di Wikipedia tiene dentro chi e andato via. Quella di API-Football
    * e la lista buona per la partita, e si aggiorna da sola. Si incrociano sul
    * numero di maglia: chi non ha un numero in entrambe resta, perche togliere
@@ -98,7 +108,8 @@ async function main() {
   // la partita dal vivo e le formazioni vere viaggiano accanto al resto
   bundle.live = live.partita;
   bundle.lineups = storico.archivio;
-  bundle.meta.warnings.push(...live.warnings, ...storico.warnings, ...rosaApi.warnings);
+  bundle.prossima = prossima.prossima;
+  bundle.meta.warnings.push(...live.warnings, ...storico.warnings, ...rosaApi.warnings, ...prossima.warnings);
 
   const errors = validate(bundle);
   summary(bundle, nextHome, Date.now() - t0);
@@ -126,6 +137,7 @@ async function main() {
     'tickets.json': bundle.tickets,
     'stats.json': bundle.stats,
     'live.json': bundle.live,
+    'prossima.json': bundle.prossima,
     'lineups.json': bundle.lineups,
     'bundle.json': bundle,
   };
@@ -174,9 +186,20 @@ async function aggiornaPartita({ chiave, matches }) {
     return { partita: stessa, archivio, warnings };
   }
 
-  const r = await fetchPartita({ chiave, date, salvata: stessa });
+  /*
+   * Se l'id della partita e gia noto si chiede quella e basta: `fixtures?id=`
+   * risponde con due chili di JSON, mentre `fixtures?date=` ne scarica due mega
+   * con tutte le partite del mondo per poi buttarne 1169.
+   */
+  const noto = (await letto('prossima.json'))?.kickoff?.slice(0, 10) === date
+    ? (await letto('prossima.json'))?.fixtureId
+    : null;
+
+  const r = noto
+    ? await fetchPartitaPerId({ chiave, fixtureId: noto, salvata: stessa })
+    : await fetchPartita({ chiave, date, salvata: stessa });
   warnings.push(...r.warnings);
-  log(`  chiamate spese: ${r.chiamate}`);
+  log(`  ${noto ? `partita ${noto}` : `giorno ${date}`}: ${r.chiamate} chiamate`);
   if (!r.partita) return { partita: salvata, archivio, warnings };
 
   return { partita: r.partita, archivio: inArchivio(archivio, r.partita), warnings };

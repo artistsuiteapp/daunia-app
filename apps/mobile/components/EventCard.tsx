@@ -7,6 +7,7 @@ import type { Match } from '@satanelli/core';
 import { Crest } from './Crest';
 import { colors, gradients, radius, space, type } from '../theme/tokens';
 import { shortDate, time } from '../lib/format';
+import { useLive, liveDi } from '../lib/live';
 import { PredictionCallout } from './PredictionCallout';
 
 type Tone = 'accent' | 'dark';
@@ -27,7 +28,12 @@ export function EventCard({ match, tone = 'dark', compatta = false }: {
 }) {
   const accent = tone === 'accent';
   const played = match.status === 'finished';
-  const live = match.status === 'live';
+  // il punteggio dal vivo arriva da TheSportsDB durante la partita; fuori dalla
+  // finestra della gara vale lo stato scritto nei dati
+  const vivo = liveDi(match, useLive());
+  const live = match.status === 'live' || Boolean(vivo);
+  const casa = vivo ? vivo.casa ?? 0 : match.score?.home ?? 0;
+  const ospite = vivo ? vivo.ospite ?? 0 : match.score?.away ?? 0;
   const fg = accent ? '#FFFFFF' : colors.text;
   const dim = accent ? 'rgba(255,255,255,0.72)' : colors.textDim;
 
@@ -55,7 +61,7 @@ export function EventCard({ match, tone = 'dark', compatta = false }: {
         <View style={[styles.status, accent ? styles.statusOnAccent : styles.statusOnDark]}>
           {live ? <View style={styles.liveDot} /> : null}
           <Text style={[styles.statusText, { color: accent ? '#FFFFFF' : colors.textDim }]}>
-            {live ? 'in corso' : played ? 'finita' : 'in arrivo'}
+            {vivo ? vivo.fase : live ? 'in corso' : played ? 'finita' : 'in arrivo'}
           </Text>
         </View>
       </View>
@@ -64,7 +70,7 @@ export function EventCard({ match, tone = 'dark', compatta = false }: {
         <Crest uri={match.home.crest} name={match.home.shortName} size={compatta ? 34 : 46} />
         <View style={styles.centre}>
           <Text style={[styles.score, compatta && styles.scoreCompatto, { color: fg }]}>
-            {played || live ? `${match.score?.home ?? 0} : ${match.score?.away ?? 0}` : time(match.kickoff)}
+            {played || live ? `${casa} : ${ospite}` : time(match.kickoff)}
           </Text>
           <Text style={[styles.sub, { color: dim }]}>{day(match)}</Text>
           <Text style={[styles.sub, { color: dim }]}>{shortDate(match.kickoff)}</Text>

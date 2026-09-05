@@ -55,6 +55,19 @@ export const stats = base.stats as TeamStats;
  */
 export const lineups = ((base as unknown as { lineups?: MatchLineup[] }).lineups ?? []);
 
+/** La prossima partita con l'id TheSportsDB: serve al punteggio dal vivo. */
+export const prossima = ((base as unknown as { prossima?: Prossima | null }).prossima ?? null);
+
+export type Prossima = {
+  eventId: number;
+  fixtureId: number | null;
+  kickoff: string;
+  label: string | null;
+  competition: string | null;
+  home: string | null;
+  away: string | null;
+};
+
 export type LineupPlayer = { number: number | null; name: string | null; pos: string | null };
 export type MatchLineup = {
   fixtureId: number;

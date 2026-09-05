@@ -18,6 +18,7 @@ import { matchById, matches } from '../../lib/data';
 import { Pagelle } from '../../components/Pagelle';
 import { Pronostico } from '../../components/Pronostico';
 import { useDatiPartita } from '../../lib/fanplay';
+import { useLive, liveDi } from '../../lib/live';
 
 type Tab = 'formazione' | 'gioco' | 'eventi' | 'dati';
 
@@ -26,6 +27,7 @@ export default function MatchDetail() {
   const gutter = useGutter();
   const [view, setView] = useState<Tab>('formazione');
   const match = matchById(String(id));
+  const vivo = liveDi(match, useLive());
   const lineup = useMemo(
     () => lineupPerPartita(match?.kickoff ? match.kickoff.slice(0, 10) : undefined),
     [match?.kickoff],
@@ -52,16 +54,20 @@ export default function MatchDetail() {
         <View style={styles.teams}>
           <Side team={match.home} />
           <View style={styles.centre}>
-            {played
-              ? <Text style={styles.score}>{match.score!.home}–{match.score!.away}</Text>
-              : <Text style={styles.vs}>vs</Text>}
+            {vivo
+              ? <Text style={styles.score}>{vivo.casa ?? 0}–{vivo.ospite ?? 0}</Text>
+              : played
+                ? <Text style={styles.score}>{match.score!.home}–{match.score!.away}</Text>
+                : <Text style={styles.vs}>vs</Text>}
           </View>
           <Side team={match.away} />
         </View>
-        <Text style={styles.when}>{longDate(match.kickoff)}</Text>
+        <Text style={styles.when}>
+          {vivo ? `In corso · ${vivo.fase}` : longDate(match.kickoff)}
+        </Text>
       </View>
 
-      {!played && match.kickoff ? (
+      {!played && !vivo && match.kickoff ? (
         <View style={[gutter, { marginTop: space.lg }]}><Countdown kickoff={match.kickoff} /></View>
       ) : null}
 
