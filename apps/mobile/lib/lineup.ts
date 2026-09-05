@@ -1,14 +1,18 @@
 import type { Player } from '@satanelli/core';
 import { squad } from './data';
+import { DEPARTED, spotOf, type Spot } from './squad-overrides';
 
 /**
  * Formazione probabile.
  *
- * Wikipedia non pubblica le formazioni di Serie C, e il sito del club non le
- * compila: qui si costruisce una disposizione plausibile prendendo dalla rosa
- * reale i giocatori con il numero piu basso per reparto, che nel calcio italiano
- * e una buona approssimazione dei titolari. E dichiarata come probabile in ogni
- * schermata che la usa, e diventa quella vera appena il club apre il dato.
+ * Le formazioni di Serie C non le pubblica nessuna fonte aperta, quindi va
+ * costruita. Prima si prendeva il numero di maglia piu basso per reparto, che
+ * dava una squadra impossibile: cinque mediani in fila e nessun terzino.
+ *
+ * Ora ogni casella del modulo chiede un ruolo di campo preciso (vedi
+ * squad-overrides.ts) e si sceglie fra chi lo ricopre davvero, preferendo il
+ * numero di maglia basso a parita di ruolo. Resta una supposizione, ed e
+ * dichiarata come tale in ogni schermata che la usa.
  */
 
 export type Slot = {
@@ -20,37 +24,53 @@ export type Slot = {
 
 export const FORMATION = '3-5-2';
 
-/** Griglia del 3-5-2 vista da dietro la porta: x da sinistra, y dalla propria area. */
-const SHAPE: Array<{ role: 'P' | 'D' | 'C' | 'A'; x: number; y: number }> = [
-  { role: 'P', x: 50, y: 8 },
-  { role: 'D', x: 24, y: 26 },
-  { role: 'D', x: 50, y: 22 },
-  { role: 'D', x: 76, y: 26 },
-  { role: 'C', x: 10, y: 50 },
-  { role: 'C', x: 33, y: 46 },
-  { role: 'C', x: 50, y: 54 },
-  { role: 'C', x: 67, y: 46 },
-  { role: 'C', x: 90, y: 50 },
-  { role: 'A', x: 38, y: 78 },
-  { role: 'A', x: 62, y: 78 },
+/** Il 3-5-2 visto da dietro la propria porta. Ogni casella dice chi ci va. */
+const SHAPE: Array<{ want: Spot[]; x: number; y: number }> = [
+  { want: ['POR'], x: 50, y: 2 },
+
+  { want: ['DC'], x: 24, y: 24 },
+  { want: ['DC'], x: 50, y: 19 },
+  { want: ['DC'], x: 76, y: 24 },
+
+  { want: ['TS', 'TD'], x: 8, y: 52 },
+  { want: ['MED'], x: 31, y: 47 },
+  { want: ['MED'], x: 50, y: 57 },
+  { want: ['MED', 'EST'], x: 69, y: 47 },
+  { want: ['TD', 'EST'], x: 92, y: 52 },
+
+  { want: ['PUN'], x: 35, y: 86 },
+  { want: ['PUN', 'ALA'], x: 65, y: 86 },
 ];
 
-export function probableLineup(): { slots: Slot[]; bench: Player[]; formation: string } {
-  const byRole = (r: string) => squad
-    .filter((p) => p.role === r && !p.onLoan)
-    .sort((a, b) => (a.number ?? 99) - (b.number ?? 99));
+const num = (p: Player) => p.number ?? 999;
 
-  const pools: Record<string, Player[]> = {
-    P: byRole('P'), D: byRole('D'), C: byRole('C'), A: byRole('A'),
-  };
+/** Rosa al netto di chi e uscito e dei prestiti in uscita. */
+export function activeSquad(): Player[] {
+  return squad.filter((p) => !p.onLoan && !DEPARTED.includes(p.shortName));
+}
+
+export function probableLineup(): { slots: Slot[]; bench: Player[]; formation: string } {
+  const pool = [...activeSquad()].sort((a, b) => num(a) - num(b));
   const used = new Set<string>();
 
-  const slots: Slot[] = SHAPE.map(({ role, x, y }) => {
-    const player = pools[role]!.find((p) => !used.has(p.id)) ?? null;
-    if (player) used.add(player.id);
-    return { player, x, y };
-  });
+  const take = (want: Spot[]): Player | null => {
+    // si prova ruolo per ruolo nell'ordine dichiarato: il primo e la scelta
+    // naturale, gli altri sono i ripieghi accettabili per quella casella
+    for (const w of want) {
+      const found = pool.find((p) => !used.has(p.id) && spotOf(p.shortName) === w);
+      if (found) {
+        used.add(found.id);
+        return found;
+      }
+    }
+    // nessuno copre il ruolo: si prende chi resta del reparto piu vicino
+    const fallback = pool.find((p) => !used.has(p.id));
+    if (fallback) used.add(fallback.id);
+    return fallback ?? null;
+  };
 
-  const bench = squad.filter((p) => !used.has(p.id) && !p.onLoan).slice(0, 9);
+  const slots: Slot[] = SHAPE.map((s) => ({ player: take(s.want), x: s.x, y: s.y }));
+  const bench = pool.filter((p) => !used.has(p.id)).slice(0, 12);
+
   return { slots, bench, formation: FORMATION };
 }

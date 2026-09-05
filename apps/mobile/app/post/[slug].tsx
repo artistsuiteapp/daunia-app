@@ -7,6 +7,8 @@ import { BackBar } from '../../components/BackBar';
 import { colors, space, type } from '../../theme/tokens';
 import { longDate } from '../../lib/format';
 import { newsBySlug } from '../../lib/data';
+import { coverOf } from '../../lib/editorial';
+import { ArticleCover } from '../../components/ArticleCover';
 import { photo } from '../../lib/media';
 
 export default function Post() {
@@ -18,13 +20,14 @@ export default function Post() {
 
   const fromClub = post.kind === 'club';
   const link = post.url;
+  const cover = coverOf(post.slug);
 
   return (
     <Screen>
       <BackBar label="Notizie" />
 
-      {photo(post.image) ? (
-        <Image source={{ uri: photo(post.image)! }} style={styles.image} contentFit="cover" transition={220} />
+      {cover ? (
+        <View style={[styles.coverWrap, gutter]}><ArticleCover cover={cover} height={200} /></View>
       ) : null}
 
       <View style={[styles.body, gutter]}>
@@ -52,7 +55,7 @@ export default function Post() {
 }
 
 const styles = StyleSheet.create({
-  image: { width: '100%', height: 230, backgroundColor: colors.surfaceHi, marginTop: space.md },
+  coverWrap: { marginTop: space.md },
   body: { paddingTop: space.lg, gap: space.md },
   title: { ...type.title1, color: colors.text },
   date: { ...type.footnote, color: colors.textFaint, marginTop: -space.sm },

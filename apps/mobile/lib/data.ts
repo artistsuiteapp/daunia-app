@@ -13,6 +13,7 @@ import type {
 
 import bundled from '../../../data/bundle.json';
 import { editorial } from './editorial';
+import { DEPARTED } from './squad-overrides';
 
 /** Vuoto = solo dati inclusi nel bundle. In produzione: il raw del repo o un CDN. */
 export const REMOTE_BASE = '';
@@ -23,7 +24,11 @@ export const meta = base.meta;
 export const teams = base.teams as Team[];
 export const matches = base.matches as Match[];
 export const standings = base.standings as StandingRow[];
-export const squad = base.squad as Player[];
+/**
+ * Rosa, senza chi ha lasciato la squadra. Le uscite recenti stanno in
+ * squad-overrides.ts: Wikipedia resta indietro su quelle.
+ */
+export const squad = (base.squad as Player[]).filter((p) => !DEPARTED.includes(p.shortName));
 export const staff = base.staff as StaffMember[];
 /**
  * Le notizie sono solo quelle scritte da noi.
@@ -51,8 +56,25 @@ export function upcomingMatches(now = Date.now()): Match[] {
   return matches.filter((m) => m.status !== 'finished' && ts(m) > now).sort((a, b) => ts(a) - ts(b));
 }
 
+/**
+ * Nome della competizione di campionato. Serve a tenere fuori la coppa dai conti
+ * di stagione: sommarla falsa tutto, perche una sconfitta in Coppa Italia non
+ * toglie punti in classifica e non entra nell'andamento.
+ */
+export const LEAGUE = 'Serie C';
+
 export function playedMatches(): Match[] {
   return matches.filter((m) => m.status === 'finished').sort((a, b) => ts(b) - ts(a));
+}
+
+/** Solo campionato: e questo che va confrontato con la classifica. */
+export function leagueMatches(): Match[] {
+  return playedMatches().filter((m) => m.competition === LEAGUE);
+}
+
+/** Solo coppa, tenuta a parte e mostrata come tale. */
+export function cupMatches(): Match[] {
+  return playedMatches().filter((m) => m.competition !== LEAGUE);
 }
 
 export function nextMatch(now = Date.now()): Match | null {
@@ -94,7 +116,7 @@ export function standingsWindow(size = 5): StandingRow[] {
 
 /** Ultimi risultati del Foggia, dal piu vecchio al piu recente: serve alla striscia W/N/P. */
 export function recentForm(limit = 5): Array<'W' | 'D' | 'L'> {
-  return playedMatches()
+  return leagueMatches()
     .slice(0, limit)
     .map((m) => m.foggiaResult)
     .filter((r): r is 'W' | 'D' | 'L' => r !== null)
@@ -145,9 +167,10 @@ export function seasonRecord() {
     won: a.won + b.won, drawn: a.drawn + b.drawn, lost: a.lost + b.lost,
     goalsFor: a.goalsFor + b.goalsFor, goalsAgainst: a.goalsAgainst + b.goalsAgainst,
   });
+  // solo campionato: la coppa ha il suo conto, piu sotto
   let home = { ...zero };
   let away = { ...zero };
-  for (const c of stats.competitions) {
+  for (const c of stats.competitions.filter((c) => c.competition === LEAGUE)) {
     home = add(home, c.home);
     away = add(away, c.away);
   }

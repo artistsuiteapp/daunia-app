@@ -14,6 +14,8 @@ import { Crest } from '../../components/Crest';
 import { brand } from '../../theme/brand';
 import { colors, radius, space, type } from '../../theme/tokens';
 import { relative } from '../../lib/format';
+import { coverOf } from '../../lib/editorial';
+import { ArticleCover } from '../../components/ArticleCover';
 import { photo } from '../../lib/media';
 import {
   FOGGIA, foggiaRow, lastMatch, meta, news, nextMatch, recentForm,
@@ -130,7 +132,7 @@ export default function Home() {
             onPress={() => router.push(`/post/${lead.slug}` as never)}
             style={({ pressed }) => [styles.lead, pressed && { opacity: 0.85 }]}
           >
-            {photo(lead.image) ? <Image source={{ uri: photo(lead.image)! }} style={styles.leadImg} contentFit="cover" transition={220} /> : null}
+            {coverOf(lead.slug) ? <ArticleCover cover={coverOf(lead.slug)!} height={170} /> : null}
             <View style={styles.leadBody}>
               <Text style={styles.leadKicker}>{lead.kind === 'club' ? 'Ufficiale' : 'Redazione'}</Text>
               <Text style={styles.leadTitle} numberOfLines={3}>{lead.title}</Text>
@@ -144,11 +146,9 @@ export default function Home() {
         <ListGroup>
           {rest.map((n) => (
             <ListRow key={n.id} onPress={() => router.push(`/post/${n.slug}` as never)} chevron height={64}>
-              {photo(n.image) ? (
-                <Image source={{ uri: photo(n.image)! }} style={styles.thumb} contentFit="cover" transition={160} />
-              ) : (
-                <View style={[styles.thumb, styles.thumbEmpty]} />
-              )}
+              {coverOf(n.slug) ? (
+                <View style={styles.thumb}><ArticleCover cover={coverOf(n.slug)!} height={40} compact /></View>
+              ) : null}
               <View style={{ flex: 1, gap: 2 }}>
                 <Text style={styles.newsTitle} numberOfLines={2}>{n.title}</Text>
                 <Text style={styles.newsMeta}>{relative(n.date)}</Text>
@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
   leadTitle: { ...type.title3, color: colors.text },
   leadMeta: { ...type.footnote, color: colors.textFaint, marginTop: 2 },
 
-  thumb: { width: 56, height: 40, borderRadius: radius.sm, backgroundColor: colors.surfaceHi },
+  thumb: { width: 64, height: 40, overflow: 'hidden', borderRadius: radius.sm, backgroundColor: colors.surfaceHi },
   thumbEmpty: {},
   newsTitle: { ...type.subhead, color: colors.text },
   newsMeta: { ...type.caption, color: colors.textFaint },

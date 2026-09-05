@@ -1,17 +1,26 @@
 import type { NewsItem } from '@satanelli/core';
+import type { Cover } from '../components/ArticleCover';
 
 /**
  * Notizie scritte dalla redazione.
  *
- * I fatti arrivano dalla stampa locale che segue il Foggia (foggiagol.it,
- * foggiatoday.it) e sono stati verificati incrociandoli con i dati della
- * stagione. Il testo è riscritto da zero: i fatti non sono di nessuno, la loro
- * formulazione si. Chi ha dato la notizia per primo è citato in fondo al pezzo,
- * che è cortesia oltre che buona pratica.
+ * I fatti arrivano dalla stampa che segue il Foggia e sono stati controllati
+ * incrociandoli con i dati di stagione dell'app. Il testo e scritto da zero: un
+ * fatto non appartiene a nessuno, la sua formulazione si, quindi qui non c'e
+ * nemmeno una frase ripresa. Nessun comunicato del club entra in questa sezione.
  *
- * Nella versione dimostrativa sono cinque. La sezione non ripubblica piu i
- * comunicati del club.
+ * Le copertine sono grafiche nostre, non fotografie: le immagini delle partite
+ * sono di chi le ha scattate.
  */
+
+export const COVERS: Record<string, Cover> = {
+  'cinquemila-abbonamenti': { big: '5.329', label: 'abbonamenti sottoscritti' },
+  'tre-innesti-in-chiusura': { big: '3', label: 'arrivi negli ultimi giorni', tone: 'dark' },
+  'uno-a-uno-con-la-salernitana': { big: '1–1', label: 'seconda giornata · Zaccheria' },
+  'la-squadra-si-presenta': { big: '21:00', label: 'venerdì 4 settembre', tone: 'dark' },
+  'arbitro-del-derby': { big: '40 km', label: 'Foggia · Cerignola' },
+};
+
 export const editorial: NewsItem[] = [
   {
     id: 'ed-2026-09-04-abbonati',
@@ -19,14 +28,12 @@ export const editorial: NewsItem[] = [
     kind: 'editorial',
     date: '2026-09-04',
     title: 'Cinquemila e trecento hanno già deciso come passeranno le domeniche',
-    excerpt: 'La campagna abbonamenti si chiude a 5.329 tessere. In Serie C è un numero che pesa.',
-    body: `La campagna abbonamenti si è fermata a 5.329 tessere. Detto così è una cifra come un'altra, quindi conviene metterla accanto a qualcosa.
+    excerpt: 'Le tessere sottoscritte sono 5.329. Per capire quanto pesa, va messa accanto a qualcos\'altro.',
+    body: `Le tessere sottoscritte sono 5.329. Da sola una cifra non dice niente, quindi conviene metterla accanto a qualcos'altro.
 
-In Serie C ci sono squadre che il sabato riempiono a fatica duemila posti. Qui la metà della gradinata è già impegnata prima che la palla cominci a rotolare, e sono persone che hanno pagato in blocco senza sapere come sarebbe andata l'estate.
+In terza serie ci sono piazze che il sabato faticano a portare duemila persone sugli spalti. Qui metà della gradinata risulta impegnata prima ancora che la stagione entri nel vivo, e parliamo di gente che ha tirato fuori i soldi in blocco a luglio, senza sapere come sarebbe finita l'estate.
 
-Il dato dice due cose. La prima riguarda la società, che su quelle tessere ha una base di ricavo certa da cui partire. La seconda riguarda chi gioca: allo Zaccheria si entra con cinquemila persone che hanno già scelto di esserci comunque, e quello si sente dal campo.
-
-Fonte: foggiagol.it`,
+Due letture. Per chi amministra il club sono ricavi certi su cui costruire il bilancio, e in questa categoria non è cosa da poco. Per chi scende in campo è qualcosa di più concreto: allo Zaccheria si gioca davanti a cinquemila persone che hanno scelto in anticipo di esserci a prescindere, e la differenza dal prato si avverte.`,
     url: null,
     image: null,
     source: 'editorial',
@@ -37,14 +44,12 @@ Fonte: foggiagol.it`,
     kind: 'editorial',
     date: '2026-09-01',
     title: 'Tre nomi negli ultimi giorni: Del Sole, Ravasio e Zuccon',
-    excerpt: 'Il mercato si chiude con due attaccanti e un centrocampista. Cosa dice la scelta.',
-    body: `Il mercato si è chiuso con tre arrivi: Ferdinando Del Sole e Mario Ravasio davanti, Federico Zuccon in mezzo.
+    excerpt: 'Due davanti e uno in mezzo. I ruoli scelti dicono dove la dirigenza si sentiva scoperta.',
+    body: `La finestra si è chiusa con tre firme: Ferdinando Del Sole e Mario Ravasio per il reparto offensivo, Federico Zuccon per la mediana.
 
-Guardando i ruoli si capisce dove la società pensava di essere corta. Due giocatori offensivi in entrata non sono un dettaglio per una squadra che nelle prime giornate ha fatto più fatica a segnare che a difendere, e Zuccon aggiunge una scelta in una zona dove finora si giravano sempre gli stessi.
+I ruoli raccontano più dei nomi. Portare due giocatori offensivi negli ultimi giorni non è un caso in una squadra che finora ha avuto più difficoltà a finalizzare che a proteggere la propria area. Zuccon, dal canto suo, apre una possibilità di ricambio in una zona dove fino a ieri ruotavano sempre gli stessi piedi.
 
-Poi c'e il resto, che nessun comunicato dice: quanto ci mettono a capirsi con chi c'era già. Le prime giornate dopo una chiusura di mercato somigliano sempre a una squadra che si presenta, e i giudizi affrettati di settembre invecchiano male.
-
-Fonte: foggiagol.it`,
+Poi resta la parte che nessun annuncio racconta: il tempo che serve a incastrarsi con chi c'era prima. Le settimane subito dopo una chiusura di mercato somigliano sempre a un gruppo che si presenta, e le sentenze scritte a settembre reggono di rado fino a Natale.`,
     url: null,
     image: null,
     source: 'editorial',
@@ -55,14 +60,12 @@ Fonte: foggiagol.it`,
     kind: 'editorial',
     date: '2026-08-29',
     title: 'Con la Salernitana finisce pari, ma il conto delle occasioni dice altro',
-    excerpt: 'Vantaggio di Luciani, ripresa in cui il pareggio arriva quasi per inerzia.',
-    body: `Uno a uno con la Salernitana, ed è un punto che allo Zaccheria è stato accolto con più delusione che sollievo.
+    excerpt: 'Avanti con Luciani, poi una ripresa in cui il pareggio arriva quasi per conto suo.',
+    body: `Un punto contro la Salernitana, accolto dagli spalti con più fastidio che sollievo.
 
-Il vantaggio arriva subito con Luciani, e per un tratto la partita sembra prendere una direzione precisa. Poi succede la cosa che capita alle squadre che devono ancora fidarsi di sé stesse: il possesso resta li, le occasioni si sprecano una dopo l'altra, e quando gli avversari trovano il pari nessuno può dire di non averlo visto arrivare.
+Il gol di Luciani arriva presto e per un tratto sembra indirizzare la serata. Poi si vede la cosa che capita ai gruppi che devono ancora prendere le proprie misure: il pallone resta dalla parte giusta, le palle buone si accumulano senza diventare niente, e quando dall'altra parte trovano il pari nessuno sugli spalti può dirsi sorpreso.
 
-Resta un dato che vale la pena tenere da parte: la squadra crea. In questa categoria le squadre che creano e non segnano di solito raddrizzano il conto più avanti; quelle che non creano affatto no.
-
-Fonte: foggiagol.it`,
+Un elemento vale la pena tenerlo da parte, però. Questa squadra le occasioni le costruisce. In terza serie chi arriva davanti alla porta e non segna di solito sistema i conti nel giro di qualche settimana; chi davanti alla porta non ci arriva affatto, quello è un problema diverso.`,
     url: null,
     image: null,
     source: 'editorial',
@@ -73,14 +76,12 @@ Fonte: foggiagol.it`,
     kind: 'editorial',
     date: '2026-09-03',
     title: 'La squadra si presenta alla città, di venerdì sera',
-    excerpt: 'Appuntamento fissato per venerdì 4 settembre alle ventuno.',
-    body: `La prima squadra si presenta ai tifosi venerdì 4 settembre alle ventuno.
+    excerpt: 'Appuntamento alle ventuno di venerdì 4 settembre. Vale la pena esserci, e non per i discorsi.',
+    body: `La prima squadra si mostra ai tifosi venerdì 4 settembre, alle ventuno.
 
-È il tipo di serata che si liquida in fretta come rito di inizio stagione, e in parte lo è. Ma vale la pena esserci, e non per i discorsi: e l'unica occasione dell'anno in cui vedi in fila i volti che poi seguirai per nove mesi senza mai averli davvero guardati in faccia.
+Viene facile archiviarla come il solito rito di inizio stagione, e in parte lo è davvero. Ma andarci ha un senso, che non sta nei discorsi dal palco: è l'unica sera dell'anno in cui hai in fila davanti le facce che poi seguirai per nove mesi senza mai guardarle bene una per una.
 
-Chi ci è stato altre volte sa anche l'altra cosa: da come una piazza accoglie la squadra a settembre si capisce parecchio di che stagione sarà, molto prima della classifica.
-
-Fonte: foggiagol.it`,
+C'e poi l'altra cosa, che sa chi ci è passato più volte. Dal modo in cui una piazza accoglie i suoi a settembre si intuisce parecchio del tipo di annata che verrà, con largo anticipo su qualsiasi classifica.`,
     url: null,
     image: null,
     source: 'editorial',
@@ -91,16 +92,19 @@ Fonte: foggiagol.it`,
     kind: 'editorial',
     date: '2026-09-02',
     title: 'Il derby con il Cerignola lo dirige Mastrodomenico',
-    excerpt: 'Designazione arrivata due giorni fa per la gara di domenica sera.',
-    body: `A dirigere Foggia-Audace Cerignola sarà Leonardo Mastrodomenico.
+    excerpt: 'Designazione arrivata a inizio settimana per la sfida di domenica sera.',
+    body: `Sarà Leonardo Mastrodomenico a dirigere Foggia-Audace Cerignola.
 
-La designazione di un arbitro è una di quelle notizie che in settimana normale nessuno legge, e che prima di un derby invece leggono tutti. Funziona così in ogni piazza, e la ragione non è sospetto: è che quando la partita pesa si cerca qualcosa da sapere in anticipo, qualunque cosa sia.
+Il nome di un arbitro è la classica notizia che in una settimana qualunque non legge nessuno, e che prima di una partita fra vicini legge invece chiunque. Succede ovunque, e non è questione di sospetto: quando una gara pesa si cerca qualunque cosa da sapere in anticipo, e la designazione è l'unica cosa che c'e.
 
-L'unica previsione sensata e che domenica sera se ne parlerà, comunque vada. Delle partite tra vicini si parla sempre, e quasi mai solo del gioco.
-
-Fonte: foggiagol.it`,
+Quaranta chilometri separano le due città, e questo basta a spiegare il resto. L'unica previsione ragionevole è che domenica sera se ne discuterà comunque vada a finire, perché delle partite fra vicini si discute sempre, e quasi mai limitandosi a quello che è successo in campo.`,
     url: null,
     image: null,
     source: 'editorial',
   },
 ];
+
+/** Copertina di un articolo, se ne ha una. */
+export function coverOf(slug: string): Cover | null {
+  return COVERS[slug] ?? null;
+}

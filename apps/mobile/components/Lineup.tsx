@@ -16,16 +16,27 @@ import { colors, radius, space, type } from '../theme/tokens';
  * t e la coordinata a terra: 0 la porta lontana (attacco), 1 quella vicina
  * (dove sta il portiere, come nella reference). u va da 0 a 1 da sinistra.
  */
-const VB = { w: 100, h: 116 };
+const VB = { w: 100, h: 100 };
 /** quanto e stretta la sponda lontana rispetto a quella vicina */
-const FAR = 0.5;
-const TOP = 3;
+const FAR = 0.52;
+const TOP = 4;
 const H = VB.h - TOP * 2;
 const CX = VB.w / 2;
-const HALF = 47;
+const HALF = 48;
 
-/** y sullo schermo per una coordinata a terra: non lineare, e li la prospettiva */
-const yAt = (t: number) => TOP + H * (t / (FAR + t * (1 - FAR)));
+/**
+ * y sullo schermo per una coordinata a terra.
+ *
+ * La proiezione prospettica pura schiaccia troppo: i tre quarti del campo
+ * finivano nella meta bassa e la parte alta restava vuota. Si mescola con una
+ * scala lineare, che e esattamente il trucco delle grafiche televisive: resta la
+ * sensazione di profondita, sparisce l'ammasso.
+ */
+const DEPTH = 0.55;
+const yAt = (t: number) => {
+  const proiettata = t / (FAR + t * (1 - FAR));
+  return TOP + H * (DEPTH * proiettata + (1 - DEPTH) * t);
+};
 /** larghezza relativa alla sponda vicina, alla quota y */
 const wAt = (y: number) => FAR + ((y - TOP) / H) * (1 - FAR);
 const xAt = (u: number, y: number) => CX + (u - 0.5) * 2 * HALF * wAt(y);
@@ -111,7 +122,9 @@ export function Lineup({
         {/* le maglie restano dritte: seguono la prospettiva in posizione e scala,
             ma inclinarle le renderebbe illeggibili */}
         {slots.map((s, i) => {
-          const t = 1 - s.y / 100;
+          // il campo utile si ferma prima dei bordi: una maglia sulla linea di
+          // fondo esce dal prato e il nome finisce fuori dal riquadro
+          const t = 0.05 + (1 - s.y / 100) * 0.9;
           const y = yAt(t);
           const x = xAt(s.x / 100, y);
           const scale = 0.62 + wAt(y) * 0.46;
