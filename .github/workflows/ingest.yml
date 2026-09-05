@@ -2,9 +2,11 @@ name: Aggiorna dati
 
 on:
   schedule:
-    # ogni 15 minuti. GitHub puo ritardare i cron sui repo pubblici, va bene lo stesso:
-    # l'app legge sempre l'ultimo JSON committato.
-    - cron: '*/15 * * * *'
+    # Ogni 30 minuti. Non e una scelta di gusto: un'esecuzione dura 24 secondi ma
+    # GitHub fattura al minuto arrotondando per eccesso, quindi ogni 15 minuti
+    # farebbe 2880 minuti al mese contro i 2000 gratis di un repo privato.
+    # A 30 minuti restano 1440, e Wikipedia comunque non si aggiorna piu spesso.
+    - cron: '*/30 * * * *'
   workflow_dispatch:
   push:
     paths:
