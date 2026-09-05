@@ -17,6 +17,7 @@ import { relative } from '../../lib/format';
 import { coverOf } from '../../lib/editorial';
 import { ArticleCover } from '../../components/ArticleCover';
 import { photo } from '../../lib/media';
+import { useSafeInsets } from '../../lib/viewport';
 import {
   FOGGIA, foggiaRow, lastMatch, meta, news, nextMatch, recentForm,
   standingsWindow, topScorers, upcomingMatches,
@@ -24,6 +25,7 @@ import {
 
 export default function Home() {
   const gutter = useGutter();
+  const insets = useSafeInsets();
   const next = nextMatch();
   const last = lastMatch();
   const row = foggiaRow();
@@ -37,7 +39,9 @@ export default function Home() {
 
   return (
     <Screen edgeToEdge>
-      <View style={[styles.greeting, gutter]}>
+      {/* aggiunta alla schermata Home l'app parte sotto la barra di stato:
+          senza la zona sicura il saluto finisce sopra l'orologio */}
+      <View style={[styles.greeting, gutter, { paddingTop: insets.top + space.md }]}>
         <Greeting name={brand.demoUser.name} crest={null} onBell={() => router.push('/news')} />
       </View>
 
@@ -176,7 +180,7 @@ function diffLabel(d: number) {
 }
 
 const styles = StyleSheet.create({
-  greeting: { paddingTop: space.xxl, paddingBottom: space.md, backgroundColor: colors.bg },
+  greeting: { paddingBottom: space.md, backgroundColor: colors.bg },
   action: { ...type.subhead, color: colors.accentBright },
   stack: { gap: space.sm, marginTop: space.sm },
 

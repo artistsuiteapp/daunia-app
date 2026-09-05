@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react';
 import { Animated, Easing, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { colors, radius, space, type } from '../theme/tokens';
+import { useSafeInsets, useKeyboardOpen } from '../lib/viewport';
 
 /**
  * Forma minima di cio che expo-router passa a una barra personalizzata.
@@ -40,7 +40,12 @@ const ICONS: Record<string, [keyof typeof Ionicons.glyphMap, keyof typeof Ionico
  * schermo da 360 punti.
  */
 export function FloatingTabBar({ state, descriptors, navigation }: TabBarProps) {
-  const insets = useSafeAreaInsets();
+  const insets = useSafeInsets();
+  // con la tastiera aperta la barra finirebbe sotto i tasti, e comunque nessuno
+  // cambia scheda mentre sta scrivendo
+  const typing = useKeyboardOpen();
+
+  if (typing) return null;
 
   return (
     <View

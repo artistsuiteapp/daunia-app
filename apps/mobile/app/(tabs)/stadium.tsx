@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Linking, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import type { StadiumSector } from '@satanelli/core';
 
@@ -12,12 +11,13 @@ import { colors, radius, space, type } from '../../theme/tokens';
 import { useLayout } from '../../theme/responsive';
 import { euro, shortDate, thousands } from '../../lib/format';
 import { nextHomeMatch, stadium } from '../../lib/data';
+import { useSafeInsets } from '../../lib/viewport';
 import {
   clearPresence, declarePresence, myPresence, presenceOf, useFanplay,
 } from '../../lib/fanplay';
 
 export default function StadiumScreen() {
-  const insets = useSafeAreaInsets();
+  const insets = useSafeInsets();
   const { gutter, height } = useLayout();
   const [selected, setSelected] = useState<StadiumSector | null>(null);
   // di default gli spalti sono pieni: uno stadio vuoto non racconta la partita

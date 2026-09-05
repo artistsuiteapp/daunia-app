@@ -2,24 +2,28 @@ import { Fragment, ReactNode } from 'react';
 import {
   Pressable, ScrollView, StyleSheet, Text, View, ViewStyle,
 } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { colors, radius, ROW_HEIGHT, space, type } from '../theme/tokens';
 import { useLayout } from '../theme/responsive';
 import { TAB_BAR_SPACE } from './FloatingTabBar';
 import { BrandMark } from './BrandMark';
+import { useSafeInsets, useKeyboardInset } from '../lib/viewport';
 
 /* -------------------------------------------------------------- contenitore */
 
 export function Screen({ children, scroll = true, edgeToEdge = false }: {
   children: ReactNode; scroll?: boolean; edgeToEdge?: boolean;
 }) {
-  const insets = useSafeAreaInsets();
-  // la barra delle schede galleggia sopra il contenuto: va lasciato lo spazio
-  // sotto, altrimenti l'ultimo blocco finisce nascosto dietro la pastiglia
+  const insets = useSafeInsets();
+  const keyboard = useKeyboardInset();
+  // Sotto: la barra delle schede galleggia sopra il contenuto, e con la tastiera
+  // aperta serve altro spazio, altrimenti l'ultimo blocco finisce sotto i tasti.
+  // Con la tastiera aperta la barra si nasconde, quindi il suo spazio si libera.
   const pad = {
     paddingTop: edgeToEdge ? 0 : insets.top,
-    paddingBottom: TAB_BAR_SPACE + insets.bottom,
+    paddingBottom: keyboard > 0
+      ? keyboard + space.xl
+      : TAB_BAR_SPACE + insets.bottom,
   };
   if (!scroll) return <View style={[styles.screen, pad]}>{children}</View>;
   return (

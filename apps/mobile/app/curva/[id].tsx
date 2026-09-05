@@ -8,6 +8,7 @@ import { BackBar } from '../../components/BackBar';
 import { Avatar } from '../../components/Avatar';
 import { colors, radius, space, type } from '../../theme/tokens';
 import { relative, shortDate } from '../../lib/format';
+import { useKeyboardInset } from '../../lib/viewport';
 import {
   TOPIC_ICON, addReply, discussionById, like, removeDiscussion, useDiscussions,
 } from '../../lib/community';
@@ -23,6 +24,7 @@ export default function DiscussionPage() {
   useDiscussions();
   const [draft, setDraft] = useState('');
   const [liked, setLiked] = useState(false);
+  const keyboard = useKeyboardInset();
 
   const d = discussionById(String(id));
   if (!d) return <Screen><Empty text="Discussione non trovata." /></Screen>;
@@ -111,7 +113,8 @@ export default function DiscussionPage() {
           </Pressable>
         </View>
 
-        <Text style={styles.footNote}>
+        {/* con la tastiera aperta la nota finirebbe sotto i tasti */}
+        <Text style={[styles.footNote, keyboard > 0 && { marginBottom: space.xl }]}>
           La risposta resta in questo browser. Con gli account veri finisce sul filo per tutti.
         </Text>
       </View>
