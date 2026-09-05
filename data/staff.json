@@ -1,0 +1,14 @@
+[
+  {
+    "id": "coach",
+    "name": "Gaetano Auteri",
+    "job": "Allenatore",
+    "photo": null
+  },
+  {
+    "id": "president",
+    "name": "Gennaro Casillo",
+    "job": "Presidente",
+    "photo": null
+  }
+]

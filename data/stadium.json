@@ -1,0 +1,126 @@
+{
+  "name": "Stadio Pino Zaccheria",
+  "city": "Foggia",
+  "capacity": 14530,
+  "capacityIsEstimated": false,
+  "pitch": {
+    "length": 105,
+    "width": 68
+  },
+  "ticketUrl": "https://calciofoggia1920.vivaticket.it/",
+  "priceNote": "Prezzi indicativi: cambiano a ogni partita. Il prezzo valido e quello su Vivaticket.",
+  "sectors": [
+    {
+      "id": "tribuna-centrale",
+      "name": "Tribuna Centrale",
+      "side": "west",
+      "capacity": 3200,
+      "covered": true,
+      "priceFrom": 31.5,
+      "geometry": {
+        "length": 112,
+        "depth": 22,
+        "rows": 30,
+        "baseHeight": 1.5,
+        "topHeight": 14,
+        "offset": 42
+      },
+      "currency": "EUR",
+      "capacityIsEstimated": true,
+      "priceIsIndicative": true,
+      "occupancy": 0.7511,
+      "occupancyIsSimulated": true,
+      "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
+    },
+    {
+      "id": "tribuna-est",
+      "name": "Tribuna Est (Distinti)",
+      "side": "east",
+      "capacity": 4100,
+      "covered": false,
+      "priceFrom": 16,
+      "geometry": {
+        "length": 112,
+        "depth": 19,
+        "rows": 26,
+        "baseHeight": 1.2,
+        "topHeight": 12,
+        "offset": 42
+      },
+      "currency": "EUR",
+      "capacityIsEstimated": true,
+      "priceIsIndicative": true,
+      "occupancy": 0.7951,
+      "occupancyIsSimulated": true,
+      "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
+    },
+    {
+      "id": "curva-nord",
+      "name": "Curva Nord",
+      "side": "north",
+      "capacity": 3800,
+      "covered": false,
+      "priceFrom": 11,
+      "geometry": {
+        "length": 74,
+        "depth": 21,
+        "rows": 28,
+        "baseHeight": 1.2,
+        "topHeight": 13,
+        "offset": 62
+      },
+      "currency": "EUR",
+      "capacityIsEstimated": true,
+      "priceIsIndicative": true,
+      "occupancy": 0.8908,
+      "occupancyIsSimulated": true,
+      "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
+    },
+    {
+      "id": "curva-sud",
+      "name": "Curva Sud",
+      "side": "south",
+      "capacity": 2400,
+      "covered": false,
+      "priceFrom": 11,
+      "geometry": {
+        "length": 52,
+        "depth": 21,
+        "rows": 28,
+        "baseHeight": 1.2,
+        "topHeight": 13,
+        "offset": 62,
+        "shift": -11
+      },
+      "currency": "EUR",
+      "capacityIsEstimated": true,
+      "priceIsIndicative": true,
+      "occupancy": 0.7153,
+      "occupancyIsSimulated": true,
+      "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
+    },
+    {
+      "id": "settore-ospiti",
+      "name": "Settore Ospiti",
+      "side": "south",
+      "capacity": 1030,
+      "covered": false,
+      "priceFrom": 11,
+      "geometry": {
+        "length": 22,
+        "depth": 21,
+        "rows": 28,
+        "baseHeight": 1.2,
+        "topHeight": 13,
+        "offset": 62,
+        "shift": 26
+      },
+      "currency": "EUR",
+      "capacityIsEstimated": true,
+      "priceIsIndicative": true,
+      "occupancy": 0.57524,
+      "occupancyIsSimulated": true,
+      "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
+    }
+  ]
+}

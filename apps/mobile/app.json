@@ -1,0 +1,49 @@
+{
+  "expo": {
+    "name": "Satanelli",
+    "slug": "satanelli",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "scheme": "satanelli",
+    "userInterfaceStyle": "dark",
+    "newArchEnabled": true,
+    "backgroundColor": "#08080A",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#08080A"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "io.satanelli.demo"
+    },
+    "android": {
+      "package": "io.satanelli.demo",
+      "adaptiveIcon": {
+        "backgroundColor": "#08080A"
+      },
+      "edgeToEdgeEnabled": true
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#08080A",
+          "resizeMode": "contain"
+        }
+      ],
+      "expo-status-bar",
+      "expo-font",
+      "expo-image",
+      "expo-web-browser",
+      "expo-audio"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

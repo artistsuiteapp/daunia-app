@@ -1,0 +1,14 @@
+{
+  "name": "@satanelli/ingest",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "satanelli-ingest": "./run.mjs"
+  },
+  "scripts": {
+    "start": "node run.mjs",
+    "dry": "node run.mjs --dry-run",
+    "test": "node --test test/parsers.test.mjs"
+  }
+}

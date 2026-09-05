@@ -1,0 +1,20 @@
+{
+  "name": "satanelli-app",
+  "private": true,
+  "version": "0.1.0",
+  "description": "App tifosi Calcio Foggia 1920 - prototipo",
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "services/*"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "ingest": "node services/ingest/run.mjs",
+    "ingest:dry": "node services/ingest/run.mjs --dry-run",
+    "mobile": "npm run start -w apps/mobile",
+    "test": "node --test services/ingest/test/parsers.test.mjs"
+  }
+}

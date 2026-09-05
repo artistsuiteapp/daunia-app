@@ -1,0 +1,1271 @@
+[
+  {
+    "id": "wp-2026-2027-039",
+    "kickoff": "2026-08-16T19:00:00.000Z",
+    "status": "finished",
+    "matchday": null,
+    "competition": "Coppa Italia Serie C",
+    "season": "2026-2027",
+    "score": {
+      "home": 1,
+      "away": 2
+    },
+    "venue": "Stadio Pino Zaccheria",
+    "city": "Foggia",
+    "attendance": 0,
+    "referee": "Bruno Tierno",
+    "goals": [
+      {
+        "minute": 50,
+        "extra": null,
+        "scorer": "Malcore",
+        "side": "away",
+        "ownGoal": false,
+        "penalty": false
+      },
+      {
+        "minute": 76,
+        "extra": null,
+        "scorer": "Azarovs",
+        "side": "home",
+        "ownGoal": false,
+        "penalty": false
+      },
+      {
+        "minute": 83,
+        "extra": null,
+        "scorer": "Mogentale",
+        "side": "away",
+        "ownGoal": false,
+        "penalty": false
+      }
+    ],
+    "foggiaHome": true,
+    "foggiaResult": "L",
+    "reportUrl": "https://www.transfermarkt.it/spielbericht/index/spielbericht/4979646§",
+    "source": "wikipedia",
+    "home": {
+      "id": "foggia",
+      "name": "CALCIO FOGGIA 1920",
+      "shortName": "Foggia",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png"
+    },
+    "away": {
+      "id": "team-altamura",
+      "name": "TEAM ALTAMURA",
+      "shortName": "Team Altamura",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2024/07/Team_Altamura_marchio-472x500.png"
+    },
+    "ticketUrl": null
+  },
+  {
+    "id": "wp-2026-2027-001",
+    "kickoff": "2026-08-24T19:00:00.000Z",
+    "status": "finished",
+    "matchday": 1,
+    "competition": "Serie C",
+    "season": "2026-2027",
+    "score": {
+      "home": 0,
+      "away": 1
+    },
+    "venue": "Stadio Ezio Scida",
+    "city": "Crotone",
+    "attendance": 2366,
+    "referee": "Cerbasi",
+    "goals": [
+      {
+        "minute": 23,
+        "extra": null,
+        "scorer": "Petito",
+        "side": "away",
+        "ownGoal": false,
+        "penalty": false
+      }
+    ],
+    "foggiaHome": false,
+    "foggiaResult": "W",
+    "reportUrl": "https://www.transfermarkt.it/spielbericht/index/spielbericht/4979169",
+    "source": "wikipedia",
+    "home": {
+      "id": "crotone",
+      "name": "F.C. CROTONE",
+      "shortName": "Crotone",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2022/08/crotone.png"
+    },
+    "away": {
+      "id": "foggia",
+      "name": "CALCIO FOGGIA 1920",
+      "shortName": "Foggia",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png"
+    },
+    "ticketUrl": null
+  },
+  {
+    "id": "wp-2026-2027-002",
+    "kickoff": "2026-08-29T16:00:00.000Z",
+    "status": "finished",
+    "matchday": 2,
+    "competition": "Serie C",
+    "season": "2026-2027",
+    "score": {
+      "home": 1,
+      "away": 1
+    },
+    "venue": "Stadio Pino Zaccheria",
+    "city": "Foggia",
+    "attendance": 0,
+    "referee": "Gavini",
+    "goals": [
+      {
+        "minute": 1,
+        "extra": null,
+        "scorer": "Luciani",
+        "side": "home",
+        "ownGoal": false,
+        "penalty": false
+      },
+      {
+        "minute": 52,
+        "extra": null,
+        "scorer": "La Gumina",
+        "side": "away",
+        "ownGoal": false,
+        "penalty": false
+      }
+    ],
+    "foggiaHome": true,
+    "foggiaResult": "D",
+    "reportUrl": "https://www.transfermarkt.it/spielbericht/index/spielbericht/4979183",
+    "source": "wikipedia",
+    "home": {
+      "id": "foggia",
+      "name": "CALCIO FOGGIA 1920",
+      "shortName": "Foggia",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png"
+    },
+    "away": {
+      "id": "salernitana",
+      "name": "US SALERNITANA 1919",
+      "shortName": "Salernitana",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2025/08/us-salernitana-768x768.png"
+    },
+    "ticketUrl": null
+  },
+  {
+    "id": "wp-2026-2027-003",
+    "kickoff": "2026-09-06T19:00:00.000Z",
+    "status": "scheduled",
+    "matchday": 3,
+    "competition": "Serie C",
+    "season": "2026-2027",
+    "score": null,
+    "venue": "Stadio Pino Zaccheria",
+    "city": "Foggia",
+    "attendance": null,
+    "referee": null,
+    "goals": [],
+    "foggiaHome": true,
+    "foggiaResult": null,
+    "reportUrl": null,
+    "source": "wikipedia",
+    "home": {
+      "id": "foggia",
+      "name": "CALCIO FOGGIA 1920",
+      "shortName": "Foggia",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png"
+    },
+    "away": {
+      "id": "audace-cerignola",
+      "name": "SS AUDACE CERIGNOLA 1912",
+      "shortName": "Audace Cerignola",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2019/09/LOGO-CERIGNOLA-296x300.png"
+    },
+    "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
+  },
+  {
+    "id": "wp-2026-2027-004",
+    "kickoff": "2026-09-12T16:00:00.000Z",
+    "status": "scheduled",
+    "matchday": 4,
+    "competition": "Serie C",
+    "season": "2026-2027",
+    "score": null,
+    "venue": "Stadio Vito Simone Veneziani",
+    "city": "Monopoli",
+    "attendance": null,
+    "referee": null,
+    "goals": [],
+    "foggiaHome": false,
+    "foggiaResult": null,
+    "reportUrl": null,
+    "source": "wikipedia",
+    "home": {
+      "id": "monopoli",
+      "name": "SS MONOPOLI 1966",
+      "shortName": "Monopoli",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/Monopoli_SS_1966_Since_2014-1.png"
+    },
+    "away": {
+      "id": "foggia",
+      "name": "CALCIO FOGGIA 1920",
+      "shortName": "Foggia",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png"
+    },
+    "ticketUrl": null
+  },
+  {
+    "id": "wp-2026-2027-005",
+    "kickoff": "2026-09-15T19:00:00.000Z",
+    "status": "scheduled",
+    "matchday": 5,
+    "competition": "Serie C",
+    "season": "2026-2027",
+    "score": null,
+    "venue": "Stadio Pino Zaccheria",
+    "city": "Foggia",
+    "attendance": null,
+    "referee": null,
+    "goals": [],
+    "foggiaHome": true,
+    "foggiaResult": null,
+    "reportUrl": null,
+    "source": "wikipedia",
+    "home": {
+      "id": "foggia",
+      "name": "CALCIO FOGGIA 1920",
+      "shortName": "Foggia",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png"
+    },
+    "away": {
+      "id": "savoia",
+      "name": "Savoia",
+      "shortName": "Savoia",
+      "crest": null
+    },
+    "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
+  },
+  {
+    "id": "wp-2026-2027-006",
+    "kickoff": "2026-09-20T13:00:00.000Z",
+    "status": "scheduled",
+    "matchday": 6,
+    "competition": "Serie C",
+    "season": "2026-2027",
+    "score": null,
+    "venue": "Stadio Ernesto Breda",
+    "city": "Sesto San Giovanni",
+    "attendance": null,
+    "referee": null,
+    "goals": [],
+    "foggiaHome": false,
+    "foggiaResult": null,
+    "reportUrl": null,
+    "source": "wikipedia",
+    "home": {
+      "id": "inter-u23",
+      "name": "Inter U23",
+      "shortName": "Inter U23",
+      "crest": null
+    },
+    "away": {
+      "id": "foggia",
+      "name": "CALCIO FOGGIA 1920",
+      "shortName": "Foggia",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png"
+    },
+    "ticketUrl": null
+  },
+  {
+    "id": "wp-2026-2027-007",
+    "kickoff": "2026-09-27T18:30:00.000Z",
+    "status": "scheduled",
+    "matchday": 7,
+    "competition": "Serie C",
+    "season": "2026-2027",
+    "score": null,
+    "venue": "Stadio Pino Zaccheria",
+    "city": "Foggia",
+    "attendance": null,
+    "referee": null,
+    "goals": [],
+    "foggiaHome": true,
+    "foggiaResult": null,
+    "reportUrl": null,
+    "source": "wikipedia",
+    "home": {
+      "id": "foggia",
+      "name": "CALCIO FOGGIA 1920",
+      "shortName": "Foggia",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png"
+    },
+    "away": {
+      "id": "sorrento",
+      "name": "SORRENTO 1945",
+      "shortName": "Sorrento",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2019/09/sorrento.png"
+    },
+    "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
+  },
+  {
+    "id": "wp-2026-2027-008",
+    "kickoff": "2026-10-04T12:30:00.000Z",
+    "status": "scheduled",
+    "matchday": 8,
+    "competition": "Serie C",
+    "season": "2026-2027",
+    "score": null,
+    "venue": "Stadio San Vito-Gigi Marulla",
+    "city": "Cosenza",
+    "attendance": null,
+    "referee": null,
+    "goals": [],
+    "foggiaHome": false,
+    "foggiaResult": null,
+    "reportUrl": null,
+    "source": "wikipedia",
+    "home": {
+      "id": "cosenza",
+      "name": "COSENZA CALCIO",
+      "shortName": "Cosenza",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2025/08/logo-cosenza-768x1041.png"
+    },
+    "away": {
+      "id": "foggia",
+      "name": "CALCIO FOGGIA 1920",
+      "shortName": "Foggia",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png"
+    },
+    "ticketUrl": null
+  },
+  {
+    "id": "wp-2026-2027-009",
+    "kickoff": "2026-10-11T13:00:00.000Z",
+    "status": "scheduled",
+    "matchday": 9,
+    "competition": "Serie C",
+    "season": "2026-2027",
+    "score": null,
+    "venue": "Stadio Pino Zaccheria",
+    "city": "Foggia",
+    "attendance": null,
+    "referee": null,
+    "goals": [],
+    "foggiaHome": true,
+    "foggiaResult": null,
+    "reportUrl": null,
+    "source": "wikipedia",
+    "home": {
+      "id": "foggia",
+      "name": "CALCIO FOGGIA 1920",
+      "shortName": "Foggia",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png"
+    },
+    "away": {
+      "id": "potenza",
+      "name": "POTENZA CALCIO",
+      "shortName": "Potenza",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/potenza-1.png"
+    },
+    "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
+  },
+  {
+    "id": "wp-2026-2027-010",
+    "kickoff": "2026-10-18T13:00:00.000Z",
+    "status": "scheduled",
+    "matchday": 10,
+    "competition": "Serie C",
+    "season": "2026-2027",
+    "score": null,
+    "venue": "Stadio Alberto De Cristofaro",
+    "city": "Giugliano in Campania",
+    "attendance": null,
+    "referee": null,
+    "goals": [],
+    "foggiaHome": false,
+    "foggiaResult": null,
+    "reportUrl": null,
+    "source": "wikipedia",
+    "home": {
+      "id": "giugliano",
+      "name": "GIUGLIANO CALCIO 1928",
+      "shortName": "Giugliano",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2022/08/giugliano.png"
+    },
+    "away": {
+      "id": "foggia",
+      "name": "CALCIO FOGGIA 1920",
+      "shortName": "Foggia",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png"
+    },
+    "ticketUrl": null
+  },
+  {
+    "id": "wp-2026-2027-011",
+    "kickoff": "2026-10-25T13:00:00.000Z",
+    "status": "scheduled",
+    "matchday": 11,
+    "competition": "Serie C",
+    "season": "2026-2027",
+    "score": null,
+    "venue": "Stadio Pino Zaccheria",
+    "city": "Foggia",
+    "attendance": null,
+    "referee": null,
+    "goals": [],
+    "foggiaHome": true,
+    "foggiaResult": null,
+    "reportUrl": null,
+    "source": "wikipedia",
+    "home": {
+      "id": "foggia",
+      "name": "CALCIO FOGGIA 1920",
+      "shortName": "Foggia",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png"
+    },
+    "away": {
+      "id": "cavese",
+      "name": "CAVESE 1919",
+      "shortName": "Cavese",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/Cavese_stemma.png"
+    },
+    "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
+  },
+  {
+    "id": "wp-2026-2027-013",
+    "kickoff": "2026-11-08T14:00:00.000Z",
+    "status": "scheduled",
+    "matchday": 13,
+    "competition": "Serie C",
+    "season": "2026-2027",
+    "score": null,
+    "venue": "Stadio Pino Zaccheria",
+    "city": "Foggia",
+    "attendance": null,
+    "referee": null,
+    "goals": [],
+    "foggiaHome": true,
+    "foggiaResult": null,
+    "reportUrl": null,
+    "source": "wikipedia",
+    "home": {
+      "id": "foggia",
+      "name": "CALCIO FOGGIA 1920",
+      "shortName": "Foggia",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png"
+    },
+    "away": {
+      "id": "barletta",
+      "name": "Barletta",
+      "shortName": "Barletta",
+      "crest": null
+    },
+    "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
+  },
+  {
+    "id": "wp-2026-2027-014",
+    "kickoff": "2026-11-15T14:00:00.000Z",
+    "status": "scheduled",
+    "matchday": 14,
+    "competition": "Serie C",
+    "season": "2026-2027",
+    "score": null,
+    "venue": "Stadio San Nicola",
+    "city": "Bari",
+    "attendance": null,
+    "referee": null,
+    "goals": [],
+    "foggiaHome": false,
+    "foggiaResult": null,
+    "reportUrl": null,
+    "source": "wikipedia",
+    "home": {
+      "id": "ssc-bari",
+      "name": "SSC Bari",
+      "shortName": "Ssc Bari",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/822px-SSC_Bari_logo.png"
+    },
+    "away": {
+      "id": "foggia",
+      "name": "CALCIO FOGGIA 1920",
+      "shortName": "Foggia",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png"
+    },
+    "ticketUrl": null
+  },
+  {
+    "id": "wp-2026-2027-015",
+    "kickoff": "2026-11-22T14:00:00.000Z",
+    "status": "scheduled",
+    "matchday": 15,
+    "competition": "Serie C",
+    "season": "2026-2027",
+    "score": null,
+    "venue": "Stadio 28 settembre 1943-Giovanni Vitiello",
+    "city": "Scafati",
+    "attendance": null,
+    "referee": null,
+    "goals": [],
+    "foggiaHome": false,
+    "foggiaResult": null,
+    "reportUrl": null,
+    "source": "wikipedia",
+    "home": {
+      "id": "scafatese",
+      "name": "Scafatese",
+      "shortName": "Scafatese",
+      "crest": null
+    },
+    "away": {
+      "id": "foggia",
+      "name": "CALCIO FOGGIA 1920",
+      "shortName": "Foggia",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png"
+    },
+    "ticketUrl": null
+  },
+  {
+    "id": "wp-2026-2027-016",
+    "kickoff": "2026-11-29T14:00:00.000Z",
+    "status": "scheduled",
+    "matchday": 16,
+    "competition": "Serie C",
+    "season": "2026-2027",
+    "score": null,
+    "venue": "Stadio Pino Zaccheria",
+    "city": "Foggia",
+    "attendance": null,
+    "referee": null,
+    "goals": [],
+    "foggiaHome": true,
+    "foggiaResult": null,
+    "reportUrl": null,
+    "source": "wikipedia",
+    "home": {
+      "id": "foggia",
+      "name": "CALCIO FOGGIA 1920",
+      "shortName": "Foggia",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png"
+    },
+    "away": {
+      "id": "casertana",
+      "name": "CASERTANA FC",
+      "shortName": "Casertana",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/casertana.png"
+    },
+    "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
+  },
+  {
+    "id": "wp-2026-2027-017",
+    "kickoff": "2026-12-06T14:00:00.000Z",
+    "status": "scheduled",
+    "matchday": 17,
+    "competition": "Serie C",
+    "season": "2026-2027",
+    "score": null,
+    "venue": "Stadio Donato Curcio",
+    "city": "Picerno",
+    "attendance": null,
+    "referee": null,
+    "goals": [],
+    "foggiaHome": false,
+    "foggiaResult": null,
+    "reportUrl": null,
+    "source": "wikipedia",
+    "home": {
+      "id": "az-picerno",
+      "name": "AZ PICERNO",
+      "shortName": "AZ Picerno",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2021/08/picerno-logo-new-768x923.png"
+    },
+    "away": {
+      "id": "foggia",
+      "name": "CALCIO FOGGIA 1920",
+      "shortName": "Foggia",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png"
+    },
+    "ticketUrl": null
+  },
+  {
+    "id": "wp-2026-2027-018",
+    "kickoff": "2026-12-13T14:00:00.000Z",
+    "status": "scheduled",
+    "matchday": 18,
+    "competition": "Serie C",
+    "season": "2026-2027",
+    "score": null,
+    "venue": "Stadio Pino Zaccheria",
+    "city": "Foggia",
+    "attendance": null,
+    "referee": null,
+    "goals": [],
+    "foggiaHome": true,
+    "foggiaResult": null,
+    "reportUrl": null,
+    "source": "wikipedia",
+    "home": {
+      "id": "foggia",
+      "name": "CALCIO FOGGIA 1920",
+      "shortName": "Foggia",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png"
+    },
+    "away": {
+      "id": "team-altamura",
+      "name": "TEAM ALTAMURA",
+      "shortName": "Team Altamura",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2024/07/Team_Altamura_marchio-472x500.png"
+    },
+    "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
+  },
+  {
+    "id": "wp-2026-2027-019",
+    "kickoff": "2026-12-20T14:00:00.000Z",
+    "status": "scheduled",
+    "matchday": 19,
+    "competition": "Serie C",
+    "season": "2026-2027",
+    "score": null,
+    "venue": "Stadio Angelo Massimino",
+    "city": "Catania",
+    "attendance": null,
+    "referee": null,
+    "goals": [],
+    "foggiaHome": false,
+    "foggiaResult": null,
+    "reportUrl": null,
+    "source": "wikipedia",
+    "home": {
+      "id": "catania",
+      "name": "CATANIA FC",
+      "shortName": "Catania",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/catania.png"
+    },
+    "away": {
+      "id": "foggia",
+      "name": "CALCIO FOGGIA 1920",
+      "shortName": "Foggia",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png"
+    },
+    "ticketUrl": null
+  },
+  {
+    "id": "wp-2026-2027-020",
+    "kickoff": "2027-01-03T14:00:00.000Z",
+    "status": "scheduled",
+    "matchday": 20,
+    "competition": "Serie C",
+    "season": "2026-2027",
+    "score": null,
+    "venue": "Stadio Pino Zaccheria",
+    "city": "Foggia",
+    "attendance": null,
+    "referee": null,
+    "goals": [],
+    "foggiaHome": true,
+    "foggiaResult": null,
+    "reportUrl": null,
+    "source": "wikipedia",
+    "home": {
+      "id": "foggia",
+      "name": "CALCIO FOGGIA 1920",
+      "shortName": "Foggia",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png"
+    },
+    "away": {
+      "id": "crotone",
+      "name": "F.C. CROTONE",
+      "shortName": "Crotone",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2022/08/crotone.png"
+    },
+    "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
+  },
+  {
+    "id": "wp-2026-2027-021",
+    "kickoff": "2027-01-10T14:00:00.000Z",
+    "status": "scheduled",
+    "matchday": 21,
+    "competition": "Serie C",
+    "season": "2026-2027",
+    "score": null,
+    "venue": "Stadio Arechi",
+    "city": "Salerno",
+    "attendance": null,
+    "referee": null,
+    "goals": [],
+    "foggiaHome": false,
+    "foggiaResult": null,
+    "reportUrl": null,
+    "source": "wikipedia",
+    "home": {
+      "id": "salernitana",
+      "name": "US SALERNITANA 1919",
+      "shortName": "Salernitana",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2025/08/us-salernitana-768x768.png"
+    },
+    "away": {
+      "id": "foggia",
+      "name": "CALCIO FOGGIA 1920",
+      "shortName": "Foggia",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png"
+    },
+    "ticketUrl": null
+  },
+  {
+    "id": "wp-2026-2027-022",
+    "kickoff": "2027-01-17T14:00:00.000Z",
+    "status": "scheduled",
+    "matchday": 22,
+    "competition": "Serie C",
+    "season": "2026-2027",
+    "score": null,
+    "venue": "Stadio Domenico Monterisi",
+    "city": "Cerignola",
+    "attendance": null,
+    "referee": null,
+    "goals": [],
+    "foggiaHome": false,
+    "foggiaResult": null,
+    "reportUrl": null,
+    "source": "wikipedia",
+    "home": {
+      "id": "audace-cerignola",
+      "name": "SS AUDACE CERIGNOLA 1912",
+      "shortName": "Audace Cerignola",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2019/09/LOGO-CERIGNOLA-296x300.png"
+    },
+    "away": {
+      "id": "foggia",
+      "name": "CALCIO FOGGIA 1920",
+      "shortName": "Foggia",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png"
+    },
+    "ticketUrl": null
+  },
+  {
+    "id": "wp-2026-2027-023",
+    "kickoff": "2027-01-24T14:00:00.000Z",
+    "status": "scheduled",
+    "matchday": 23,
+    "competition": "Serie C",
+    "season": "2026-2027",
+    "score": null,
+    "venue": "Stadio Pino Zaccheria",
+    "city": "Foggia",
+    "attendance": null,
+    "referee": null,
+    "goals": [],
+    "foggiaHome": true,
+    "foggiaResult": null,
+    "reportUrl": null,
+    "source": "wikipedia",
+    "home": {
+      "id": "foggia",
+      "name": "CALCIO FOGGIA 1920",
+      "shortName": "Foggia",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png"
+    },
+    "away": {
+      "id": "monopoli",
+      "name": "SS MONOPOLI 1966",
+      "shortName": "Monopoli",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/Monopoli_SS_1966_Since_2014-1.png"
+    },
+    "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
+  },
+  {
+    "id": "wp-2026-2027-024",
+    "kickoff": "2027-01-31T14:00:00.000Z",
+    "status": "scheduled",
+    "matchday": 24,
+    "competition": "Serie C",
+    "season": "2026-2027",
+    "score": null,
+    "venue": "Stadio Alfredo Giraud",
+    "city": "Torre Annunziata",
+    "attendance": null,
+    "referee": null,
+    "goals": [],
+    "foggiaHome": false,
+    "foggiaResult": null,
+    "reportUrl": null,
+    "source": "wikipedia",
+    "home": {
+      "id": "savoia",
+      "name": "Savoia",
+      "shortName": "Savoia",
+      "crest": null
+    },
+    "away": {
+      "id": "foggia",
+      "name": "CALCIO FOGGIA 1920",
+      "shortName": "Foggia",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png"
+    },
+    "ticketUrl": null
+  },
+  {
+    "id": "wp-2026-2027-025",
+    "kickoff": "2027-02-07T14:00:00.000Z",
+    "status": "scheduled",
+    "matchday": 25,
+    "competition": "Serie C",
+    "season": "2026-2027",
+    "score": null,
+    "venue": "Stadio Pino Zaccheria",
+    "city": "Foggia",
+    "attendance": null,
+    "referee": null,
+    "goals": [],
+    "foggiaHome": true,
+    "foggiaResult": null,
+    "reportUrl": null,
+    "source": "wikipedia",
+    "home": {
+      "id": "foggia",
+      "name": "CALCIO FOGGIA 1920",
+      "shortName": "Foggia",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png"
+    },
+    "away": {
+      "id": "inter-u23",
+      "name": "Inter U23",
+      "shortName": "Inter U23",
+      "crest": null
+    },
+    "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
+  },
+  {
+    "id": "wp-2026-2027-026",
+    "kickoff": "2027-02-10T14:00:00.000Z",
+    "status": "scheduled",
+    "matchday": 26,
+    "competition": "Serie C",
+    "season": "2026-2027",
+    "score": null,
+    "venue": "Stadio Donato Curcio",
+    "city": "Picerno",
+    "attendance": null,
+    "referee": null,
+    "goals": [],
+    "foggiaHome": false,
+    "foggiaResult": null,
+    "reportUrl": null,
+    "source": "wikipedia",
+    "home": {
+      "id": "sorrento",
+      "name": "SORRENTO 1945",
+      "shortName": "Sorrento",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2019/09/sorrento.png"
+    },
+    "away": {
+      "id": "foggia",
+      "name": "CALCIO FOGGIA 1920",
+      "shortName": "Foggia",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png"
+    },
+    "ticketUrl": null
+  },
+  {
+    "id": "wp-2026-2027-027",
+    "kickoff": "2027-02-14T14:00:00.000Z",
+    "status": "scheduled",
+    "matchday": 27,
+    "competition": "Serie C",
+    "season": "2026-2027",
+    "score": null,
+    "venue": "Stadio Pino Zaccheria",
+    "city": "Foggia",
+    "attendance": null,
+    "referee": null,
+    "goals": [],
+    "foggiaHome": true,
+    "foggiaResult": null,
+    "reportUrl": null,
+    "source": "wikipedia",
+    "home": {
+      "id": "foggia",
+      "name": "CALCIO FOGGIA 1920",
+      "shortName": "Foggia",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png"
+    },
+    "away": {
+      "id": "cosenza",
+      "name": "COSENZA CALCIO",
+      "shortName": "Cosenza",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2025/08/logo-cosenza-768x1041.png"
+    },
+    "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
+  },
+  {
+    "id": "wp-2026-2027-028",
+    "kickoff": "2027-02-21T14:00:00.000Z",
+    "status": "scheduled",
+    "matchday": 28,
+    "competition": "Serie C",
+    "season": "2026-2027",
+    "score": null,
+    "venue": "Stadio Alfredo Viviani",
+    "city": "Potenza",
+    "attendance": null,
+    "referee": null,
+    "goals": [],
+    "foggiaHome": false,
+    "foggiaResult": null,
+    "reportUrl": null,
+    "source": "wikipedia",
+    "home": {
+      "id": "potenza",
+      "name": "POTENZA CALCIO",
+      "shortName": "Potenza",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/potenza-1.png"
+    },
+    "away": {
+      "id": "foggia",
+      "name": "CALCIO FOGGIA 1920",
+      "shortName": "Foggia",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png"
+    },
+    "ticketUrl": null
+  },
+  {
+    "id": "wp-2026-2027-029",
+    "kickoff": "2027-02-28T14:00:00.000Z",
+    "status": "scheduled",
+    "matchday": 29,
+    "competition": "Serie C",
+    "season": "2026-2027",
+    "score": null,
+    "venue": "Stadio Pino Zaccheria",
+    "city": "Foggia",
+    "attendance": null,
+    "referee": null,
+    "goals": [],
+    "foggiaHome": true,
+    "foggiaResult": null,
+    "reportUrl": null,
+    "source": "wikipedia",
+    "home": {
+      "id": "foggia",
+      "name": "CALCIO FOGGIA 1920",
+      "shortName": "Foggia",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png"
+    },
+    "away": {
+      "id": "giugliano",
+      "name": "GIUGLIANO CALCIO 1928",
+      "shortName": "Giugliano",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2022/08/giugliano.png"
+    },
+    "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
+  },
+  {
+    "id": "wp-2026-2027-030",
+    "kickoff": "2027-03-03T14:00:00.000Z",
+    "status": "scheduled",
+    "matchday": 30,
+    "competition": "Serie C",
+    "season": "2026-2027",
+    "score": null,
+    "venue": "Stadio Simonetta Lamberti",
+    "city": "Cava de' Tirreni",
+    "attendance": null,
+    "referee": null,
+    "goals": [],
+    "foggiaHome": false,
+    "foggiaResult": null,
+    "reportUrl": null,
+    "source": "wikipedia",
+    "home": {
+      "id": "cavese",
+      "name": "CAVESE 1919",
+      "shortName": "Cavese",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/Cavese_stemma.png"
+    },
+    "away": {
+      "id": "foggia",
+      "name": "CALCIO FOGGIA 1920",
+      "shortName": "Foggia",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png"
+    },
+    "ticketUrl": null
+  },
+  {
+    "id": "wp-2026-2027-031",
+    "kickoff": "2027-03-07T14:00:00.000Z",
+    "status": "scheduled",
+    "matchday": 31,
+    "competition": "Serie C",
+    "season": "2026-2027",
+    "score": null,
+    "venue": "Stadio Pino Zaccheria",
+    "city": "Foggia",
+    "attendance": null,
+    "referee": null,
+    "goals": [],
+    "foggiaHome": true,
+    "foggiaResult": null,
+    "reportUrl": null,
+    "source": "wikipedia",
+    "home": {
+      "id": "foggia",
+      "name": "CALCIO FOGGIA 1920",
+      "shortName": "Foggia",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png"
+    },
+    "away": {
+      "id": "casarano",
+      "name": "CASARANO CALCIO",
+      "shortName": "Casarano",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2019/09/Logo_Casarano-296x300.png"
+    },
+    "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
+  },
+  {
+    "id": "wp-2026-2027-032",
+    "kickoff": "2027-03-14T14:00:00.000Z",
+    "status": "scheduled",
+    "matchday": 32,
+    "competition": "Serie C",
+    "season": "2026-2027",
+    "score": null,
+    "venue": "Stadio Cosimo Puttilli",
+    "city": "Barletta",
+    "attendance": null,
+    "referee": null,
+    "goals": [],
+    "foggiaHome": false,
+    "foggiaResult": null,
+    "reportUrl": null,
+    "source": "wikipedia",
+    "home": {
+      "id": "barletta",
+      "name": "Barletta",
+      "shortName": "Barletta",
+      "crest": null
+    },
+    "away": {
+      "id": "foggia",
+      "name": "CALCIO FOGGIA 1920",
+      "shortName": "Foggia",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png"
+    },
+    "ticketUrl": null
+  },
+  {
+    "id": "wp-2026-2027-033",
+    "kickoff": "2027-03-21T14:00:00.000Z",
+    "status": "scheduled",
+    "matchday": 33,
+    "competition": "Serie C",
+    "season": "2026-2027",
+    "score": null,
+    "venue": "Stadio Pino Zaccheria",
+    "city": "Foggia",
+    "attendance": null,
+    "referee": null,
+    "goals": [],
+    "foggiaHome": true,
+    "foggiaResult": null,
+    "reportUrl": null,
+    "source": "wikipedia",
+    "home": {
+      "id": "foggia",
+      "name": "CALCIO FOGGIA 1920",
+      "shortName": "Foggia",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png"
+    },
+    "away": {
+      "id": "ssc-bari",
+      "name": "SSC Bari",
+      "shortName": "Ssc Bari",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/822px-SSC_Bari_logo.png"
+    },
+    "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
+  },
+  {
+    "id": "wp-2026-2027-034",
+    "kickoff": "2027-03-27T14:00:00.000Z",
+    "status": "scheduled",
+    "matchday": 34,
+    "competition": "Serie C",
+    "season": "2026-2027",
+    "score": null,
+    "venue": "Stadio Pino Zaccheria",
+    "city": "Foggia",
+    "attendance": null,
+    "referee": null,
+    "goals": [],
+    "foggiaHome": true,
+    "foggiaResult": null,
+    "reportUrl": null,
+    "source": "wikipedia",
+    "home": {
+      "id": "foggia",
+      "name": "CALCIO FOGGIA 1920",
+      "shortName": "Foggia",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png"
+    },
+    "away": {
+      "id": "scafatese",
+      "name": "Scafatese",
+      "shortName": "Scafatese",
+      "crest": null
+    },
+    "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
+  },
+  {
+    "id": "wp-2026-2027-035",
+    "kickoff": "2027-04-04T13:00:00.000Z",
+    "status": "scheduled",
+    "matchday": 35,
+    "competition": "Serie C",
+    "season": "2026-2027",
+    "score": null,
+    "venue": "Stadio Alberto Pinto",
+    "city": "Caserta",
+    "attendance": null,
+    "referee": null,
+    "goals": [],
+    "foggiaHome": false,
+    "foggiaResult": null,
+    "reportUrl": null,
+    "source": "wikipedia",
+    "home": {
+      "id": "casertana",
+      "name": "CASERTANA FC",
+      "shortName": "Casertana",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/casertana.png"
+    },
+    "away": {
+      "id": "foggia",
+      "name": "CALCIO FOGGIA 1920",
+      "shortName": "Foggia",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png"
+    },
+    "ticketUrl": null
+  },
+  {
+    "id": "wp-2026-2027-036",
+    "kickoff": "2027-04-11T13:00:00.000Z",
+    "status": "scheduled",
+    "matchday": 36,
+    "competition": "Serie C",
+    "season": "2026-2027",
+    "score": null,
+    "venue": "Stadio Pino Zaccheria",
+    "city": "Foggia",
+    "attendance": null,
+    "referee": null,
+    "goals": [],
+    "foggiaHome": true,
+    "foggiaResult": null,
+    "reportUrl": null,
+    "source": "wikipedia",
+    "home": {
+      "id": "foggia",
+      "name": "CALCIO FOGGIA 1920",
+      "shortName": "Foggia",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png"
+    },
+    "away": {
+      "id": "az-picerno",
+      "name": "AZ PICERNO",
+      "shortName": "AZ Picerno",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2021/08/picerno-logo-new-768x923.png"
+    },
+    "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
+  },
+  {
+    "id": "wp-2026-2027-037",
+    "kickoff": "2027-04-18T13:00:00.000Z",
+    "status": "scheduled",
+    "matchday": 37,
+    "competition": "Serie C",
+    "season": "2026-2027",
+    "score": null,
+    "venue": "Stadio Tonino D'Angelo",
+    "city": "Altamura",
+    "attendance": null,
+    "referee": null,
+    "goals": [],
+    "foggiaHome": false,
+    "foggiaResult": null,
+    "reportUrl": null,
+    "source": "wikipedia",
+    "home": {
+      "id": "team-altamura",
+      "name": "TEAM ALTAMURA",
+      "shortName": "Team Altamura",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2024/07/Team_Altamura_marchio-472x500.png"
+    },
+    "away": {
+      "id": "foggia",
+      "name": "CALCIO FOGGIA 1920",
+      "shortName": "Foggia",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png"
+    },
+    "ticketUrl": null
+  },
+  {
+    "id": "wp-2026-2027-038",
+    "kickoff": "2027-04-25T13:00:00.000Z",
+    "status": "scheduled",
+    "matchday": 38,
+    "competition": "Serie C",
+    "season": "2026-2027",
+    "score": null,
+    "venue": "Stadio Pino Zaccheria",
+    "city": "Foggia",
+    "attendance": null,
+    "referee": null,
+    "goals": [],
+    "foggiaHome": true,
+    "foggiaResult": null,
+    "reportUrl": null,
+    "source": "wikipedia",
+    "home": {
+      "id": "foggia",
+      "name": "CALCIO FOGGIA 1920",
+      "shortName": "Foggia",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png"
+    },
+    "away": {
+      "id": "catania",
+      "name": "CATANIA FC",
+      "shortName": "Catania",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/catania.png"
+    },
+    "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
+  },
+  {
+    "id": "wp-2026-2027-012",
+    "kickoff": null,
+    "status": "scheduled",
+    "matchday": 12,
+    "competition": "Serie C",
+    "season": "2026-2027",
+    "score": null,
+    "venue": "Stadio Giuseppe Capozza",
+    "city": "Casarano",
+    "attendance": null,
+    "referee": null,
+    "goals": [],
+    "foggiaHome": false,
+    "foggiaResult": null,
+    "reportUrl": null,
+    "source": "wikipedia",
+    "home": {
+      "id": "casarano",
+      "name": "CASARANO CALCIO",
+      "shortName": "Casarano",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2019/09/Logo_Casarano-296x300.png"
+    },
+    "away": {
+      "id": "foggia",
+      "name": "CALCIO FOGGIA 1920",
+      "shortName": "Foggia",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png"
+    },
+    "ticketUrl": null
+  }
+]

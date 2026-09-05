@@ -1,0 +1,24 @@
+{
+  "generatedAt": "2026-09-04T15:28:30.436Z",
+  "season": "2026-2027",
+  "competition": "Serie C",
+  "sources": {
+    "fixtures": "wikipedia",
+    "standings": "wikipedia",
+    "squad": "wikipedia",
+    "stats": "wikipedia",
+    "news": "calciofoggia1920.net",
+    "crests": "calciofoggia1920.net",
+    "photos": "calciofoggia1920.net",
+    "shop": "calciofoggia1920.store"
+  },
+  "attribution": "Dati stagione in corso da Wikipedia (CC BY-SA 4.0). News, stemmi e foto da calciofoggia1920.net. Prodotti dal negozio ufficiale calciofoggia1920.store.",
+  "warnings": [
+    "Anno corretto su Wikipedia per Foggia-Altamura: 2025-08-16 -> 2026-08-16.",
+    "Nessuno stemma per \"Savoia\": il sito del club non ha mai incontrato questa squadra.",
+    "Nessuno stemma per \"Inter U23\": il sito del club non ha mai incontrato questa squadra.",
+    "Nessuno stemma per \"Barletta\": il sito del club non ha mai incontrato questa squadra.",
+    "Nessuno stemma per \"Scafatese\": il sito del club non ha mai incontrato questa squadra.",
+    "Solo 3 giocatori su 30 hanno la foto: la rosa sul sito del club e ferma alla stagione precedente."
+  ]
+}

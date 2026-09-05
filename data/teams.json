@@ -1,0 +1,142 @@
+[
+  {
+    "id": "audace-cerignola",
+    "name": "SS AUDACE CERIGNOLA 1912",
+    "shortName": "Audace Cerignola",
+    "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2019/09/LOGO-CERIGNOLA-296x300.png",
+    "isFoggia": false
+  },
+  {
+    "id": "az-picerno",
+    "name": "AZ PICERNO",
+    "shortName": "AZ Picerno",
+    "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2021/08/picerno-logo-new-768x923.png",
+    "isFoggia": false
+  },
+  {
+    "id": "barletta",
+    "name": "Barletta",
+    "shortName": "Barletta",
+    "crest": null,
+    "isFoggia": false
+  },
+  {
+    "id": "casarano",
+    "name": "CASARANO CALCIO",
+    "shortName": "Casarano",
+    "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2019/09/Logo_Casarano-296x300.png",
+    "isFoggia": false
+  },
+  {
+    "id": "casertana",
+    "name": "CASERTANA FC",
+    "shortName": "Casertana",
+    "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/casertana.png",
+    "isFoggia": false
+  },
+  {
+    "id": "catania",
+    "name": "CATANIA FC",
+    "shortName": "Catania",
+    "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/catania.png",
+    "isFoggia": false
+  },
+  {
+    "id": "cavese",
+    "name": "CAVESE 1919",
+    "shortName": "Cavese",
+    "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/Cavese_stemma.png",
+    "isFoggia": false
+  },
+  {
+    "id": "cosenza",
+    "name": "COSENZA CALCIO",
+    "shortName": "Cosenza",
+    "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2025/08/logo-cosenza-768x1041.png",
+    "isFoggia": false
+  },
+  {
+    "id": "crotone",
+    "name": "F.C. CROTONE",
+    "shortName": "Crotone",
+    "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2022/08/crotone.png",
+    "isFoggia": false
+  },
+  {
+    "id": "foggia",
+    "name": "CALCIO FOGGIA 1920",
+    "shortName": "Foggia",
+    "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png",
+    "isFoggia": true
+  },
+  {
+    "id": "giugliano",
+    "name": "GIUGLIANO CALCIO 1928",
+    "shortName": "Giugliano",
+    "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2022/08/giugliano.png",
+    "isFoggia": false
+  },
+  {
+    "id": "inter-u23",
+    "name": "Inter U23",
+    "shortName": "Inter U23",
+    "crest": null,
+    "isFoggia": false
+  },
+  {
+    "id": "monopoli",
+    "name": "SS MONOPOLI 1966",
+    "shortName": "Monopoli",
+    "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/Monopoli_SS_1966_Since_2014-1.png",
+    "isFoggia": false
+  },
+  {
+    "id": "potenza",
+    "name": "POTENZA CALCIO",
+    "shortName": "Potenza",
+    "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/potenza-1.png",
+    "isFoggia": false
+  },
+  {
+    "id": "salernitana",
+    "name": "US SALERNITANA 1919",
+    "shortName": "Salernitana",
+    "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2025/08/us-salernitana-768x768.png",
+    "isFoggia": false
+  },
+  {
+    "id": "savoia",
+    "name": "Savoia",
+    "shortName": "Savoia",
+    "crest": null,
+    "isFoggia": false
+  },
+  {
+    "id": "scafatese",
+    "name": "Scafatese",
+    "shortName": "Scafatese",
+    "crest": null,
+    "isFoggia": false
+  },
+  {
+    "id": "sorrento",
+    "name": "SORRENTO 1945",
+    "shortName": "Sorrento",
+    "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2019/09/sorrento.png",
+    "isFoggia": false
+  },
+  {
+    "id": "ssc-bari",
+    "name": "SSC Bari",
+    "shortName": "Ssc Bari",
+    "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/822px-SSC_Bari_logo.png",
+    "isFoggia": false
+  },
+  {
+    "id": "team-altamura",
+    "name": "TEAM ALTAMURA",
+    "shortName": "Team Altamura",
+    "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2024/07/Team_Altamura_marchio-472x500.png",
+    "isFoggia": false
+  }
+]

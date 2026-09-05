@@ -1,0 +1,1227 @@
+{{in corso|calcio}}
+{{torna a|Calcio Foggia 1920}}
+{{Stagione squadra
+|sport = Calcio
+|club = Calcio Foggia
+|stagione = 2026-2027
+|immagine = Fg12063310 1071986072823750 3137721016710385483 n.jpg
+|didascalia = Lo [[stadio Pino Zaccheria]] di Foggia
+|allenatore1 = {{Bandiera|ITA}} [[Gaetano Auteri]]
+|allenatore2 = {{Bandiera|ITA}} Simone Calori
+|presidente = {{Bandiera|ITA}} Gennaro Casillo
+|capitano = 
+|campionato = [[Serie C 2026-2027|Serie C]]
+|campionato posizione = ''da disputare''
+|coppa1 = [[Coppa Italia Serie C 2026-2027|Coppa Italia Serie C]]
+|coppa1 posizione = Primo turno
+|presenze campionato = 
+|marcatore campionato = 
+|stadio = [[Stadio Pino Zaccheria|Pino Zaccheria]] ({{formatnum:14530}})
+|abbonati = 
+|spettatori max = 
+|spettatori min = 
+|spettatori media = 
+|spettatori media legenda = 
+|stagione prima = [[Calcio Foggia 1920 2025-2026|2025-2026]]
+|stagione dopo = 
+}}
+Questa voce raccoglie le informazioni riguardanti il '''Calcio Foggia 1920''' nelle competizioni ufficiali della stagione '''2026-2027'''.
+
+== Stagione ==
+Per via delle inadempienze finanziarie e del fallimento della [[Ternana Calcio|Ternana]], il [[Calcio Foggia 1920|Foggia]] è stato riammesso in [[Serie C 2026-2027|Serie C]], a cui partecipa per la 48ª volta. Nonostante la retrocessione sul campo giunta al termine della [[Calcio Foggia 1920 2025-2026|scorsa stagione]], la nuova società guidata dal presidente Gennaro Casillo e dal vicepresidente Giuseppe De Vitto completa la pratica di iscrizione al campionato di Serie D 2026-2027, avviando però nel contempo l'iter di riammissione in Lega Pro.
+
+A causa del mancato deposito delle garanzie fideiussorie da parte della Ternana e della conseguente revoca dell'affiliazione alla [[Federazione Italiana Giuoco Calcio|FIGC]] ai sensi delle NOIF, si libera un posto nell'organico della terza serie. Essendo prima nella graduatoria delle riammissioni, il club rossonero presenta l'intera documentazione richiesta.
+[[File:Gaetano_Auteri_2022_(cropped).jpg|sinistra|miniatura|Il nuovo allenatore del Foggia [[Gaetano Auteri]]|225x225px]]
+Il 28 luglio 2026, il Consiglio Federale della FIGC ratifica la riammissione ufficiale del Foggia in Serie C a completamento dell'organico a 60 squadre, inserendo la squadra nel girone C.
+
+Come allenatore viene nominato [[Gaetano Auteri]], affiancato dal vice Simone Calori e dal direttore tecnico Giuseppe Pavone. Il debutto ufficiale della stagione avviene il 16 agosto 2026 nel primo turno eliminatorio di [[Coppa Italia Serie C 2026-2027|Coppa Italia Serie C]], con la sconfitta interna per 1-2 maturata allo [[Stadio Pino Zaccheria]] contro l'[[Altamura Società Sportiva|Altamura]].
+
+== Divise e sponsor ==
+Lo sponsor tecnico per la stagione 2026-2027 è il celebre marchio statunitense  [[Nike (azienda)|Nike]]<ref>{{Cita web|url=https://www.foggiagol.it/2026/07/03/foggia-al-via-la-stagione-2026-2027-ufficializzati-auteri-casella-pavone-e-il-nuovo-corso-rossonero-nike-sara-il-nuovo-sponsor-tecnico/|titolo=Foggia, al via la stagione 2026-2027: Nike sarà il nuovo sponsor tecnico|sito=FoggiaGol|data=3 luglio 2026}}</ref>, con cui la società rossonera ha stretto un accordo quadriennale.
+
+{|
+|
+{{Divisa Calcio
+ |pattern_la=
+ |leftarm=
+ |pattern_b=
+ |body=
+ |pattern_ra=
+ |rightarm=
+ |pattern_sh=
+ |shorts=
+ |pattern_so=
+ |socks=
+ |title=Casa
+}}
+|
+{{Divisa Calcio
+ |pattern_la=
+ |leftarm=
+ |pattern_b=
+ |body=
+ |pattern_ra=
+ |rightarm=
+ |pattern_sh=
+ |shorts=
+ |pattern_so=
+ |socks=
+ |title=Trasferta
+}}
+|
+{{Divisa Calcio
+ |pattern_la=
+ |leftarm=
+ |pattern_b=
+ |body=
+ |pattern_ra=
+ |rightarm=
+ |pattern_sh=
+ |shorts=
+ |pattern_so=
+ |socks=
+ |title=Terza divisa
+}}
+|}
+
+== Organigramma societario ==
+{{Colonne}}
+'''''Area direttiva'''''
+*Presidente: ''Gennaro Casillo''
+*Amministratore unico: ''Giuseppe Martino'' 
+*Vicepresidente: ''Giuseppe De Vitto''
+*Direttore generale ''Giovanni Francavilla'' 
+*Segretario Generale: ''Giuseppe Severo''
+*Responsabile affari legali: ''Roberto De Rossi''
+
+{{Colonne spezza}}
+'''''Area tecnica'''''
+*Direttore Tecnico: ''[[Giuseppe Pavone]]''
+*Direttore Sportivo: ''Alex Casella''
+*Allenatore: ''[[Gaetano Auteri]]''
+*Vice allenatore: ''Simone Calori''
+*Preparatore dei portieri: ''[[Domenico Botticella]]''
+*Preparatore atletico: ''Giacomo Cofano''
+*Preparatore recupero infortunati: ''Francesco Paolo Fiore''
+*Match analyst: ''Piero Colangelo''
+{{Colonne spezza}}
+'''''Settore Giovanile'''''
+*Responsabile: ''Gianluca Torma''
+{{Colonne spezza}}
+'''''Area comunicazione'''''
+*Responsabile comunicazione: ''Alessio Grieco''
+*Addetto stampa: ''Giuseppe Capano''
+*Responsabile marketing: ''Francesco Ordine''
+{{Colonne fine}}
+
+== Rosa ==
+In ''corsivo'' i calciatori ceduti a stagione in corso. Rosa aggiornata al 4 settembre 2026.
+{{Calciatore in rosa/inizio}}
+{{Calciatore in rosa|n=12|nazione=ITA|nome=Davide Marfella|ruolo=P}}
+{{Calciatore in rosa|n=22|nazione=ITA|nome=Gianluca Saro|ruolo=P}}
+{{Calciatore in rosa|n=80|nazione=ITA|nome=Angelo Testa|ruolo=P}}
+{{Calciatore in rosa|n=2|nazione=ITA|nome=Gianmarco Todisco|ruolo=D}}
+{{Calciatore in rosa|n=3|nazione=SEN|nome=Mohamed Seck|ruolo=D}}
+{{Calciatore in rosa|n=6|nazione=ITA|nome=Davide Di Pasquale|ruolo=D}}
+{{Calciatore in rosa|n=20|nazione=HUN|nome=Milán Demeter|ruolo=D}}
+{{Calciatore in rosa|n=21|nazione=ITA|nome=[[Filippo Berra]]|ruolo=D}}
+{{Calciatore in rosa|n=33|nazione=LVA|nome=Timurs Azarovs|ruolo=D}}
+{{Calciatore in rosa|n=51|nazione=FRA|nome=Corentin Parisy|ruolo=D}}
+{{Calciatore in rosa|n=4|nazione=ITA|nome=Andrea Gallo|ruolo=C}}
+{{Calciatore in rosa|n=8|nazione=SEN|nome=[[Mamadou Coulibaly (calciatore 1999)|Mamadou Coulibaly]]|ruolo=C}}
+{{Calciatore in rosa|n=16|nazione=FRA|nome=Hamza Haoudi|ruolo=C}}
+{{Calciatore in rosa|n=19|nazione=ITA|nome=Rinaldo Maestrelli|ruolo=C}}
+{{Calciatore in rosa|n=37|nazione=ITA|nome=Valdes Ngana|ruolo=C}}
+{{Calciatore in rosa/medio}}
+{{Calciatore in rosa|n=56|nazione=ITA|nome=Edoardo Chiara|ruolo=C}}
+{{Calciatore in rosa|n=74|nazione=ITA|nome=Sebastian Miu|ruolo=C}}
+{{Calciatore in rosa|n=--|nazione=ITA|nome=Gerardo Agnelli|ruolo=C}}
+{{Calciatore in rosa|n=--|nazione=ITA|nome=[[Federico Zuccon]]|ruolo=C}}
+{{Calciatore in rosa|n=7|nazione=ITA|nome=Enrico Oviszach|ruolo=A}}
+{{Calciatore in rosa|n=11|nazione=ITA|nome=Francesco Pio Petito|ruolo=A}}
+{{Calciatore in rosa|n=17|nazione=ITA|nome=[[Giuseppe Panico]]|ruolo=A}}
+{{Calciatore in rosa|n=18|nazione=ITA|nome=Pierluca Luciani|ruolo=A}}
+{{Calciatore in rosa|n=27|nazione=ITA|nome=Michele Bigonzoni|ruolo=A}}
+{{Calciatore in rosa|n=28|nazione=FRA|nome=Isyakha Touré|ruolo=A}}
+{{Calciatore in rosa|n=29|nazione=FRA|nome=[[Yanis Merdji]]|ruolo=A}}
+{{Calciatore in rosa|n=32|nazione=ITA|nome=Andrea Smeraldi|ruolo=A}}
+{{Calciatore in rosa|n=71|nazione=ITA|nome=Pietro Paolino|ruolo=A}}
+{{Calciatore in rosa|n=--|nazione=ITA|nome=Ferdinando Del Sole|ruolo=A}}
+{{Calciatore in rosa|n=--|nazione=ITA|nome=Mario Ravasio|ruolo=A}}
+{{Calciatore in rosa/fine}}
+
+== Calciomercato ==
+=== Sessione estiva ''(dal 01/07 al 01/09)'' ===
+{{colonne}}
+{| class="wikitable" style="font-size:90%"
+! colspan="4" | Acquisti
+|-
+! width=3% | R.
+! width=33% | Nome
+! width=28% | da
+! width=36% | Modalità
+|-
+| P || Davide Marfella || [[Società_Sportiva_Calcio_Bari|Bari]] || ''definitivo''
+|-
+| P || Gianluca Saro || [[Unione Sportiva Cremonese|Cremonese]] || ''definitivo''
+|-
+| D || Timurs Azarovs || Monza U20 || ''definitivo''
+|-
+| D || Filippo Berra || [[Unione Sportiva Salernitana 1919|Salernitana]]|| ''definitivo''
+|-
+| D || Milán Demeter || [[Diósgyőri Vasgyárak Testgyakorló Köre|Diósgyőr]] || ''definitivo''
+|-
+| D || Davide Di Pasquale || [[Football Club Crotone|Crotone]]|| ''definitivo''<ref>{{Cita web|url=https://www.calciofoggia1920.net/di-pasquale-torna-in-rossonero/|titolo=DI PASQUALE TORNA IN ROSSONERO|data=1º agosto 2026|accesso=8 agosto 2026}}</ref>
+|-
+| D || Corentin Parisy || Reims Sainte-Anne|| ''definitivo''
+|-
+| D || Gianmarco Todisco || [[Unione Sportiva Avellino 1912|Avellino]] || ''definitivo''
+|-
+| C || Edoardo Chiara || [[Siracusa Calcio 1924|Siracusa]] || ''definitivo''
+|-
+| C || Mamadou Coulibaly || [[Fussball Club Südtirol|Südtirol]] || ''definitivo''
+|-
+| C || Hamza Haoudi || [[Football Club Pro Vercelli 1892|Pro Vercelli]] || ''definitivo''
+|-
+| C || Rinaldo Maestrelli || [[Unione Sportiva Città di Pontedera|Pontedera]] || ''definitivo''
+|-
+| C || [[Federico Zuccon]]|| [[Atalanta Bergamasca Calcio|Atalanta]]|| ''definitivo''
+|-
+| A || Michele Bigonzoni || [[Unione Sportiva Cremonese|Cremonese]] || ''definitivo''
+|-
+| A || Yanis Merdji || [[Football Club des Girondins de Bordeaux|Bordeaux]] || ''definitivo''
+|-
+| A || Giuseppe Panico || [[Unione Sportiva Avellino 1912|Avellino]] || ''definitivo''
+|-
+| A || Andrea Smeraldi || Napoli U19 || ''definitivo''
+|-
+| A || Isyakha Touré || [[A.C.R. Messina 1900|ACR Messina]] || ''definitivo''
+|-
+| A || Mario Ravasio|| [[Società Sportiva Arezzo|Arezzo]]|| ''definitivo''
+|-
+| A || Ferdinando Del Sole|| [[Ascoli Calcio 1898 FC|Ascoli]]|| ''definitivo''
+|-
+| D || Mohamed Seck || Roma U20 || ''prestito''
+|-
+| D || Valdes Ngana || [[Juventus Next Gen]] || ''prestito''
+|-
+| C || Andrea Gallo || [[Football Club Crotone|Crotone]] || ''prestito con obbligo di riscatto'' <ref>{{Cita web|url=https://www.calciofoggia1920.net/bentornato-andrea-gallo/|titolo=BENTORNATO ANDREA GALLO|data=11 agosto 2026|accesso=11 agosto 2026}}</ref>
+|-
+| A || Pierluca Luciani || [[Ravenna Football Club 1913|Ravenna]] || ''prestito con obbligo di riscatto'' <ref>{{Cita web|url=https://www.calciofoggia1920.net/in-attacco-arriva-luciani/|titolo=In attacco arriva Luciani|data=21 agosto 2026|accesso=25 agosto 2026}}</ref>
+|-
+| A || Enrico Oviszach || [[Ascoli Calcio 1898 FC|Ascoli]] || ''prestito con diritto di riscatto'' <ref>{{Cita web|https://www.calciofoggia1920.net/oviszach-per-lattacco-del-foggia/|titolo=Oviszach per l'attacco del Foggia|data=5 agosto 2026|accesso=25 agosto 2026}}</ref>
+|-
+| A || Francesco Pio Petito || [[Dolomiti Bellunesi (squadra di calcio)|Dolomiti]] || ''prestito''
+|-
+| C || Claudio Conte || {{Calcio Heraclea|N|2025}} || ''fine prestito''
+|}
+{{colonne spezza}}
+
+{| class="wikitable" style="font-size:90%"
+! colspan="4" | Cessioni
+|-
+! width=3% | R.
+! width=33% | Nome
+! width=28% | a
+! width=36% | Modalità
+|-
+| P || Luca De Simone || [[Unione Sportiva Vibonese Calcio|Vibonese]] || ''definitivo''
+|-
+| P || Filippo Perucchini || [[Altamura Società Sportiva|Team Altamura]] || ''definitivo''
+|-
+| D || Eric Biasiol || [[Lucchese Calcio|Lucchese]] || ''definitivo''
+|-
+| D || Riccardo Brosco || [[Associazione Sportiva Ostia Mare Lido Calcio|Ostiamare]] || ''definitivo''
+|-
+| D || Gabriele Morelli || [[Unione Sportiva Pianese|Pianese]] || ''definitivo''
+|-
+| D || Cornelius Staver || [[Potenza Calcio|Potenza]] || ''definitivo''
+|-
+| C || Steeve-Mike Eyango || [[Sarnese 1926|Sarnese]] || ''definitivo''
+|-
+| C || Marco Oliva || [[Pineto Calcio|Pineto]] || ''definitivo''
+|-
+| A || Marco Bevilacqua || [[Unione Sportiva Salernitana 1919|Salernitana]] || ''definitivo''
+|-
+| A || Felice D'Amico || [[Unione Sportiva Folgore Caratese|Caratese]] || ''definitivo''
+|-
+| A || Michael Liguori || [[Catania Football Club|Catania]] || ''definitivo''
+|-
+| A || Luca Nocerino || [[AZ Picerno|Picerno]] || ''definitivo''
+|-
+| A || Mario Scoccola || Cosmano Sport || ''definitivo''
+|-
+| A || Christian Tommasini || [[Treviso Foot Ball Club|Treviso]] || ''definitivo''
+|-
+| C || Claudio Conte || {{Calcio Heraclea|N|2025}} || ''prestito''
+|-
+| P || Alexandru Borbei || [[Unione Sportiva Lecce|Lecce]] || ''fine prestito''
+|-
+| P || Federico Magro || [[Hellas Verona Football Club|Verona]] || ''fine prestito''
+|-
+| D || Alessio Buttaro || [[Palermo Football Club|Palermo]] || ''fine prestito''
+|-
+| D || Christian Dimarco || [[Aurora Pro Patria 1919|Pro Patria]] || ''fine prestito''
+|-
+| D || Alessandro Minelli || [[Giugliano Calcio 1928|Giugliano]] || ''fine prestito''
+|-
+| C || Gianmarco Castorri || [[Cesena Football Club|Cesena]] || ''fine prestito''
+|-
+| C || Lorenzo Menegazzo || [[Bologna Football Club 1909|Bologna]] || ''fine prestito''
+|-
+| C || Federico Romeo || [[Nuova Ternana 1925|Ternana]] || ''fine prestito''
+|-
+| A || Gianmarco Cangiano || [[Delfino Pescara 1936|Pescara]] || ''fine prestito''
+|-
+| D || Maxime Giron || || ''svincolato''
+|-
+| D || Francesco Rizzo || || ''svincolato''
+|-
+| D || Federico Valietti || || ''svincolato''
+|-
+| C || Vincenzo Garofalo || || ''svincolato''
+|-
+| C || Orazio Pazienza || || ''svincolato''
+|-
+| C || Giuseppe Pellegrino || || ''svincolato''
+|-
+| C || Davide Petermann || || ''svincolato''
+|-
+| A || Pierluigi La Porta|| || ''svincolato''
+|-
+| A || Till Winkelmann || || ''svincolato''
+|}
+{{colonne fine}}
+
+=== Sessione invernale ''(dal 02/01 al 02/02)'' ===
+{{colonne}}
+{| class="wikitable" style="font-size:90%"
+! colspan="4" | Acquisti
+|-
+! width=3% | R.
+! width=33% | Nome
+! width=28% | da
+! width=36% | Modalità
+|-
+
+|}
+{{colonne spezza}}
+{| class="wikitable" style="font-size:90%"
+! colspan="4" | Cessioni
+|-
+! width=3% | R.
+! width=33% | Nome
+! width=28% | a
+! width=36% | Modalità
+|-
+
+|}
+{{colonne fine}}
+
+== Risultati ==
+=== Serie C ===
+{{Vedi anche|Serie C 2026-2027}}
+==== Girone di andata ====
+{{Incontro di club
+|Sport = calcio
+|Giornomese = 24 agosto
+|Anno = 2026
+|Ora = 21:00 [[Central European Summer Time|CEST]]
+|Turno = 1ª giornata
+|Squadra 1 = Crotone
+|Squadra 2 = Foggia
+|Punteggio 1 =0
+|Punteggio 2 =1
+|Referto = https://www.transfermarkt.it/spielbericht/index/spielbericht/4979169
+|Città = [[Crotone]]
+|Stadio = [[Stadio Ezio Scida]]
+|Spettatori = 2.366
+|Arbitro = Cerbasi
+|Cittarbitro = [[Arezzo]]
+|Marcatori 1 =
+|Marcatori 2 = {{goal|23}} Petito
+|id = 1
+}}
+{{Incontro di club
+|Sport = calcio
+|Giornomese = 29 agosto
+|Anno = 2026
+|Ora = 18:00 [[Central European Summer Time|CEST]]
+|Turno = 2ª giornata
+|Squadra 1 = Foggia
+|Squadra 2 = Salernitana
+|Punteggio 1 = 1
+|Punteggio 2 = 1
+|Referto = https://www.transfermarkt.it/spielbericht/index/spielbericht/4979183
+|Città = [[Foggia]]
+|Stadio = [[Stadio Pino Zaccheria]]
+|Spettatori =0<ref>a porte chiuse</ref>
+|Arbitro = Gavini
+|Cittarbitro = [[Aprilia (Italia)|Aprilia]]
+|Marcatori 1 = Luciani {{Goal|1}}
+|Marcatori 2 = {{Goal|52}} [[Antonino La Gumina|La Gumina]]
+|Sfondo = on
+|id = 2
+}}
+{{Incontro di club
+|Sport = calcio
+|Giornomese = 6 settembre
+|Anno = 2026
+|Ora = 21:00 [[Central European Summer Time|CEST]]
+|Turno = 3ª giornata
+|Squadra 1 = Foggia
+|Squadra 2 = Audace Cerignola
+|Punteggio 1 =
+|Punteggio 2 =
+|Referto =
+|Città = [[Foggia]]
+|Stadio = [[Stadio Pino Zaccheria]]
+|Spettatori =
+|Arbitro =
+|Cittarbitro =
+|Marcatori 1 =
+|Marcatori 2 =
+|Sfondo =
+|id = 3
+}}
+{{Incontro di club
+|Sport = calcio
+|Giornomese = 12 settembre
+|Anno = 2026
+|Ora = 18:00 [[Central European Summer Time|CEST]]
+|Turno = 4ª giornata
+|Squadra 1 = Monopoli
+|Squadra 2 = Foggia
+|Punteggio 1 =
+|Punteggio 2 =
+|Referto =
+|Città = [[Monopoli (Italia)|Monopoli]]
+|Stadio = [[Stadio Vito Simone Veneziani]]
+|Spettatori =
+|Arbitro =
+|Cittarbitro =
+|Marcatori 1 =
+|Marcatori 2 =
+|Sfondo =on
+|id = 4
+}}
+{{Incontro di club
+|Sport = calcio
+|Giornomese = 15 settembre
+|Anno = 2026
+|Ora = 21:00 [[Central European Summer Time|CEST]]
+|Turno = 5ª giornata
+|Squadra 1 = Foggia
+|Squadra 2 = Savoia
+|Punteggio 1 =
+|Punteggio 2 =
+|Referto =
+|Città = [[Foggia]]
+|Stadio = [[Stadio Pino Zaccheria]]
+|Spettatori =
+|Arbitro =
+|Cittarbitro =
+|Marcatori 1 =
+|Marcatori 2 =
+|Sfondo =
+|id = 5
+}}
+{{Incontro di club
+|Sport = calcio
+|Giornomese = 20 settembre
+|Anno = 2026
+|Ora = 15:00 [[Central European Summer Time|CEST]]
+|Turno = 6ª giornata
+|Squadra 1 = Inter U23
+|Squadra 2 = Foggia
+|Punteggio 1 =
+|Punteggio 2 =
+|Referto =
+|Città = [[Sesto San Giovanni]]
+|Stadio = [[Stadio Ernesto Breda]]
+|Spettatori =
+|Arbitro =
+|Cittarbitro =
+|Marcatori 1 =
+|Marcatori 2 =
+|Sfondo =on
+|id = 6
+}}
+{{Incontro di club
+|Sport = calcio
+|Giornomese = 27 settembre
+|Anno = 2026
+|Ora = 20:30 [[Central European Summer Time|CEST]]
+|Turno = 7ª giornata
+|Squadra 1 = Foggia
+|Squadra 2 = Sorrento
+|Punteggio 1 =
+|Punteggio 2 =
+|Referto =
+|Città = [[Foggia]]
+|Stadio = [[Stadio Pino Zaccheria]]
+|Spettatori =
+|Arbitro =
+|Cittarbitro =
+|Marcatori 1 =
+|Marcatori 2 =
+|Sfondo =
+|id = 7
+}}
+{{Incontro di club
+|Sport = calcio
+|Giornomese = 4 ottobre
+|Anno = 2026
+|Ora = 14:30 [[Central European Summer Time|CEST]]
+|Turno = 8ª giornata
+|Squadra 1 = Cosenza
+|Squadra 2 = Foggia
+|Punteggio 1 =
+|Punteggio 2 =
+|Referto =
+|Città = [[Cosenza]]
+|Stadio = [[Stadio San Vito-Gigi Marulla]]
+|Spettatori =
+|Arbitro =
+|Cittarbitro =
+|Marcatori 1 =
+|Marcatori 2 =
+|Sfondo =on
+|id = 8
+}}
+{{Incontro di club
+|Sport = calcio
+|Giornomese = 11 ottobre
+|Anno = 2026
+|Ora =
+|Turno = 9ª giornata
+|Squadra 1 = Foggia
+|Squadra 2 = Potenza
+|Punteggio 1 =
+|Punteggio 2 =
+|Referto =
+|Città = [[Foggia]]
+|Stadio = [[Stadio Pino Zaccheria]]
+|Spettatori =
+|Arbitro =
+|Cittarbitro =
+|Marcatori 1 =
+|Marcatori 2 =
+|Sfondo =
+|id = 9
+}}
+{{Incontro di club
+|Sport = calcio
+|Giornomese = 18 ottobre
+|Anno = 2026
+|Ora =
+|Turno = 10ª giornata
+|Squadra 1 = Giugliano
+|Squadra 2 = Foggia
+|Punteggio 1 =
+|Punteggio 2 =
+|Referto =
+|Città = [[Giugliano in Campania]]
+|Stadio = [[Stadio Alberto De Cristofaro]]
+|Spettatori =
+|Arbitro =
+|Cittarbitro =
+|Marcatori 1 =
+|Marcatori 2 =
+|Sfondo = on
+|id = 10
+}}
+{{Incontro di club
+|Sport = calcio
+|Giornomese = 25 ottobre
+|Anno = 2026
+|Ora =
+|Turno = 11ª giornata
+|Squadra 1 = Foggia
+|Squadra 2 = Cavese
+|Punteggio 1 =
+|Punteggio 2 =
+|Referto =
+|Città = [[Foggia]]
+|Stadio = [[Stadio Pino Zaccheria]]
+|Spettatori =
+|Arbitro =
+|Cittarbitro =
+|Marcatori 1 =
+|Marcatori 2 =
+|Sfondo =
+|id = 11
+}}
+{{Incontro di club
+|Sport = calcio
+|Giornomese = 1º novembre
+|Anno = 2026
+|Ora =
+|Turno = 12ª giornata
+|Squadra 1 = Casarano
+|Squadra 2 = Foggia
+|Punteggio 1 =
+|Punteggio 2 =
+|Referto =
+|Città = [[Casarano]]
+|Stadio = [[Stadio Giuseppe Capozza]]
+|Spettatori =
+|Arbitro =
+|Cittarbitro =
+|Marcatori 1 =
+|Marcatori 2 =
+|Sfondo =on
+|id = 12
+}}
+{{Incontro di club
+|Sport = calcio
+|Giornomese = 8 novembre
+|Anno = 2026
+|Ora =
+|Turno = 13ª giornata
+|Squadra 1 = Foggia
+|Squadra 2 = Barletta
+|Punteggio 1 =
+|Punteggio 2 =
+|Referto =
+|Città = [[Foggia]]
+|Stadio = [[Stadio Pino Zaccheria]]
+|Spettatori =
+|Arbitro =
+|Cittarbitro =
+|Marcatori 1 =
+|Marcatori 2 =
+|Sfondo =
+|id = 13
+}}
+{{Incontro di club
+|Sport = calcio
+|Giornomese = 15 novembre
+|Anno = 2026
+|Ora =
+|Turno = 14ª giornata
+|Squadra 1 = Bari
+|Squadra 2 = Foggia
+|Punteggio 1 =
+|Punteggio 2 =
+|Referto =
+|Città = [[Bari]]
+|Stadio = [[Stadio San Nicola]]
+|Spettatori =
+|Arbitro =
+|Cittarbitro =
+|Marcatori 1 =
+|Marcatori 2 =
+|Sfondo =on
+|id = 14
+}}
+{{Incontro di club
+|Sport = calcio
+|Giornomese = 22 novembre
+|Anno = 2026
+|Ora =
+|Turno = 15ª giornata
+|Squadra 1 = Scafatese
+|Squadra 2 = Foggia
+|Punteggio 1 =
+|Punteggio 2 =
+|Referto =
+|Città = [[Scafati]]
+|Stadio = [[Stadio 28 settembre 1943-Giovanni Vitiello]]
+|Spettatori =
+|Arbitro =
+|Cittarbitro =
+|Marcatori 1 =
+|Marcatori 2 =
+|Sfondo =
+|id = 15
+}}
+{{Incontro di club
+|Sport = calcio
+|Giornomese = 29 novembre
+|Anno = 2026
+|Ora =
+|Turno = 16ª giornata
+|Squadra 1 = Foggia
+|Squadra 2 = Casertana
+|Punteggio 1 =
+|Punteggio 2 =
+|Referto =
+|Città = [[Foggia]]
+|Stadio = [[Stadio Pino Zaccheria]]
+|Spettatori =
+|Arbitro =
+|Cittarbitro =
+|Marcatori 1 =
+|Marcatori 2 =
+|Sfondo =on
+|id = 16
+}}
+{{Incontro di club
+|Sport = calcio
+|Giornomese = 6 dicembre
+|Anno = 2026
+|Ora =
+|Turno = 17ª giornata
+|Squadra 1 = AZ Picerno
+|Squadra 2 = Foggia
+|Punteggio 1 =
+|Punteggio 2 =
+|Referto =
+|Città = [[Picerno]]
+|Stadio = [[Stadio Donato Curcio]]
+|Spettatori =
+|Arbitro =
+|Cittarbitro =
+|Marcatori 1 =
+|Marcatori 2 =
+|Sfondo =
+|id = 17
+}}
+{{Incontro di club
+|Sport = calcio
+|Giornomese = 13 dicembre
+|Anno = 2026
+|Ora =
+|Turno = 18ª giornata
+|Squadra 1 = Foggia
+|Squadra 2 = Team Altamura
+|Punteggio 1 =
+|Punteggio 2 =
+|Referto =
+|Città = [[Foggia]]
+|Stadio = [[Stadio Pino Zaccheria]]
+|Spettatori =
+|Arbitro =
+|Cittarbitro =
+|Marcatori 1 =
+|Marcatori 2 =
+|Sfondo =on
+|id = 18
+}}
+{{Incontro di club
+|Sport = calcio
+|Giornomese = 20 dicembre
+|Anno = 2026
+|Ora =
+|Turno = 19ª giornata
+|Squadra 1 = Catania
+|Squadra 2 = Foggia
+|Punteggio 1 =
+|Punteggio 2 =
+|Referto =
+|Città = [[Catania]]
+|Stadio = [[Stadio Angelo Massimino]]
+|Spettatori =
+|Arbitro =
+|Cittarbitro =
+|Marcatori 1 =
+|Marcatori 2 =
+|Sfondo =
+|id = 19
+}}
+==== Girone di ritorno ====
+{{Incontro di club
+|Sport = calcio
+|Giornomese = 3 gennaio
+|Anno = 2027
+|Ora =
+|Turno = 20ª giornata
+|Squadra 1 = Foggia
+|Squadra 2 = Crotone
+|Punteggio 1 =
+|Punteggio 2 =
+|Referto =
+|Città = [[Foggia]]
+|Stadio = [[Stadio Pino Zaccheria]]
+|Spettatori =
+|Arbitro =
+|Cittarbitro =
+|Marcatori 1 =
+|Marcatori 2 =
+|Sfondo = on
+|id = 20
+}}
+{{Incontro di club
+|Sport = calcio
+|Giornomese = 10 gennaio
+|Anno = 2027
+|Ora =
+|Turno = 21ª giornata
+|Squadra 1 = Salernitana
+|Squadra 2 = Foggia
+|Punteggio 1 =
+|Punteggio 2 =
+|Referto =
+|Città = [[Salerno]]
+|Stadio = [[Stadio Arechi]]
+|Spettatori =
+|Arbitro =
+|Cittarbitro =
+|Marcatori 1 =
+|Marcatori 2 =
+|Sfondo =
+|id = 21
+}}
+{{Incontro di club
+|Sport = calcio
+|Giornomese = 17 gennaio
+|Anno = 2027
+|Ora =
+|Turno = 22ª giornata
+|Squadra 1 = Audace Cerignola
+|Squadra 2 = Foggia
+|Punteggio 1 =
+|Punteggio 2 =
+|Referto =
+|Città = [[Cerignola]]
+|Stadio = [[Stadio Domenico Monterisi]]
+|Spettatori =
+|Arbitro =
+|Cittarbitro =
+|Marcatori 1 =
+|Marcatori 2 =
+|Sfondo = on
+|id = 22
+}}
+{{Incontro di club
+|Sport = calcio
+|Giornomese = 24 gennaio
+|Anno = 2027
+|Ora =
+|Turno = 23ª giornata
+|Squadra 1 = Foggia
+|Squadra 2 = Monopoli
+|Punteggio 1 =
+|Punteggio 2 =
+|Referto =
+|Città = [[Foggia]]
+|Stadio = [[Stadio Pino Zaccheria]]
+|Spettatori =
+|Arbitro =
+|Cittarbitro =
+|Marcatori 1 =
+|Marcatori 2 =
+|Sfondo =
+|id = 23
+}}
+{{Incontro di club
+|Sport = calcio
+|Giornomese = 31 gennaio
+|Anno = 2027
+|Ora =
+|Turno = 24ª giornata
+|Squadra 1 = Savoia
+|Squadra 2 = Foggia
+|Punteggio 1 =
+|Punteggio 2 =
+|Referto =
+|Città = [[Torre Annunziata]]
+|Stadio = [[Stadio Alfredo Giraud]]
+|Spettatori =
+|Arbitro =
+|Cittarbitro =
+|Marcatori 1 =
+|Marcatori 2 =
+|Sfondo = on
+|id = 24
+}}
+{{Incontro di club
+|Sport = calcio
+|Giornomese = 7 febbraio
+|Anno = 2027
+|Ora =
+|Turno = 25ª giornata
+|Squadra 1 = Foggia
+|Squadra 2 = Inter U23
+|Punteggio 1 =
+|Punteggio 2 =
+|Referto =
+|Città = [[Foggia]]
+|Stadio = [[Stadio Pino Zaccheria]]
+|Spettatori =
+|Arbitro =
+|Cittarbitro =
+|Marcatori 1 =
+|Marcatori 2 =
+|Sfondo =
+|id = 25
+}}
+{{Incontro di club
+|Sport = calcio
+|Giornomese = 10 febbraio
+|Anno = 2027
+|Ora = 
+|Turno = 26ª giornata
+|Squadra 1 = Sorrento
+|Squadra 2 = Foggia
+|Punteggio 1 = 
+|Punteggio 2 = 
+|Referto = 
+|Città = [[Picerno]]
+|Stadio = [[Stadio Donato Curcio]]
+|Spettatori = 
+|Arbitro = 
+|Cittarbitro = 
+|Marcatori 1 = 
+|Marcatori 2 = 
+|Sfondo = on
+|id = 26
+}}
+{{Incontro di club
+|Sport = calcio
+|Giornomese = 14 febbraio
+|Anno = 2027
+|Ora =
+|Turno = 27ª giornata
+|Squadra 1 = Foggia
+|Squadra 2 = Cosenza
+|Punteggio 1 =
+|Punteggio 2 =
+|Referto =
+|Città = [[Foggia]]
+|Stadio = [[Stadio Pino Zaccheria]]
+|Spettatori =
+|Arbitro =
+|Cittarbitro =
+|Marcatori 1 =
+|Marcatori 2 =
+|Sfondo =
+|id = 27
+}}
+{{Incontro di club
+|Sport = calcio
+|Giornomese = 21 febbraio
+|Anno = 2027
+|Ora =
+|Turno = 28ª giornata
+|Squadra 1 = Potenza
+|Squadra 2 = Foggia
+|Punteggio 1 =
+|Punteggio 2 =
+|Referto =
+|Città = [[Potenza (Italia)|Potenza]]
+|Stadio = [[Stadio Alfredo Viviani]]
+|Spettatori =
+|Arbitro =
+|Cittarbitro =
+|Marcatori 1 =
+|Marcatori 2 =
+|Sfondo = on
+|id = 28
+}}
+{{Incontro di club
+|Sport = calcio
+|Giornomese = 28 febbraio
+|Anno = 2027
+|Ora =
+|Turno = 29ª giornata
+|Squadra 1 = Foggia
+|Squadra 2 = Giugliano
+|Punteggio 1 =
+|Punteggio 2 =
+|Referto =
+|Città = [[Foggia]]
+|Stadio = [[Stadio Pino Zaccheria]]
+|Spettatori =
+|Arbitro =
+|Cittarbitro =
+|Marcatori 1 =
+|Marcatori 2 =
+|Sfondo =
+|id = 29
+}}
+{{Incontro di club
+|Sport = calcio
+|Giornomese = 3 marzo
+|Anno = 2027
+|Ora =
+|Turno = 30ª giornata
+|Squadra 1 = Cavese
+|Squadra 2 = Foggia
+|Punteggio 1 =
+|Punteggio 2 =
+|Referto =
+|Città = [[Cava de' Tirreni]]
+|Stadio = [[Stadio Simonetta Lamberti]]
+|Spettatori =
+|Arbitro =
+|Cittarbitro =
+|Marcatori 1 =
+|Marcatori 2 =
+|Sfondo = on
+|id = 30
+}}
+{{Incontro di club
+|Sport = calcio
+|Giornomese = 7 marzo
+|Anno = 2027
+|Ora =
+|Turno = 31ª giornata
+|Squadra 1 = Foggia
+|Squadra 2 = Casarano
+|Punteggio 1 =
+|Punteggio 2 =
+|Referto =
+|Città = [[Foggia]]
+|Stadio = [[Stadio Pino Zaccheria]]
+|Spettatori =
+|Arbitro =
+|Cittarbitro =
+|Marcatori 1 =
+|Marcatori 2 =
+|Sfondo =
+|id = 31
+}}
+{{Incontro di club
+|Sport = calcio
+|Giornomese = 14 marzo
+|Anno = 2027
+|Ora =
+|Turno = 32ª giornata
+|Squadra 1 = Barletta
+|Squadra 2 = Foggia
+|Punteggio 1 =
+|Punteggio 2 =
+|Referto =
+|Città = [[Barletta]]
+|Stadio = [[Stadio Cosimo Puttilli]]
+|Spettatori =
+|Arbitro =
+|Cittarbitro =
+|Marcatori 1 =
+|Marcatori 2 =
+|Sfondo = on
+|id = 32
+}}
+{{Incontro di club
+|Sport = calcio
+|Giornomese = 21 marzo
+|Anno = 2027
+|Ora =
+|Turno = 33ª giornata
+|Squadra 1 = Foggia
+|Squadra 2 = Bari
+|Punteggio 1 =
+|Punteggio 2 =
+|Referto =
+|Città = [[Foggia]]
+|Stadio = [[Stadio Pino Zaccheria]]
+|Spettatori =
+|Arbitro =
+|Cittarbitro =
+|Marcatori 1 =
+|Marcatori 2 =
+|Sfondo =
+|id = 33
+}}
+{{Incontro di club
+|Sport = calcio
+|Giornomese = 27 marzo
+|Anno = 2027
+|Ora =
+|Turno = 34ª giornata
+|Squadra 1 = Foggia
+|Squadra 2 = Scafatese
+|Punteggio 1 =
+|Punteggio 2 =
+|Referto =
+|Città = [[Foggia]]
+|Stadio = [[Stadio Pino Zaccheria]]
+|Spettatori =
+|Arbitro =
+|Cittarbitro =
+|Marcatori 1 =
+|Marcatori 2 =
+|Sfondo = on
+|id = 34
+}}
+{{Incontro di club
+|Sport = calcio
+|Giornomese = 4 aprile
+|Anno = 2027
+|Ora =
+|Turno = 35ª giornata
+|Squadra 1 = Casertana
+|Squadra 2 = Foggia
+|Punteggio 1 =
+|Punteggio 2 =
+|Referto =
+|Città = [[Caserta]]
+|Stadio = [[Stadio Alberto Pinto]]
+|Spettatori =
+|Arbitro =
+|Cittarbitro =
+|Marcatori 1 =
+|Marcatori 2 =
+|Sfondo =
+|id = 35
+}}
+{{Incontro di club
+|Sport = calcio
+|Giornomese = 11 aprile
+|Anno = 2027
+|Ora =
+|Turno = 36ª giornata
+|Squadra 1 = Foggia
+|Squadra 2 = AZ Picerno
+|Punteggio 1 =
+|Punteggio 2 =
+|Referto =
+|Città = [[Foggia]]
+|Stadio = [[Stadio Pino Zaccheria]]
+|Spettatori =
+|Arbitro =
+|Cittarbitro =
+|Marcatori 1 =
+|Marcatori 2 =
+|Sfondo = on
+|id = 36
+}}
+{{Incontro di club
+|Sport = calcio
+|Giornomese = 18 aprile
+|Anno = 2027
+|Ora =
+|Turno = 37ª giornata
+|Squadra 1 = Team Altamura
+|Squadra 2 = Foggia
+|Punteggio 1 =
+|Punteggio 2 =
+|Referto =
+|Città = [[Altamura]]
+|Stadio = [[Stadio Antonio D'Angelo|Stadio Tonino D'Angelo]]
+|Spettatori =
+|Arbitro =
+|Cittarbitro =
+|Marcatori 1 =
+|Marcatori 2 =
+|Sfondo =
+|id = 37
+}}
+{{Incontro di club
+|Sport = calcio
+|Giornomese = 25 aprile
+|Anno = 2027
+|Ora =
+|Turno = 38ª giornata
+|Squadra 1 = Foggia
+|Squadra 2 = Catania
+|Punteggio 1 =
+|Punteggio 2 =
+|Referto =
+|Città = [[Foggia]]
+|Stadio = [[Stadio Pino Zaccheria]]
+|Spettatori =
+|Arbitro =
+|Cittarbitro =
+|Marcatori 1 =
+|Marcatori 2 =
+|Sfondo = on
+|id = 38
+}}
+
+=== Coppa Italia Serie C ===
+{{Vedi anche|Coppa Italia Serie C 2026-2027|}}
+
+{{Incontro di club
+|Sport = calcio
+|Giornomese = 16 agosto
+|Anno = 2025
+|Ora = 21:00 [[Central European Summer Time|CEST]]
+|Turno = Primo turno
+|Squadra 1 = Foggia
+|Squadra 2 = Altamura
+|Punteggio 1 = 1
+|Punteggio 2 = 2
+|Referto = https://www.transfermarkt.it/spielbericht/index/spielbericht/4979646§
+|Città = [[Foggia]]
+|Stadio = [[Stadio Pino Zaccheria]]
+|Spettatori = 0<ref>a porte chiuse</ref>
+|Arbitro = Bruno Tierno
+|Cittarbitro = [[Sala Consilina]]
+|Marcatori 1 = Azarovs {{goal|76}}
+|Marcatori 2 = {{goal|50}} Malcore<br />{{goal|83}} Mogentale
+|Sfondo = 
+}}
+
+== Statistiche ==
+=== Statistiche di squadra ===
+{{Statistiche_squadra
+|comp1=[[Serie C 2026-2027|Serie C]]
+|punti1= 
+|cv1= 0
+|cn1= 1
+|cp1= 0
+|cgf1= 1
+|cgs1= 1
+|tv1= 1
+|tn1= 0
+|tp1= 0
+|tgf1= 1
+|tgs1= 0
+|comp2=[[Coppa Italia Serie C 2026-2027|Coppa Italia Serie C]]
+|punti2=-
+|cv2= 0
+|cn2= 0
+|cp2= 1
+|cgf2= 1
+|cgs2= 2
+|tv2= 
+|tn2= 
+|tp2= 
+|tgf2= 
+|tgs2= 
+}}
+
+=== Andamento in campionato ===
+{{Andamento|nr=38}}
+{{Andamento/Luogo|m1=T|m2=C|m3=T|m4=C|m5=T|m6=C|m7=T|m8=T|m9=C|m10=T|m11=C|m12=T|m13=C|m14=C|m15=T|m16=C|m17=T|m18=C|m19=T|m20=C|m21=T|m22=C|m23=T|m24=C|m25=T|m26=C|m27=C|m28=T|m29=C|m30=T|m31=C|m32=T|m33=T|m34=C|m35=T|m36=C|m37=T|m38=C}}
+{{Andamento/Risultato|m1=V|m2=N|m3=|m4=|m5=|m6=|m7=|m8=|m9=|m10=|m11=|m12=|m13=|m14=|m15=|m16=|m17=|m18=|m19=|m20=|m21=|m22=|m23=|m24=|m25=|m26=|m27=|m28=|m29=|m30=|m31=|m32=|m33=|m34=|m35=|m36=|m37=|m38=}}
+{{Andamento/Posizione|m1=8|m2=6|m3=|m4=|m5=|m6=|m7=|m8=|m9=|m10=|m11=|m12=|m13=|m14=|m15=|m16=|m17=|m18=|m19=|m20=|m21=|m22=|m23=|m24=|m25=|m26=|m27=|m28=|m29=|m30=|m31=|m32=|m33=|m34=|m35=|m36=|m37=|m38=}}
+{{Andamento/Fine}}
+
+=== Statistiche dei giocatori ===
+In ''corsivo'' i calciatori ceduti a stagione in corso.
+{{Statistiche dei giocatori
+| Competizione1 = Serie C
+| Competizione2 = Coppa Italia Serie C
+| Totale = 1
+| Cartellini = 1
+| {{Sortname|D.|Marfella|nolink=1}}{{Sommastat|0|0|0|0|0|0|0|0}}| {{Sortname|G.|Agnelli|nolink=1}}{{Sommastat|0|0|0|0|0|0|0|0}}
+| {{Sortname|G.|Saro|nolink=1}}{{Sommastat|0|0|0|0|0|0|0|0}}
+| {{Sortname|A.|Testa|nolink=1}}{{Sommastat|0|0|0|0|0|0|0|0}}
+| {{Sortname|T.|Azarovs|nolink=1}}{{Sommastat|0|0|0|0|0|0|0|0}}
+| {{Sortname|F.|Zuccon|nolink=1}}{{Sommastat|0|0|0|0|0|0|0|0}}| {{Sortname|M.|Demeter|nolink=1}}{{Sommastat|0|0|0|0|0|0|0|0}}
+| {{Sortname|D.|Di Pasquale|nolink=1}}{{Sommastat|0|0|0|0|0|0|0|0}}
+| {{Sortname|C.|Parisy|nolink=1}}{{Sommastat|0|0|0|0|0|0|0|0}}
+| {{Sortname|M.|Seck|nolink=1}}{{Sommastat|0|0|0|0|0|0|0|0}}
+| {{Sortname|G.|Todisco|nolink=1}}{{Sommastat|0|0|0|0|0|0|0|0}}
+| {{Sortname|E.|Chiara|nolink=1}}{{Sommastat|0|0|0|0|0|0|0|0}}
+| {{Sortname|M.|Coulibaly|nolink=1}}{{Sommastat|0|0|0|0|0|0|0|0}}
+| {{Sortname|A.|Gallo|nolink=1}}{{Sommastat|0|0|0|0|0|0|0|0}}
+| {{Sortname|H.|Haoudi|nolink=1}}{{Sommastat|0|0|0|0|0|0|0|0}}
+| {{Sortname|R.|Maestrelli|nolink=1}}{{Sommastat|0|0|0|0|0|0|0|0}}
+| {{Sortname|S.|Miu|nolink=1}}{{Sommastat|0|0|0|0|0|0|0|0}}
+| {{Sortname|M.|Bigonzoni|nolink=1}}{{Sommastat|0|0|0|0|0|0|0|0}}
+| {{Sortname|P.|Luciani|nolink=1}}{{Sommastat|0|0|0|0|0|0|0|0}}
+| {{Sortname|Y.|Merdji|nolink=1}}{{Sommastat|0|0|0|0|0|0|0|0}}
+| {{Sortname|E.|Oviszach|nolink=1}}{{Sommastat|0|0|0|0|0|0|0|0}}
+| {{Sortname|G.|Panico|nolink=1}}{{Sommastat|0|0|0|0|0|0|0|0}}
+| {{Sortname|P.|Paolino|nolink=1}}{{Sommastat|0|0|0|0|0|0|0|0}}
+| {{Sortname|F. P.|Petito|nolink=1}}{{Sommastat|0|0|0|0|0|0|0|0}}
+| {{Sortname|A.|Smeraldi|nolink=1}}{{Sommastat|0|0|0|0|0|0|0|0}}
+| {{Sortname|F.|Berra|nolink=1}}{{Sommastat|0|0|0|0|0|0|0|0}}
+| {{Sortname|V.|Ngana|nolink=1}}{{Sommastat|0|0|0|0|0|0|0|0}}
+| {{Sortname|I.|Touré|nolink=1}}{{Sommastat|0|0|0|0|0|0|0|0}}
+| {{Sortname|F.|Del Sole|nolink=1}}{{Sommastat|0|0|0|0|0|0|0|0}}| {{Sortname|M.|Ravasio|nolink=1}}{{Sommastat|0|0|0|0|0|0|0|0}}}}
+
+==Note==
+<references/>
+
+==Collegamenti esterni==
+* {{cita web|url=http://www.calciofoggia1920.net/|titolo=Sito ufficiale}}
+
+{{Calcio Foggia storico}}
+{{Calcio in Italia 2026-2027}}
+{{Portale|calcio}}

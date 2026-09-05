@@ -1,0 +1,330 @@
+{
+  "competitions": [
+    {
+      "competition": "Serie C",
+      "points": null,
+      "home": {
+        "won": 0,
+        "drawn": 1,
+        "lost": 0,
+        "goalsFor": 1,
+        "goalsAgainst": 1
+      },
+      "away": {
+        "won": 1,
+        "drawn": 0,
+        "lost": 0,
+        "goalsFor": 1,
+        "goalsAgainst": 0
+      }
+    },
+    {
+      "competition": "Coppa Italia Serie C",
+      "points": null,
+      "home": {
+        "won": 0,
+        "drawn": 0,
+        "lost": 1,
+        "goalsFor": 1,
+        "goalsAgainst": 2
+      },
+      "away": {
+        "won": 0,
+        "drawn": 0,
+        "lost": 0,
+        "goalsFor": 0,
+        "goalsAgainst": 0
+      }
+    }
+  ],
+  "trend": [
+    {
+      "matchday": 1,
+      "venue": "away",
+      "result": "W",
+      "position": 8
+    },
+    {
+      "matchday": 2,
+      "venue": "home",
+      "result": "D",
+      "position": 6
+    },
+    {
+      "matchday": 3,
+      "venue": "away",
+      "result": null,
+      "position": null
+    },
+    {
+      "matchday": 4,
+      "venue": "home",
+      "result": null,
+      "position": null
+    },
+    {
+      "matchday": 5,
+      "venue": "away",
+      "result": null,
+      "position": null
+    },
+    {
+      "matchday": 6,
+      "venue": "home",
+      "result": null,
+      "position": null
+    },
+    {
+      "matchday": 7,
+      "venue": "away",
+      "result": null,
+      "position": null
+    },
+    {
+      "matchday": 8,
+      "venue": "away",
+      "result": null,
+      "position": null
+    },
+    {
+      "matchday": 9,
+      "venue": "home",
+      "result": null,
+      "position": null
+    },
+    {
+      "matchday": 10,
+      "venue": "away",
+      "result": null,
+      "position": null
+    },
+    {
+      "matchday": 11,
+      "venue": "home",
+      "result": null,
+      "position": null
+    },
+    {
+      "matchday": 12,
+      "venue": "away",
+      "result": null,
+      "position": null
+    },
+    {
+      "matchday": 13,
+      "venue": "home",
+      "result": null,
+      "position": null
+    },
+    {
+      "matchday": 14,
+      "venue": "home",
+      "result": null,
+      "position": null
+    },
+    {
+      "matchday": 15,
+      "venue": "away",
+      "result": null,
+      "position": null
+    },
+    {
+      "matchday": 16,
+      "venue": "home",
+      "result": null,
+      "position": null
+    },
+    {
+      "matchday": 17,
+      "venue": "away",
+      "result": null,
+      "position": null
+    },
+    {
+      "matchday": 18,
+      "venue": "home",
+      "result": null,
+      "position": null
+    },
+    {
+      "matchday": 19,
+      "venue": "away",
+      "result": null,
+      "position": null
+    },
+    {
+      "matchday": 20,
+      "venue": "home",
+      "result": null,
+      "position": null
+    },
+    {
+      "matchday": 21,
+      "venue": "away",
+      "result": null,
+      "position": null
+    },
+    {
+      "matchday": 22,
+      "venue": "home",
+      "result": null,
+      "position": null
+    },
+    {
+      "matchday": 23,
+      "venue": "away",
+      "result": null,
+      "position": null
+    },
+    {
+      "matchday": 24,
+      "venue": "home",
+      "result": null,
+      "position": null
+    },
+    {
+      "matchday": 25,
+      "venue": "away",
+      "result": null,
+      "position": null
+    },
+    {
+      "matchday": 26,
+      "venue": "home",
+      "result": null,
+      "position": null
+    },
+    {
+      "matchday": 27,
+      "venue": "home",
+      "result": null,
+      "position": null
+    },
+    {
+      "matchday": 28,
+      "venue": "away",
+      "result": null,
+      "position": null
+    },
+    {
+      "matchday": 29,
+      "venue": "home",
+      "result": null,
+      "position": null
+    },
+    {
+      "matchday": 30,
+      "venue": "away",
+      "result": null,
+      "position": null
+    },
+    {
+      "matchday": 31,
+      "venue": "home",
+      "result": null,
+      "position": null
+    },
+    {
+      "matchday": 32,
+      "venue": "away",
+      "result": null,
+      "position": null
+    },
+    {
+      "matchday": 33,
+      "venue": "away",
+      "result": null,
+      "position": null
+    },
+    {
+      "matchday": 34,
+      "venue": "home",
+      "result": null,
+      "position": null
+    },
+    {
+      "matchday": 35,
+      "venue": "away",
+      "result": null,
+      "position": null
+    },
+    {
+      "matchday": 36,
+      "venue": "home",
+      "result": null,
+      "position": null
+    },
+    {
+      "matchday": 37,
+      "venue": "away",
+      "result": null,
+      "position": null
+    },
+    {
+      "matchday": 38,
+      "venue": "home",
+      "result": null,
+      "position": null
+    }
+  ],
+  "derived": {
+    "played": 3,
+    "cleanSheets": 1,
+    "failedToScore": 0,
+    "goalsFor": 3,
+    "goalsAgainst": 3,
+    "avgGoalsFor": 1,
+    "avgGoalsAgainst": 1,
+    "biggestWin": "Crotone 0-1 Foggia",
+    "worstLoss": "Foggia 1-2 Team Altamura",
+    "bestPosition": 6,
+    "worstPosition": 8,
+    "byWindow": [
+      {
+        "label": "1-15'",
+        "scored": 1,
+        "conceded": 0
+      },
+      {
+        "label": "16-30'",
+        "scored": 1,
+        "conceded": 0
+      },
+      {
+        "label": "31-45'",
+        "scored": 0,
+        "conceded": 0
+      },
+      {
+        "label": "46-60'",
+        "scored": 0,
+        "conceded": 2
+      },
+      {
+        "label": "61-75'",
+        "scored": 0,
+        "conceded": 0
+      },
+      {
+        "label": "76-90'",
+        "scored": 1,
+        "conceded": 1
+      }
+    ],
+    "scorers": [
+      {
+        "name": "Azarovs",
+        "goals": 1
+      },
+      {
+        "name": "Petito",
+        "goals": 1
+      },
+      {
+        "name": "Luciani",
+        "goals": 1
+      }
+    ],
+    "homeAttendanceAvg": 0
+  }
+}

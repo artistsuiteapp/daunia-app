@@ -1,0 +1,91 @@
+=== Classifica ===
+{| class="wikitable sortable" style="text-align: center; margin:auto; font-size: 90%;"
+!width=7%|
+!width=7%|{{Abbr|Pos.|Posizione}}
+!width=27%|Squadra
+!width=10%|{{Abbr|Pt|Punti}}
+!width=7%|{{Abbr|G|Giocate}}
+!width=7%|{{Abbr|V|Vinte}}
+!width=7%|{{Abbr|N|Nulle}}
+!width=7%|{{Abbr|P|Perse}}
+!width=7%|{{Abbr|GF|Gol fatti}}
+!width=7%|{{Abbr|GS|Gol subiti}}
+!width=7%|{{Abbr|DR|Differenza reti}}
+|- style="background:#FFFF66;"
+| {{simbolo|1uparrow green.svg|15}} ||1.|| style="text-align:left" |{{Calcio Potenza}}
+|'''6'''||2||2||0||0||6||2||+4
+|- style="background:#CCFF99"
+| {{simbolo|Noatunloopsong (nuvola).svg|15}} ||2.|| style="text-align:left" |{{Calcio Picerno}}
+|'''6'''||2||2||0||0||5||2||+3
+|- style="background:#CCFF99"
+|{{simbolo|Noatunloopsong (nuvola).svg|15}} ||3.|| style="text-align: left;" |{{Calcio Sorrento}}
+|'''6'''||2||2||0||0||3||1||+2
+|-
+|{{simbolo|Noatunloopsong (nuvola).svg|15}}||4.|| style="text-align:left" |{{Calcio Barletta}}
+|'''4'''||2||1||1||0||6||3||+3
+|-
+| {{simbolo|Noatunloopsong (nuvola).svg|15}}||5.|| style="text-align:left" |{{Calcio Casertana}}
+|'''4'''||2||1||1||0||5||4||+1
+|-
+| {{simbolo|Noatunloopsong (nuvola).svg|15}}||6.|| style="text-align:left" |{{Calcio Inter U23}}
+|'''4'''||2||1||1||0||3||2||+1
+|-
+| {{simbolo|Noatunloopsong (nuvola).svg|15}}||7.|| style="text-align:left" |{{Calcio Altamura}}
+|'''4'''||2||1||1||0||2||1||+1
+|-
+| {{simbolo|Noatunloopsong (nuvola).svg|15}}||8.|| style="text-align:left" |{{Calcio Foggia}}
+|'''4'''||2||1||1||0||2||1||+1
+|-
+| {{simbolo|Noatunloopsong (nuvola).svg|15}}||9.|| style="text-align:left" |{{Calcio Monopoli}}
+|'''3'''||2||1||0||1||2||1||+1
+|-
+| {{simbolo|Noatunloopsong (nuvola).svg|15}}||10.|| style="text-align:left" |{{Calcio Cerignola}}
+|'''3'''||2||1||0||1||4||4||0
+|-
+| ||11.|| style="text-align:left" |{{Calcio Bari}}
+|'''3'''||2||1||0||1||3||3||0
+|-
+| ||12.|| style="text-align:left" |{{Calcio Cavese}}
+|'''3'''||2||1||0||1||3||4||-1
+|-
+| ||13.|| style="text-align:left" |{{Calcio Casarano}}
+|'''3'''||2||1||0||1||5||7||-2
+|-
+| ||14.|| style="text-align:left" |{{Calcio Giugliano}}
+|'''1'''||2||0||1||1||6||7||-1
+|-
+| ||15.|| style="text-align:left" |{{Calcio Salernitana}}
+|'''1'''||2||0||1||1||2||3||-1
+|-
+| {{simbolo|Noatunloopsong (nuvola).svg|15}}||16.|| style="text-align:left" |{{Calcio Scafatese}}
+|'''1'''||2||0||1||1||3||5||-2
+|-
+|{{simbolo|Noatunloopsong (nuvola).svg|15}} ||17.|| style="text-align: left;" |{{Calcio Savoia}}
+|'''0'''||2||0||0||2||3||5||-2
+|-
+|{{simbolo|Noatunloopsong (nuvola).svg|15}} ||18.|| style="text-align: left;" |{{Calcio Cosenza}}
+|'''0'''||2||0||0||2||2||5||-3
+|-
+| {{simbolo|Noatunloopsong (nuvola).svg|15}} ||19.|| style="text-align:left;" |{{Calcio Catania}}
+|'''0'''||2||0||0||2||1||4||-3
+|- style="background:#FFCCCC"
+| {{simbolo|1downarrow red.svg|15}} ||20.|| style="text-align:left" |{{Calcio Crotone}} <small>(-6)</small>
+|'''-6'''||2||0||0||2||0||2||-2
+|}
+<div style="font-size:smaller">{{Colonne}}'''''Legenda:'''''
+:<span style="background-color:#FFFF66;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Promosso in '''Serie B 2027-2028'''.
+:<span style="background-color:#CCFF99;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Ammessa direttamente ai play-off nazionali.
+:{{Simbolo|Noatunloopsong (nuvola).svg|15}}&nbsp;&nbsp;Ammesso ai play-off o ai play-out. 
+:<span style="background-color:#FFCCCC;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> Retrocesso in '''Serie D 2027-2028'''.
+{{Colonne spezza}}'''''Regolamento:'''''
+:Tre punti per la vittoria, uno per il pareggio, zero per la sconfitta.
+:In caso di arrivo di due o più squadre a pari punti, la graduatoria verrà stilata secondo la ''classifica avulsa'' tra le squadre interessate che prevede, in ordine, i seguenti criteri:
+:*Punti negli scontri diretti.
+:*Differenza reti negli scontri diretti.
+:*Differenza reti generale.
+:*Reti realizzate in generale.
+:*Sorteggio.
+
+'''''Note:'''''
+:Il Crotone ha scontato 6 punti di penalizzazione.<ref>{{Cita web|lingua=it-IT|url=https://www.figc.it/it/federazione/news/violazioni-amministrative-2-punti-di-penalizzazione-alla-juve-stabia-6-al-crotone-5-al-trapani-e-7-al-siracusa-o8y5dxvf|titolo=Violazioni amministrative: 2 punti di penalizzazione alla Juve Stabia, 6 al Crotone, 5 al Trapani e 7 al Siracusa|data=2026-05-28|accesso=2026-07-22}}</ref>{{Colonne fine}}
+</div>
