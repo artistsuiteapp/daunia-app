@@ -13,33 +13,42 @@
 
 Alternative, se vuoi qualcosa di più diretto:
 - Ho fatto un'app per il Foggia. Serve una mano per finirla.
-- Il Tifo della Daunia: il posto che ai tifosi rossoneri manca
+- Sono andato via da Foggia. Il Foggia no.
 
 ---
 
 ## Racconta la tua storia
 
-Sono foggiano e tifoso del Foggia. Questa app l'ho fatta per noi.
+Sono foggiano e tifoso del Foggia. Per lavoro ho dovuto lasciare la città, e da
+allora allo Zaccheria ci torno poche volte all'anno.
 
-Di app che danno risultati, classifica e formazioni ce ne sono già, e funzionano
+Chi è partito sa come funziona. La squadra la segui lo stesso, certe volte pure
+di più. Quello che si perde sono gli altri: il discorso al bar il lunedì mattina,
+la faccia di chi ti sta accanto quando entra il gol, uno che ti scrive due minuti
+dopo il fischio finale solo per dirti che partita è stata.
+
+Volevo un posto dove ritrovarli. Non l'ho trovato, così me lo sono fatto.
+
+### Quello che c'è già, e quello che manca
+
+Di app che danno risultati, classifica e formazioni ce ne sono, e funzionano
 bene. Le uso anch'io. Però sono uguali per tutte e sessanta le squadre della
 Serie C: si aprono su un elenco di partite dove il Foggia è una riga fra le
 altre, e di noi tifosi non c'è traccia.
 
-Il problema non sono i dati. I dati ci sono, sono gratis e li trovi ovunque.
-Manca il posto dove stiamo noi.
+I dati non sono il problema. I dati ci sono, sono gratis e li trovi ovunque.
 
-Cinquemila e trecento persone hanno fatto l'abbonamento quest'anno. Per la Serie
-C è un numero che poche piazze fanno. Eppure per parlarci finiamo sotto un post
-di Facebook, dove metà delle risposte sono di gente che del Foggia non gliene
-importa niente, oppure in gruppi WhatsApp che si aprono a settembre e muoiono a
-novembre.
+Cinquemila e trecento persone hanno fatto l'abbonamento quest'anno, e per la
+Serie C è un numero che poche piazze fanno. Loro almeno la domenica si vedono.
+Chi sta fuori come me ha solo i commenti sotto un post di Facebook, dove metà
+delle risposte sono di gente che del Foggia non gliene importa niente, oppure
+gruppi WhatsApp che nascono a settembre e muoiono a novembre.
 
-Un tifoso della Juventus quel posto ce l'ha. Noi ci arrangiamo.
+Manca il posto dove stiamo tutti.
 
-### Così me la sono fatta
+### L'app
 
-L'app esiste già. Si apre dal telefono senza installare niente e la puoi provare
+Esiste già. Si apre dal telefono senza installare niente e la puoi provare
 adesso:
 
 **daunia.vercel.app**
@@ -47,18 +56,18 @@ adesso:
 La parte che conta è questa, e non la trovi da nessun'altra parte:
 
 - **La Curva.** I tifosi discutono per argomento e le discussioni restano. Chi
-  risponde fra tre giorni trova ancora il filo dov'era. Non commenti che
-  spariscono in fondo a un post.
+  risponde fra tre giorni trova ancora il filo dov'era, non un commento sepolto
+  in fondo a un post.
 - **Ci sono anch'io.** Dici in quale settore vai e lo stadio nel modello si
-  riempie. Prima della partita vedi quanti saranno in Curva Nord con te.
+  riempie. Prima della partita vedi quanti saranno in Curva Nord.
 - **Le pagelle.** Dopo il fischio finale voti i giocatori e vedi la media di
   tutti gli altri. Non quella di un giornalista: la nostra.
 - **I pronostici.** Indovini il risultato, e per tutta la stagione c'è una
   classifica di chi ne prende di più.
 
-Queste quattro oggi girano in dimostrazione. Le provi, ma i numeri che vedi
-accanto sono di esempio, e l'app te lo scrive in ogni schermata. Diventano veri
-quando arrivano gli account.
+Queste quattro oggi girano in dimostrazione. Le provi davvero, ma i numeri che
+vedi accanto sono di esempio, e l'app te lo scrive in ogni schermata. Diventano
+veri quando arrivano gli account.
 
 Poi c'è tutto il resto, con dentro solo il Foggia e nessuna delle altre
 cinquantanove squadre:
@@ -86,8 +95,8 @@ Queste cose non le so fare, e da qui viene la richiesta di soldi.
 
 ### Cosa chiedo
 
-**500 €.** Il lavoro lo metto io e continuo a metterlo: le ore le ho già fatte e
-non le sto chiedendo a nessuno.
+**500 €.** Il lavoro non lo pago a nessuno: le ore le ho messe io e continuo a
+metterle.
 
 | Voce | Costo |
 |---|---|
@@ -115,30 +124,6 @@ Questa raccolta però non lo presuppone.
 
 Aprila e provala. Scrivimi cosa non va, che poi lo sistemo. E se conosci qualcuno
 che segue il Foggia, mandagliela: mi serve quasi quanto i soldi.
-
----
-
-## Aperture alternative
-
-[Scegli quella vera e sostituisci la prima riga. Quella nel testo dice solo
-quello che mi hai detto: sei foggiano e tifoso. Tutto il resto lo devi mettere
-tu, perche riguarda te.]
-
-**A — quella che c'e adesso, minima**
-> Sono foggiano e tifoso del Foggia. Questa app l'ho fatta per noi.
-
-**B — se allo stadio ci vai**
-> Sono foggiano, e al Foggia ci vado da quando mio padre mi ci portava. [oppure
-> l'anno, o il primo ricordo: piu e specifico, piu funziona]
-
-**C — se lo segui da lontano**
-> Sono di Foggia ma non ci vivo piu. Il Foggia lo seguo lo stesso, e da fuori si
-> sente ancora di piu quanto manchi un posto dove stiamo tutti.
-
-**D — se preferisci partire dal problema**
-> Di app che danno risultati e classifica della Serie C ce ne sono, e funzionano.
-> Quello che non c'e e un posto dove stiano i tifosi del Foggia. Sono foggiano,
-> e me lo sono fatto.
 
 ---
 
