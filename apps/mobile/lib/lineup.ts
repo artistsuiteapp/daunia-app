@@ -222,3 +222,19 @@ export function lineupPerPartita(date?: string): Formazione {
   const p = probableLineup();
   return { ...p, vera: false, estranei: [] };
 }
+
+/**
+ * Gli id di rosa dell'undici ufficiale di una partita.
+ *
+ * Serve al confronto con la Formazione della Curva: la fonte manda nomi e
+ * numeri, la curva vota id. Chi non e in rosa non entra nel confronto, perche
+ * nessuno avrebbe potuto schierarlo.
+ */
+export function idsUfficiali(m: MatchLineup): string[] {
+  const lato = m.lineups.find((l) => l.isFoggia);
+  if (!lato) return [];
+  return lato.startXI
+    .map((p) => trova(p))
+    .filter((p): p is Player => Boolean(p))
+    .map((p) => p.id);
+}
