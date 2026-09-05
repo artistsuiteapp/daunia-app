@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { router } from 'expo-router';
-import { Animated, Easing, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Animated, Easing, Pressable, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import { Screen, useGutter } from '../components/ui';
@@ -24,6 +24,10 @@ import { foggiaRow, nextMatch } from '../lib/data';
  */
 export default function Benvenuto() {
   const gutter = useGutter();
+  const { height } = useWindowDimensions();
+  // su un iPhone in Safari restano circa 660 punti utili: con lo stemma a 124
+  // il blocco non ci sta e la pagina finisce tagliata invece che scorrere
+  const stemma = height < 720 ? 92 : 124;
   const next = nextMatch();
   const riga = foggiaRow();
   const entra = useRef(new Animated.Value(0)).current;
@@ -42,11 +46,11 @@ export default function Benvenuto() {
   };
 
   return (
-    <Screen scroll={false}>
+    <Screen centrato senzaBarra>
       <SfondoCitta />
       <View style={[styles.wrap, gutter]}>
         <Animated.View style={{ opacity: entra, transform: [{ translateY: salita }], alignItems: 'center', gap: space.md }}>
-          <BrandMark size={124} />
+          <BrandMark size={stemma} />
           <Text style={styles.titolo}>Il Tifo della Daunia</Text>
           <Text style={styles.sotto}>Lo spazio dei tifosi rossoneri</Text>
         </Animated.View>
@@ -106,7 +110,7 @@ function Numero({ valore, etichetta }: { valore: string; etichetta: string }) {
 }
 
 const styles = StyleSheet.create({
-  wrap: { flex: 1, justifyContent: 'center', gap: space.xl, paddingBottom: space.xxl },
+  wrap: { gap: space.xl, paddingVertical: space.xl },
   titolo: { ...type.displayTitle, color: colors.text, textAlign: 'center' },
   sotto: { ...type.subhead, color: colors.textDim, marginTop: -space.sm },
 

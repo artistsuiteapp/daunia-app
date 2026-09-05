@@ -11,29 +11,45 @@ import { useSafeInsets, useKeyboardInset } from '../lib/viewport';
 
 /* -------------------------------------------------------------- contenitore */
 
-export function Screen({ children, scroll = true, edgeToEdge = false }: {
-  children: ReactNode; scroll?: boolean; edgeToEdge?: boolean;
+export function Screen({ children, scroll = true, edgeToEdge = false, centrato = false, senzaBarra = false }: {
+  children: ReactNode;
+  scroll?: boolean;
+  edgeToEdge?: boolean;
+  /** contenuto al centro quando ci sta, che scorre quando non ci sta */
+  centrato?: boolean;
+  /** schermate fuori dalle schede: senza barra sotto, senza il suo spazio */
+  senzaBarra?: boolean;
 }) {
   const insets = useSafeInsets();
   const keyboard = useKeyboardInset();
   // Sotto: la barra delle schede galleggia sopra il contenuto, e con la tastiera
   // aperta serve altro spazio, altrimenti l'ultimo blocco finisce sotto i tasti.
   // Con la tastiera aperta la barra si nasconde, quindi il suo spazio si libera.
+  const sotto = senzaBarra ? space.xl : TAB_BAR_SPACE;
   const pad = {
     paddingTop: edgeToEdge ? 0 : insets.top,
     paddingBottom: keyboard > 0
       ? keyboard + space.xl
-      : TAB_BAR_SPACE + insets.bottom,
+      : sotto + insets.bottom,
   };
   if (!scroll) return <View style={[styles.screen, pad]}>{children}</View>;
   return (
     <ScrollView
       style={styles.screen}
-      contentContainerStyle={pad}
+      contentContainerStyle={[pad, centrato && { flexGrow: 1 }]}
       showsVerticalScrollIndicator={false}
       contentInsetAdjustmentBehavior="never"
     >
-      {children}
+      {/*
+        * Centrare con `justifyContent` sembra la strada ovvia e invece taglia:
+        * quando il contenuto e piu alto del contenitore, flexbox lo fa
+        * traboccare da entrambi i lati e la parte sopra diventa irraggiungibile
+        * anche scorrendo. Su un iPhone in Safari lo stemma finiva mezzo fuori.
+        *
+        * I margini automatici fanno la cosa giusta in tutti e due i casi: se
+        * c'e spazio centrano, se non ce n'e valgono zero e la pagina scorre.
+        */}
+      {centrato ? <View style={{ marginTop: 'auto', marginBottom: 'auto' }}>{children}</View> : children}
     </ScrollView>
   );
 }

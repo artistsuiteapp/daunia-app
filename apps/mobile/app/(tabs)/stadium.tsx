@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Linking, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 import type { StadiumSector } from '@satanelli/core';
 
 import { StadiumCanvas } from '../../features/stadium3d/StadiumCanvas';
@@ -62,6 +63,21 @@ export default function StadiumScreen() {
           onSelect={(s) => setSelected((cur) => (cur?.id === s.id ? null : s))}
           mode={mode}
           fill={declared}
+        />
+
+        {/*
+          * Velo scuro dietro al titolo.
+          *
+          * Il modello sale fin dentro l'area del titolo, e bianco su tetto
+          * chiaro non si legge piu. Spostare il modello piu in basso avrebbe
+          * significato rimpicciolirlo; un velo che sfuma lo lascia intero e
+          * rende il testo leggibile in ogni rotazione.
+          */}
+        <LinearGradient
+          colors={['rgba(0,0,0,0.78)', 'rgba(0,0,0,0.35)', 'transparent']}
+          locations={[0, 0.55, 1]}
+          style={[styles.velo, { height: insets.top + 96 }]}
+          pointerEvents="none"
         />
 
         {/* tutto in alto: in basso il modello 3D finisce sotto al foglio dei settori */}
@@ -269,6 +285,7 @@ const styles = StyleSheet.create({
   goingTextOn: { color: colors.win },
   canvas: { backgroundColor: '#070709' },
   overlay: { position: 'absolute', left: 0, right: 0, top: 0 },
+  velo: { position: 'absolute', left: 0, right: 0, top: 0 },
   titleRow: { flexDirection: 'row', alignItems: 'flex-start', gap: space.sm },
   controls: { alignItems: 'flex-end', gap: 6 },
   title: { ...type.title1, color: colors.text },

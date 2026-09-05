@@ -70,7 +70,7 @@ export default function Accedi() {
 
   if (!backendAttivo) {
     return (
-      <Screen>
+      <Screen senzaBarra>
         <SfondoCitta intensita={0.55} />
         <BackBar label="Indietro" />
         <View style={[styles.wrap, gutter]}>
@@ -86,7 +86,7 @@ export default function Accedi() {
   }
 
   return (
-    <Screen>
+    <Screen senzaBarra>
       {/* meno acceso della schermata d'ingresso: qui si legge e si scrive */}
       <SfondoCitta intensita={0.55} />
       <BackBar label="Indietro" />

@@ -57,8 +57,23 @@ const CSS = `
   --sar: env(safe-area-inset-right, 0px);
   --sab: env(safe-area-inset-bottom, 0px);
   --sal: env(safe-area-inset-left, 0px);
-  --app-height: 100%;
+  /*
+   * Altezza dell'app.
+   *
+   * Prima era un numero di pixel misurato all'avvio e riscritto a ogni resize.
+   * Su iPhone, con l'app aggiunta alla schermata Home, quel numero restava piu
+   * corto dello schermo e sotto avanzava una striscia nera inutilizzata, con la
+   * barra delle schede sollevata di conseguenza.
+   *
+   * L'unita dvh fa da sola la cosa giusta: e l'altezza davvero disponibile, e
+   * cambia quando le barre del browser compaiono o spariscono. I pixel misurati
+   * servono ancora, ma solo con la tastiera aperta, dove dvh non basta.
+   */
+  --app-height: 100vh;
   --kb: 0px;
+}
+@supports (height: 100dvh) {
+  :root { --app-height: 100dvh; }
 }
 html, body { height: 100%; background-color: #08080A; }
 body { overscroll-behavior: none; -webkit-tap-highlight-color: transparent; }
@@ -81,7 +96,9 @@ const VIEWPORT = `
     // quanto della finestra copre la tastiera: differenza fra la finestra e la
     // parte davvero visibile, tolto lo scorrimento della parte visibile stessa
     var kb = vv ? Math.max(0, Math.round(window.innerHeight - vv.height - vv.offsetTop)) : 0;
-    root.style.setProperty('--app-height', Math.round(h) + 'px');
+    // con la tastiera aperta si comanda a mano, altrimenti vince dvh
+    if (kb > 80) root.style.setProperty('--app-height', Math.round(h) + 'px');
+    else root.style.removeProperty('--app-height');
     root.style.setProperty('--kb', kb + 'px');
     root.setAttribute('data-kb', kb > 80 ? 'open' : 'closed');
     window.dispatchEvent(new CustomEvent('appviewport', { detail: { height: h, keyboard: kb } }));
