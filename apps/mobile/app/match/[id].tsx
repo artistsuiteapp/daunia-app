@@ -85,6 +85,8 @@ export default function MatchDetail() {
               formation={lineup.formation}
               homeCrest={match.home.crest}
               awayCrest={match.away.crest}
+              homeName={match.home.shortName}
+              awayName={match.away.shortName}
               foggiaHome={match.foggiaHome}
             />
           </View>

@@ -16,7 +16,6 @@ export default function TabsLayout() {
       <Tabs.Screen name="matches" options={{ title: 'Partite' }} />
       <Tabs.Screen name="squad" options={{ title: 'Rosa' }} />
       <Tabs.Screen name="stadium" options={{ title: 'Stadio' }} />
-      <Tabs.Screen name="shop" options={{ title: 'Store' }} />
       <Tabs.Screen name="news" options={{ title: 'News' }} />
     </Tabs>
   );

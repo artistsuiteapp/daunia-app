@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
-import { Image } from 'expo-image';
+import { Crest } from './Crest';
 import Svg, { Defs, Ellipse, LinearGradient as SvgGradient, Path, Polygon, Polyline, Stop, Rect } from 'react-native-svg';
 
 import type { Slot } from '../lib/lineup';
@@ -44,21 +44,23 @@ type Props = {
   formation: string;
   homeCrest?: string | null;
   awayCrest?: string | null;
+  homeName?: string | null;
+  awayName?: string | null;
   awayFormation?: string | null;
   foggiaHome?: boolean;
 };
 
 export function Lineup({
-  slots, formation, homeCrest, awayCrest, awayFormation, foggiaHome = true,
+  slots, formation, homeCrest, awayCrest, homeName, awayName, awayFormation, foggiaHome = true,
 }: Props) {
   const stripes = 9;
 
   return (
     <View style={styles.wrap}>
       <View style={styles.head}>
-        <Side crest={homeCrest} formation={foggiaHome ? formation : awayFormation} active={foggiaHome} />
+        <Side crest={homeCrest} name={homeName} formation={foggiaHome ? formation : awayFormation} active={foggiaHome} />
         <Text style={styles.colon}>:</Text>
-        <Side crest={awayCrest} formation={foggiaHome ? awayFormation : formation} active={!foggiaHome} align="right" />
+        <Side crest={awayCrest} name={awayName} formation={foggiaHome ? awayFormation : formation} active={!foggiaHome} align="right" />
       </View>
 
       <View style={styles.stage}>
@@ -133,16 +135,15 @@ export function Lineup({
   );
 }
 
-function Side({ crest, formation, active, align = 'left' }: {
-  crest?: string | null; formation?: string | null; active: boolean; align?: 'left' | 'right';
+function Side({ crest, name, formation, active, align = 'left' }: {
+  crest?: string | null; name?: string | null; formation?: string | null;
+  active: boolean; align?: 'left' | 'right';
 }) {
   return (
     <View style={[styles.side, align === 'right' && styles.sideRight]}>
-      {crest ? (
-        <Image source={{ uri: crest }} style={[styles.headCrest, !active && styles.dim]} contentFit="contain" />
-      ) : (
-        <View style={styles.headCrest} />
-      )}
+      <View style={!active ? styles.dim : undefined}>
+        <Crest uri={crest ?? null} name={name ?? '?'} size={44} />
+      </View>
       {/* la formazione avversaria non e pubblicata da nessuna fonte aperta:
           meglio niente che un trattino che sembra un dato mancante */}
       {formation ? (

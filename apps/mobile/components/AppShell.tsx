@@ -5,15 +5,12 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { ViewportContext } from '../theme/responsive';
 import { colors, radius, space, type } from '../theme/tokens';
 import { brand } from '../theme/brand';
-import { PreviewNotice } from './PreviewNotice';
 
 /** Sotto questa larghezza il browser mostra l'app a tutto schermo, come un telefono. */
 const FRAME_BREAKPOINT = 760;
 const FRAME_WIDTH = 414;
 const FRAME_MAX_HEIGHT = 896;
 
-/** Build condivisa fuori: la didascalia lo dice a chi apre il link da computer. */
-const PREVIEW = process.env.EXPO_PUBLIC_PREVIEW === '1';
 
 /**
  * Su desktop l'app va vista come app, non come sito.
@@ -40,7 +37,6 @@ export function AppShell({ children }: { children: ReactNode }) {
     return (
       <ViewportContext.Provider value={null}>
         {children}
-        <PreviewNotice />
       </ViewportContext.Provider>
     );
   }
@@ -58,7 +54,6 @@ export function AppShell({ children }: { children: ReactNode }) {
           <View style={styles.screen}>
             <ViewportContext.Provider value={frame}>
               {children}
-              <PreviewNotice />
             </ViewportContext.Provider>
           </View>
         </View>
@@ -66,11 +61,9 @@ export function AppShell({ children }: { children: ReactNode }) {
         <View style={styles.caption}>
           <Text style={styles.captionTitle}>{brand.name}</Text>
           <Text style={styles.captionText}>
-            {PREVIEW ? 'Anteprima privata' : 'Anteprima app'} · {brand.clubName}
+{brand.about}
           </Text>
-          {PREVIEW || !brand.official ? (
-            <Text style={styles.captionText}>{brand.disclaimer}</Text>
-          ) : null}
+          <Text style={styles.captionText}>{brand.disclaimer}</Text>
         </View>
       </View>
     </View>

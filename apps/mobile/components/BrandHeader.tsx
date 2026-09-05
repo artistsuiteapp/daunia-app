@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react';
 import { Animated, Easing, StyleSheet, Text, View } from 'react-native';
-import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { brand } from '../theme/brand';
+import { BrandMark } from './BrandMark';
 import { colors, radius, space, type } from '../theme/tokens';
 import { useLayout } from '../theme/responsive';
 import { FormStrip } from './FormStrip';
@@ -46,15 +46,13 @@ export function BrandHeader({ crest, competition, season, form, position, points
       />
 
       <View style={styles.row}>
-        {crest ? (
-          <Animated.View style={{ transform: [{ scale }], opacity: enter }}>
-            <Image source={{ uri: crest }} style={styles.crest} contentFit="contain" transition={300} />
-          </Animated.View>
-        ) : null}
+        <Animated.View style={{ transform: [{ scale }], opacity: enter }}>
+          <BrandMark size={104} />
+        </Animated.View>
 
         <View style={styles.titleCol}>
-          <Text style={styles.line1}>Sempre con i</Text>
-          <Text style={styles.line2}>{brand.nickname}</Text>
+          <Text style={styles.line1}>Il tifo della</Text>
+          <Text style={styles.line2}>{brand.name}</Text>
           <Text style={styles.meta} numberOfLines={1}>
             {competition} · Girone C · {season.replace('-', '/')}
           </Text>

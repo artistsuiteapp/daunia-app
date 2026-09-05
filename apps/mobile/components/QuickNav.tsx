@@ -10,7 +10,6 @@ const ITEMS: Item[] = [
   { icon: 'ticket', label: 'Biglietti', href: '/tickets' },
   { icon: 'stats-chart', label: 'Statistiche', href: '/stats' },
   { icon: 'list', label: 'Classifica', href: '/standings' },
-  { icon: 'bag', label: 'Store', href: '/shop' },
   { icon: 'location', label: 'Stadio', href: '/stadium' },
 ];
 

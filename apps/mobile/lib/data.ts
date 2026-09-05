@@ -7,7 +7,7 @@
  * dati freschi sostituiscono quelli inclusi. In caso di errore si resta sui bundled.
  */
 import type {
-  DataBundle, Match, NewsItem, Player, Product, ShopCategory, StandingRow,
+  DataBundle, Match, NewsItem, Player, StandingRow,
   Team, TeamStats, TicketOffer, Stadium, StaffMember,
 } from '@satanelli/core';
 
@@ -26,25 +26,6 @@ export const squad = base.squad as Player[];
 export const staff = base.staff as StaffMember[];
 export const news = base.news as NewsItem[];
 export const stadium = base.stadium as Stadium;
-/**
- * Vetrina della demo: solo le due maglie da gara, con un prezzo simbolico.
- *
- * Il catalogo vero del negozio resta in data/shop.json, ma qui viene ridotto di
- * proposito. Il prezzo mostrato NON e quello del negozio: e un segnaposto, e i
- * testi dell'app lo dicono, cosi nessuno legge 70 € come il prezzo reale.
- */
-const DEMO_SKUS = ['shop-15519', 'shop-15505'];
-export const DEMO_PRICE = 70;
-
-const catalogue = base.shop.products as Product[];
-
-export const products: Product[] = catalogue
-  .filter((p) => DEMO_SKUS.includes(p.id))
-  .map((p) => ({ ...p, price: DEMO_PRICE, regularPrice: DEMO_PRICE, onSale: false }));
-
-export const shopCategories = (base.shop.categories as ShopCategory[])
-  .filter((c) => products.some((p) => p.categorySlug === c.slug))
-  .map((c) => ({ ...c, count: products.filter((p) => p.categorySlug === c.slug).length }));
 export const tickets = base.tickets as TicketOffer[];
 export const stats = base.stats as TeamStats;
 
@@ -139,14 +120,6 @@ export function topScorers(): Array<{ name: string; goals: number }> {
     .sort((a, b) => b.goals - a.goals);
 }
 
-export function productById(id: string): Product | null {
-  return products.find((p) => p.id === id) ?? null;
-}
-
-export function productsByCategory(slug: string | null): Product[] {
-  if (!slug) return products;
-  return products.filter((p) => p.categorySlug === slug);
-}
 
 /** Le giornate gia giocate, per il grafico dell'andamento. */
 export function playedTrend() {

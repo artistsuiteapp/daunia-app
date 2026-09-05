@@ -2,6 +2,7 @@ import { Image } from 'expo-image';
 import { StyleSheet, Text, View } from 'react-native';
 import { colors, type } from '../theme/tokens';
 import { hueFrom, initials } from '../lib/format';
+import { remote } from '../lib/media';
 
 type Props = { uri: string | null; name: string; size?: number };
 
@@ -11,10 +12,11 @@ type Props = { uri: string | null; name: string; size?: number };
  * pulita visto che i loghi altrui non sono ridistribuibili.
  */
 export function Crest({ uri, name, size = 40 }: Props) {
-  if (uri) {
+  const src = remote(uri);
+  if (src) {
     return (
       <Image
-        source={{ uri }}
+        source={{ uri: src }}
         style={{ width: size, height: size }}
         contentFit="contain"
         transition={180}

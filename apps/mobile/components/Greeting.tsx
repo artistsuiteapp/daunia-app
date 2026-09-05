@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
 import { Animated, Easing, Pressable, StyleSheet, Text, View } from 'react-native';
-import { Image } from 'expo-image';
 import { Ionicons } from '@expo/vector-icons';
 
 import { colors, radius, space, type } from '../theme/tokens';
@@ -41,9 +40,7 @@ export function Greeting({ name, crest, onBell }: {
         <Text style={styles.name} numberOfLines={1}>{name}</Text>
       </View>
 
-      <Animated.View style={{ transform: [{ scale }] }}>
-        {crest ? <Image source={{ uri: crest }} style={styles.crest} contentFit="contain" transition={200} /> : null}
-      </Animated.View>
+
 
       <Pressable onPress={onBell} hitSlop={10} style={styles.bell}>
         <Ionicons name="notifications-outline" size={20} color={colors.text} />

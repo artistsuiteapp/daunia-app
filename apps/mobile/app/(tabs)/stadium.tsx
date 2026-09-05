@@ -1,15 +1,12 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { Linking, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { useFocusEffect } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import type { StadiumSector } from '@satanelli/core';
 
 import { StadiumCanvas } from '../../features/stadium3d/StadiumCanvas';
 import type { SeatMode } from '../../features/stadium3d/seating';
-import { occupancyColor } from '../../features/stadium3d/geometry';
 import { Badge, ListGroup, ListRow, GroupLabel, GroupNote, Button, Segmented, useGutter } from '../../components/ui';
-import { AmbienceButton, useAmbience } from '../../components/Ambience';
 import { Crest } from '../../components/Crest';
 import { colors, radius, space, type } from '../../theme/tokens';
 import { useLayout } from '../../theme/responsive';
@@ -23,15 +20,6 @@ export default function StadiumScreen() {
   // di default gli spalti sono pieni: uno stadio vuoto non racconta la partita
   const [mode, setMode] = useState<SeatMode>('occupancy');
   const match = nextHomeMatch();
-  const { setScreenActive } = useAmbience();
-
-  // il sottofondo suona solo mentre questa schermata e davanti
-  useFocusEffect(
-    useCallback(() => {
-      setScreenActive(true);
-      return () => setScreenActive(false);
-    }, [setScreenActive]),
-  );
 
   const pad = { paddingHorizontal: space.lg + gutter };
   const canvasHeight = Math.max(280, Math.min(height * 0.46, 460));
@@ -57,9 +45,8 @@ export default function StadiumScreen() {
               <Text style={styles.sub}>{stadium.city} · {thousands(stadium.capacity)} posti</Text>
             </View>
             <View style={styles.controls}>
-              <AmbienceButton compact />
               <View style={styles.modeSwitch}>
-                {([['realistic', 'Reale'], ['occupancy', 'Pieni']] as Array<[SeatMode, string]>).map(([k, l]) => (
+                {([['realistic', 'Seggiolini'], ['occupancy', 'Tifosi']] as Array<[SeatMode, string]>).map(([k, l]) => (
                   <Pressable key={k} onPress={() => setMode(k)} style={[styles.modeBtn, mode === k && styles.modeBtnOn]}>
                     <Text style={[styles.modeText, mode === k && styles.modeTextOn]}>{l.toUpperCase()}</Text>
                   </Pressable>
@@ -102,7 +89,6 @@ export default function StadiumScreen() {
                 onPress={() => setSelected((cur) => (cur?.id === s.id ? null : s))}
                 style={({ pressed }) => [styles.row, on && styles.rowOn, pressed && { opacity: 0.75 }]}
               >
-                <View style={[styles.swatch, { backgroundColor: occupancyColor(s.occupancy) }]} />
                 <View style={styles.rowText}>
                   <Text style={[styles.rowName, on && styles.rowNameOn]}>{s.name}</Text>
                   <Text style={styles.rowMeta}>
@@ -111,9 +97,6 @@ export default function StadiumScreen() {
                 </View>
                 <View style={styles.rowRight}>
                   <Text style={styles.rowPrice}>da {euro(s.priceFrom)}</Text>
-                  {s.occupancy != null ? (
-                    <Text style={styles.rowOcc}>{Math.round(s.occupancy * 100)}% pieno</Text>
-                  ) : null}
                 </View>
               </Pressable>
             );
@@ -121,8 +104,8 @@ export default function StadiumScreen() {
         </View>
 
         <Text style={[styles.note, pad]}>
-          {stadium.priceNote} Le capienze per settore e il riempimento mostrato sono stime:
-          diventano dati reali con l'accesso alla biglietteria del club.
+          {stadium.priceNote} Le capienze per settore sono stime nostre. Il riempimento degli
+          spalti nel modello e una resa grafica, non la disponibilita dei biglietti.
         </Text>
       </ScrollView>
     </View>
@@ -142,22 +125,11 @@ function SectorCard({ sector }: { sector: StadiumSector }) {
         <Text style={styles.cardPrice}>da {euro(sector.priceFrom)}</Text>
       </View>
 
-      {sector.occupancy != null ? (
-        <View style={styles.barWrap}>
-          <View style={styles.barTrack}>
-            <View
-              style={[
-                styles.barFill,
-                { width: `${Math.round(sector.occupancy * 100)}%`, backgroundColor: occupancyColor(sector.occupancy) },
-              ]}
-            />
-          </View>
-          <Text style={styles.barLabel}>
-            {Math.round(sector.occupancy * 100)}% venduto
-            {sector.occupancyIsSimulated ? ' (simulato)' : ''}
-          </Text>
-        </View>
-      ) : null}
+      {/* niente percentuali di venduto: la disponibilita reale la conosce solo
+          la biglietteria, e un numero inventato qui sarebbe fuorviante */}
+      <Text style={styles.cardNote}>
+        Disponibilita e prezzo aggiornati sul canale ufficiale.
+      </Text>
 
       <Pressable
         style={({ pressed }) => [styles.cta, pressed && { opacity: 0.85 }]}
@@ -213,6 +185,7 @@ const styles = StyleSheet.create({
   barWrap: { gap: 6 },
   barTrack: { height: 6, borderRadius: 3, backgroundColor: colors.surfaceHi, overflow: 'hidden' },
   barFill: { height: 6, borderRadius: 3 },
+  cardNote: { ...type.caption, color: colors.textFaint, marginTop: space.sm },
   barLabel: { ...type.caption, color: colors.textFaint },
 
   cta: {

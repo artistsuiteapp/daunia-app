@@ -1,18 +1,26 @@
 /**
- * Identita di marca in un file solo.
- * Serve al pitch (versione con stemma e colori del club) e alla via di riserva
- * (versione indipendente senza marchio, se il club non firma): si cambia qui e basta.
+ * Identita del progetto, in un file solo.
  *
- * I colori sono campionati dallo stemma ufficiale, non scelti a occhio.
+ * Questa e la versione NON UFFICIALE, pensata per stare online e per una
+ * raccolta fondi. Regole che valgono qui e che non vanno aggirate:
+ *
+ * - Il nome del club si puo scrivere solo in forma descrittiva ("app non
+ *   ufficiale per i tifosi del Calcio Foggia 1920"). Mai come nome del prodotto.
+ * - Stemma, marchio figurativo e soprannomi del club non si usano, e non si
+ *   usano nemmeno segni che gli somiglino.
+ * - Rosso e nero restano: un colore non e registrabile come marchio.
+ *
+ * Il prototipo con stemma e nome del club vive separato in ~/dev/satanelli-app
+ * ed e materiale da mostrare alla societa, non da pubblicare.
  */
 export const brand = {
-  /** true = demo privata per il club. Mai true in una build pubblicata sugli store. */
-  official: true,
+  /** false = versione pubblica non affiliata. Qui non deve mai diventare true. */
+  official: false,
 
-  name: 'Satanelli',
+  name: 'Daunia',
+  /** Nominato solo in testi descrittivi, mai come marchio del prodotto. */
   clubName: 'Calcio Foggia 1920',
-  tagline: 'I Satanelli, ogni giorno',
-  nickname: 'Satanelli',
+  tagline: 'La squadra, ogni giorno',
   city: 'Foggia',
 
   colors: {
@@ -22,16 +30,18 @@ export const brand = {
     white: '#FFFFFF',
   },
 
-  /** Mostrato quando official = false: obbligatorio per una build fan-made. */
-  disclaimer: 'App non ufficiale, non affiliata al Calcio Foggia 1920.',
+  disclaimer: 'Progetto indipendente di tifosi. Non affiliato al Calcio Foggia 1920, che non lo sostiene ne lo approva.',
+
+  /** Descrizione breve, da riusare nelle pagine legali e nella raccolta fondi. */
+  about: 'App non ufficiale per i tifosi del Calcio Foggia 1920, fatta da tifosi. Dati sportivi da fonti pubbliche.',
 
   ticketProvider: {
     name: 'Vivaticket',
+    /** Collegamento in uscita al canale ufficiale. Mai vendita, mai affiliazione. */
     url: 'https://calciofoggia1920.vivaticket.it/',
   },
 
   officialSite: 'https://www.calciofoggia1920.net',
 
-  /** Utente di esempio per la demo: nell'app vera arriva dal profilo. */
   demoUser: { name: 'Mario Rossi' },
 } as const;

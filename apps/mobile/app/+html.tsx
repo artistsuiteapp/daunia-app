@@ -1,7 +1,6 @@
 import { ScrollViewStyleReset } from 'expo-router/html';
 import type { ReactNode } from 'react';
 
-const IS_PREVIEW = process.env.EXPO_PUBLIC_PREVIEW === '1';
 
 /**
  * Documento HTML dell'export web.
@@ -20,19 +19,12 @@ export default function Root({ children }: { children: ReactNode }) {
           name="viewport"
           content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover"
         />
-        {IS_PREVIEW ? (
-          <>
-            <meta name="robots" content="noindex, nofollow, noarchive, noimageindex" />
-            <meta name="googlebot" content="noindex, nofollow" />
-            <meta name="referrer" content="no-referrer" />
-          </>
-        ) : null}
         <meta name="theme-color" content="#08080A" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta
           name="description"
-          content="Prototipo di app per i tifosi. Non ufficiale, non affiliato al Calcio Foggia 1920."
+          content="App non ufficiale per i tifosi del Calcio Foggia 1920. Progetto indipendente, dati da fonti pubbliche."
         />
         <ScrollViewStyleReset />
         <style dangerouslySetInnerHTML={{ __html: BODY }} />

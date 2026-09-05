@@ -27,7 +27,6 @@ const ICONS: Record<string, [keyof typeof Ionicons.glyphMap, keyof typeof Ionico
   matches: ['football', 'football-outline'],
   squad: ['shirt', 'shirt-outline'],
   stadium: ['location', 'location-outline'],
-  shop: ['bag', 'bag-outline'],
   news: ['newspaper', 'newspaper-outline'],
 };
 

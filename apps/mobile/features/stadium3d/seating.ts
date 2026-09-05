@@ -83,8 +83,11 @@ export function buildSeating(sector: StadiumSector, mode: SeatMode): SeatingResu
   // alla Tribuna Centrale, non su una curva
   const mask = sector.id === 'tribuna-est' ? makeWordMask('FOGGIA', cols, rows) : null;
 
-  const filledRows = mode === 'occupancy' && sector.occupancy != null
-    ? Math.round(rows * sector.occupancy)
+  // In modalita "tifosi" si riempie tutto: e una resa grafica, non una
+  // previsione di quanti biglietti sono venduti. La disponibilita vera sta solo
+  // su Vivaticket, e questa app non la conosce.
+  const filledRows = mode === 'occupancy'
+    ? rows
     : 0;
 
   const positions = new Float32Array(rows * cols * 6 * 3);

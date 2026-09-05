@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "Satanelli",
-    "slug": "satanelli",
+    "name": "Daunia",
+    "slug": "daunia",
     "version": "0.1.0",
     "orientation": "portrait",
-    "scheme": "satanelli",
+    "scheme": "daunia",
     "userInterfaceStyle": "dark",
     "newArchEnabled": true,
     "backgroundColor": "#08080A",
@@ -14,10 +14,10 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "io.satanelli.demo"
+      "bundleIdentifier": "io.daunia.app"
     },
     "android": {
-      "package": "io.satanelli.demo",
+      "package": "io.daunia.app",
       "adaptiveIcon": {
         "backgroundColor": "#08080A"
       },
@@ -39,8 +39,7 @@
       "expo-status-bar",
       "expo-font",
       "expo-image",
-      "expo-web-browser",
-      "expo-audio"
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true

@@ -4,10 +4,10 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { Image } from 'expo-image';
 import { colors, radius, ROW_HEIGHT, space, type } from '../theme/tokens';
 import { useLayout } from '../theme/responsive';
 import { TAB_BAR_SPACE } from './FloatingTabBar';
+import { BrandMark } from './BrandMark';
 
 /* -------------------------------------------------------------- contenitore */
 
@@ -57,8 +57,8 @@ export function LargeTitle({ title, subtitle, action, crest }: {
         {subtitle ? <Text style={styles.largeSub}>{subtitle}</Text> : null}
       </View>
       {action}
-      {/* lo stemma resta visibile in cima a ogni schermata, non solo sulla home */}
-      {crest ? <Image source={{ uri: crest }} style={styles.titleCrest} contentFit="contain" /> : null}
+      {/* il marchio del progetto resta in cima a ogni schermata */}
+      {crest !== null ? <BrandMark size={40} /> : null}
     </View>
   );
 }

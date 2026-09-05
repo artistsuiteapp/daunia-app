@@ -66,9 +66,12 @@ export function initials(name: string, max = 2): string {
 
 /** Colore stabile derivato dal nome: due squadre diverse non hanno mai lo stesso segnaposto. */
 export function hueFrom(seed: string): string {
-  let h = 0;
-  for (let i = 0; i < seed.length; i++) h = (h * 31 + seed.charCodeAt(i)) % 360;
-  return `hsl(${h}, 42%, 34%)`;
+  // Grigi neutri, non tinte casuali: in una palette rosso e nero un monogramma
+  // verde o viola sembra un errore. La variazione serve solo a distinguere le
+  // squadre fra loro, quindi basta muovere la luminosita.
+  const n = [...seed].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7);
+  const l = 22 + (n % 5) * 5;
+  return `hsl(220, 6%, ${l}%)`;
 }
 
 /**

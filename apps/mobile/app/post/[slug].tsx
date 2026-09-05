@@ -7,6 +7,7 @@ import { BackBar } from '../../components/BackBar';
 import { colors, space, type } from '../../theme/tokens';
 import { longDate } from '../../lib/format';
 import { newsBySlug } from '../../lib/data';
+import { remote } from '../../lib/media';
 
 export default function Post() {
   const { slug } = useLocalSearchParams<{ slug: string }>();
@@ -19,8 +20,8 @@ export default function Post() {
     <Screen>
       <BackBar label="Notizie" />
 
-      {post.image ? (
-        <Image source={{ uri: post.image }} style={styles.image} contentFit="cover" transition={220} />
+      {remote(post.image) ? (
+        <Image source={{ uri: remote(post.image)! }} style={styles.image} contentFit="cover" transition={220} />
       ) : null}
 
       <View style={[styles.body, gutter]}>

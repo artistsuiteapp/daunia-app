@@ -10,7 +10,6 @@ import {
 
 import { colors } from '../theme/tokens';
 import { AppShell } from '../components/AppShell';
-import { AmbienceProvider } from '../components/Ambience';
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
@@ -30,7 +29,6 @@ export default function RootLayout() {
   return (
     <SafeAreaProvider>
       <StatusBar style="light" />
-      <AmbienceProvider>
         <AppShell>
           <Stack
           screenOptions={{
@@ -46,10 +44,8 @@ export default function RootLayout() {
           <Stack.Screen name="standings" />
           <Stack.Screen name="stats" />
           <Stack.Screen name="tickets" />
-          <Stack.Screen name="product/[id]" />
           </Stack>
         </AppShell>
-      </AmbienceProvider>
     </SafeAreaProvider>
   );
 }
