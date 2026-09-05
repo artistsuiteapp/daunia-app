@@ -7,7 +7,7 @@ import { Screen, useGutter } from '../components/ui';
 import { BrandMark } from '../components/BrandMark';
 import { colors, radius, space, type } from '../theme/tokens';
 import { continuaComeOspite } from '../lib/ospite';
-import { foggiaRow, nextMatch, stadium } from '../lib/data';
+import { foggiaRow, nextMatch } from '../lib/data';
 import { shortDate } from '../lib/format';
 
 /**
@@ -56,8 +56,8 @@ export default function Benvenuto() {
               {'  '}{shortDate(next.kickoff)}
             </Text>
             <Text style={styles.gancioNota}>
-              Di' in che settore vai e vedi lo Zaccheria riempirsi. Poi vota i giocatori a fine
-              partita e sfida gli altri sul risultato.
+              Di’ dove ti siedi e guarda lo Zaccheria riempirsi. A fine partita dai i voti
+              insieme agli altri, e prova a indovinare il risultato prima del fischio d’inizio.
             </Text>
           </Animated.View>
         ) : null}
@@ -65,7 +65,7 @@ export default function Benvenuto() {
         <View style={styles.numeri}>
           <Numero valore={riga ? `${riga.position}°` : '—'} etichetta="in classifica" />
           <View style={styles.sep} />
-          <Numero valore={String(stadium.sectors.length)} etichetta="settori in 3D" />
+          <Numero valore={riga ? String(riga.points) : '—'} etichetta="punti" />
           <View style={styles.sep} />
           <Numero valore="5.329" etichetta="abbonati" />
         </View>

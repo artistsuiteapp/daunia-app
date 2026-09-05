@@ -11,7 +11,7 @@ import { Avatar } from '../components/Avatar';
 import { colors, radius, space, type } from '../theme/tokens';
 import { stadium } from '../lib/data';
 import {
-  caricaAvatar, chiediCancellazione, esci, leggiProfilo, rimuoviAvatar,
+  cancellaAccount, caricaAvatar, esci, leggiProfilo, rimuoviAvatar,
   salvaProfilo, useSessione, type Profilo,
 } from '../lib/auth';
 
@@ -112,18 +112,20 @@ export default function ProfiloSchermata() {
 
   const cancella = async () => {
     const conferma = async () => {
-      const r = await chiediCancellazione('richiesta dalla schermata profilo');
-      setMessaggio(r.errore ? null : 'Richiesta registrata. Ti rispondo entro 30 giorni.');
+      setInCorso(true);
+      const r = await cancellaAccount();
+      setInCorso(false);
       if (r.errore) setErrore(r.errore);
+      else router.replace('/benvenuto' as never);
     };
     if (Platform.OS === 'web') {
       // eslint-disable-next-line no-alert
-      if (window.confirm('Chiedere la cancellazione dell’account e di tutto quello che hai scritto?')) conferma();
+      if (window.confirm('Cancellare l’account? Vengono rimossi profilo, immagine, voti, pronostici e presenze. Non si torna indietro.')) conferma();
     } else {
       Alert.alert(
         'Cancellare l’account?',
-        'Verranno rimossi il profilo e tutto quello che hai scritto. Non si torna indietro.',
-        [{ text: 'Annulla', style: 'cancel' }, { text: 'Chiedi la cancellazione', style: 'destructive', onPress: conferma }],
+        'Vengono rimossi il profilo, l’immagine, i voti, i pronostici e le presenze. Quello che hai scritto sparisce dalla vista degli altri. Non si torna indietro.',
+        [{ text: 'Annulla', style: 'cancel' }, { text: 'Cancella tutto', style: 'destructive', onPress: conferma }],
       );
     }
   };
@@ -206,7 +208,7 @@ export default function ProfiloSchermata() {
           </ListRow>
           <ListRow onPress={cancella}>
             <Ionicons name="trash-outline" size={19} color={colors.loss} />
-            <Text style={[styles.voce, { color: colors.loss }]}>Cancella l’account</Text>
+            <Text style={[styles.voce, { color: colors.loss }]}>Cancella l’account e i dati</Text>
           </ListRow>
         </ListGroup>
       </View>

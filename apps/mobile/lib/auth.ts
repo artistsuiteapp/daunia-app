@@ -183,20 +183,27 @@ export async function rimuoviAvatar() {
 }
 
 /**
- * Cancellazione dell'account.
+ * Cancellazione dell'account, per davvero.
  *
- * L'utente non puo cancellarsi da solo con la chiave pubblica: serve una
- * funzione lato server. Finche non c'e, la richiesta si registra e si gestisce a
- * mano, che e comunque un obbligo del regolamento europeo sui dati personali.
+ * Chiama una funzione lato server, perche la chiave che sta dentro l'app non
+ * puo toccare gli utenti. Apple e Google chiedono che la cancellazione avvenga
+ * dentro l'app e che sia una cancellazione vera: disattivare non basta e l'app
+ * verrebbe respinta.
+ *
+ * Chi viene cancellato lo decide il token, non questa chiamata: altrimenti
+ * chiunque potrebbe cancellare chiunque.
  */
-export async function chiediCancellazione(motivo: string) {
-  const u = utenteCorrente();
-  if (!supabase || !u) return { errore: 'Devi accedere.' };
-  const { error } = await supabase.from('segnalazioni').insert({
-    segnalante: u.id,
-    tipo: 'discussione',
-    bersaglio: u.id,
-    motivo: `CANCELLAZIONE ACCOUNT: ${motivo.slice(0, 400)}`,
+export async function cancellaAccount() {
+  if (!supabase) return { errore: 'Le iscrizioni non sono ancora aperte.' };
+  const { data: sessione } = await supabase.auth.getSession();
+  const token = sessione.session?.access_token;
+  if (!token) return { errore: 'Devi accedere.' };
+
+  const { error } = await supabase.functions.invoke('cancella-account', {
+    headers: { Authorization: `Bearer ${token}` },
   });
-  return { errore: error ? messaggioErrore(error) : null };
+  if (error) return { errore: messaggioErrore(error) };
+
+  await supabase.auth.signOut();
+  return { errore: null };
 }
