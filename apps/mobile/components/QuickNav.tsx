@@ -8,6 +8,7 @@ type Item = { icon: keyof typeof Ionicons.glyphMap; label: string; href: string 
 
 const ITEMS: Item[] = [
   { icon: 'ticket', label: 'Biglietti', href: '/tickets' },
+  { icon: 'trophy', label: 'Pronostici', href: '/pronostici' },
   { icon: 'stats-chart', label: 'Statistiche', href: '/stats' },
   { icon: 'list', label: 'Classifica', href: '/standings' },
   { icon: 'location', label: 'Stadio', href: '/stadium' },

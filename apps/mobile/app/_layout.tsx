@@ -49,6 +49,7 @@ export default function RootLayout() {
           <Stack.Screen name="curva/nuovo" options={{ presentation: 'modal' }} />
           <Stack.Screen name="standings" />
           <Stack.Screen name="stats" />
+          <Stack.Screen name="pronostici" />
           <Stack.Screen name="tickets" />
           </Stack>
         </AppShell>

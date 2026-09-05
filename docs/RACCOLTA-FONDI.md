@@ -11,12 +11,12 @@
 
 ## Obiettivo
 
-**1.500 €**
+**500 €**
 
 ## Sottotitolo breve
 
-Un'app per chi segue il Foggia, costruita da un tifoso. Funziona già: serve
-aiuto per farla funzionare per tutti.
+Un'app per chi segue il Foggia, costruita da un tifoso. Il lavoro lo metto io.
+Servono i soldi per le tre cose che gratis non si possono fare.
 
 ---
 
@@ -29,69 +29,79 @@ telefono senza installare niente:
 
 **daunia.vercel.app**
 
-Dentro ci sono il calendario e i risultati aggiornati, la classifica del girone,
-la rosa completa con la formazione probabile, le statistiche della stagione, un
-modello in tre dimensioni dello Zaccheria dove tocchi un settore e vedi da quanto
-partono i biglietti, e uno spazio dove i tifosi discutono.
+Dentro ci sono calendario e risultati aggiornati, la classifica del girone, la
+rosa completa con i ruoli veri di ogni giocatore, le statistiche della stagione,
+un modello in tre dimensioni dello Zaccheria dove tocchi un settore e vedi da
+quanto partono i biglietti, e uno spazio dove i tifosi discutono.
 
-L'ho costruita da solo nelle ultime settimane. Adesso mi serve una mano per la
-parte che da solo non posso fare.
+L'ho costruita da solo. Adesso serve una mano per la parte che da solo non posso
+fare.
 
-### Perché serve
+### Perché servono solo 500 €
 
-Le partite, la classifica e la rosa arrivano da fonti pubbliche e non costano
-niente. Il pezzo che costa è un altro: **far parlare i tifosi fra loro**.
+Perché **lo sviluppo lo metto io, gratis, e continuerò a farlo**. Le ore le ho
+già messe e le metterò ancora, non le sto chiedendo a nessuno.
 
-Nel momento in cui una persona si iscrive, l'app smette di essere un sito che
-mostra dei dati e diventa una cosa che raccoglie informazioni di persone vere.
-Servono un server che tenga quelle informazioni, un'informativa sulla privacy
-scritta da chi sa scriverla, un sistema per segnalare e togliere i messaggi
-offensivi, e qualcuno che se ne occupi. Non è una parte che si improvvisa, ed è
-esattamente la parte che oggi manca.
-
-### Come vengono spesi i 1.500 €
+Quello che non posso mettere sono tre cose che costano davvero:
 
 | Voce | Costo |
 |---|---|
+| Informativa privacy e condizioni d'uso scritte da un professionista | 300 € |
 | Dominio, un anno | 15 € |
-| Server e database, un anno | 276 € |
-| Informativa privacy e condizioni d'uso redatte da un professionista | 400 € |
-| Commissioni della piattaforma | ~60 € |
-| Sviluppo: iscrizioni, discussioni vere, strumenti di moderazione, notifiche | 749 € |
-| **Totale** | **1.500 €** |
+| Server e database oltre il piano gratuito, riserva per il primo anno | 140 € |
+| Commissioni della piattaforma | ~20 € |
+| **Totale** | **475 €** |
 
-L'hosting delle pagine è gratuito e resta gratuito. Se si raccoglie meno
-dell'obiettivo, si parte comunque: le prime tre voci sono quelle che aprono le
-iscrizioni, il resto arriva dopo.
+Chiedo 500 € perché è il primo numero tondo sopra questa somma. Non c'è
+margine per me e non c'è niente di gonfiato.
+
+**Se si raccoglie meno, si parte lo stesso.** Il dominio e il server si pagano
+subito; l'informativa privacy è la voce che decide quando si aprono le
+iscrizioni, e finché non c'è quella l'app resta com'è adesso.
+
+### La voce da 300 € è la più importante, e spiego perché
+
+Nel momento in cui una persona si iscrive, l'app smette di essere un sito che
+mostra dei dati e comincia a raccogliere informazioni di persone vere: un indirizzo
+email, quello che scrivono, quando lo scrivono.
+
+Da quel momento chi gestisce l'app ha degli obblighi precisi verso chi si è
+iscritto. Servono un'informativa scritta bene, delle condizioni d'uso, e un modo
+per segnalare e togliere i contenuti offensivi. Sono cose che non si copiano da
+internet e non si improvvisano, e riguardano i dati delle persone che si
+fideranno di questa app.
+
+È la ragione per cui non ho ancora aperto le iscrizioni, pur avendo tutto il
+resto pronto.
 
 ### Cosa c'è già, e lo puoi verificare adesso
 
 - **Partite e risultati** — calendario completo, marcatori, minuto del gol
 - **Classifica** del girone C, aggiornata
-- **Rosa** con i ruoli reali di ogni giocatore e la formazione probabile
+- **Rosa** con il ruolo reale di ogni giocatore e la formazione probabile
 - **Statistiche** di squadra e andamento in campionato
 - **Zaccheria in 3D** — ruoti lo stadio, tocchi un settore, vedi il prezzo di
   partenza e vai alla biglietteria ufficiale
 - **La Curva** — discussioni fra tifosi divise per argomento
 - **Notizie** scritte dalla redazione
-- **Ci sono anch'io** — dici in quale settore vai e lo stadio si riempie
+- **Ci sono anch'io** — dici in quale settore vai, e lo stadio si riempie
 - **Pagelle della Curva** — voti i giocatori dopo la partita
-- **Pronostico** — indovini il risultato, classifica per tutta la stagione
+- **Pronostici** — indovini il risultato, con la classifica di chi ne azzecca di più
 
-Le ultime tre oggi funzionano in dimostrazione: le provi, ma i numeri accanto
-sono di esempio e l'app te lo dice in ogni schermata. Diventano reali quando ci
-sono gli account, cioè quando questa raccolta va a buon fine.
+Le ultime tre oggi funzionano in dimostrazione: le provi davvero, ma i numeri
+accanto sono di esempio e l'app te lo scrive in ogni schermata. Diventano reali
+quando ci sono gli account.
 
 ### Cosa arriva dopo
 
-**Con i primi fondi**
+**Con questi 500 €**
 
 - Iscrizione e profilo, così quello che scrivi resta e ti segue fra i dispositivi
 - Discussioni vere: apri un argomento, gli altri rispondono, resta lì
 - Segnalazione dei messaggi e strumenti per moderarli
 - Presenze, pagelle e pronostici con i numeri di tutti al posto degli esempi
 
-**Se si va oltre l'obiettivo**
+**Se si va oltre**
 
 - Notifiche: formazioni, gol, biglietti messi in vendita
 - Archivio dei ricordi — foto e racconti delle stagioni passate, caricati dai tifosi
@@ -100,9 +110,9 @@ sono gli account, cioè quando questa raccolta va a buon fine.
 
 ### Cosa NON ci sarà mai
 
-**Biglietti venduti dentro l'app.** I biglietti si comprano solo sul canale
-ufficiale della società, e l'app ci porta con un collegamento. Rivenderli fuori
-da lì è vietato dalla legge e non è una zona in cui voglio mettere piede.
+**Biglietti venduti dentro l'app.** Si comprano solo sul canale ufficiale della
+società, e l'app ci porta con un collegamento. Rivenderli fuori da lì è vietato
+dalla legge e non è una zona in cui voglio mettere piede.
 
 **Pubblicità invadente e vendita di dati.** Se un giorno servirà sostenersi, lo
 scriverò qui prima di farlo.
@@ -138,7 +148,8 @@ Serve quasi quanto i soldi, e a te non costa niente.
 
 - **Prima di aprire la campagna**, senti un commercialista: le donazioni ricevute
   da una persona fisica non sono automaticamente esenti e vale la pena saperlo
-  prima di incassare, non dopo.
+  prima di incassare, non dopo. A 500 € il discorso è più semplice che a 1.500,
+  ma va comunque fatto.
 - **Sposta il sito su Cloudflare Pages** prima di pubblicare: le condizioni del
   piano gratuito di Vercel escludono l'uso commerciale, e una raccolta fondi è
   la zona grigia che ti fanno pesare.
@@ -149,3 +160,6 @@ Serve quasi quanto i soldi, e a te non costa niente.
   reale. Le campagne che si muovono raccolgono; quelle ferme no.
 - **Foto di copertina**: usa una schermata dell'app, non una foto dello stadio
   presa online. È tuo lavoro e non ha problemi di diritti.
+- **Un obiettivo basso raggiunto batte uno alto mancato.** GoFundMe mostra la
+  percentuale: 500 € superati fanno "obiettivo raggiunto" e attirano altre
+  donazioni, 1.500 € fermi a 400 sembrano una campagna che non funziona.

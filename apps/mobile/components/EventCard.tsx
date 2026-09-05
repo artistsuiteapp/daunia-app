@@ -7,6 +7,7 @@ import type { Match } from '@satanelli/core';
 import { Crest } from './Crest';
 import { colors, gradients, radius, space, type } from '../theme/tokens';
 import { shortDate, time } from '../lib/format';
+import { PredictionCallout } from './PredictionCallout';
 
 type Tone = 'accent' | 'dark';
 
@@ -68,6 +69,10 @@ export function EventCard({ match, tone = 'dark' }: { match: Match; tone?: Tone 
         <Text style={[styles.team, { color: fg }]} numberOfLines={1}>{match.home.shortName}</Text>
         <Text style={[styles.team, styles.teamRight, { color: fg }]} numberOfLines={1}>{match.away.shortName}</Text>
       </View>
+
+      {/* il richiamo al pronostico sta sulla partita di riferimento, prima dei
+          bottoni: e la prima cosa da fare quando apri l'app prima della gara */}
+      {accent && !played && !live ? <PredictionCallout matchId={match.id} onAccent /> : null}
 
       {accent ? (
         <View style={styles.actions}>
