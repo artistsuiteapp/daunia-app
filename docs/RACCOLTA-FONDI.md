@@ -20,20 +20,23 @@ Alternative, se vuoi qualcosa di più diretto:
 ## Racconta la tua storia
 
 Sono di Foggia e il Foggia lo seguo da sempre. Allo Zaccheria ci vado, e quando
-non posso andarci passo la domenica a cercare notizie in giro.
+non posso andarci passo la domenica a seguirlo da casa.
 
-Per l'orario di una partita apro un sito. Per la formazione ne apro un altro. La
-classifica sta da un'altra parte ancora, il prezzo dei biglietti pure. E se
-voglio sapere cosa ne pensano gli altri tifosi mi tocca leggere i commenti sotto
-un post di Facebook, dove metà delle risposte sono di gente che del Foggia non
-gliene importa niente.
+Di app che danno risultati, classifica e formazioni ce ne sono già, e funzionano
+bene. Le uso anch'io. Però sono uguali per tutte e sessanta le squadre della
+Serie C: si aprono su un elenco di partite dove il Foggia è una riga fra le
+altre, e di noi tifosi non c'è traccia.
+
+Il problema non sono i dati. I dati ci sono, sono gratis e li trovi ovunque.
+Manca il posto dove stiamo noi.
 
 Cinquemila e trecento persone hanno fatto l'abbonamento quest'anno. Per la Serie
-C è un numero che poche piazze fanno. Eppure stiamo tutti sparsi: gruppi WhatsApp
-che si aprono e si chiudono, pagine che durano una stagione, commenti che
-spariscono dopo due giorni.
+C è un numero che poche piazze fanno. Eppure per parlarci finiamo sotto un post
+di Facebook, dove metà delle risposte sono di gente che del Foggia non gliene
+importa niente, oppure in gruppi WhatsApp che si aprono a settembre e muoiono a
+novembre.
 
-Manca un posto solo dove stiamo tutti.
+Un tifoso della Juventus quel posto ce l'ha. Noi ci arrangiamo.
 
 ### Così me la sono fatta
 
@@ -42,29 +45,32 @@ adesso:
 
 **daunia.vercel.app**
 
-Dentro c'è quello che oggi devi cercare in quattro posti diversi:
+La parte che conta è questa, e non la trovi da nessun'altra parte:
 
-- Calendario e risultati aggiornati, con i marcatori e il minuto del gol
-- La classifica del girone
-- La rosa completa, con il ruolo vero di ogni giocatore e la formazione probabile
-- Le statistiche della stagione
-- Lo Zaccheria in tre dimensioni: lo ruoti, tocchi un settore, vedi da quanto
-  partono i biglietti e vai alla biglietteria ufficiale
-- Le notizie, scritte da me
-
-Poi c'è la parte per cui l'ho fatta:
-
-- **La Curva.** I tifosi discutono per argomento, e le discussioni restano. Chi
-  risponde fra tre giorni trova ancora il filo dov'era.
+- **La Curva.** I tifosi discutono per argomento e le discussioni restano. Chi
+  risponde fra tre giorni trova ancora il filo dov'era. Non commenti che
+  spariscono in fondo a un post.
 - **Ci sono anch'io.** Dici in quale settore vai e lo stadio nel modello si
-  riempie. Prima della partita vedi quanti saranno in Curva Nord.
-- **Le pagelle.** Dopo il fischio finale voti i giocatori e vedi la media di tutti.
+  riempie. Prima della partita vedi quanti saranno in Curva Nord con te.
+- **Le pagelle.** Dopo il fischio finale voti i giocatori e vedi la media di
+  tutti gli altri. Non quella di un giornalista: la nostra.
 - **I pronostici.** Indovini il risultato, e per tutta la stagione c'è una
   classifica di chi ne prende di più.
 
 Queste quattro oggi girano in dimostrazione. Le provi, ma i numeri che vedi
 accanto sono di esempio, e l'app te lo scrive in ogni schermata. Diventano veri
 quando arrivano gli account.
+
+Poi c'è tutto il resto, con dentro solo il Foggia e nessuna delle altre
+cinquantanove squadre:
+
+- Calendario e risultati, con i marcatori e il minuto del gol
+- La classifica del girone
+- La rosa completa, con il ruolo vero di ogni giocatore e la formazione probabile
+- Le statistiche della stagione
+- Lo Zaccheria in tre dimensioni: lo ruoti, tocchi un settore, vedi da quanto
+  partono i biglietti e vai alla biglietteria ufficiale
+- Le notizie sul Foggia, riscritte per chi vuole il fatto in trenta secondi
 
 ### Perché mi sono fermato qui
 
