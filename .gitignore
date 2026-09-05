@@ -10,3 +10,7 @@ apps/mobile/dist/
 
 # cache HTTP dell ingest: si rigenera, e versionarla crea conflitti a ogni esecuzione
 services/ingest/.cache/
+
+# la CLI di Supabase ci mette dentro lo stato della sessione
+supabase/.temp/
+supabase/.branches/

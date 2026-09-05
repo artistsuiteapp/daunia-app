@@ -1,0 +1,7 @@
+# Configurazione minima: serve alla CLI per sapere di quale progetto si tratta.
+# L'identificativo vero arriva da "supabase link" e finisce in .temp, che non
+# viene versionato.
+project_id = "daunia"
+
+[db]
+major_version = 15

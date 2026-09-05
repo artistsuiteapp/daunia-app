@@ -17,8 +17,19 @@ import { Platform } from 'react-native';
  * anche senza account.
  */
 
-const url = process.env.EXPO_PUBLIC_SUPABASE_URL;
-const anon = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY;
+/**
+ * L'indirizzo va dato nudo: https://<progetto>.supabase.co
+ * Nel pannello pero compare anche con /rest/v1 in coda, e chi copia quello si
+ * ritrova il percorso raddoppiato e ogni chiamata a 404. Si taglia qui una volta
+ * per tutte invece di scoprirlo a runtime.
+ */
+function radice(u: string | undefined): string | undefined {
+  if (!u) return undefined;
+  return u.trim().replace(/\/+$/, '').replace(/\/(rest|auth|storage|realtime)\/v\d.*$/, '');
+}
+
+const url = radice(process.env.EXPO_PUBLIC_SUPABASE_URL);
+const anon = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY?.trim();
 
 /** true quando il progetto e configurato: le schermate lo usano per scegliere. */
 export const backendAttivo = Boolean(url && anon);
