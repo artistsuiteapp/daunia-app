@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { Screen, useGutter } from '../components/ui';
 import { BrandMark } from '../components/BrandMark';
+import { SfondoCitta } from '../components/SfondoCitta';
 import { colors, radius, space, type } from '../theme/tokens';
 import { continuaComeOspite } from '../lib/ospite';
 import { foggiaRow, nextMatch } from '../lib/data';
@@ -42,9 +43,10 @@ export default function Benvenuto() {
 
   return (
     <Screen scroll={false}>
+      <SfondoCitta />
       <View style={[styles.wrap, gutter]}>
         <Animated.View style={{ opacity: entra, transform: [{ translateY: salita }], alignItems: 'center', gap: space.md }}>
-          <BrandMark size={104} />
+          <BrandMark size={124} />
           <Text style={styles.titolo}>Il Tifo della Daunia</Text>
           <Text style={styles.sotto}>Lo spazio dei tifosi rossoneri</Text>
         </Animated.View>
@@ -115,7 +117,7 @@ const styles = StyleSheet.create({
   sotto: { ...type.subhead, color: colors.textDim, marginTop: -space.sm },
 
   gancio: {
-    backgroundColor: colors.accentSoft, borderRadius: radius.xl, padding: space.lg, gap: 6,
+    backgroundColor: 'rgba(0,0,0,0.42)', borderRadius: radius.xl, padding: space.lg, gap: 6,
     borderWidth: StyleSheet.hairlineWidth, borderColor: 'rgba(238,17,17,0.4)',
   },
   gancioTesto: { ...type.subhead, color: colors.textDim },
@@ -124,7 +126,7 @@ const styles = StyleSheet.create({
 
   numeri: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
-    backgroundColor: colors.surface, borderRadius: radius.xl, paddingVertical: space.md,
+    backgroundColor: 'rgba(0,0,0,0.42)', borderRadius: radius.xl, paddingVertical: space.md,
     paddingHorizontal: space.lg,
   },
   numero: { flex: 1, alignItems: 'center', gap: 1 },
@@ -135,7 +137,7 @@ const styles = StyleSheet.create({
   azioni: { gap: space.sm },
   principale: { backgroundColor: colors.accent, borderRadius: radius.xl, paddingVertical: 16, alignItems: 'center' },
   principaleTesto: { ...type.headline, color: colors.onAccent },
-  secondaria: { backgroundColor: colors.surface, borderRadius: radius.xl, paddingVertical: 15, alignItems: 'center' },
+  secondaria: { backgroundColor: 'rgba(255,255,255,0.10)', borderRadius: radius.xl, paddingVertical: 15, alignItems: 'center' },
   secondariaTesto: { ...type.headline, color: colors.text },
   ospite: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 7, paddingVertical: 13 },
   ospiteTesto: { ...type.subheadBold, color: colors.textDim },

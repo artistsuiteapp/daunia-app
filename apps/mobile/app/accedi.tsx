@@ -6,6 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Screen, useGutter } from '../components/ui';
 import { BackBar } from '../components/BackBar';
 import { BrandMark } from '../components/BrandMark';
+import { SfondoCitta } from '../components/SfondoCitta';
 import { colors, radius, space, type } from '../theme/tokens';
 import { accedi, nonRicordare, recuperaPassword, registrati, validaRegistrazione } from '../lib/auth';
 import { backendAttivo } from '../lib/supabase';
@@ -70,9 +71,10 @@ export default function Accedi() {
   if (!backendAttivo) {
     return (
       <Screen>
+        <SfondoCitta intensita={0.55} />
         <BackBar label="Indietro" />
         <View style={[styles.wrap, gutter]}>
-          <BrandMark size={64} />
+          <BrandMark size={72} />
           <Text style={styles.titolo}>Iscrizioni non ancora aperte</Text>
           <Text style={styles.testo}>
             Gli account arrivano quando la raccolta fondi copre le tutele per chi si iscrive.
@@ -85,10 +87,12 @@ export default function Accedi() {
 
   return (
     <Screen>
+      {/* meno acceso della schermata d'ingresso: qui si legge e si scrive */}
+      <SfondoCitta intensita={0.55} />
       <BackBar label="Indietro" />
 
       <View style={[styles.wrap, gutter]}>
-        <BrandMark size={56} />
+        <BrandMark size={72} />
         <Text style={styles.titolo}>
           {modo === 'accesso' ? 'Bentornato' : modo === 'registrazione' ? 'Unisciti alla Curva' : 'Recupera la password'}
         </Text>
@@ -225,14 +229,14 @@ const styles = StyleSheet.create({
   campo: { gap: space.sm },
   etichetta: { ...type.caption, color: colors.textFaint, letterSpacing: 0.5 },
   input: {
-    backgroundColor: colors.surface, borderRadius: radius.lg,
+    backgroundColor: 'rgba(18,18,22,0.86)', borderRadius: radius.lg,
     paddingHorizontal: space.lg, paddingVertical: 13,
     ...type.body, color: colors.text,
     borderWidth: StyleSheet.hairlineWidth, borderColor: 'rgba(255,255,255,0.08)',
   },
   passwordRiga: { flexDirection: 'row', alignItems: 'center', gap: space.sm },
   occhio: {
-    width: 46, height: 46, borderRadius: radius.lg, backgroundColor: colors.surface,
+    width: 46, height: 46, borderRadius: radius.lg, backgroundColor: 'rgba(18,18,22,0.86)',
     alignItems: 'center', justifyContent: 'center',
   },
 
@@ -248,7 +252,7 @@ const styles = StyleSheet.create({
   avvisoTesto: { ...type.footnote, color: colors.text, flex: 1 },
 
   cta: { borderRadius: radius.xl, paddingVertical: 16, alignItems: 'center', backgroundColor: colors.accent },
-  ctaOff: { backgroundColor: colors.surface },
+  ctaOff: { backgroundColor: 'rgba(255,255,255,0.12)' },
   ctaTesto: { ...type.headline, color: colors.onAccent },
   ctaTestoOff: { color: colors.textFaint },
 
