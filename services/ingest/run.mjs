@@ -15,6 +15,7 @@ import * as wp from './src/sources/foggia-wp.mjs';
 import * as wiki from './src/sources/wikipedia.mjs';
 import { fetchEditorial } from './src/sources/blog.mjs';
 import * as shopSrc from './src/sources/shop.mjs';
+import { fetchFormazioni } from './src/sources/apifootball.mjs';
 import { buildStadium } from './src/stadium.mjs';
 import { normalize, validate } from './src/normalize.mjs';
 
@@ -42,6 +43,24 @@ async function main() {
     step('categorie negozio', () => shopSrc.fetchCategories().catch(() => [])),
   ]);
 
+  /*
+   * Formazioni ed eventi da API-Football.
+   *
+   * Spento se non c'e la chiave o se non e stato acceso a mano. Il motivo e la
+   * quota: cento chiamate al giorno, e con il cron ogni mezz'ora sarebbero
+   * quarantotto tentativi che sulla stagione in corso vengono rifiutati dal
+   * piano gratuito. Meglio non consumarla per niente.
+   *
+   * Si accende con API_FOOTBALL_ENABLED=1 quando il piano arriva alla stagione
+   * giusta.
+   */
+  const lineup = process.env.API_FOOTBALL_ENABLED === '1'
+    ? await step('formazioni (API-Football)', () => fetchFormazioni({
+        chiave: process.env.API_FOOTBALL_KEY,
+        season: SEASON,
+      }))
+    : { formazioni: [], eventi: [], warnings: [] };
+
   // un unico feed, i post redazionali si mescolano ai comunicati per data
   const news = [...clubNews, ...editorial].sort((a, b) => Date.parse(b.date) - Date.parse(a.date));
 
@@ -53,6 +72,10 @@ async function main() {
     shop: { products, categories: shopCats },
     season: SEASON, competition: COMPETITION,
   });
+
+  // le formazioni vere, quando ci sono, viaggiano accanto al resto
+  bundle.lineups = lineup.formazioni;
+  bundle.meta.warnings.push(...lineup.warnings);
 
   const errors = validate(bundle);
   summary(bundle, nextHome, Date.now() - t0);

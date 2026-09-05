@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-05T16:42:08.601Z",
+  "generatedAt": "2026-09-05T16:58:38.121Z",
   "season": "2026-2027",
   "competition": "Serie C",
   "sources": {
@@ -19,6 +19,7 @@
     "Nessuno stemma per \"Inter U23\": il sito del club non ha mai incontrato questa squadra.",
     "Nessuno stemma per \"Barletta\": il sito del club non ha mai incontrato questa squadra.",
     "Nessuno stemma per \"Scafatese\": il sito del club non ha mai incontrato questa squadra.",
-    "Solo 3 giocatori su 30 hanno la foto: la rosa sul sito del club e ferma alla stagione precedente."
+    "Solo 3 giocatori su 30 hanno la foto: la rosa sul sito del club e ferma alla stagione precedente.",
+    "API-Football: Free plans do not have access to this season, try from 2022 to 2024."
   ]
 }
