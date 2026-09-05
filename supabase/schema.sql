@@ -7,8 +7,11 @@
 --
 -- La regola che tiene in piedi tutto e la sicurezza per riga (RLS): senza,
 -- chiunque abbia la chiave pubblica dell'app potrebbe leggere e scrivere
--- qualsiasi riga. La chiave anon e fatta per stare dentro l'app, ed e proprio
--- l'RLS a renderla innocua.
+-- qualsiasi riga. La chiave pubblicabile e fatta per stare dentro l'app, ed e
+-- proprio l'RLS a renderla innocua.
+--
+-- Ogni istruzione e ripetibile: si puo rilanciare senza rompere niente. Le
+-- politiche non hanno "create if not exists", quindi si tolgono prima.
 
 -- ---------------------------------------------------------------- profili
 
@@ -20,12 +23,15 @@ create table if not exists profiles (
 
 alter table profiles enable row level security;
 
+drop policy if exists "profili leggibili da tutti" on profiles;
 create policy "profili leggibili da tutti"
   on profiles for select using (true);
 
+drop policy if exists "ognuno modifica il proprio profilo" on profiles;
 create policy "ognuno modifica il proprio profilo"
   on profiles for update using (auth.uid() = id);
 
+drop policy if exists "ognuno crea il proprio profilo" on profiles;
 create policy "ognuno crea il proprio profilo"
   on profiles for insert with check (auth.uid() = id);
 
@@ -50,15 +56,19 @@ create index if not exists discussioni_attive on discussioni (attiva_il desc)
 
 alter table discussioni enable row level security;
 
+drop policy if exists "discussioni visibili se non nascoste" on discussioni;
 create policy "discussioni visibili se non nascoste"
   on discussioni for select using (not nascosta);
 
+drop policy if exists "scrive chi ha fatto accesso" on discussioni;
 create policy "scrive chi ha fatto accesso"
   on discussioni for insert with check (auth.uid() = autore);
 
+drop policy if exists "ognuno modifica le proprie" on discussioni;
 create policy "ognuno modifica le proprie"
   on discussioni for update using (auth.uid() = autore);
 
+drop policy if exists "ognuno cancella le proprie" on discussioni;
 create policy "ognuno cancella le proprie"
   on discussioni for delete using (auth.uid() = autore);
 
@@ -78,18 +88,23 @@ create index if not exists risposte_per_discussione
 
 alter table risposte enable row level security;
 
+drop policy if exists "risposte visibili se non nascoste" on risposte;
 create policy "risposte visibili se non nascoste"
   on risposte for select using (not nascosta);
 
+drop policy if exists "risponde chi ha fatto accesso" on risposte;
 create policy "risponde chi ha fatto accesso"
   on risposte for insert with check (auth.uid() = autore);
 
+drop policy if exists "ognuno cancella le proprie risposte" on risposte;
 create policy "ognuno cancella le proprie risposte"
   on risposte for delete using (auth.uid() = autore);
 
 -- una risposta rimette in cima la discussione
 create or replace function tocca_discussione() returns trigger
-language plpgsql security definer as $$
+language plpgsql security definer
+set search_path = public
+as $$
 begin
   update discussioni set attiva_il = now() where id = new.discussione;
   return new;
@@ -112,14 +127,17 @@ create table if not exists presenze (
 
 alter table presenze enable row level security;
 
+drop policy if exists "presenze leggibili da tutti" on presenze;
 create policy "presenze leggibili da tutti"
   on presenze for select using (true);
 
+drop policy if exists "ognuno dichiara la propria presenza" on presenze;
 create policy "ognuno dichiara la propria presenza"
   on presenze for all using (auth.uid() = utente) with check (auth.uid() = utente);
 
 -- il conteggio per settore, senza esporre chi ci va
-create or replace view presenze_per_settore as
+create or replace view presenze_per_settore
+with (security_invoker = on) as
   select partita, settore, count(*)::int as quanti
   from presenze group by partita, settore;
 
@@ -136,13 +154,32 @@ create table if not exists voti (
 
 alter table voti enable row level security;
 
+drop policy if exists "ognuno vede e cambia solo i propri voti" on voti;
 create policy "ognuno vede e cambia solo i propri voti"
   on voti for all using (auth.uid() = utente) with check (auth.uid() = utente);
 
--- le medie sono pubbliche, i singoli voti no
+-- Le medie sono pubbliche, i singoli voti no. La vista gira con i permessi di
+-- chi l'ha creata, non di chi la legge, altrimenti ognuno vedrebbe la media dei
+-- soli voti suoi.
 create or replace view medie_voti as
   select partita, giocatore, round(avg(voto)::numeric, 1) as media, count(*)::int as quanti
   from voti group by partita, giocatore;
+
+-- ------------------------------------------------- risultati delle partite
+-- Sta prima dei pronostici perche la loro politica di lettura la interroga.
+
+create table if not exists partite_chiuse (
+  partita    text primary key,
+  casa       smallint not null,
+  ospiti     smallint not null,
+  chiusa_il  timestamptz not null default now()
+);
+
+alter table partite_chiuse enable row level security;
+
+drop policy if exists "risultati leggibili da tutti" on partite_chiuse;
+create policy "risultati leggibili da tutti"
+  on partite_chiuse for select using (true);
 
 -- -------------------------------------------------------------- pronostici
 
@@ -157,27 +194,18 @@ create table if not exists pronostici (
 
 alter table pronostici enable row level security;
 
--- Un pronostico si legge solo dopo che la partita e finita: altrimenti basta
+-- Un pronostico altrui si legge solo a partita finita: altrimenti basta
 -- guardare quelli degli altri per copiare, e la classifica non vale niente.
+drop policy if exists "i propri pronostici sempre, quelli altrui a partita finita" on pronostici;
 create policy "i propri pronostici sempre, quelli altrui a partita finita"
   on pronostici for select
   using (auth.uid() = utente or exists (
     select 1 from partite_chiuse p where p.partita = pronostici.partita
   ));
 
+drop policy if exists "ognuno scrive il proprio pronostico" on pronostici;
 create policy "ognuno scrive il proprio pronostico"
   on pronostici for all using (auth.uid() = utente) with check (auth.uid() = utente);
-
--- elenco delle partite gia giocate, riempito dall'ingest
-create table if not exists partite_chiuse (
-  partita    text primary key,
-  casa       smallint not null,
-  ospiti     smallint not null,
-  chiusa_il  timestamptz not null default now()
-);
-
-alter table partite_chiuse enable row level security;
-create policy "risultati leggibili da tutti" on partite_chiuse for select using (true);
 
 -- ----------------------------------------------------------- segnalazioni
 
@@ -195,25 +223,28 @@ create table if not exists segnalazioni (
 
 alter table segnalazioni enable row level security;
 
+drop policy if exists "chiunque abbia fatto accesso puo segnalare" on segnalazioni;
 create policy "chiunque abbia fatto accesso puo segnalare"
   on segnalazioni for insert with check (auth.uid() = segnalante);
 
+drop policy if exists "ognuno rivede le proprie segnalazioni" on segnalazioni;
 create policy "ognuno rivede le proprie segnalazioni"
   on segnalazioni for select using (auth.uid() = segnalante);
 
 -- -------------------------------------------------------------- notifiche
 
 create table if not exists dispositivi (
-  utente     uuid not null references profiles on delete cascade,
-  token      text primary key,
+  utente      uuid not null references profiles on delete cascade,
+  token       text primary key,
   piattaforma text not null check (piattaforma in ('ios','android','web')),
-  gol        boolean not null default true,
-  prepartita boolean not null default true,
-  curva      boolean not null default false,
-  creato_il  timestamptz not null default now()
+  gol         boolean not null default true,
+  prepartita  boolean not null default true,
+  curva       boolean not null default false,
+  creato_il   timestamptz not null default now()
 );
 
 alter table dispositivi enable row level security;
 
+drop policy if exists "ognuno gestisce i propri dispositivi" on dispositivi;
 create policy "ognuno gestisce i propri dispositivi"
   on dispositivi for all using (auth.uid() = utente) with check (auth.uid() = utente);
