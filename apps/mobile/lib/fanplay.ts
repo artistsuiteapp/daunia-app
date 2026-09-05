@@ -1,5 +1,7 @@
 import { useSyncExternalStore } from 'react';
 
+import { scorePrediction } from './prediction-score';
+
 /**
  * Le tre cose che i tifosi fanno nell'app: dire che ci sono, dare i voti,
  * indovinare il risultato.
@@ -147,18 +149,7 @@ export function clearPrediction(matchId: string) {
   commit();
 }
 
-/**
- * Punteggio di un pronostico: tre punti il risultato esatto, uno l'esito.
- * Nessun premio e nessuna quota: e una classifica fra tifosi, non una scommessa.
- */
-export function scorePrediction(
-  guess: [number, number],
-  actual: { home: number; away: number },
-): number {
-  if (guess[0] === actual.home && guess[1] === actual.away) return 3;
-  const sign = (a: number, b: number) => (a === b ? 0 : a > b ? 1 : -1);
-  return sign(guess[0], guess[1]) === sign(actual.home, actual.away) ? 1 : 0;
-}
+export { scorePrediction } from './prediction-score';
 
 export type LeaderRow = { name: string; points: number; exact: number; sample: boolean };
 

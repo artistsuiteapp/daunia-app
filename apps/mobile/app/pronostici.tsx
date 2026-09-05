@@ -112,7 +112,8 @@ export default function Pronostici() {
       )}
 
       <GroupNote>
-        Tre punti il risultato esatto, uno se azzecchi solo chi vince. Nessuna quota e nessun
+        Tre punti il risultato esatto, uno se indovini solo come finisce: vittoria, pareggio o
+        sconfitta. Nessuna quota e nessun
         premio: si gioca per la classifica. I pronostici restano su questo dispositivo finché
         non ci sono gli account, e la classifica qui sopra è di esempio.
       </GroupNote>

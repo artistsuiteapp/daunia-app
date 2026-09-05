@@ -41,8 +41,8 @@ export function Pronostico({ match }: { match: Match }) {
           <View style={styles.confirmed}>
             <Ionicons name="checkmark-circle" size={15} color={colors.win} />
             <Text style={styles.confirmedText}>
-              Hai detto {guess[0]}–{guess[1]}. Tre punti se ci prendi il risultato, uno se azzecchi
-              solo chi vince.
+              Hai detto {guess[0]}–{guess[1]}. Tre punti se prendi il risultato esatto, uno se
+              indovini solo come finisce: vittoria, pareggio o sconfitta.
             </Text>
             <Pressable onPress={() => clearPrediction(match.id)} hitSlop={8}>
               <Text style={styles.undo}>Cambia</Text>
