@@ -27,7 +27,6 @@
 import { Platform } from 'react-native';
 
 import { supabase } from './supabase';
-import { utenteCorrente } from './auth';
 
 const CHIAVE_PUBBLICA = process.env.EXPO_PUBLIC_VAPID_PUBLIC_KEY?.trim();
 
@@ -53,6 +52,8 @@ export const ETICHETTE: Record<keyof Preferenze, string> = {
 
 export type Stato =
   | { modo: 'attive'; preferenze: Preferenze }
+  /** il telefono e pronto ma il server non ha registrato l'iscrizione */
+  | { modo: 'attive-non-salvate'; preferenze: Preferenze; motivo: string }
   | { modo: 'spente' }
   | { modo: 'negato' }
   | { modo: 'aggiungi-alla-home' }
@@ -151,8 +152,19 @@ export async function accendi(preferenze: Preferenze = PREFERENZE_INIZIALI): Pro
       applicationServerKey: chiaveInByte(CHIAVE_PUBBLICA) as BufferSource,
     });
 
-  await salva(iscrizione, preferenze);
+  const problema = await salva(iscrizione, preferenze);
   ricorda(iscrizione.endpoint, preferenze);
+
+  /*
+   * Se il salvataggio fallisce non si dice "attive".
+   *
+   * Il browser a quel punto e iscritto davvero, quindi controllare solo lui
+   * darebbe una risposta rassicurante e falsa: le notifiche non arriverebbero
+   * mai, perche il server non sa a chi mandarle. Questo caso e successo per
+   * davvero, con un upsert che la policy rifiutava, e non se ne accorgeva
+   * nessuno.
+   */
+  if (problema) return { modo: 'attive-non-salvate', preferenze, motivo: problema };
   return { modo: 'attive', preferenze };
 }
 
@@ -176,27 +188,35 @@ export async function cambiaPreferenze(preferenze: Preferenze): Promise<Preferen
   if (!iscrizione) return preferenze;
 
   if (supabase) {
-    await supabase.from('push_iscrizioni')
-      .update({ preferenze, visto_il: new Date().toISOString() })
-      .eq('endpoint', iscrizione.endpoint);
+    await supabase.rpc('preferenze_notifiche', {
+      p_endpoint: iscrizione.endpoint,
+      p_preferenze: preferenze,
+    });
   }
   ricorda(iscrizione.endpoint, preferenze);
   return preferenze;
 }
 
-async function salva(iscrizione: PushSubscription, preferenze: Preferenze) {
-  if (!supabase) return;
-  const u = await utenteCorrente();
+/**
+ * Registra l'iscrizione sul server. Torna il motivo se non ci riesce.
+ *
+ * Passa da una funzione e non da un upsert sulla tabella. Un upsert e un
+ * INSERT ... ON CONFLICT, e per risolvere il conflitto PostgREST vuole anche il
+ * permesso di lettura: sulla tabella la lettura e negata di proposito, perche
+ * le chiavi di cifratura di un'iscrizione non devono poter uscire. Con l'upsert
+ * l'iscrizione veniva rifiutata dalla policy, e in silenzio.
+ */
+async function salva(iscrizione: PushSubscription, preferenze: Preferenze): Promise<string | null> {
+  if (!supabase) return 'nessun collegamento al server';
   const chiavi = iscrizione.toJSON().keys ?? {};
 
-  await supabase.from('push_iscrizioni').upsert({
-    endpoint: iscrizione.endpoint,
-    utente: u?.id ?? null,
-    p256dh: chiavi.p256dh ?? inBase64(iscrizione.getKey('p256dh')),
-    auth: chiavi.auth ?? inBase64(iscrizione.getKey('auth')),
-    preferenze,
-    visto_il: new Date().toISOString(),
-  }, { onConflict: 'endpoint' });
+  const { error } = await supabase.rpc('iscrivi_notifiche', {
+    p_endpoint: iscrizione.endpoint,
+    p_p256dh: chiavi.p256dh ?? inBase64(iscrizione.getKey('p256dh')),
+    p_auth: chiavi.auth ?? inBase64(iscrizione.getKey('auth')),
+    p_preferenze: preferenze,
+  });
+  return error ? error.message : null;
 }
 
 /*

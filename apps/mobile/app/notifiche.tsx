@@ -33,7 +33,7 @@ export default function Notifiche() {
   const aggiorna = useCallback(async () => {
     const s = await statoNotifiche();
     setStato(s);
-    if (s.modo === 'attive') setPreferenze(s.preferenze);
+    if (s.modo === 'attive' || s.modo === 'attive-non-salvate') setPreferenze(s.preferenze);
   }, []);
 
   useEffect(() => { void aggiorna(); }, [aggiorna]);
@@ -42,7 +42,7 @@ export default function Notifiche() {
     setInCorso(true);
     const s = stato?.modo === 'attive' ? await spegni() : await accendi(preferenze);
     setStato(s);
-    if (s.modo === 'attive') setPreferenze(s.preferenze);
+    if (s.modo === 'attive' || s.modo === 'attive-non-salvate') setPreferenze(s.preferenze);
     setInCorso(false);
   };
 
@@ -52,7 +52,7 @@ export default function Notifiche() {
     await cambiaPreferenze(nuove);
   };
 
-  const attive = stato?.modo === 'attive';
+  const attive = stato?.modo === 'attive' || stato?.modo === 'attive-non-salvate';
 
   return (
     <Screen>
@@ -112,6 +112,16 @@ export default function Notifiche() {
               </View>
             </Premi>
           </View>
+
+          {stato.modo === 'attive-non-salvate' ? (
+            <View style={[styles.guasto, gutter]}>
+              <Ionicons name="warning-outline" size={18} color="#FFB020" />
+              <Text style={styles.guastoTesto}>
+                Il telefono è pronto, ma il server non ha registrato l'iscrizione, quindi le
+                notifiche non arriverebbero. Riprova fra poco: {stato.motivo}
+              </Text>
+            </View>
+          ) : null}
 
           {attive ? (
             <>
@@ -193,6 +203,12 @@ const styles = StyleSheet.create({
   bottoneSpento: { backgroundColor: colors.surfaceHi },
   bottoneTesto: { ...type.headline, color: colors.onAccent },
   riga: { ...type.body, color: colors.text },
+  guasto: {
+    flexDirection: 'row', gap: space.sm, alignItems: 'flex-start',
+    backgroundColor: 'rgba(255,176,32,0.12)', borderRadius: radius.md,
+    padding: space.md, marginTop: space.md,
+  },
+  guastoTesto: { ...type.caption, color: colors.text, flex: 1 },
   prova: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: space.sm,
     borderRadius: radius.lg, paddingVertical: space.sm,
