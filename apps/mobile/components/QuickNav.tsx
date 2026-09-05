@@ -7,7 +7,6 @@ import { useLayout } from '../theme/responsive';
 type Item = { icon: keyof typeof Ionicons.glyphMap; label: string; href: string };
 
 const ITEMS: Item[] = [
-  { icon: 'shirt', label: 'Schiera', href: '/formazione' },
   { icon: 'ticket', label: 'Biglietti', href: '/tickets' },
   { icon: 'trophy', label: 'Pronostici', href: '/pronostici' },
   { icon: 'stats-chart', label: 'Statistiche', href: '/stats' },
@@ -17,12 +16,8 @@ const ITEMS: Item[] = [
 
 /**
  * Scorciatoie come pastiglie con icona a sinistra ed etichetta accanto, nella
- * forma dei filtri della reference. La prima e in rosso pieno.
- *
- * Al primo posto c'e la formazione della curva e non i biglietti, che pure
- * portano soldi al club. Il motivo: i biglietti mandano fuori dall'app, la
- * formazione ci tiene dentro tutta la settimana, ed e la cosa che fa aprire un
- * account. Il rosso va sulla voce che trattiene, non su quella che congeda.
+ * forma dei filtri della reference. La prima e in rosso pieno perche i biglietti
+ * sono la voce che porta soldi al club: e la sola che deve saltare all'occhio.
  */
 export function QuickNav() {
   const { gutter } = useLayout();

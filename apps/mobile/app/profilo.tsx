@@ -194,6 +194,9 @@ export default function ProfiloSchermata() {
 
       <View style={[gutter, { marginTop: space.xl }]}>
         <ListGroup>
+          <ListRow onPress={() => router.push('/notifiche' as never)} chevron>
+            <Text style={styles.voce}>Notifiche</Text>
+          </ListRow>
           <ListRow onPress={() => router.push('/privacy' as never)} chevron>
             <Ionicons name="shield-checkmark-outline" size={19} color={colors.textDim} />
             <Text style={styles.voce}>Informativa privacy</Text>

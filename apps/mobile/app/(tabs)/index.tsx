@@ -11,7 +11,6 @@ import { Greeting } from '../../components/Greeting';
 import { Reveal } from '../../components/Reveal';
 import { QuickNav } from '../../components/QuickNav';
 import { EventCard } from '../../components/EventCard';
-import { InvitoCurva } from '../../components/InvitoCurva';
 import { Crest } from '../../components/Crest';
 import { brand } from '../../theme/brand';
 import { colors, radius, space, type } from '../../theme/tokens';
@@ -52,7 +51,7 @@ export default function Home() {
       {/* aggiunta alla schermata Home l'app parte sotto la barra di stato:
           senza la zona sicura il saluto finisce sopra l'orologio */}
       <View style={[styles.greeting, gutter, { paddingTop: insets.top + space.md }]}>
-        <Greeting name={brand.demoUser.name} crest={null} onBell={() => router.push('/news')} />
+        <Greeting name={brand.demoUser.name} crest={null} onBell={() => router.push('/notifiche')} />
       </View>
 
       <BrandHeader
@@ -72,10 +71,6 @@ export default function Home() {
             {next.foggiaHome ? 'Prossima in casa' : 'Prossima trasferta'}
           </GroupLabel>
           <Reveal delay={120}><View style={gutter}><EventCard match={next} tone="accent" /></View></Reveal>
-          {/* subito sotto la partita, dove l'occhio e gia arrivato */}
-          <Reveal delay={160}>
-            <View style={[gutter, { marginTop: space.sm }]}><InvitoCurva match={next} /></View>
-          </Reveal>
         </>
       ) : null}
 

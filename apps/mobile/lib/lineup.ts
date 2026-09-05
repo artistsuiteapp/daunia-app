@@ -98,12 +98,22 @@ function trova(p: LineupPlayer): Player | null {
   return squad.find((x) => cognome(x.shortName) === c || cognome(x.name) === c) ?? null;
 }
 
+/**
+ * Da dove viene la formazione mostrata.
+ *
+ *   ufficiale  l'undici sceso in campo in questa partita
+ *   ultima     l'undici dell'ultima partita giocata, mostrato in attesa
+ *   costruita  nessuna partita in archivio: si va di ruoli e numeri di maglia
+ */
+export type Fonte = 'ufficiale' | 'ultima' | 'costruita';
+
 export type Formazione = {
   slots: Slot[];
   bench: Player[];
   formation: string;
-  /** vera = undici ufficiale della partita; probabile = costruita dalla rosa */
-  vera: boolean;
+  fonte: Fonte;
+  /** data della partita da cui viene l'undici, quando la fonte e `ultima` */
+  dataUltima: string | null;
   /** i nomi che la rosa non conosce, mostrati comunque */
   estranei: string[];
 };
@@ -211,16 +221,37 @@ export function lineupFromMatch(m: MatchLineup): Formazione | null {
     .filter((p): p is Player => Boolean(p))
     .slice(0, 12);
 
-  return { slots, bench, formation: FORMATION, vera: true, estranei };
+  return { slots, bench, formation: FORMATION, fonte: 'ufficiale', dataUltima: null, estranei };
 }
 
-/** La formazione da mostrare per una partita: vera se c'e, altrimenti probabile. */
+/**
+ * La formazione da mostrare per una partita.
+ *
+ * Se la partita e stata giocata si mostra l'undici vero. Se non lo e ancora si
+ * mostra l'ultimo undici davvero sceso in campo: le formazioni ufficiali escono
+ * un'ora prima del fischio e prima non esistono da nessuna parte, mentre in
+ * Serie C cambiano poco da una giornata all'altra, quindi l'ultima e la
+ * previsione migliore che si possa fare senza inventare.
+ *
+ * Non si chiama mai probabile ufficiale, perche non lo e: la schermata dice da
+ * che partita viene.
+ */
 export function lineupPerPartita(date?: string): Formazione {
-  const vera = realLineup(date);
-  const disposta = vera ? lineupFromMatch(vera) : null;
-  if (disposta) return disposta;
+  const diQuesta = realLineup(date);
+  if (diQuesta) {
+    const disposta = lineupFromMatch(diQuesta);
+    if (disposta) return disposta;
+  }
+
+  // niente per questa partita: si prende l'ultima giocata
+  const precedente = date ? realLineup() : null;
+  if (precedente && precedente.date !== date) {
+    const disposta = lineupFromMatch(precedente);
+    if (disposta) return { ...disposta, fonte: 'ultima', dataUltima: precedente.date };
+  }
+
   const p = probableLineup();
-  return { ...p, vera: false, estranei: [] };
+  return { ...p, fonte: 'costruita', dataUltima: null, estranei: [] };
 }
 
 /**

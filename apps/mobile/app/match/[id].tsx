@@ -13,7 +13,7 @@ import { BackBar } from '../../components/BackBar';
 import { Crest } from '../../components/Crest';
 import { Countdown } from '../../components/Countdown';
 import { colors, radius, space, type } from '../../theme/tokens';
-import { longDate, thousands } from '../../lib/format';
+import { longDate, shortDate, thousands } from '../../lib/format';
 import { matchById, matches } from '../../lib/data';
 import { Pagelle } from '../../components/Pagelle';
 import { Pronostico } from '../../components/Pronostico';
@@ -115,7 +115,11 @@ export default function MatchDetail() {
 
       {view === 'formazione' ? (
         <>
-          <GroupLabel>{lineup.vera ? 'Formazione ufficiale' : 'Formazione probabile'}</GroupLabel>
+          <GroupLabel>
+            {lineup.fonte === 'ufficiale' ? 'Formazione ufficiale'
+              : lineup.fonte === 'ultima' ? 'Così ha giocato l\'ultima volta'
+              : 'Formazione probabile'}
+          </GroupLabel>
           <View style={gutter}>
             <Lineup
               slots={lineup.slots}
@@ -138,9 +142,11 @@ export default function MatchDetail() {
             ))}
           </View>
           <GroupNote>
-            {lineup.vera
+            {lineup.fonte === 'ufficiale'
               ? 'Undici sceso in campo, da API-Football. La disposizione è la nostra: il modulo per la Serie C non lo pubblica nessuno.'
-              : 'La partita non si è ancora giocata: questa formazione è costruita dalla rosa reale e va letta come probabile.'}
+              : lineup.fonte === 'ultima'
+                ? `Questo è l'undici sceso in campo il ${lineup.dataUltima ? shortDate(lineup.dataUltima) : 'match precedente'}. Le formazioni ufficiali escono circa un'ora prima del fischio: quando esce, questa si aggiorna da sola.`
+                : 'Nessuna partita in archivio: questa formazione è costruita dalla rosa e va letta come una supposizione.'}
           </GroupNote>
         </>
       ) : null}
