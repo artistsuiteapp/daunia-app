@@ -6,10 +6,10 @@ import { Ionicons } from '@expo/vector-icons';
 import { Screen, useGutter } from '../components/ui';
 import { BrandMark } from '../components/BrandMark';
 import { SfondoCitta } from '../components/SfondoCitta';
+import { EventCard } from '../components/EventCard';
 import { colors, radius, space, type } from '../theme/tokens';
 import { continuaComeOspite } from '../lib/ospite';
 import { foggiaRow, nextMatch } from '../lib/data';
-import { shortDate } from '../lib/format';
 
 /**
  * Prima schermata.
@@ -52,15 +52,9 @@ export default function Benvenuto() {
         </Animated.View>
 
         {next ? (
-          <Animated.View style={[styles.gancio, { opacity: entra }]}>
-            <Text style={styles.gancioTesto}>
-              <Text style={styles.gancioForte}>{next.home.shortName} – {next.away.shortName}</Text>
-              {'  '}{shortDate(next.kickoff)}
-            </Text>
-            <Text style={styles.gancioNota}>
-              Di’ dove ti siedi e guarda lo Zaccheria riempirsi. A fine partita dai i voti
-              insieme agli altri, e prova a indovinare il risultato prima del fischio d’inizio.
-            </Text>
+          <Animated.View style={{ opacity: entra }}>
+            <Text style={styles.etichetta}>PROSSIMA PARTITA</Text>
+            <EventCard match={next} tone="accent" compatta />
           </Animated.View>
         ) : null}
 
@@ -116,13 +110,7 @@ const styles = StyleSheet.create({
   titolo: { ...type.displayTitle, color: colors.text, textAlign: 'center' },
   sotto: { ...type.subhead, color: colors.textDim, marginTop: -space.sm },
 
-  gancio: {
-    backgroundColor: 'rgba(0,0,0,0.42)', borderRadius: radius.xl, padding: space.lg, gap: 6,
-    borderWidth: StyleSheet.hairlineWidth, borderColor: 'rgba(238,17,17,0.4)',
-  },
-  gancioTesto: { ...type.subhead, color: colors.textDim },
-  gancioForte: { ...type.headline, color: colors.text },
-  gancioNota: { ...type.footnote, color: colors.textDim, lineHeight: 19 },
+  etichetta: { ...type.caption, color: 'rgba(255,255,255,0.6)', letterSpacing: 1, marginBottom: 6 },
 
   numeri: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',

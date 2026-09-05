@@ -22,7 +22,9 @@ const day = (m: Match) => (m.matchday ? `${m.matchday}ª giornata` : m.competiti
  * La partita di riferimento e rossa piena, le altre restano scure: e il rosso a
  * dire quale conta, non la dimensione.
  */
-export function EventCard({ match, tone = 'dark' }: { match: Match; tone?: Tone }) {
+export function EventCard({ match, tone = 'dark', compatta = false }: {
+  match: Match; tone?: Tone; compatta?: boolean;
+}) {
   const accent = tone === 'accent';
   const played = match.status === 'finished';
   const live = match.status === 'live';
@@ -32,7 +34,12 @@ export function EventCard({ match, tone = 'dark' }: { match: Match; tone?: Tone 
   return (
     <Pressable
       onPress={() => router.push(`/match/${match.id}` as never)}
-      style={({ pressed }) => [styles.card, !accent && styles.cardDark, pressed && { opacity: 0.88 }]}
+      disabled={compatta}
+      style={({ pressed }) => [
+        styles.card, !accent && styles.cardDark,
+        compatta && styles.cardCompatta,
+        pressed && !compatta && { opacity: 0.88 },
+      ]}
     >
       {accent ? (
         <LinearGradient
@@ -54,15 +61,15 @@ export function EventCard({ match, tone = 'dark' }: { match: Match; tone?: Tone 
       </View>
 
       <View style={styles.body}>
-        <Crest uri={match.home.crest} name={match.home.shortName} size={46} />
+        <Crest uri={match.home.crest} name={match.home.shortName} size={compatta ? 34 : 46} />
         <View style={styles.centre}>
-          <Text style={[styles.score, { color: fg }]}>
+          <Text style={[styles.score, compatta && styles.scoreCompatto, { color: fg }]}>
             {played || live ? `${match.score?.home ?? 0} : ${match.score?.away ?? 0}` : time(match.kickoff)}
           </Text>
           <Text style={[styles.sub, { color: dim }]}>{day(match)}</Text>
           <Text style={[styles.sub, { color: dim }]}>{shortDate(match.kickoff)}</Text>
         </View>
-        <Crest uri={match.away.crest} name={match.away.shortName} size={46} />
+        <Crest uri={match.away.crest} name={match.away.shortName} size={compatta ? 34 : 46} />
       </View>
 
       <View style={styles.names}>
@@ -72,9 +79,9 @@ export function EventCard({ match, tone = 'dark' }: { match: Match; tone?: Tone 
 
       {/* il richiamo al pronostico sta sulla partita di riferimento, prima dei
           bottoni: e la prima cosa da fare quando apri l'app prima della gara */}
-      {accent && !played && !live ? <PredictionCallout matchId={match.id} onAccent /> : null}
+      {accent && !played && !live && !compatta ? <PredictionCallout matchId={match.id} onAccent /> : null}
 
-      {accent ? (
+      {accent && !compatta ? (
         <View style={styles.actions}>
           {match.ticketUrl ? (
             <Pressable
@@ -100,6 +107,7 @@ export function EventCard({ match, tone = 'dark' }: { match: Match; tone?: Tone 
 
 const styles = StyleSheet.create({
   card: { borderRadius: radius.xxl, overflow: 'hidden', padding: space.lg, gap: space.md },
+  cardCompatta: { padding: space.md, gap: space.sm },
   cardDark: {
     backgroundColor: colors.surface,
     borderWidth: StyleSheet.hairlineWidth, borderColor: 'rgba(255,255,255,0.07)',
@@ -119,6 +127,7 @@ const styles = StyleSheet.create({
   body: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: space.sm },
   centre: { flex: 1, alignItems: 'center', gap: 1 },
   score: { ...type.score, fontSize: 38, lineHeight: 40 },
+  scoreCompatto: { fontSize: 28, lineHeight: 32 },
   sub: { ...type.caption, fontSize: 11 },
 
   names: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: space.sm },
