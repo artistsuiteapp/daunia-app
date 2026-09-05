@@ -17,6 +17,7 @@ import { longDate, thousands } from '../../lib/format';
 import { matchById, matches } from '../../lib/data';
 import { Pagelle } from '../../components/Pagelle';
 import { Pronostico } from '../../components/Pronostico';
+import { useDatiPartita } from '../../lib/fanplay';
 
 type Tab = 'formazione' | 'gioco' | 'eventi' | 'dati';
 
@@ -26,6 +27,7 @@ export default function MatchDetail() {
   const [view, setView] = useState<Tab>('formazione');
   const lineup = useMemo(() => probableLineup(), []);
   const match = matchById(String(id));
+  useDatiPartita(match?.id ?? null, true);
 
   if (!match) return <Screen><Empty text="Partita non trovata." /></Screen>;
 

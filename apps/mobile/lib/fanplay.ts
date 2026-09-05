@@ -1,4 +1,7 @@
-import { useSyncExternalStore } from 'react';
+import { useEffect, useSyncExternalStore } from 'react';
+
+import { supabase } from './supabase';
+import { utenteCorrente } from './auth';
 
 import { scorePrediction } from './prediction-score';
 
@@ -15,6 +18,10 @@ import { scorePrediction } from './prediction-score';
  * Le percentuali di riempimento inventate le abbiamo tolte proprio perche
  * sembravano dati reali sulla disponibilita dei biglietti: qui non deve
  * succedere di nuovo.
+ *
+ * Con un account attivo i numeri veri arrivano dal database e prendono il posto
+ * degli esempi. Le funzioni che le schermate chiamano restano le stesse: cambia
+ * solo da dove viene la risposta.
  */
 
 const KEY = 'daunia.fanplay.v1';
@@ -52,6 +59,15 @@ function commit() {
 }
 
 let version = 0;
+/** Da chiamare in una schermata che mostra i numeri di una partita. */
+export function useDatiPartita(matchId: string | null, conVoti = false) {
+  useEffect(() => {
+    if (!matchId) return;
+    void caricaPresenze(matchId);
+    if (conVoti) void caricaMedie(matchId);
+  }, [matchId, conVoti]);
+}
+
 export function useFanplay(): number {
   return useSyncExternalStore(
     (l) => { listeners.add(l); return () => listeners.delete(l); },
@@ -60,6 +76,46 @@ export function useFanplay(): number {
   );
 }
 listeners.add(() => { version += 1; });
+
+/* ------------------------------------------------------- numeri dal database */
+
+type Reali = {
+  presenze: Record<string, Record<string, number>>;
+  medie: Record<string, Record<string, { media: number; quanti: number }>>;
+};
+
+let reali: Reali = { presenze: {}, medie: {} };
+let caricate = new Set<string>();
+
+/** Presenze vere per una partita, dalla vista che conta senza esporre chi va. */
+export async function caricaPresenze(matchId: string) {
+  if (!supabase || caricate.has(`p:${matchId}`)) return;
+  caricate.add(`p:${matchId}`);
+  const { data } = await supabase
+    .from('presenze_per_settore')
+    .select('settore, quanti')
+    .eq('partita', matchId);
+  if (!data) return;
+  reali.presenze[matchId] = Object.fromEntries(
+    (data as Array<{ settore: string; quanti: number }>).map((r) => [r.settore, r.quanti]),
+  );
+  version += 1;
+  listeners.forEach((l) => l());
+}
+
+/** Medie vere dei voti. Passa da una funzione: i voti singoli restano privati. */
+export async function caricaMedie(matchId: string) {
+  if (!supabase || caricate.has(`m:${matchId}`)) return;
+  caricate.add(`m:${matchId}`);
+  const { data } = await supabase.rpc('medie_voti', { p_partita: matchId });
+  if (!data) return;
+  reali.medie[matchId] = Object.fromEntries(
+    (data as Array<{ giocatore: string; media: number; quanti: number }>)
+      .map((r) => [r.giocatore, { media: Number(r.media), quanti: r.quanti }]),
+  );
+  version += 1;
+  listeners.forEach((l) => l());
+}
 
 /** Numero stabile da una stringa: gli esempi non devono ballare a ogni ricarica. */
 function seed(s: string): number {
@@ -85,6 +141,12 @@ export function myPresence(matchId: string): string | null {
 export function declarePresence(matchId: string, sectorId: string) {
   store = { ...store, presence: { ...store.presence, [matchId]: sectorId } };
   commit();
+  const u = utenteCorrente();
+  if (supabase && u) {
+    void supabase.from('presenze')
+      .upsert({ utente: u.id, partita: matchId, settore: sectorId })
+      .then(() => { caricate.delete(`p:${matchId}`); return caricaPresenze(matchId); });
+  }
 }
 
 export function clearPresence(matchId: string) {
@@ -92,13 +154,30 @@ export function clearPresence(matchId: string) {
   delete next[matchId];
   store = { ...store, presence: next };
   commit();
+  const u = utenteCorrente();
+  if (supabase && u) {
+    void supabase.from('presenze').delete().eq('utente', u.id).eq('partita', matchId)
+      .then(() => { caricate.delete(`p:${matchId}`); return caricaPresenze(matchId); });
+  }
 }
 
 /** Totale per settore: esempi piu la tua dichiarazione, se e in quel settore. */
 export function presenceOf(matchId: string, sectorId: string, capacity: number) {
-  const sample = samplePresence(matchId, sectorId, capacity);
+  const vere = reali.presenze[matchId];
   const mine = myPresence(matchId) === sectorId ? 1 : 0;
+  // con il database attivo il numero e quello vero, senza aggiunte di esempio
+  if (vere) return { total: vere[sectorId] ?? 0, sample: 0, mine: mine === 1 };
+  const sample = samplePresence(matchId, sectorId, capacity);
   return { total: sample + mine, sample, mine: mine === 1 };
+}
+
+/** true quando i numeri mostrati vengono dal database e non dagli esempi. */
+export function presenzeVere(matchId: string): boolean {
+  return Boolean(reali.presenze[matchId]);
+}
+
+export function medieVere(matchId: string): boolean {
+  return Boolean(reali.medie[matchId]);
 }
 
 /* ---------------------------------------------------------------- pagelle */
@@ -117,12 +196,23 @@ export function rate(matchId: string, playerId: string, vote: number) {
   const forMatch = { ...(store.ratings[matchId] ?? {}), [playerId]: vote };
   store = { ...store, ratings: { ...store.ratings, [matchId]: forMatch } };
   commit();
+  const u = utenteCorrente();
+  if (supabase && u) {
+    void supabase.from('voti')
+      .upsert({ utente: u.id, partita: matchId, giocatore: playerId, voto: vote })
+      .then(() => { caricate.delete(`m:${matchId}`); return caricaMedie(matchId); });
+  }
 }
 
 /** Media mostrata: quella di esempio con dentro il tuo voto, se l'hai dato. */
 export function ratingOf(matchId: string, playerId: string) {
-  const { avg, votes } = sampleRating(matchId, playerId);
   const mine = myRating(matchId, playerId);
+  const vere = reali.medie[matchId]?.[playerId];
+  if (reali.medie[matchId]) {
+    // il proprio voto e gia dentro la media del server: non va sommato di nuovo
+    return { avg: vere?.media ?? 0, votes: vere?.quanti ?? 0, mine };
+  }
+  const { avg, votes } = sampleRating(matchId, playerId);
   if (mine == null) return { avg, votes, mine: null as number | null };
   return { avg: (avg * votes + mine) / (votes + 1), votes: votes + 1, mine };
 }
@@ -140,6 +230,11 @@ export function myPrediction(matchId: string): [number, number] | null {
 export function predict(matchId: string, home: number, away: number) {
   store = { ...store, predictions: { ...store.predictions, [matchId]: [home, away] } };
   commit();
+  const u = utenteCorrente();
+  if (supabase && u) {
+    void supabase.from('pronostici')
+      .upsert({ utente: u.id, partita: matchId, casa: home, ospiti: away });
+  }
 }
 
 export function clearPrediction(matchId: string) {

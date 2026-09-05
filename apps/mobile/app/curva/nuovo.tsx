@@ -24,10 +24,20 @@ export default function NuovoPost() {
 
   const ready = title.trim().length >= 4 && body.trim().length >= 20;
 
-  const publish = () => {
-    if (!ready) return;
-    const d = addDiscussion({ author, title, body, topic });
-    router.replace(`/curva/${d.id}` as never);
+  const [errore, setErrore] = useState<string | null>(null);
+  const [inCorso, setInCorso] = useState(false);
+
+  const publish = async () => {
+    if (!ready || inCorso) return;
+    setErrore(null); setInCorso(true);
+    try {
+      const d = await addDiscussion({ author, title, body, topic });
+      router.replace(`/curva/${d.id}` as never);
+    } catch (e) {
+      setErrore(e instanceof Error ? e.message : 'Non sono riuscito a pubblicare.');
+    } finally {
+      setInCorso(false);
+    }
   };
 
   return (
@@ -92,13 +102,15 @@ export default function NuovoPost() {
           />
         </Field>
 
+        {errore ? <Text style={styles.errore}>{errore}</Text> : null}
+
         <Pressable
           onPress={publish}
-          disabled={!ready}
+          disabled={!ready || inCorso}
           style={({ pressed }) => [styles.cta, !ready && styles.ctaOff, pressed && ready && { opacity: 0.85 }]}
         >
           <Text style={[styles.ctaText, !ready && styles.ctaTextOff]}>
-            {ready ? 'Apri la discussione' : 'Servono un titolo e qualche riga'}
+            {inCorso ? 'Un momento…' : ready ? 'Apri la discussione' : 'Servono un titolo e qualche riga'}
           </Text>
         </Pressable>
       </View>
@@ -152,4 +164,5 @@ const styles = StyleSheet.create({
   ctaOff: { backgroundColor: colors.surface },
   ctaText: { ...type.headline, color: colors.onAccent },
   ctaTextOff: { color: colors.textFaint },
+  errore: { ...type.footnote, color: colors.loss },
 });

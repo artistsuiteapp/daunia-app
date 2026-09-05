@@ -4,7 +4,7 @@ import type { Player } from '@satanelli/core';
 
 import { Avatar } from './Avatar';
 import { colors, radius, space, type } from '../theme/tokens';
-import { myRating, myRatingCount, rate, ratingOf, useFanplay } from '../lib/fanplay';
+import { medieVere, myRating, myRatingCount, rate, ratingOf, useFanplay } from '../lib/fanplay';
 
 const VOTES = [4, 5, 6, 7, 8, 9, 10];
 
@@ -30,7 +30,9 @@ export function Pagelle({ matchId, players }: { matchId: string; players: Player
             ? 'Dai il tuo voto: si aggiunge alla media.'
             : `Hai votato ${given} ${given === 1 ? 'giocatore' : 'giocatori'}.`}
         </Text>
-        <View style={styles.sampleTag}><Text style={styles.sampleText}>medie di esempio</Text></View>
+        {!medieVere(matchId) ? (
+          <View style={styles.sampleTag}><Text style={styles.sampleText}>medie di esempio</Text></View>
+        ) : null}
       </View>
 
       {players.map((p) => {

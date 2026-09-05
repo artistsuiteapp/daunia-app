@@ -29,10 +29,16 @@ export default function DiscussionPage() {
   const d = discussionById(String(id));
   if (!d) return <Screen><Empty text="Discussione non trovata." /></Screen>;
 
-  const send = () => {
+  const send = async () => {
     if (!draft.trim()) return;
-    addReply(d.id, 'Tu', draft);
+    const testo = draft;
     setDraft('');
+    try {
+      await addReply(d.id, 'Tu', testo);
+    } catch {
+      // se il salvataggio fallisce il testo torna nel campo, invece di sparire
+      setDraft(testo);
+    }
   };
 
   return (
@@ -69,7 +75,7 @@ export default function DiscussionPage() {
 
         {!d.sample ? (
           <Pressable
-            onPress={() => { removeDiscussion(d.id); router.back(); }}
+            onPress={async () => { await removeDiscussion(d.id); router.back(); }}
             style={({ pressed }) => [styles.action, pressed && { opacity: 0.8 }]}
           >
             <Ionicons name="trash-outline" size={15} color={colors.textDim} />

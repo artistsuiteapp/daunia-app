@@ -1,5 +1,8 @@
-import { useSyncExternalStore } from 'react';
+import { useEffect, useSyncExternalStore } from 'react';
 import type { Ionicons } from '@expo/vector-icons';
+
+import { supabase, backendAttivo } from './supabase';
+import { utenteCorrente } from './auth';
 
 /**
  * La Curva, con un modello solo: la discussione.
@@ -15,8 +18,13 @@ import type { Ionicons } from '@expo/vector-icons';
  * moderare. Il filo di discussione regge da trent'anni perche una tifoseria non
  * e mai tutta collegata nello stesso momento.
  *
- * Nessun server: gli esempi stanno qui sotto, quello che scrive chi prova l'app
- * resta nel suo browser.
+ * Due modi di funzionare, stessa interfaccia verso le schermate.
+ *
+ * Con il database configurato e un account attivo, tutto passa da Supabase.
+ * Senza, resta la dimostrazione: gli esempi qui sotto piu quello che scrivi, che
+ * rimane nella memoria del browser. Le schermate chiamano le stesse funzioni e
+ * non sanno quale dei due sta girando: e per questo che il passaggio non ha
+ * richiesto di toccarle.
  */
 
 export const TOPICS = [
@@ -279,7 +287,65 @@ function commit() {
   listeners.forEach((l) => l());
 }
 
+/* --------------------------------------------------------------- database */
+
+type RigaProfilo = { nome: string | null } | null;
+type RigaRisposta = {
+  id: string; testo: string; creata_il: string; autore: string; profiles: RigaProfilo;
+};
+type RigaDiscussione = {
+  id: string; titolo: string; testo: string; argomento: string;
+  creata_il: string; attiva_il: string; autore: string;
+  profiles: RigaProfilo; risposte: RigaRisposta[] | null;
+};
+
+const soloData = (iso: string) => iso.slice(0, 10);
+
+function daRiga(r: RigaDiscussione): Discussion {
+  const mio = utenteCorrente()?.id;
+  return {
+    id: r.id,
+    author: r.profiles?.nome ?? 'Tifoso',
+    title: r.titolo,
+    body: r.testo,
+    topic: r.argomento as Topic,
+    date: soloData(r.creata_il),
+    likes: 0,
+    sample: false,
+    replies: (r.risposte ?? [])
+      .sort((a, b) => a.creata_il.localeCompare(b.creata_il))
+      .map((x) => ({
+        id: x.id,
+        author: x.profiles?.nome ?? 'Tifoso',
+        body: x.testo,
+        date: soloData(x.creata_il),
+        sample: x.autore !== mio ? true : false,
+      })),
+  };
+}
+
+let caricamentoAvviato = false;
+
+/** Scarica le discussioni e sostituisce la cache. Silenzioso: se fallisce restano gli esempi. */
+export async function ricarica() {
+  if (!supabase) return;
+  const { data, error } = await supabase
+    .from('discussioni')
+    .select('id, titolo, testo, argomento, creata_il, attiva_il, autore, profiles(nome), risposte(id, testo, creata_il, autore, profiles(nome))')
+    .order('attiva_il', { ascending: false })
+    .limit(100);
+  if (error || !data) return;
+  all = (data as unknown as RigaDiscussione[]).map(daRiga);
+  listeners.forEach((l) => l());
+}
+
 export function useDiscussions(): Discussion[] {
+  useEffect(() => {
+    if (!backendAttivo || caricamentoAvviato) return;
+    caricamentoAvviato = true;
+    void ricarica();
+  }, []);
+
   return useSyncExternalStore(
     (l) => { listeners.add(l); return () => listeners.delete(l); },
     () => all,
@@ -293,7 +359,23 @@ export function discussionById(id: string): Discussion | null {
 
 const today = () => new Date().toISOString().slice(0, 10);
 
-export function addDiscussion(input: { author: string; title: string; body: string; topic: Topic }) {
+export async function addDiscussion(input: { author: string; title: string; body: string; topic: Topic }) {
+  const u = utenteCorrente();
+  if (supabase && u) {
+    const { data, error } = await supabase.from('discussioni').insert({
+      autore: u.id,
+      titolo: input.title.trim(),
+      testo: input.body.trim(),
+      argomento: input.topic,
+    }).select('id').single();
+    if (error) throw new Error(error.message);
+    await ricarica();
+    return { id: (data as { id: string }).id } as Discussion;
+  }
+  return aggiungiInLocale(input);
+}
+
+function aggiungiInLocale(input: { author: string; title: string; body: string; topic: Topic }) {
   const d: Discussion = {
     id: `mine-${Date.now()}`,
     author: input.author.trim() || 'Tu',
@@ -310,9 +392,18 @@ export function addDiscussion(input: { author: string; title: string; body: stri
   return d;
 }
 
-export function addReply(on: string, author: string, body: string) {
+export async function addReply(on: string, author: string, body: string) {
   const text = body.trim();
   if (!text) return;
+  const u = utenteCorrente();
+  if (supabase && u) {
+    const { error } = await supabase.from('risposte').insert({
+      discussione: on, autore: u.id, testo: text,
+    });
+    if (error) throw new Error(error.message);
+    await ricarica();
+    return;
+  }
   mine = {
     ...mine,
     replies: [...mine.replies, {
@@ -323,7 +414,13 @@ export function addReply(on: string, author: string, body: string) {
   commit();
 }
 
-export function removeDiscussion(id: string) {
+export async function removeDiscussion(id: string) {
+  const u = utenteCorrente();
+  if (supabase && u) {
+    await supabase.from('discussioni').delete().eq('id', id).eq('autore', u.id);
+    await ricarica();
+    return;
+  }
   mine = {
     discussions: mine.discussions.filter((d) => d.id !== id),
     replies: mine.replies.filter((r) => r.on !== id),

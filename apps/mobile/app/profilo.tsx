@@ -1,0 +1,277 @@
+import { useEffect, useState } from 'react';
+import { router } from 'expo-router';
+import { ActivityIndicator, Alert, Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Image } from 'expo-image';
+import * as ImagePicker from 'expo-image-picker';
+import { Ionicons } from '@expo/vector-icons';
+
+import { Screen, useGutter, ListGroup, ListRow } from '../components/ui';
+import { BackBar } from '../components/BackBar';
+import { Avatar } from '../components/Avatar';
+import { colors, radius, space, type } from '../theme/tokens';
+import { stadium } from '../lib/data';
+import {
+  caricaAvatar, chiediCancellazione, esci, leggiProfilo, rimuoviAvatar,
+  salvaProfilo, useSessione, type Profilo,
+} from '../lib/auth';
+
+/**
+ * Profilo.
+ *
+ * L'immagine si carica in due passaggi: si sceglie dal telefono, si manda
+ * all'archivio, e solo se il caricamento riesce si aggiorna la riga del
+ * profilo. Al contrario resterebbe scritto un indirizzo che non esiste.
+ */
+export default function ProfiloSchermata() {
+  const gutter = useGutter();
+  const { utente, caricato } = useSessione();
+  const [profilo, setProfilo] = useState<Profilo | null>(null);
+  const [nome, setNome] = useState('');
+  const [bio, setBio] = useState('');
+  const [settore, setSettore] = useState<string | null>(null);
+  const [inCorso, setInCorso] = useState(false);
+  const [messaggio, setMessaggio] = useState<string | null>(null);
+  const [errore, setErrore] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!utente) return;
+    leggiProfilo(utente.id).then((p) => {
+      if (!p) return;
+      setProfilo(p);
+      setNome(p.nome);
+      setBio(p.bio ?? '');
+      setSettore(p.settore);
+    });
+  }, [utente]);
+
+  if (!caricato) {
+    return <Screen><View style={styles.attesa}><ActivityIndicator color={colors.accent} /></View></Screen>;
+  }
+
+  if (!utente) {
+    return (
+      <Screen>
+        <BackBar label="Indietro" />
+        <View style={[styles.vuoto, gutter]}>
+          <Ionicons name="person-circle-outline" size={56} color={colors.textFaint} />
+          <Text style={styles.titolo}>Nessun account</Text>
+          <Text style={styles.testo}>
+            Con un account quello che scrivi ti segue fra telefono e computer, e i tuoi voti
+            entrano nelle medie di tutti.
+          </Text>
+          <Pressable onPress={() => router.push('/accedi' as never)} style={styles.cta}>
+            <Text style={styles.ctaTesto}>Entra o iscriviti</Text>
+          </Pressable>
+        </View>
+      </Screen>
+    );
+  }
+
+  const scegliImmagine = async () => {
+    setErrore(null); setMessaggio(null);
+    const permesso = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (!permesso.granted) {
+      setErrore('Serve il permesso di accedere alle foto.');
+      return;
+    }
+    const scelta = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ['images'],
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 0.7,
+    });
+    if (scelta.canceled || !scelta.assets[0]) return;
+
+    setInCorso(true);
+    try {
+      const asset = scelta.assets[0];
+      // fetch legge sia i percorsi locali del telefono sia i blob del browser
+      const risposta = await fetch(asset.uri);
+      const blob = await risposta.blob();
+      const est = (asset.mimeType ?? blob.type ?? 'image/jpeg').split('/')[1] ?? 'jpeg';
+      const r = await caricaAvatar(blob, est === 'jpg' ? 'jpeg' : est);
+      if (r.errore) setErrore(r.errore);
+      else {
+        setProfilo((p) => (p ? { ...p, avatar: r.url } : p));
+        setMessaggio('Immagine aggiornata.');
+      }
+    } catch (e) {
+      setErrore('Non sono riuscito a caricare l’immagine.');
+    } finally {
+      setInCorso(false);
+    }
+  };
+
+  const salva = async () => {
+    setErrore(null); setMessaggio(null); setInCorso(true);
+    const r = await salvaProfilo({ nome: nome.trim(), bio: bio.trim() || null, settore });
+    setInCorso(false);
+    if (r.errore) setErrore(r.errore);
+    else setMessaggio('Profilo salvato.');
+  };
+
+  const cancella = async () => {
+    const conferma = async () => {
+      const r = await chiediCancellazione('richiesta dalla schermata profilo');
+      setMessaggio(r.errore ? null : 'Richiesta registrata. Ti rispondo entro 30 giorni.');
+      if (r.errore) setErrore(r.errore);
+    };
+    if (Platform.OS === 'web') {
+      // eslint-disable-next-line no-alert
+      if (window.confirm('Chiedere la cancellazione dell’account e di tutto quello che hai scritto?')) conferma();
+    } else {
+      Alert.alert(
+        'Cancellare l’account?',
+        'Verranno rimossi il profilo e tutto quello che hai scritto. Non si torna indietro.',
+        [{ text: 'Annulla', style: 'cancel' }, { text: 'Chiedi la cancellazione', style: 'destructive', onPress: conferma }],
+      );
+    }
+  };
+
+  return (
+    <Screen>
+      <BackBar label="Indietro" />
+
+      <View style={[styles.testa, gutter]}>
+        <Pressable onPress={scegliImmagine} disabled={inCorso}>
+          {profilo?.avatar ? (
+            <Image source={{ uri: profilo.avatar }} style={styles.foto} contentFit="cover" transition={220} />
+          ) : (
+            <Avatar uri={null} name={nome || 'Tu'} size={92} />
+          )}
+          <View style={styles.matita}>
+            <Ionicons name="camera" size={15} color={colors.onAccent} />
+          </View>
+        </Pressable>
+
+        <View style={{ flex: 1, gap: 2 }}>
+          <Text style={styles.nome} numberOfLines={1}>{nome || 'Il tuo nome'}</Text>
+          <Text style={styles.email} numberOfLines={1}>{utente.email}</Text>
+          {profilo?.avatar ? (
+            <Pressable onPress={async () => { await rimuoviAvatar(); setProfilo((p) => (p ? { ...p, avatar: null } : p)); }}>
+              <Text style={styles.rimuovi}>Togli l’immagine</Text>
+            </Pressable>
+          ) : null}
+        </View>
+      </View>
+
+      {errore ? <Riquadro tono="errore" testo={errore} gutter={gutter} /> : null}
+      {messaggio ? <Riquadro tono="ok" testo={messaggio} gutter={gutter} /> : null}
+
+      <View style={[styles.campi, gutter]}>
+        <Campo etichetta="Nome">
+          <TextInput value={nome} onChangeText={setNome} style={styles.input} maxLength={40} />
+        </Campo>
+
+        <Campo etichetta={`Due righe su di te${bio ? ` · ${bio.length}/200` : ''}`}>
+          <TextInput
+            value={bio} onChangeText={setBio}
+            placeholder="Da quanto segui il Foggia, dove guardi le partite…"
+            placeholderTextColor={colors.textFaint}
+            style={[styles.input, styles.area]} multiline maxLength={200} textAlignVertical="top"
+          />
+        </Campo>
+
+        <Campo etichetta="Dove stai di solito">
+          <View style={styles.settori}>
+            {stadium.sectors.filter((s) => s.id !== 'settore-ospiti').map((s) => {
+              const on = settore === s.id;
+              return (
+                <Pressable key={s.id} onPress={() => setSettore(on ? null : s.id)} style={[styles.settore, on && styles.settoreOn]}>
+                  <Text style={[styles.settoreTesto, on && styles.settoreTestoOn]}>{s.name}</Text>
+                </Pressable>
+              );
+            })}
+          </View>
+        </Campo>
+
+        <Pressable onPress={salva} disabled={inCorso} style={({ pressed }) => [styles.cta, pressed && { opacity: 0.85 }]}>
+          <Text style={styles.ctaTesto}>{inCorso ? 'Un momento…' : 'Salva'}</Text>
+        </Pressable>
+      </View>
+
+      <View style={[gutter, { marginTop: space.xl }]}>
+        <ListGroup>
+          <ListRow onPress={() => router.push('/privacy' as never)} chevron>
+            <Ionicons name="shield-checkmark-outline" size={19} color={colors.textDim} />
+            <Text style={styles.voce}>Informativa privacy</Text>
+          </ListRow>
+          <ListRow onPress={() => router.push('/condizioni' as never)} chevron>
+            <Ionicons name="document-text-outline" size={19} color={colors.textDim} />
+            <Text style={styles.voce}>Condizioni d’uso</Text>
+          </ListRow>
+          <ListRow onPress={() => { esci(); router.back(); }}>
+            <Ionicons name="log-out-outline" size={19} color={colors.textDim} />
+            <Text style={styles.voce}>Esci</Text>
+          </ListRow>
+          <ListRow onPress={cancella}>
+            <Ionicons name="trash-outline" size={19} color={colors.loss} />
+            <Text style={[styles.voce, { color: colors.loss }]}>Cancella l’account</Text>
+          </ListRow>
+        </ListGroup>
+      </View>
+    </Screen>
+  );
+}
+
+function Campo({ etichetta, children }: { etichetta: string; children: React.ReactNode }) {
+  return (
+    <View style={{ gap: space.sm }}>
+      <Text style={styles.etichetta}>{etichetta.toUpperCase()}</Text>
+      {children}
+    </View>
+  );
+}
+
+function Riquadro({ tono, testo, gutter }: { tono: 'ok' | 'errore'; testo: string; gutter: object }) {
+  const ok = tono === 'ok';
+  return (
+    <View style={[styles.riquadro, gutter, { backgroundColor: ok ? 'rgba(48,209,88,0.12)' : 'rgba(255,69,58,0.12)' }]}>
+      <Ionicons name={ok ? 'checkmark-circle' : 'alert-circle'} size={16} color={ok ? colors.win : colors.loss} />
+      <Text style={styles.riquadroTesto}>{testo}</Text>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  attesa: { paddingTop: space.xxxl, alignItems: 'center' },
+  vuoto: { alignItems: 'center', gap: space.md, marginTop: space.xxl },
+  titolo: { ...type.title2, color: colors.text },
+  testo: { ...type.subhead, color: colors.textDim, textAlign: 'center', lineHeight: 21 },
+
+  testa: { flexDirection: 'row', alignItems: 'center', gap: space.lg, marginTop: space.lg },
+  foto: { width: 92, height: 92, borderRadius: 46, backgroundColor: colors.surface },
+  matita: {
+    position: 'absolute', right: -2, bottom: -2,
+    width: 30, height: 30, borderRadius: 15, backgroundColor: colors.accent,
+    alignItems: 'center', justifyContent: 'center',
+    borderWidth: 2, borderColor: colors.bg,
+  },
+  nome: { ...type.title3, color: colors.text },
+  email: { ...type.caption, color: colors.textFaint },
+  rimuovi: { ...type.caption, color: colors.accentBright, marginTop: 4 },
+
+  riquadro: { flexDirection: 'row', gap: space.sm, alignItems: 'flex-start', borderRadius: radius.lg, padding: space.md, marginTop: space.md },
+  riquadroTesto: { ...type.footnote, color: colors.text, flex: 1 },
+
+  campi: { gap: space.lg, marginTop: space.xl },
+  etichetta: { ...type.caption, color: colors.textFaint, letterSpacing: 0.5 },
+  input: {
+    backgroundColor: colors.surface, borderRadius: radius.lg,
+    paddingHorizontal: space.lg, paddingVertical: 13,
+    ...type.body, color: colors.text,
+    borderWidth: StyleSheet.hairlineWidth, borderColor: 'rgba(255,255,255,0.08)',
+  },
+  area: { minHeight: 92, paddingTop: 13 },
+
+  settori: { flexDirection: 'row', flexWrap: 'wrap', gap: space.sm },
+  settore: { paddingHorizontal: space.md, paddingVertical: 9, borderRadius: radius.pill, backgroundColor: colors.surface },
+  settoreOn: { backgroundColor: colors.accent },
+  settoreTesto: { ...type.footnoteBold, color: colors.textDim },
+  settoreTestoOn: { color: colors.onAccent },
+
+  cta: { borderRadius: radius.xl, paddingVertical: 15, alignItems: 'center', backgroundColor: colors.accent, marginTop: space.sm },
+  ctaTesto: { ...type.headline, color: colors.onAccent },
+
+  voce: { ...type.body, color: colors.text, flex: 1 },
+});

@@ -13,7 +13,7 @@ import { euro, shortDate, thousands } from '../../lib/format';
 import { nextHomeMatch, stadium } from '../../lib/data';
 import { useSafeInsets } from '../../lib/viewport';
 import {
-  clearPresence, declarePresence, myPresence, presenceOf, useFanplay,
+  clearPresence, declarePresence, myPresence, presenceOf, presenzeVere, useDatiPartita, useFanplay,
 } from '../../lib/fanplay';
 
 export default function StadiumScreen() {
@@ -24,6 +24,7 @@ export default function StadiumScreen() {
   const [mode, setMode] = useState<SeatMode>('occupancy');
   const match = nextHomeMatch();
   useFanplay();
+  useDatiPartita(match?.id ?? null);
 
   // il modello si riempie in proporzione a chi ha dichiarato di esserci:
   // e l'unico numero vero che questa app puo avere sullo stadio
@@ -102,7 +103,9 @@ export default function StadiumScreen() {
               <Text style={styles.presenceTitle}>
                 {thousands(totalDeclared)} hanno detto che ci sono
               </Text>
-              <View style={styles.sampleTag}><Text style={styles.sampleText}>esempio</Text></View>
+              {!presenzeVere(match.id) ? (
+                <View style={styles.sampleTag}><Text style={styles.sampleText}>esempio</Text></View>
+              ) : null}
             </View>
             <Text style={styles.presenceNote}>
               {mySector

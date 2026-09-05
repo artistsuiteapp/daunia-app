@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Animated, Easing, Pressable, StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { router } from 'expo-router';
 
 import { colors, radius, space, type } from '../theme/tokens';
 import { initials } from '../lib/format';
@@ -31,9 +32,11 @@ export function Greeting({ name, crest, onBell }: {
 
   return (
     <View style={styles.row}>
-      <View style={styles.avatar}>
-        <Text style={styles.avatarText}>{initials(name)}</Text>
-      </View>
+      <Pressable onPress={() => router.push('/profilo' as never)} hitSlop={8}>
+        <View style={styles.avatar}>
+          <Text style={styles.avatarText}>{initials(name)}</Text>
+        </View>
+      </Pressable>
 
       <View style={{ flex: 1 }}>
         <Text style={styles.salute}>{salute}</Text>

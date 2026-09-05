@@ -50,6 +50,10 @@ export default function RootLayout() {
           <Stack.Screen name="standings" />
           <Stack.Screen name="stats" />
           <Stack.Screen name="pronostici" />
+          <Stack.Screen name="condizioni" />
+          <Stack.Screen name="privacy" />
+          <Stack.Screen name="profilo" />
+          <Stack.Screen name="accedi" />
           <Stack.Screen name="tickets" />
           </Stack>
         </AppShell>
