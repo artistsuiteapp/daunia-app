@@ -23,6 +23,7 @@ import { useEffect, useSyncExternalStore } from 'react';
 
 import { supabase } from './supabase';
 import { utenteCorrente } from './auth';
+import { type Canale } from './contatti-core.ts';
 
 export type Stato = 'aperta' | 'vietata-residenti' | 'ospiti-chiuso' | 'non-confermato';
 
@@ -84,13 +85,18 @@ export const SPIEGAZIONI: Record<Stato, { titolo: string; chiPuo: string; grave:
   },
 };
 
+export type Contatto = { partita: string; utente: string; canale: Canale; riferimento: string };
+
 type Store = {
   divieti: Record<string, Divieto>;
   presenze: Record<string, Presenza[]>;
+  /** contatti visibili: solo di chi va a una partita a cui vai anche tu */
+  contatti: Record<string, Contatto[]>;
+  io: string | null;
   chieste: string[];
 };
 
-let store: Store = { divieti: {}, presenze: {}, chieste: [] };
+let store: Store = { divieti: {}, presenze: {}, contatti: {}, io: null, chieste: [] };
 const ascoltatori = new Set<() => void>();
 
 function annuncia() { ascoltatori.forEach((f) => f()); }
@@ -110,9 +116,13 @@ export async function carica(partite: string[]) {
   if (!nuove.length) return;
   store = { ...store, chieste: [...store.chieste, ...nuove] };
 
-  const [d, t] = await Promise.all([
+  const [d, t, c, u] = await Promise.all([
     supabase.from('divieti').select('*').in('partita', nuove),
     supabase.from('trasferte').select('*').in('partita', nuove),
+    // torna vuoto per chi non ha dichiarato di andarci: e la policy a decidere,
+    // non il client, quindi qui non c'e niente da filtrare
+    supabase.from('trasferte_contatti').select('*').in('partita', nuove),
+    utenteCorrente(),
   ]);
 
   const divieti = { ...store.divieti };
@@ -122,8 +132,28 @@ export async function carica(partite: string[]) {
   for (const p of nuove) presenze[p] = [];
   for (const r of (t.data ?? []) as Presenza[]) (presenze[r.partita] ??= []).push(r);
 
-  store = { ...store, divieti, presenze };
+  const contatti = { ...store.contatti };
+  for (const p of nuove) contatti[p] = [];
+  for (const r of (c.data ?? []) as Contatto[]) (contatti[r.partita] ??= []).push(r);
+
+  store = { ...store, divieti, presenze, contatti, io: u?.id ?? null };
   annuncia();
+}
+
+/** Chi sono io, per riconoscere la mia riga nell'elenco. */
+export function ioSono(): string | null {
+  return store.io;
+}
+
+/**
+ * Il contatto di una persona per quella trasferta.
+ *
+ * Se torna null puo voler dire due cose: che non l'ha lasciato, o che non hai
+ * diritto di vederlo perche non hai detto che ci vai. La schermata spiega quale
+ * delle due, altrimenti sembra che l'app sia rotta.
+ */
+export function contattoDi(partita: string, utente: string): Contatto | null {
+  return (store.contatti[partita] ?? []).find((c) => c.utente === utente) ?? null;
 }
 
 /** Lo stato di una trasferta. Senza dato si dice che non si sa, non che e aperta. */
@@ -159,8 +189,21 @@ export async function miaPresenza(partita: string): Promise<Presenza | null> {
   return chiVa(partita).find((p) => p.utente === u.id) ?? null;
 }
 
-/** Dichiara che ci vai. Serve un account: senza, non c'e nessuno da avvisare. */
-export async function ciVado(partita: string, dati: { citta: string; mezzo: Mezzo; posti: number; nota?: string }) {
+/**
+ * Dichiara che ci vai. Serve un account: senza, non c'e nessuno da avvisare.
+ *
+ * Il contatto e facoltativo e si scrive dopo la presenza, perche la tabella dei
+ * contatti punta a quella delle trasferte: senza esserci dentro, non esiste
+ * niente a cui attaccarlo.
+ */
+export async function ciVado(partita: string, dati: {
+  citta: string;
+  mezzo: Mezzo;
+  posti: number;
+  nota?: string;
+  canale?: Canale | null;
+  riferimento?: string | null;
+}) {
   const u = await utenteCorrente();
   if (!supabase || !u) throw new Error('Per dire che ci vai serve un account.');
 
@@ -180,6 +223,16 @@ export async function ciVado(partita: string, dati: { citta: string; mezzo: Mezz
     if (error.message.includes('parolaccia')) throw new Error('Nella nota c\'è una parola che non passa. Riscrivila e riprova.');
     throw new Error(error.message);
   }
+
+  if (dati.canale && dati.riferimento?.trim()) {
+    await supabase.from('trasferte_contatti').upsert({
+      partita, utente: u.id, canale: dati.canale, riferimento: dati.riferimento.trim(),
+    }, { onConflict: 'partita,utente' });
+  } else {
+    // niente contatto significa toglierlo, non lasciarlo com'era
+    await supabase.from('trasferte_contatti').delete().eq('partita', partita).eq('utente', u.id);
+  }
+
   store = { ...store, chieste: store.chieste.filter((x) => x !== partita) };
   await carica([partita]);
 }
@@ -187,6 +240,8 @@ export async function ciVado(partita: string, dati: { citta: string; mezzo: Mezz
 export async function nonCiVado(partita: string) {
   const u = await utenteCorrente();
   if (!supabase || !u) return;
+  // il contatto se ne va con la presenza: la chiave esterna lo porta via da
+  // sola, ma dirlo qui evita di doverlo ricordare leggendo lo schema
   await supabase.from('trasferte').delete().eq('partita', partita).eq('utente', u.id);
   store = { ...store, chieste: store.chieste.filter((x) => x !== partita) };
   await carica([partita]);

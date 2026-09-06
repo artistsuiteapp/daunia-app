@@ -50,6 +50,10 @@
     {
       "source": "/curva/:id",
       "destination": "/curva/[id]"
+    },
+    {
+      "source": "/trasferta/:id",
+      "destination": "/trasferta/[id]"
     }
   ]
 }

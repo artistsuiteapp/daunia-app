@@ -1,5 +1,6 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { Linking, StyleSheet, Text, View } from 'react-native';
+import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 import { Screen, LargeTitle, GroupLabel, GroupNote, Empty, useGutter } from '../components/ui';
@@ -72,8 +73,6 @@ export default function Trasferte() {
 
 function Scheda({ match, indice }: { match: (typeof matches)[number]; indice: number }) {
   const gutter = useGutter();
-  const [aperta, setAperta] = useState(indice === 0);
-
   const d = divietoDi(match.id);
   const s = SPIEGAZIONI[d.stato];
   const gruppi = perCitta(match.id);
@@ -83,7 +82,7 @@ function Scheda({ match, indice }: { match: (typeof matches)[number]; indice: nu
   return (
     <Reveal delay={60 + indice * 50}>
       <View style={[styles.card, gutter]}>
-        <Premi onPress={() => setAperta((x) => !x)} scala={0.99}>
+        <Premi onPress={() => router.push(`/trasferta/${match.id}` as never)} scala={0.99}>
           <View style={styles.testa}>
             <Crest uri={match.home.crest} name={match.home.shortName} size={34} />
             <View style={{ flex: 1 }}>
@@ -93,7 +92,7 @@ function Scheda({ match, indice }: { match: (typeof matches)[number]; indice: nu
                 {match.venue ? ` · ${match.venue}` : ''}
               </Text>
             </View>
-            <Ionicons name={aperta ? 'chevron-up' : 'chevron-down'} size={16} color={colors.textFaint} />
+            <Ionicons name="chevron-forward" size={16} color={colors.textFaint} />
           </View>
         </Premi>
 
@@ -114,30 +113,21 @@ function Scheda({ match, indice }: { match: (typeof matches)[number]; indice: nu
           </View>
         </View>
 
-        {aperta ? (
-          <View style={styles.dentro}>
+        <View style={styles.dentro}>
             <Text style={styles.riepilogo}>
               {quanti === 0
                 ? 'Nessuno ha ancora detto che ci va.'
                 : `${quanti} ${quanti === 1 ? 'tifoso ci va' : 'tifosi ci vanno'}${posti > 0 ? ` · ${posti} ${posti === 1 ? 'posto libero' : 'posti liberi'} in macchina` : ''}`}
             </Text>
 
-            {gruppi.map((g) => (
-              <View key={g.citta} style={styles.citta}>
-                <Text style={styles.cittaNome}>{g.citta}</Text>
-                <View style={styles.gente}>
-                  {g.gente.map((p) => (
-                    <View key={p.utente} style={styles.tag}>
-                      <Text style={styles.tagTesto}>
-                        {MEZZI[p.mezzo]}{p.posti > 0 ? ` · ${p.posti} posti` : ''}
-                      </Text>
-                    </View>
-                  ))}
-                </View>
+          <View style={styles.gente}>
+            {gruppi.slice(0, 4).map((g) => (
+              <View key={g.citta} style={styles.tag}>
+                <Text style={styles.tagTesto}>{g.citta} · {g.gente.length}</Text>
               </View>
             ))}
           </View>
-        ) : null}
+        </View>
       </View>
     </Reveal>
   );
