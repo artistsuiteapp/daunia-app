@@ -28,8 +28,18 @@ import { utenteCorrente } from './auth';
  * richiesto di toccarle.
  */
 
+/*
+ * L'ordine e quello con cui compaiono: davanti le cose di cui si parla ogni
+ * settimana, in fondo quelle che si aprono ogni tanto.
+ *
+ * Tredici sono tanti, e i primi mesi molti resteranno vuoti. E un compromesso
+ * accettato: una categoria vuota si nota meno di una discussione sulle
+ * penalizzazioni finita dentro "Fuori tema".
+ */
 export const TOPICS = [
-  'Partita', 'Formazione', 'Mercato', 'Trasferte', 'Zaccheria', 'Giovanili', 'Memoria', 'Fuori tema',
+  'Partita', 'Formazione', 'Mercato', 'Società', 'Arbitri',
+  'Trasferte', 'Biglietti', 'Tifoseria', 'Zaccheria', 'Serie C',
+  'Giovanili', 'Memoria', 'Fuori tema',
 ] as const;
 export type Topic = (typeof TOPICS)[number];
 
@@ -37,8 +47,13 @@ export const TOPIC_ICON: Record<Topic, keyof typeof Ionicons.glyphMap> = {
   Partita: 'football',
   Formazione: 'grid',
   Mercato: 'swap-horizontal',
+  Società: 'business',
+  Arbitri: 'flag',
   Trasferte: 'car-sport',
+  Biglietti: 'ticket',
+  Tifoseria: 'flame',
   Zaccheria: 'location',
+  'Serie C': 'trophy',
   Giovanili: 'school',
   Memoria: 'time',
   'Fuori tema': 'chatbubbles',

@@ -271,7 +271,9 @@ function Framing({ orbit, zoom, requestFrame }: {
      * Il raycast per la scelta dei settori resta giusto: legge la stessa
      * matrice di proiezione.
      */
-    const giu = Math.min(SPINGI_GIU, size.height * 0.2);
+    // proporzionale all'altezza del canvas, non fisso: su uno schermo basso
+    // 58 pixel erano tanti e la tribuna vicina finiva sotto al foglio
+    const giu = Math.min(SPINGI_GIU, size.height * 0.1);
     camera.setViewOffset(size.width, size.height, 0, -giu, size.width, size.height);
     camera.updateProjectionMatrix();
 
@@ -284,7 +286,7 @@ function Framing({ orbit, zoom, requestFrame }: {
 /** Quanto la vasca riempie l'inquadratura: piu piccolo, piu vicina. */
 const FIT = 0.82;
 /** Di quanti pixel il modello scende, per non finire sotto al titolo. */
-const SPINGI_GIU = 58;
+const SPINGI_GIU = 38;
 
 function OrbitCamera({ orbit, requestFrame, zoom }: {
   orbit: React.MutableRefObject<Orbit>;

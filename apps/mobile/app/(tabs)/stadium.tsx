@@ -52,7 +52,9 @@ export default function StadiumScreen() {
   const mySector = match ? myPresence(match.id) : null;
 
   const pad = { paddingHorizontal: space.lg + gutter };
-  const canvasHeight = Math.max(280, Math.min(height * 0.46, 460));
+  // piu alto di prima: al modello serve spazio sia in cima, dove galleggiano
+  // titolo e comandi, sia in fondo, dove comincia il foglio dei settori
+  const canvasHeight = Math.max(300, Math.min(height * 0.52, 500));
 
   return (
     <View style={styles.root}>
