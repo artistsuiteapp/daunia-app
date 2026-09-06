@@ -17,6 +17,7 @@ import { fetchEditorial } from './src/sources/blog.mjs';
 import * as shopSrc from './src/sources/shop.mjs';
 import { fetchPartita, fetchPartitaPerId, fetchRosa, dentroLaFinestra } from './src/sources/apifootball.mjs';
 import { fetchIdPartite, fetchProssima } from './src/sources/thesportsdb.mjs';
+import { fetchDivieti } from './src/sources/divieti.mjs';
 import { buildStadium } from './src/stadium.mjs';
 import { normalize, validate } from './src/normalize.mjs';
 
@@ -78,6 +79,19 @@ async function main() {
   const prossima = await step('prossima partita (TheSportsDB)', () => fetchProssima());
 
   /*
+   * Divieti di trasferta, letti dalla stampa locale.
+   *
+   * Propone, non pubblica: quello che esce qui e una proposta che diventa vera
+   * solo dopo che una persona l'ha letta. Un divieto sbagliato fa prendere un
+   * treno a vuoto a qualcuno.
+   */
+  const divieti = await step('divieti di trasferta (stampa locale)', () => fetchDivieti({
+    partite: wikiSeason.matches
+      .filter((m) => m.status !== 'finished' && !m.foggiaHome && m.kickoff)
+      .map((m) => ({ id: m.id, away: m.homeName ?? m.awayName, kickoff: m.kickoff })),
+  }));
+
+  /*
    * La rosa di Wikipedia tiene dentro chi e andato via. Quella di API-Football
    * e la lista buona per la partita, e si aggiorna da sola. Si incrociano sul
    * numero di maglia: chi non ha un numero in entrambe resta, perche togliere
@@ -109,7 +123,8 @@ async function main() {
   bundle.live = live.partita;
   bundle.lineups = storico.archivio;
   bundle.prossima = prossima.prossima;
-  bundle.meta.warnings.push(...live.warnings, ...storico.warnings, ...rosaApi.warnings, ...prossima.warnings);
+  bundle.divietiProposti = divieti.proposte;
+  bundle.meta.warnings.push(...live.warnings, ...storico.warnings, ...rosaApi.warnings, ...prossima.warnings, ...divieti.warnings);
 
   const errors = validate(bundle);
   summary(bundle, nextHome, Date.now() - t0);
@@ -138,6 +153,7 @@ async function main() {
     'stats.json': bundle.stats,
     'live.json': bundle.live,
     'prossima.json': bundle.prossima,
+    'divieti-proposti.json': bundle.divietiProposti,
     'lineups.json': bundle.lineups,
     'bundle.json': bundle,
   };

@@ -7,6 +7,7 @@ import { useLayout } from '../theme/responsive';
 type Item = { icon: keyof typeof Ionicons.glyphMap; label: string; href: string };
 
 const ITEMS: Item[] = [
+  { icon: 'car-sport', label: 'Trasferte', href: '/trasferte' },
   { icon: 'ticket', label: 'Biglietti', href: '/tickets' },
   { icon: 'trophy', label: 'Pronostici', href: '/pronostici' },
   { icon: 'stats-chart', label: 'Statistiche', href: '/stats' },
@@ -16,8 +17,11 @@ const ITEMS: Item[] = [
 
 /**
  * Scorciatoie come pastiglie con icona a sinistra ed etichetta accanto, nella
- * forma dei filtri della reference. La prima e in rosso pieno perche i biglietti
- * sono la voce che porta soldi al club: e la sola che deve saltare all'occhio.
+ * forma dei filtri della reference. La prima e in rosso pieno.
+ *
+ * Al primo posto ci sono le trasferte e non i biglietti. Il motivo: i biglietti
+ * sono un link che manda fuori dall'app, le trasferte rispondono a una domanda
+ * che i tifosi si fanno davvero e a cui nessun altro risponde.
  */
 export function QuickNav() {
   const { gutter } = useLayout();

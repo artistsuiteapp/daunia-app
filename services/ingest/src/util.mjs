@@ -32,6 +32,36 @@ export async function getJson(url, { ttl = CACHE_TTL_MS, retries = 3 } = {}) {
   throw lastErr;
 }
 
+/**
+ * Come getJson ma per testo: gli RSS sono XML, non JSON.
+ *
+ * Stessa cache e stessa cortesia verso la fonte: un feed pubblico si legge
+ * piano, non a ogni giro del cron.
+ */
+export async function getTesto(url, { ttl = CACHE_TTL_MS, retries = 3 } = {}) {
+  const key = createHash('sha1').update(`testo:${url}`).digest('hex').slice(0, 16);
+  const file = path.join(CACHE_DIR, `${key}.json`);
+  if (!process.env.NO_CACHE && existsSync(file)) {
+    const raw = JSON.parse(await readFile(file, 'utf8'));
+    if (Date.now() - raw.at < ttl) return raw.body;
+  }
+  let lastErr;
+  for (let i = 0; i < retries; i++) {
+    try {
+      const res = await fetch(url, { headers: { 'User-Agent': UA, Accept: 'application/rss+xml, application/xml, text/xml, */*' } });
+      if (!res.ok) throw new Error(`HTTP ${res.status} su ${url}`);
+      const body = await res.text();
+      await mkdir(CACHE_DIR, { recursive: true });
+      await writeFile(file, JSON.stringify({ at: Date.now(), body }));
+      return body;
+    } catch (err) {
+      lastErr = err;
+      if (i < retries - 1) await sleep(500 * 2 ** i);
+    }
+  }
+  throw lastErr;
+}
+
 /** Come getJson ma restituisce anche gli header, serve per X-WP-Total. */
 export async function getJsonWithHeaders(url) {
   const res = await fetch(url, { headers: { 'User-Agent': UA, Accept: 'application/json' } });

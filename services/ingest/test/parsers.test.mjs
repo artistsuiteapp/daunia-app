@@ -6,6 +6,7 @@
  * che si rompa l'app.
  */
 import { test, describe } from 'node:test';
+import { classifica, chiave } from '../src/sources/divieti.mjs';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
@@ -387,5 +388,47 @@ describe('utility', () => {
   test('stripHtml decodifica le entity di WordPress', () => {
     assert.equal(stripHtml('DALL&#8217;ATALANTA ARRIVA <b>ZUCCON</b>'), 'DALL’ATALANTA ARRIVA ZUCCON');
     assert.equal(stripHtml('CLASSIFICA &#8211; GIR. C'), 'CLASSIFICA – GIR. C');
+  });
+});
+
+/* ------------------------------------------------- divieti di trasferta */
+
+
+describe('divieti di trasferta', () => {
+  /*
+   * I titoli qui sotto sono veri, presi dalla stampa che copre il Foggia. Se un
+   * giorno smettono di essere riconosciuti vuol dire che il modo di scrivere e
+   * cambiato e il riconoscimento va rifatto: e per questo che stanno in un test
+   * invece che in un commento.
+   */
+  test('riconosce il divieto ai residenti dai titoli veri', () => {
+    assert.equal(classifica('Cerignola, trasferta vietata per il derby di Foggia')?.stato, 'vietata-residenti');
+    assert.equal(classifica('Massimino blindato: trasferta vietata ai tifosi del Foggia per Catania-Foggia')?.stato, 'vietata-residenti');
+    assert.equal(classifica('Vietata la vendita dei biglietti ai residenti nella provincia di Foggia')?.stato, 'vietata-residenti');
+  });
+
+  test('il settore ospiti chiuso vince sul divieto generico', () => {
+    // gli articoli che parlano di settore chiuso spesso dicono anche
+    // "trasferta vietata": deve prevalere il caso piu specifico
+    const t = 'Foggia-Audace il 6 settembre senza tifosi ospiti: trasferta vietata ai gialloblu';
+    assert.equal(classifica(t)?.stato, 'ospiti-chiuso');
+  });
+
+  test('riconosce anche il caso buono', () => {
+    assert.equal(classifica('Trasferta consentita ai tifosi rossoneri')?.stato, 'aperta');
+  });
+
+  test('una notizia qualsiasi non diventa un divieto', () => {
+    assert.equal(classifica('Il Foggia vince 2-1 al Zaccheria'), null);
+    assert.equal(classifica('Biglietti in vendita per la trasferta di Monopoli'), null);
+  });
+
+  test('i nomi delle squadre si incontrano nonostante le sigle', () => {
+    assert.equal(chiave('SS MONOPOLI 1966'), 'monopoli');
+    assert.equal(chiave('Audace Cerignola'), 'audace cerignola');
+    assert.equal(chiave('Inter U23'), 'inter');
+    // i punti tenevano insieme la sigla e la facevano sopravvivere
+    assert.equal(chiave('A.C. Trapani'), 'trapani');
+    assert.equal(chiave('AZ Picerno'), 'az picerno');
   });
 });
