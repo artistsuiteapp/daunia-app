@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-06T20:24:59.727Z",
+    "generatedAt": "2026-09-06T20:45:55.844Z",
     "season": "2026-2027",
     "competition": "Serie C",
     "sources": {
@@ -21,7 +21,7 @@
       "Nessuno stemma per \"Barletta\": il sito del club non ha mai incontrato questa squadra.",
       "Nessuno stemma per \"Scafatese\": il sito del club non ha mai incontrato questa squadra.",
       "Solo 3 giocatori su 26 hanno la foto: la rosa sul sito del club e ferma alla stagione precedente.",
-      "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
+      "API-Football: HTTP 403",
       "Trasferta a Monopoli fra meno di una settimana e nessuna notizia sul divieto: controlla a mano, potrebbe essersi rotto il riconoscimento."
     ]
   },
