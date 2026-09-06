@@ -73,11 +73,16 @@ secure_password_change = true
 # gratuito tipo @gmail o @aol, perche dal febbraio 2024 Gmail e Yahoo rifiutano
 # o mandano in spam i messaggi che non passano la verifica del dominio.
 #
+# Meglio un sottodominio (mail.iltuodominio.it) che il dominio nudo: se un
+# giorno queste email finiscono segnalate come spam, a rimetterci e la
+# reputazione del sottodominio, non quella con cui scrivi alle persone.
+#
 # Quando il dominio c'e:
 #   1. su Resend, verificare il dominio (tre record DNS) e creare una chiave
 #   2. scrivere in un file .env accanto a questo, MAI nel repository:
 #        SMTP_USER=resend
 #        SMTP_PASS=<la chiave di Resend>
+#        SMTP_FROM=no-reply@mail.iltuodominio.it
 #   3. togliere il commento qui sotto e lanciare `supabase config push`
 #
 # [auth.email.smtp]
@@ -86,5 +91,5 @@ secure_password_change = true
 # port = 587
 # user = "env(SMTP_USER)"
 # pass = "env(SMTP_PASS)"
-# admin_email = "no-reply@iltifodelladaunia.it"
+# admin_email = "env(SMTP_FROM)"
 # sender_name = "Il Tifo della Daunia"

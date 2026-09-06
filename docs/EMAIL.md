@@ -18,19 +18,58 @@ qualcuno dentro al proprio account.
 **Un dominio.** Resend non fa spedire da un indirizzo gratuito: va verificato un
 dominio che possiedi. Non è un capriccio loro — dal febbraio 2024 Gmail e Yahoo
 rifiutano o mandano in spam i messaggi che non passano la verifica del dominio
-del mittente.
+del mittente. Cambiare fornitore non aggira la regola: anche Brevo dice che i
+domini di Gmail e Yahoo non si possono autenticare.
 
-Un `.it` costa una decina di euro l'anno, e serve comunque per la raccolta
-fondi: un link a `iltifodelladaunia.it` si legge meglio di uno a
-`daunia.vercel.app`.
+Va bene un dominio qualsiasi che già possiedi, anche se lo usi per altro. Non
+deve essere quello dell'app.
+
+## Usa un sottodominio, non il dominio nudo
+
+Su Resend va aggiunto `mail.iltuodominio.it`, non `iltuodominio.it`. Stesso
+lavoro, stessi record. Ma se un giorno queste email finiscono segnalate come
+spam, a rimetterci è la reputazione del sottodominio: la casella con cui scrivi
+alle persone resta fuori dal rischio.
+
+Chi riceve vede comunque **Il Tifo della Daunia** come mittente. Il nome
+visualizzato è separato dall'indirizzo.
+
+## I record DNS, e dove vanno davvero
+
+Questa è la parte che si sbaglia: Resend non li mette tutti sullo stesso nome.
+Gli esempi qui sotto valgono per `mail.iltuodominio.it`; i valori esatti li dà
+Resend quando aggiungi il dominio.
+
+| Nome | Tipo | Valore |
+|---|---|---|
+| `send.mail` | TXT | `v=spf1 include:amazonses.com ~all` |
+| `send.mail` | MX (priorità 10) | `feedback-smtp.<regione>.amazonses.com` |
+| `resend._domainkey.mail` | TXT | la chiave lunga che dà Resend |
+| `_dmarc.mail` | TXT | `v=DMARC1; p=none;` |
+
+Il DKIM è lungo e certi pannelli DNS lo troncano senza dirlo: va incollato per
+intero.
+
+Il DMARC non serve a Resend ma lo chiedono Gmail e Yahoo dal 2024.
+
+## Controllare prima di premere "verifica"
+
+I record ci mettono da pochi minuti a qualche ora a propagarsi. Invece di
+premere "verifica" su Resend ogni due minuti senza sapere se il problema è
+l'attesa o un record scritto male:
+
+```bash
+cd ~/dev/daunia-app && node controlla-email.mjs mail.iltuodominio.it
+```
+
+Dice quale record manca e dove va messo. Interroga i DNS pubblici di Cloudflare
+e Google, non quelli di casa, perché la cache del provider può restituire il
+"non esiste" di mezz'ora fa.
 
 ## I passaggi
 
-1. **Comprare il dominio.** Un registrar qualsiasi.
-
-2. **Su Resend**: aggiungere il dominio e copiare i tre record DNS (SPF, DKIM,
-   e quello di verifica) nel pannello del registrar. La verifica richiede da
-   pochi minuti a qualche ora.
+1. **Su Resend**: aggiungere `mail.iltuodominio.it` e copiare i record DNS nel
+   pannello del registrar.
 
 3. **Su Resend**: creare una chiave API. Vale come password SMTP.
 
@@ -40,6 +79,7 @@ fondi: un link a `iltifodelladaunia.it` si legge meglio di uno a
    ```
    SMTP_USER=resend
    SMTP_PASS=<la chiave di Resend>
+   SMTP_FROM=no-reply@mail.iltuodominio.it
    ```
 
 5. **In `supabase/config.toml`**: togliere il commento al blocco
