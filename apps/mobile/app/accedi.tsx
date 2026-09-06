@@ -61,7 +61,14 @@ export default function Accedi() {
         const r = await accedi(email, password);
         if (r.errore) return setErrore(r.errore);
         if (!resta) await nonRicordare();
-        router.back();
+        /*
+         * A casa, non "indietro".
+         *
+         * Chi arriva qui dalla schermata di benvenuto, con router.back() ci
+         * torna sopra: fa l'accesso, funziona, e si ritrova al punto di
+         * partenza come se non fosse successo niente.
+         */
+        router.replace('/' as never);
       }
     } finally {
       setInCorso(false);

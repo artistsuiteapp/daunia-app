@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { utenteCorrente } from './auth';
+import { useSessione, utenteCorrente } from './auth';
 import { backendAttivo } from './supabase';
 
 /**
@@ -71,6 +71,15 @@ export function useBenvenuto(): { mostra: boolean; pronto: boolean } {
     ascoltatori.add(l);
     return () => { ascoltatori.delete(l); };
   }, []);
+  /*
+   * Anche alla sessione, non solo a questo negozio.
+   *
+   * Prima ascoltava solo gli avvisi di "ospite" ma la decisione dipende anche
+   * dall'utente: uno faceva l'accesso, la sessione arrivava, e qui non se ne
+   * accorgeva nessuno. Restava la schermata di benvenuto addosso a uno che era
+   * gia dentro.
+   */
+  useSessione();
 
   if (!backendAttivo) return { mostra: false, pronto: true };
   if (!caricato) return { mostra: false, pronto: false };
@@ -85,6 +94,9 @@ export function useOspite(): boolean {
     ascoltatori.add(l);
     return () => { ascoltatori.delete(l); };
   }, []);
+  // stesso motivo: senza questo, dopo l'accesso le schermate continuano a
+  // trattare come ospite uno che ha appena messo la password
+  useSessione();
   return backendAttivo && !utenteCorrente();
 }
 

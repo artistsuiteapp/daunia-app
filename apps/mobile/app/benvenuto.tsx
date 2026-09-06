@@ -9,6 +9,7 @@ import { SfondoCitta } from '../components/SfondoCitta';
 import { EventCard } from '../components/EventCard';
 import { colors, radius, space, type } from '../theme/tokens';
 import { continuaComeOspite } from '../lib/ospite';
+import { useSessione } from '../lib/auth';
 import { foggiaRow, nextMatch } from '../lib/data';
 
 /**
@@ -24,7 +25,19 @@ import { foggiaRow, nextMatch } from '../lib/data';
  */
 export default function Benvenuto() {
   const gutter = useGutter();
+  const sessione = useSessione();
   const { height } = useWindowDimensions();
+
+  /*
+   * Chi e gia dentro non deve vedere questa schermata.
+   *
+   * Ci si finisce piu facilmente di quanto sembri: tornando indietro dopo
+   * l'accesso, o riaprendo l'app da un collegamento vecchio. Restarci sopra da
+   * loggati fa credere che l'accesso non abbia funzionato.
+   */
+  useEffect(() => {
+    if (sessione.utente) router.replace('/' as never);
+  }, [sessione.utente]);
   // su un iPhone in Safari restano circa 660 punti utili: con lo stemma a 124
   // il blocco non ci sta e la pagina finisce tagliata invece che scorrere
   const stemma = height < 720 ? 92 : 124;
