@@ -15,7 +15,7 @@
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 import { manda, type Iscrizione } from './push.ts';
 import {
-  contaGol, concorda, titoloGol, golVero, golDalTabellone, minutoStimato,
+  contaGol, concorda, titoloGol, golVero, golDalTabellone, minutoStimato, cronologia,
   type EventoAF, type Punteggio,
 } from './punteggio.ts';
 
@@ -76,7 +76,11 @@ const FINITE = ['FT', 'AET', 'PEN'];
 const IN_GIOCO = ['1H', 'HT', '2H', 'ET', 'BT', 'P'];
 
 type Tipo = 'formazioni' | 'inizio' | 'gol' | 'espulsione' | 'intervallo' | 'fine';
-type Avviso = { tipo: Tipo; titolo: string; testo: string; tag: string; rotta: string };
+type Avviso = {
+  tipo: Tipo; titolo: string; testo: string; tag: string; rotta: string;
+  /** riscrive una notifica gia mandata senza farla suonare di nuovo */
+  muta?: boolean;
+};
 
 const db = createClient(
   Deno.env.get('SUPABASE_URL')!,
@@ -184,7 +188,7 @@ async function diffondi(a: Avviso) {
     try {
       const stato = await manda(
         { endpoint: i.endpoint, p256dh: i.p256dh, auth: i.auth },
-        { titolo: a.titolo, testo: a.testo, tag: a.tag, rotta: a.rotta, tipo: a.tipo },
+        { titolo: a.titolo, testo: a.testo, tag: a.tag, rotta: a.rotta, tipo: a.tipo, muta: a.muta },
         jwk, pubblica, CONTATTO,
       );
       // 404 e 410 dicono che quel telefono non esiste piu: la riga va tolta,
@@ -286,7 +290,25 @@ Deno.serve(async (req) => {
   const e = dalVivo ?? ev?.events?.[0];
   if (!e) return Response.json({ fatto: 'fonte muta', avvisi: 0 });
 
-  const stato = String(e.strStatus ?? '').trim() || 'NS';
+  /*
+   * Sparita dalla lista del dal vivo vuol dire finita.
+   *
+   * La lista contiene solo le partite in corso: al triplice fischio quella
+   * riga sparisce, e restiamo sulla scheda evento, che si aggiorna con calma.
+   * Il 6 settembre l'app ha continuato a dire "in corso" per sei minuti dopo la
+   * fine, col cronometro che avanzava.
+   *
+   * La sparizione da sola non basta -- la fonte puo avere un buco -- ma
+   * insieme a "eravamo in gioco" e "sono passati almeno cento minuti dal
+   * fischio d'inizio" e una conclusione, non una supposizione.
+   */
+  const dalFischio = adesso - Date.parse(riga.kickoff);
+  const finitaPerSparizione = !dalVivo
+    && IN_GIOCO.includes(String(riga.stato ?? ''))
+    && dalFischio > 100 * MINUTO;
+
+  const letto = String(e.strStatus ?? '').trim() || 'NS';
+  const stato = finitaPerSparizione && !FINITE.includes(letto) ? 'FT' : letto;
   const casa = e.intHomeScore === null || e.intHomeScore === '' ? null : Number(e.intHomeScore);
   const ospiti = e.intAwayScore === null || e.intAwayScore === '' ? null : Number(e.intAwayScore);
   const etichetta = riga.etichetta ?? e.strEvent ?? 'Foggia';
@@ -297,7 +319,9 @@ Deno.serve(async (req) => {
   patch.stato = stato;
   patch.casa = casa;
   patch.ospiti = ospiti;
-  patch.minuto = minutoVero;
+  // a partita chiusa il minuto non vuol dire piu niente: lasciarlo scritto
+  // faceva restare "90+8" sotto il punteggio per ore
+  patch.minuto = FINITE.includes(stato) ? null : minutoVero;
 
   if (!riga.inizio_mandato && IN_GIOCO.includes(stato) && !FINITE.includes(stato)) {
     patch.inizio_mandato = true;
@@ -319,11 +343,29 @@ Deno.serve(async (req) => {
 
   // --------------------------------------------- gol ed espulsioni, dai fatti
   const eventiVecchi = riga.eventi_letti_il ? adesso - Date.parse(riga.eventi_letti_il) : Infinity;
+
+  /*
+   * Quando manca un nome si va di corsa.
+   *
+   * Il tabellone dice che si e segnato prima che API-Football dica chi. In quel
+   * buco l'utente ha gia ricevuto "GOL DEL FOGGIA!" e sta aspettando il nome:
+   * otto minuti di attesa sono la differenza fra un'app che segue la partita e
+   * una che la racconta dopo. Finche il conto dei gol del tabellone e piu alto
+   * di quello degli eventi, si rilegge ogni minuto.
+   *
+   * Costa poco perche dura poco: qualche lettura per gol, non per tutta la
+   * partita. E se API-Football per questa gara non ha eventi, `af_a_vuoto` si
+   * arrende dopo tre tentativi e il budget in `quota_af` chiude comunque.
+   */
+  const nomiMancanti = (riga.casa ?? 0) + (riga.ospiti ?? 0)
+    > (riga.casa_af ?? 0) + (riga.ospiti_af ?? 0);
+  const pausa = nomiMancanti ? MINUTO : PAUSA_EVENTI;
+
   // Se API-Football ha gia risposto a vuoto tre volte per questa partita, non
   // si insiste: le chiamate del piano gratuito sono cento al giorno e una
   // partita non coperta se le mangia tutte senza dare niente in cambio.
   const vaLetto = chiaveAF && riga.fixture_id && (riga.af_a_vuoto ?? 0) < RESE
-    && (cambiato || (IN_GIOCO.includes(stato) && eventiVecchi > PAUSA_EVENTI));
+    && (cambiato || (IN_GIOCO.includes(stato) && eventiVecchi > pausa));
 
   /** il punteggio contato dagli eventi: la seconda fonte, gratis */
   let daEventi: Punteggio | null = null;
@@ -333,7 +375,13 @@ Deno.serve(async (req) => {
     patch.eventi_letti_il = new Date().toISOString();
     const d = await json(`${AF}/fixtures/events?fixture=${riga.fixture_id}`, testaAF);
     const lista = (d?.response ?? []) as EventoAF[];
-    if (lista.length) daEventi = contaGol(lista, FOGGIA_AF, inCasa);
+    if (lista.length) {
+      daEventi = contaGol(lista, FOGGIA_AF, inCasa);
+      // La cronaca con i nomi sostituisce quella ricavata dal tabellone: stessi
+      // gol, ma si sa chi e quando. La scheda partita legge questa colonna.
+      const conNomi = cronologia(lista, FOGGIA_AF, inCasa);
+      if (conNomi.length) patch.gol = conNomi;
+    }
 
     // `errors` non vuoto vuol dire quota finita o account sospeso: la risposta
     // arriva con stato 200 e non si distingue da una partita senza eventi se
@@ -410,14 +458,21 @@ Deno.serve(async (req) => {
   // confermato da una seconda fonte.
   const giaDetto = daEventi ? detti.has(`tabellone-${daEventi.casa}-${daEventi.ospiti}`) : false;
   for (const g of nuoviGol) {
-    // quel punteggio l'ha gia annunciato il tabellone: risuonare sarebbe un bis
-    if (giaDetto) continue;
     avvisi.push({
       tipo: 'gol',
       titolo: titoloGol(g.nostro, accordo),
       testo: g.autogol ? `${g.minuto}' autogol di ${g.chi}` : `${g.minuto}' ${g.chi}`,
       tag: `punteggio-${riga.partita}`,
       rotta: '/',
+      /*
+       * Quel gol l'ha gia annunciato il tabellone, senza sapere chi.
+       *
+       * Prima qui si saltava del tutto, e il nome non arrivava mai: restava
+       * "il marcatore non risulta ancora" anche a nome noto. Ora la notifica
+       * si riscrive sul posto -- stesso tag, niente squillo -- e il nome
+       * compare dove l'utente sta gia guardando.
+       */
+      muta: giaDetto,
     });
   }
 

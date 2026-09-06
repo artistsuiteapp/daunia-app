@@ -123,3 +123,36 @@ test('il minuto stimato serve ai gol letti dal tabellone', async () => {
   assert.equal(minutoStimato(KO, 'HT', t(50)), null);
   assert.equal(minutoStimato(null, '1H', t(10)), null);
 });
+
+test('la cronaca porta il punteggio di quel momento, non quello finale', async () => {
+  const { cronologia } = await import('./punteggio.ts');
+  const e: EventoAF[] = [
+    // di proposito in disordine: l'ordine lo deve mettere la funzione
+    gol(ALTRI, 'Normal Goal', { time: { elapsed: 21 }, player: { name: 'M. Perlingieri' } }),
+    gol(ALTRI, 'Normal Goal', { time: { elapsed: 2 }, player: { name: 'A. Boccadamo' } }),
+  ];
+  // Foggia in casa: i gol sono degli ospiti
+  assert.deepEqual(cronologia(e, FOGGIA, true), [
+    { minuto: '2', chi: 'A. Boccadamo', casa: 0, ospiti: 1, nostro: false, fonte: 'eventi' },
+    { minuto: '21', chi: 'M. Perlingieri', casa: 0, ospiti: 2, nostro: false, fonte: 'eventi' },
+  ]);
+});
+
+test("l'autogol si vede nel nome e conta per l'altra squadra", async () => {
+  const { cronologia } = await import('./punteggio.ts');
+  const e: EventoAF[] = [gol(FOGGIA, 'Own Goal', { time: { elapsed: 60 }, player: { name: 'P. Rossi' } })];
+  assert.deepEqual(cronologia(e, FOGGIA, true), [
+    { minuto: '60', chi: 'P. Rossi (aut.)', casa: 0, ospiti: 1, nostro: false, fonte: 'eventi' },
+  ]);
+});
+
+test('il rigore sbagliato non entra nella cronaca', async () => {
+  const { cronologia } = await import('./punteggio.ts');
+  const e: EventoAF[] = [
+    gol(FOGGIA, 'Missed Penalty', { time: { elapsed: 30 }, player: { name: 'Tizio' } }),
+    gol(FOGGIA, 'Normal Goal', { time: { elapsed: 70 }, player: { name: 'Caio' } }),
+  ];
+  const c = cronologia(e, FOGGIA, true);
+  assert.equal(c.length, 1);
+  assert.equal(c[0].chi, 'Caio');
+});

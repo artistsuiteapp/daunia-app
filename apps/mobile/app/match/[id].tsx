@@ -160,26 +160,14 @@ export default function MatchDetail() {
           <>
             <GroupLabel>Cronaca</GroupLabel>
             <View style={gutter}>
-              {match.goals.map((g, i) => {
-                const home = g.side === 'home';
-                return (
-                  <View key={`${g.scorer}-${g.minute}-${i}`} style={styles.event}>
-                    <View style={[styles.eventSide, !home && styles.eventSideRight]}>
-                      <View style={styles.eventBubble}>
-                        <Ionicons name="football" size={13} color={colors.text} />
-                        <Text style={styles.eventName} numberOfLines={1}>
-                          {g.scorer}{g.penalty ? ' (rig.)' : ''}{g.ownGoal ? ' (aut.)' : ''}
-                        </Text>
-                      </View>
-                    </View>
-                    <View style={styles.eventLine}>
-                      <View style={styles.eventDot} />
-                      <Text style={styles.eventMinute}>{g.minute}{g.extra ? `+${g.extra}` : ''}'</Text>
-                    </View>
-                    <View style={styles.eventSide} />
-                  </View>
-                );
-              })}
+              {match.goals.map((g, i) => (
+                <RigaEvento
+                  key={`${g.scorer}-${g.minute}-${i}`}
+                  inCasa={g.side === 'home'}
+                  minuto={`${g.minute}${g.extra ? `+${g.extra}` : ''}'`}
+                  testo={`${g.scorer}${g.penalty ? ' (rig.)' : ''}${g.ownGoal ? ' (aut.)' : ''}`}
+                />
+              ))}
             </View>
           </>
         ) : golVivo.length ? (
@@ -187,29 +175,20 @@ export default function MatchDetail() {
             <GroupLabel>Cronaca</GroupLabel>
             <View style={gutter}>
               {golVivo.map((g, i) => (
-                <View key={`${g.minuto}-${i}`} style={styles.event}>
-                  <View style={[styles.eventSide, !g.nostro && styles.eventSideRight]}>
-                    <View style={styles.eventBubble}>
-                      <Ionicons name="football" size={13} color={colors.text} />
-                      <Text style={styles.eventName} numberOfLines={1}>
-                        {g.casa ?? 0}–{g.ospiti ?? 0}
-                      </Text>
-                    </View>
-                  </View>
-                  <View style={styles.eventLine}>
-                    <View style={styles.eventDot} />
-                    <Text style={styles.eventMinute}>
-                      {g.minuto ? `${g.fonte === 'stimato' ? '~' : ''}${g.minuto}'` : '–'}
-                    </Text>
-                  </View>
-                  <View style={styles.eventSide} />
-                </View>
+                <RigaEvento
+                  key={`${g.minuto}-${i}`}
+                  inCasa={match.foggiaHome ? g.nostro : !g.nostro}
+                  minuto={g.minuto ? `${g.fonte === 'stimato' ? '~' : ''}${g.minuto}'` : '–'}
+                  testo={g.chi ?? `${g.casa ?? 0}–${g.ospiti ?? 0}`}
+                />
               ))}
             </View>
-            <GroupNote>
-              Minuto e punteggio arrivano dal tabellone. Il nome di chi ha segnato compare a
-              fine partita, quando i dati ufficiali sono completi.
-            </GroupNote>
+            {golVivo.some((g) => !g.chi) ? (
+              <GroupNote>
+                Il nome di chi ha segnato compare appena la fonte lo pubblica, di solito entro
+                pochi minuti dal gol.
+              </GroupNote>
+            ) : null}
           </>
         ) : (
           <Empty text={vivo
@@ -275,6 +254,38 @@ function Side({ team }: { team: { crest: string | null; shortName: string } }) {
     <View style={styles.side_}>
       <Crest uri={team.crest} name={team.shortName} size={62} />
       <Text style={styles.teamName} numberOfLines={2}>{team.shortName}</Text>
+    </View>
+  );
+}
+
+/**
+ * Una riga della cronaca, con la bolla dalla parte della squadra che ha segnato.
+ *
+ * Prima la bolla stava sempre nella prima colonna e cambiava solo
+ * l'allineamento interno: un gol degli avversari finiva comunque a sinistra
+ * della linea del minuto, cioe dalla parte del Foggia. In Foggia-Salernitana
+ * si leggevano due gol nostri quando era 1-1.
+ *
+ * `inCasa` e il lato della scheda, non "il Foggia": la colonna di sinistra e
+ * sempre la squadra di casa di quella partita, come il punteggio sopra.
+ */
+function RigaEvento({ inCasa, minuto, testo }: {
+  inCasa: boolean; minuto: string; testo: string;
+}) {
+  const bolla = (
+    <View style={styles.eventBubble}>
+      <Ionicons name="football" size={13} color={colors.text} />
+      <Text style={styles.eventName} numberOfLines={1}>{testo}</Text>
+    </View>
+  );
+  return (
+    <View style={styles.event}>
+      <View style={styles.eventSide}>{inCasa ? bolla : null}</View>
+      <View style={styles.eventLine}>
+        <View style={styles.eventDot} />
+        <Text style={styles.eventMinute}>{minuto}</Text>
+      </View>
+      <View style={[styles.eventSide, styles.eventSideRight]}>{inCasa ? null : bolla}</View>
     </View>
   );
 }

@@ -56,10 +56,12 @@ function annuncia() {
  */
 export type GolVivo = {
   minuto: string | null;
+  /** null finche la fonte degli eventi non pubblica il marcatore */
+  chi?: string | null;
   casa: number | null;
   ospiti: number | null;
   nostro: boolean;
-  fonte?: 'vero' | 'stimato';
+  fonte?: 'vero' | 'stimato' | 'eventi';
 };
 
 /** Le colonne che il guardiano tiene aggiornate, tradotte in `Live`. */

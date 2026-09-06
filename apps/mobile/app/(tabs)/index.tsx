@@ -21,6 +21,7 @@ import { photo } from '../../lib/media';
 import { useSafeInsets } from '../../lib/viewport';
 import { useBenvenuto } from '../../lib/ospite';
 import { useProfilo } from '../../lib/auth';
+import { useLive } from '../../lib/live';
 import {
   FOGGIA, foggiaRow, lastMatch, matchInCorso, meta, news, nextMatch, recentForm,
   standingsWindow, topScorers, upcomingMatches,
@@ -40,8 +41,12 @@ export default function Home() {
     if (benvenuto.mostra) router.replace('/benvenuto' as never);
   }, [benvenuto.mostra]);
   const next = nextMatch();
-  // se si sta giocando adesso, la scheda in cima e quella, non la prossima
-  const adesso = matchInCorso();
+  // se si sta giocando adesso, la scheda in cima e quella, non la prossima.
+  // Il calendario da solo non basta: dice che siamo dentro le tre ore della
+  // partita, non che si sta ancora giocando. Al triplice fischio la fonte dal
+  // vivo lo sa, e l'etichetta deve smettere di dire "si gioca adesso".
+  const vivo = useLive();
+  const adesso = vivo?.finita ? null : matchInCorso();
   const last = lastMatch();
   const row = foggiaRow();
   const scorer = topScorers()[0];

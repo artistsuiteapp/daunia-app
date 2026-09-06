@@ -28,7 +28,11 @@ self.addEventListener('push', (e) => {
     // impilarsi: durante una partita arrivano piu aggiornamenti sullo stesso
     // fatto, e tre righe uguali in centro notifiche sono rumore
     tag: d.tag || 'partita',
-    renotify: Boolean(d.tag),
+    // `muta` e per gli aggiornamenti: quando arriva il nome di chi ha segnato
+    // la notifica del gol si riscrive sul posto, senza suonare una seconda
+    // volta. Due squilli per lo stesso gol fanno credere a un raddoppio.
+    renotify: Boolean(d.tag) && !d.muta,
+    silent: Boolean(d.muta),
     data: { rotta: d.rotta || '/' },
     vibrate: d.tipo === 'gol' ? [200, 80, 200] : undefined,
   };

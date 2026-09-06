@@ -164,3 +164,50 @@ export function minutoStimato(
   }
   return null;
 }
+
+/** Una voce di cronaca: chi, quando, e come stava la partita in quel momento. */
+export type VoceGol = {
+  minuto: string | null;
+  chi: string | null;
+  casa: number;
+  ospiti: number;
+  nostro: boolean;
+  fonte: 'eventi' | 'vero' | 'stimato';
+};
+
+/**
+ * La cronaca dei gol, ricostruita dagli eventi.
+ *
+ * Il punteggio accanto a ogni gol e quello *in quel momento*, non quello
+ * finale: e la differenza fra una cronaca e un elenco. Si ottiene contando in
+ * ordine, quindi gli eventi vanno ordinati per minuto prima di arrivare qui --
+ * API-Football li manda gia cosi, ma non e garantito e ordinarli costa nulla.
+ */
+export function cronologia(eventi: EventoAF[], nostroId: number, inCasa: boolean): VoceGol[] {
+  const gol = eventi
+    .filter(golVero)
+    .sort((a, b) => (a.time?.elapsed ?? 0) - (b.time?.elapsed ?? 0));
+
+  let nostri = 0;
+  let loro = 0;
+  const fuori: VoceGol[] = [];
+
+  for (const x of gol) {
+    const nostroGiocatore = x.team?.id === nostroId;
+    const autogol = x.detail === 'Own Goal';
+    const nostro = nostroGiocatore !== autogol;
+    if (nostro) nostri += 1; else loro += 1;
+
+    const chi = x.player?.name ?? null;
+    fuori.push({
+      minuto: x.time?.elapsed === null || x.time?.elapsed === undefined
+        ? null : String(x.time.elapsed),
+      chi: chi && autogol ? `${chi} (aut.)` : chi,
+      casa: inCasa ? nostri : loro,
+      ospiti: inCasa ? loro : nostri,
+      nostro,
+      fonte: 'eventi',
+    });
+  }
+  return fuori;
+}
