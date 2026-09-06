@@ -22,7 +22,7 @@ import { useSafeInsets } from '../../lib/viewport';
 import { useBenvenuto } from '../../lib/ospite';
 import { useProfilo } from '../../lib/auth';
 import {
-  FOGGIA, foggiaRow, lastMatch, meta, news, nextMatch, recentForm,
+  FOGGIA, foggiaRow, lastMatch, matchInCorso, meta, news, nextMatch, recentForm,
   standingsWindow, topScorers, upcomingMatches,
 } from '../../lib/data';
 
@@ -40,6 +40,8 @@ export default function Home() {
     if (benvenuto.mostra) router.replace('/benvenuto' as never);
   }, [benvenuto.mostra]);
   const next = nextMatch();
+  // se si sta giocando adesso, la scheda in cima e quella, non la prossima
+  const adesso = matchInCorso();
   const last = lastMatch();
   const row = foggiaRow();
   const scorer = topScorers()[0];
@@ -77,7 +79,9 @@ export default function Home() {
       {next ? (
         <>
           <GroupLabel action={<Action label="Calendario" onPress={() => router.push('/matches')} />}>
-            {next.foggiaHome ? 'Prossima in casa' : 'Prossima trasferta'}
+            {adesso?.id === next.id
+              ? 'Si gioca adesso'
+              : next.foggiaHome ? 'Prossima in casa' : 'Prossima trasferta'}
           </GroupLabel>
           <Reveal delay={120}><View style={gutter}><EventCard match={next} tone="accent" /></View></Reveal>
         </>

@@ -97,8 +97,30 @@ export const FOGGIA = teams.find((t) => t.isFoggia) ?? null;
 
 const ts = (m: Match) => (m.kickoff ? Date.parse(m.kickoff) : Number.POSITIVE_INFINITY);
 
+/**
+ * Quanto dura una partita nel calendario dell'app: novanta minuti, intervallo,
+ * recupero e quel che serve. Dopo, smette di essere "adesso".
+ */
+export const DURATA_PARTITA = 3 * 60 * 60 * 1000;
+
+/**
+ * Le partite ancora da vedere, compresa quella che si sta giocando in questo
+ * momento.
+ *
+ * Prima il filtro era `ts(m) > now`, e alle 21:00:01 la partita in corso
+ * spariva dall'app: la home passava alla successiva, la chat dal vivo si
+ * apriva su quella sbagliata e il punteggio non si vedeva da nessuna parte.
+ * Una partita smette di essere attuale quando finisce, non quando comincia.
+ */
 export function upcomingMatches(now = Date.now()): Match[] {
-  return matches.filter((m) => m.status !== 'finished' && ts(m) > now).sort((a, b) => ts(a) - ts(b));
+  return matches
+    .filter((m) => m.status !== 'finished' && ts(m) + DURATA_PARTITA > now)
+    .sort((a, b) => ts(a) - ts(b));
+}
+
+/** La partita che si sta giocando adesso, se ce n'e una. */
+export function matchInCorso(now = Date.now()): Match | null {
+  return upcomingMatches(now).find((m) => ts(m) <= now) ?? null;
 }
 
 /**

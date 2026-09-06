@@ -10,9 +10,10 @@ import { PallinoLive } from '../components/PallinoLive';
 import { SoloConAccount } from '../components/SoloConAccount';
 import { Premi } from '../components/anima';
 import { colors, radius, space, type } from '../theme/tokens';
-import { nextMatch, prossima } from '../lib/data';
+import { nextMatch } from '../lib/data';
 import { useOspite } from '../lib/ospite';
 import { useLive, liveDi } from '../lib/live';
+import { etichettaFase } from '../lib/live-core';
 import { useSala, manda, cancella, salaAperta, LIMITE } from '../lib/sala';
 import { ioSono } from '../lib/trasferte';
 import { controlla, spiegazione } from '../lib/filtro-core.ts';
@@ -81,7 +82,9 @@ export default function Live() {
           <Text style={styles.numeri}>
             {vivo ? `${vivo.casa ?? 0} : ${vivo.ospite ?? 0}` : '– : –'}
           </Text>
-          <Text style={styles.fase}>{vivo ? vivo.fase : aperta ? 'sta per cominciare' : 'non è ancora ora'}</Text>
+          <Text style={styles.fase}>
+            {vivo ? etichettaFase(vivo, match.kickoff) : aperta ? 'sta per cominciare' : 'non è ancora ora'}
+          </Text>
         </View>
         <Crest uri={match.away.crest} name={match.away.shortName} size={30} />
       </View>

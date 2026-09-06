@@ -132,3 +132,35 @@ export function golDalTabellone(
   const nostroLato = inCasa ? suCasa : suOspiti;
   return { nostro: nostroLato > 0 };
 }
+
+/** Quanto dura l'intervallo, per stimare il minuto nella ripresa. */
+export const PAUSA = 15 * 60 * 1000;
+
+/**
+ * Il minuto di gioco, stimato dall'orario di inizio.
+ *
+ * Serve per i gol che arrivano dal tabellone: TheSportsDB dice che il
+ * punteggio e cambiato ma non quando, e "GOL DEL FOGGIA!" senza nessun
+ * riferimento temporale e meno utile di quanto sembri quando arrivano due
+ * notifiche di fila. La stima non conosce il recupero ne la durata vera
+ * dell'intervallo, quindi si scrive con il "circa" davanti: e onesta, e la
+ * differenza fra un dato e una finta.
+ */
+export function minutoStimato(
+  kickoff: string | null | undefined,
+  stato: string,
+  adesso = Date.now(),
+): number | null {
+  const t = kickoff ? Date.parse(kickoff) : NaN;
+  if (!Number.isFinite(t)) return null;
+  const passati = adesso - t;
+  if (passati < 0) return null;
+
+  const minuti = Math.floor(passati / 60_000) + 1;
+  if (stato === '1H') return Math.min(Math.max(minuti, 1), 45);
+  if (stato === '2H') {
+    const dopoPausa = Math.floor((passati - PAUSA) / 60_000) + 1;
+    return Math.min(Math.max(dopoPausa, 46), 90);
+  }
+  return null;
+}

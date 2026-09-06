@@ -8,6 +8,7 @@ import { Crest } from './Crest';
 import { colors, gradients, radius, space, type } from '../theme/tokens';
 import { shortDate, time } from '../lib/format';
 import { useLive, liveDi } from '../lib/live';
+import { etichettaFase } from '../lib/live-core';
 import { PredictionCallout } from './PredictionCallout';
 
 type Tone = 'accent' | 'dark';
@@ -61,7 +62,7 @@ export function EventCard({ match, tone = 'dark', compatta = false }: {
         <View style={[styles.status, accent ? styles.statusOnAccent : styles.statusOnDark]}>
           {live ? <View style={styles.liveDot} /> : null}
           <Text style={[styles.statusText, { color: accent ? '#FFFFFF' : colors.textDim }]}>
-            {vivo ? vivo.fase : live ? 'in corso' : played ? 'finita' : 'in arrivo'}
+            {vivo ? etichettaFase(vivo, match.kickoff) : live ? 'in corso' : played ? 'finita' : 'in arrivo'}
           </Text>
         </View>
       </View>

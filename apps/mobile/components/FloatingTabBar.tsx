@@ -7,7 +7,7 @@ import { colors, radius, space, type } from '../theme/tokens';
 import { useSafeInsets, useKeyboardOpen } from '../lib/viewport';
 import { PallinoLive } from './PallinoLive';
 import { salaAperta } from '../lib/sala';
-import { prossima } from '../lib/data';
+import { nextMatch } from '../lib/data';
 
 /**
  * Forma minima di cio che expo-router passa a una barra personalizzata.
@@ -73,7 +73,7 @@ export function FloatingTabBar({ state, descriptors, navigation }: TabBarProps) 
         * sette insegna a non premerla piu. Cosi invece, quando compare, vuol
         * dire che sta succedendo qualcosa.
         */}
-      {salaAperta(prossima?.kickoff) ? (
+      {salaAperta(nextMatch()?.kickoff) ? (
         <Pressable
           onPress={() => router.push('/live' as never)}
           style={({ pressed }) => [styles.live, pressed && { opacity: 0.85 }]}

@@ -1,7 +1,7 @@
 import { strict as assert } from 'node:assert';
 import { test } from 'node:test';
 
-import { finestraAperta, leggiEvento, orienta } from '../lib/live-core.ts';
+import { finestraAperta, leggiEvento, orienta, minutoStimato, etichettaFase } from '../lib/live-core.ts';
 
 const KICKOFF = '2026-09-06T19:00:00Z';
 const T = Date.parse(KICKOFF);
@@ -81,4 +81,52 @@ test('partita gia archiviata: vince il risultato nei dati', () => {
 test('non ancora iniziata: niente punteggio', () => {
   const ns = leggiEvento({ strStatus: 'NS' })!;
   assert.equal(orienta(partita, fonte, ns), null);
+});
+
+/*
+ * Il minuto di gioco.
+ *
+ * Per la Serie C TheSportsDB non manda strProgress, quindi il minuto si stima
+ * dall'orario di inizio. Questi conti sono l'unica cosa che sta fra "23'" e
+ * una schermata che non dice niente.
+ */
+const KO = '2026-09-06T19:00:00Z';
+const t = (min: number) => Date.parse(KO) + min * 60_000;
+
+test('il minuto del primo tempo si conta dal fischio', () => {
+  assert.equal(minutoStimato(KO, '1H', t(0)), 1);
+  assert.equal(minutoStimato(KO, '1H', t(22.5)), 23);
+});
+
+test('il primo tempo non passa mai il 45', () => {
+  assert.equal(minutoStimato(KO, '1H', t(51)), 45);
+});
+
+test('la ripresa toglie i quindici minuti di intervallo', () => {
+  // 60 minuti dal fischio, meno 15 di intervallo: siamo al 46
+  assert.equal(minutoStimato(KO, '2H', t(60)), 46);
+  assert.equal(minutoStimato(KO, '2H', t(80)), 66);
+});
+
+test('la ripresa non passa mai il 90', () => {
+  assert.equal(minutoStimato(KO, '2H', t(140)), 90);
+});
+
+test("all'intervallo e a partita finita il minuto non si dice", () => {
+  assert.equal(minutoStimato(KO, 'HT', t(50)), null);
+  assert.equal(minutoStimato(KO, 'FT', t(120)), null);
+  assert.equal(minutoStimato(KO, 'NS', t(-5)), null);
+});
+
+test('senza orario di inizio non si inventa un minuto', () => {
+  assert.equal(minutoStimato(null, '1H', t(10)), null);
+  assert.equal(minutoStimato('non una data', '1H', t(10)), null);
+});
+
+test("l'etichetta unisce fase e minuto, e tace il minuto quando non c'e", () => {
+  const vivo = leggiEvento({ strStatus: '2H', intHomeScore: '0', intAwayScore: '2' });
+  assert.equal(etichettaFase(vivo, KO, t(70)), "2° tempo · 56'");
+
+  const pausa = leggiEvento({ strStatus: 'HT', intHomeScore: '0', intAwayScore: '2' });
+  assert.equal(etichettaFase(pausa, KO, t(50)), 'intervallo');
 });

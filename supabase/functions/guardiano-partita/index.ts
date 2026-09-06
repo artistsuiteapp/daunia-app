@@ -15,7 +15,7 @@
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 import { manda, type Iscrizione } from './push.ts';
 import {
-  contaGol, concorda, titoloGol, golVero, golDalTabellone,
+  contaGol, concorda, titoloGol, golVero, golDalTabellone, minutoStimato,
   type EventoAF, type Punteggio,
 } from './punteggio.ts';
 
@@ -38,7 +38,7 @@ const TETTO_PARERI = 6;
 const FINITE = ['FT', 'AET', 'PEN'];
 const IN_GIOCO = ['1H', 'HT', '2H', 'ET', 'BT', 'P'];
 
-type Tipo = 'formazioni' | 'inizio' | 'gol' | 'espulsione' | 'fine';
+type Tipo = 'formazioni' | 'inizio' | 'gol' | 'espulsione' | 'intervallo' | 'fine';
 type Avviso = { tipo: Tipo; titolo: string; testo: string; tag: string; rotta: string };
 
 const db = createClient(
@@ -319,6 +319,7 @@ Deno.serve(async (req) => {
     && adesso - Date.parse(riga.disaccordo_dal) > ATTESA_ACCORDO;
   if (!nuoviGol.length && (!daEventi || attesaFinita)) {
     const dal = golDalTabellone(prima, tabellone, inCasa);
+    const minuto = minutoStimato(riga.kickoff, stato, adesso);
     const firma = `tabellone-${casa}-${ospiti}`;
     if (dal && !detti.has(firma)) {
       detti.add(firma);
@@ -327,7 +328,10 @@ Deno.serve(async (req) => {
         tipo: 'gol',
         // qui il tabellone e la fonte sia del gol sia del numero: e coerente
         titolo: `${dal.nostro ? 'GOL DEL FOGGIA!' : 'Gol subito.'} ${casa}-${ospiti}`,
-        testo: 'Dal tabellone. Il marcatore non risulta ancora.',
+        // il minuto e stimato dall'orario: senza gli eventi non esiste altrove
+        testo: minuto
+          ? `Circa ${minuto}'. Il marcatore non risulta ancora.`
+          : 'Dal tabellone. Il marcatore non risulta ancora.',
         tag: `punteggio-${riga.partita}`,
         rotta: '/',
       });
@@ -340,6 +344,23 @@ Deno.serve(async (req) => {
   if (litigano && !attesaFinita) {
     delete patch.casa;
     delete patch.ospiti;
+  }
+
+  // --------------------------------------------------------- fine primo tempo
+  //
+  // Il tabellone dice HT e nessuno lo diceva a chi non stava guardando. E il
+  // momento in cui si va a prendere da bere: sapere che si e fermato per
+  // quindici minuti cambia cosa fai nei prossimi quindici.
+  if (stato === 'HT' && !detti.has(`intervallo-${riga.partita}`)) {
+    detti.add(`intervallo-${riga.partita}`);
+    patch.eventi_detti = [...detti];
+    avvisi.push({
+      tipo: 'intervallo',
+      titolo: `Fine primo tempo. ${casa ?? 0}-${ospiti ?? 0}`,
+      testo: etichetta,
+      tag: `intervallo-${riga.partita}`,
+      rotta: '/',
+    });
   }
 
   // ------------------------------------------------------------ fine partita

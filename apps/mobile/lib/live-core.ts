@@ -65,6 +65,58 @@ export function leggiEvento(e: unknown, adesso = Date.now()): Live | null {
   };
 }
 
+/** Quanto dura l'intervallo, per stimare il minuto nella ripresa. */
+export const PAUSA = 15 * 60 * 1000;
+
+/**
+ * Il minuto di gioco, stimato dal calcio d'inizio.
+ *
+ * TheSportsDB per la Serie C non manda `strProgress`: il campo torna vuoto,
+ * quindi il minuto vero non esiste da nessuna parte. Si calcola dall'orario,
+ * ed e una stima: il recupero del primo tempo e l'intervallo vero non si
+ * sanno. Sbaglia di qualche minuto, ma dice la cosa che serve davvero, cioe
+ * a che punto siamo. Meglio "23'" quasi giusto che una schermata muta.
+ *
+ * Torna null quando il minuto non ha senso: prima del fischio, all'intervallo,
+ * a partita finita.
+ */
+export function minutoStimato(
+  kickoff: string | null | undefined,
+  stato: string,
+  adesso = Date.now(),
+): number | null {
+  const t = kickoff ? Date.parse(kickoff) : NaN;
+  if (!Number.isFinite(t)) return null;
+  const passati = adesso - t;
+  if (passati < 0) return null;
+
+  const minuti = Math.floor(passati / 60_000) + 1;
+  if (stato === '1H') return Math.min(Math.max(minuti, 1), 45);
+  if (stato === '2H') {
+    const dopoPausa = Math.floor((passati - PAUSA) / 60_000) + 1;
+    return Math.min(Math.max(dopoPausa, 46), 90);
+  }
+  return null;
+}
+
+/**
+ * Come si scrive lo stato della partita sotto il punteggio.
+ *
+ * "2° tempo · 67'" quando si gioca, il nome della fase quando il minuto non
+ * si puo dire. Il minuto non porta l'apostrofo del tempo reale perche non lo
+ * e: e una stima, e fingere i secondi sarebbe una bugia piccola e inutile.
+ */
+export function etichettaFase(
+  live: Live | null,
+  kickoff: string | null | undefined,
+  adesso = Date.now(),
+): string {
+  if (!live) return '';
+  const m = minutoStimato(kickoff, live.stato, adesso);
+  const nome = live.stato === '1H' ? '1° tempo' : live.stato === '2H' ? '2° tempo' : live.fase;
+  return m === null ? nome : `${nome} · ${m}'`;
+}
+
 const pulisci = (s: string | null | undefined) =>
   String(s ?? '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z]/g, '');
 

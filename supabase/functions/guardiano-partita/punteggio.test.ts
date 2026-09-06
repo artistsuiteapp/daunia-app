@@ -111,3 +111,15 @@ test('se salgono tutti e due, il nostro gol resta vero', () => {
   const a = golDalTabellone({ casa: 0, ospiti: 0 }, { casa: 1, ospiti: 1 }, true);
   assert.deepEqual(a, { nostro: true });
 });
+
+test('il minuto stimato serve ai gol letti dal tabellone', async () => {
+  const { minutoStimato } = await import('./punteggio.ts');
+  const KO = '2026-09-06T19:00:00Z';
+  const t = (m: number) => Date.parse(KO) + m * 60_000;
+
+  assert.equal(minutoStimato(KO, '1H', t(22.5)), 23);
+  assert.equal(minutoStimato(KO, '1H', t(60)), 45);
+  assert.equal(minutoStimato(KO, '2H', t(60)), 46);
+  assert.equal(minutoStimato(KO, 'HT', t(50)), null);
+  assert.equal(minutoStimato(null, '1H', t(10)), null);
+});

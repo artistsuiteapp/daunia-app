@@ -35,11 +35,12 @@ export type Preferenze = {
   inizio: boolean;
   gol: boolean;
   espulsione: boolean;
+  intervallo: boolean;
   fine: boolean;
 };
 
 export const PREFERENZE_INIZIALI: Preferenze = {
-  formazioni: true, inizio: true, gol: true, espulsione: true, fine: true,
+  formazioni: true, inizio: true, gol: true, espulsione: true, intervallo: true, fine: true,
 };
 
 export const ETICHETTE: Record<keyof Preferenze, string> = {
@@ -47,6 +48,7 @@ export const ETICHETTE: Record<keyof Preferenze, string> = {
   inizio: 'Inizio partita',
   gol: 'Gol',
   espulsione: 'Espulsioni',
+  intervallo: 'Fine primo tempo',
   fine: 'Fine partita',
 };
 
