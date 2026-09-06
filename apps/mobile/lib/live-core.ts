@@ -102,6 +102,56 @@ export function minutoStimato(
   return null;
 }
 
+/** oltre questo, un dato fermo non si fa piu avanzare: il guardiano e giu */
+export const DERIVA_MASSIMA = 5;
+
+/**
+ * Il minuto adesso, partendo da quello che ha scritto il guardiano.
+ *
+ * Il guardiano aggiorna una volta al minuto, quindi il minuto letto dal
+ * database e vecchio fino a sessanta secondi: sullo schermo si vedeva il tempo
+ * indietro, e a scatti. Qui avanza da solo fra un aggiornamento e l'altro, che
+ * e' quello che fa un cronometro.
+ *
+ * Il recupero avanza sulla sua parte: "45+5" diventa "45+6", non "46". E oltre
+ * i regolamentari si passa al recupero invece di scrivere "94", che nessun
+ * tabellone scrive.
+ *
+ * Non avanza all'infinito: se il dato e' fermo da piu di qualche minuto vuol
+ * dire che la fonte o il guardiano si sono fermati, e continuare a far correre
+ * il cronometro sarebbe inventare.
+ */
+export function minutoCorrente(
+  base: string | null | undefined,
+  scrittoIl: string | number | null | undefined,
+  stato: string,
+  adesso = Date.now(),
+): string | null {
+  if (!base) return null;
+  const t = typeof scrittoIl === 'number' ? scrittoIl : scrittoIl ? Date.parse(scrittoIl) : NaN;
+  if (!Number.isFinite(t)) return base;
+
+  const passati = Math.floor((adesso - t) / 60_000);
+  if (passati <= 0) return base;
+  if (passati > DERIVA_MASSIMA) return base;
+
+  const m = /^(\d+)(?:\+(\d+))?$/.exec(base.trim());
+  if (!m) return base;
+
+  const regolamentari = stato === '1H' ? 45 : stato === '2H' ? 90 : null;
+  const primo = Number(m[1]);
+  const recupero = m[2] === undefined ? null : Number(m[2]);
+
+  // gia' nel recupero: cresce quello, la parte davanti resta ferma
+  if (recupero !== null) return `${primo}+${recupero + passati}`;
+
+  const avanti = primo + passati;
+  if (regolamentari !== null && avanti > regolamentari) {
+    return `${regolamentari}+${avanti - regolamentari}`;
+  }
+  return String(avanti);
+}
+
 /**
  * Come si scrive lo stato della partita sotto il punteggio.
  *
@@ -115,8 +165,10 @@ export function etichettaFase(
   adesso = Date.now(),
 ): string {
   if (!live) return '';
-  // il minuto vero, quando c'e, batte sempre la stima: porta anche il recupero
-  const m = live.minuto ?? minutoStimato(kickoff, live.stato, adesso);
+  // il minuto vero, quando c'e, batte sempre la stima: porta anche il recupero.
+  // Fatto avanzare fino ad adesso, altrimenti resta indietro di un minuto.
+  const m = minutoCorrente(live.minuto, live.aggiornato, live.stato, adesso)
+    ?? minutoStimato(kickoff, live.stato, adesso);
   const nome = live.stato === '1H' ? '1° tempo' : live.stato === '2H' ? '2° tempo' : live.fase;
   return m === null ? nome : `${nome} · ${m}'`;
 }

@@ -62,7 +62,7 @@ const viaRapid = (Deno.env.get('API_FOOTBALL_VIA') ?? '').toLowerCase() === 'rap
 const AF = viaRapid ? AF_RAPIDAPI : AF_DIRETTO;
 const testaAF: HeadersInit = viaRapid
   ? { 'x-rapidapi-key': chiaveAF, 'x-rapidapi-host': 'api-football-v1.p.rapidapi.com' }
-  : testaAF;
+  : { 'x-apisports-key': chiaveAF };
 const jwk = JSON.parse(Deno.env.get('VAPID_JWK') ?? '{}') as JsonWebKey;
 const pubblica = Deno.env.get('VAPID_PUBLIC') ?? '';
 const CONTATTO = 'https://daunia.vercel.app';

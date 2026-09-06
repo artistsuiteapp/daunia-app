@@ -1,7 +1,7 @@
 import { strict as assert } from 'node:assert';
 import { test } from 'node:test';
 
-import { finestraAperta, leggiEvento, orienta, minutoStimato, etichettaFase } from '../lib/live-core.ts';
+import { finestraAperta, leggiEvento, orienta, minutoStimato, etichettaFase, minutoCorrente } from '../lib/live-core.ts';
 
 const KICKOFF = '2026-09-06T19:00:00Z';
 const T = Date.parse(KICKOFF);
@@ -137,4 +137,45 @@ test("l'etichetta unisce fase e minuto, e tace il minuto quando non c'e", () => 
 
   const pausa = leggiEvento({ strStatus: 'HT', intHomeScore: '0', intAwayScore: '2' });
   assert.equal(etichettaFase(pausa, KO, t(50)), 'intervallo');
+});
+
+/*
+ * Il cronometro fra un aggiornamento e l'altro.
+ *
+ * Il guardiano scrive una volta al minuto: senza questi conti il minuto sullo
+ * schermo e sempre indietro, e si muove a scatti invece che scorrere.
+ */
+const T0 = Date.parse('2026-09-06T19:30:00Z');
+const dopo = (sec: number) => T0 + sec * 1000;
+
+test('il minuto avanza da solo fra un aggiornamento e l altro', () => {
+  assert.equal(minutoCorrente('30', T0, '1H', dopo(0)), '30');
+  assert.equal(minutoCorrente('30', T0, '1H', dopo(59)), '30');
+  assert.equal(minutoCorrente('30', T0, '1H', dopo(61)), '31');
+  assert.equal(minutoCorrente('30', T0, '1H', dopo(150)), '32');
+});
+
+test('nel recupero cresce il recupero, non il minuto davanti', () => {
+  assert.equal(minutoCorrente('45+2', T0, '1H', dopo(120)), '45+4');
+  assert.equal(minutoCorrente('90+1', T0, '2H', dopo(180)), '90+4');
+});
+
+test('oltre i regolamentari si passa al recupero invece di scrivere 47', () => {
+  assert.equal(minutoCorrente('44', T0, '1H', dopo(180)), '45+2');
+  assert.equal(minutoCorrente('89', T0, '2H', dopo(120)), '90+1');
+});
+
+test('un dato fermo da troppo non si fa correre', () => {
+  // se il guardiano si e fermato, il cronometro non deve inventare
+  assert.equal(minutoCorrente('30', T0, '1H', dopo(20 * 60)), '30');
+});
+
+test('senza minuto o senza orario non si inventa niente', () => {
+  assert.equal(minutoCorrente(null, T0, '1H', dopo(120)), null);
+  assert.equal(minutoCorrente('30', null, '1H', dopo(120)), '30');
+  assert.equal(minutoCorrente('boh', T0, '1H', dopo(120)), 'boh');
+});
+
+test("l'orologio non torna mai indietro", () => {
+  assert.equal(minutoCorrente('30', T0, '1H', T0 - 60_000), '30');
 });

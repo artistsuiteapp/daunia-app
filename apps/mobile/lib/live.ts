@@ -33,12 +33,15 @@ export type { Live } from './live-core';
 
 const BASE = 'https://www.thesportsdb.com/api/v1/json/123';
 const OGNI = 45_000;
+/** ogni quanto si ridisegna il minuto fra un aggiornamento e l'altro */
+const BATTITO = 15_000;
 
 let stato: Live | null = null;
 /** i gol della partita in corso, col minuto: la cronologia che il guardiano registra */
 let gol: GolVivo[] = [];
 let ascoltatori: Array<() => void> = [];
 let timer: ReturnType<typeof setInterval> | null = null;
+let battito: ReturnType<typeof setInterval> | null = null;
 
 function annuncia() {
   for (const f of ascoltatori) f();
@@ -65,17 +68,21 @@ type Riga = {
   casa: number | null;
   ospiti: number | null;
   minuto: string | null;
+  aggiornato_il?: string | null;
   gol?: GolVivo[] | null;
 };
 
 function daRiga(r: Riga | null): Live | null {
   if (!r?.stato) return null;
+  // l'ora del server, non quella della lettura: il cronometro deve partire da
+  // quando il minuto e stato scritto, non da quando l'abbiamo visto
+  const scritto = r.aggiornato_il ? Date.parse(r.aggiornato_il) : NaN;
   return leggiEvento({
     strStatus: r.stato,
     intHomeScore: r.casa,
     intAwayScore: r.ospiti,
     strProgress: r.minuto,
-  });
+  }, Number.isFinite(scritto) ? scritto : Date.now());
 }
 
 function applica(letto: Live | null, cronologia?: GolVivo[] | null) {
@@ -99,7 +106,7 @@ async function chiediAlDatabase(): Promise<boolean> {
   if (!supabase || !id) return false;
   const { data, error } = await supabase
     .from('stato_partita')
-    .select('stato, casa, ospiti, minuto, gol')
+    .select('stato, casa, ospiti, minuto, gol, aggiornato_il')
     .eq('partita', String(id))
     .maybeSingle();
   if (error || !data) return false;
@@ -154,6 +161,22 @@ function avvia() {
   if (!finestraAperta(prossima?.kickoff)) return;
   ascoltaIlDatabase();
 
+  /*
+   * Il battito del cronometro.
+   *
+   * Il dato dal server arriva una volta al minuto; senza questo il minuto sullo
+   * schermo resterebbe fermo e poi salterebbe di uno. Qui non si chiede niente
+   * a nessuno: si rifa il disegno, e `minutoCorrente` calcola dove siamo. Il
+   * conto sta in live-core, quindi non c'e nessun contatore da tenere allineato.
+   */
+  if (!battito) {
+    battito = setInterval(() => {
+      if (!stato || stato.finita) return;
+      stato = { ...stato };
+      annuncia();
+    }, BATTITO);
+  }
+
   // un colpo si fa comunque: se lo stato dell'app arrivasse sbagliato, meglio
   // un punteggio fermo che nessun punteggio
   void chiedi();
@@ -170,6 +193,8 @@ function avvia() {
 function ferma() {
   if (timer) clearInterval(timer);
   timer = null;
+  if (battito) clearInterval(battito);
+  battito = null;
   if (canale) { void canale.unsubscribe(); canale = null; }
 }
 
