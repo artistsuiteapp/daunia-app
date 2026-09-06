@@ -68,7 +68,7 @@ export default function Trasferta() {
     if (c) { setCanale(c.canale); setRiferimento(c.riferimento); }
   }, [mia?.utente]);
 
-  if (!match) return <Screen><Empty text="Trasferta non trovata." /></Screen>;
+  if (!match) return <Screen testaFissa><Empty text="Trasferta non trovata." /></Screen>;
 
   const d = divietoDi(match.id);
   const s = SPIEGAZIONI[d.stato];

@@ -16,7 +16,7 @@ export default function Post() {
   const gutter = useGutter();
   const post = newsBySlug(String(slug));
 
-  if (!post) return <Screen><Empty text="Articolo non trovato." /></Screen>;
+  if (!post) return <Screen testaFissa><Empty text="Articolo non trovato." /></Screen>;
 
   const fromClub = post.kind === 'club';
   const link = post.url;

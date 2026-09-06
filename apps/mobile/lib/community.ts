@@ -65,10 +65,15 @@ export type Reply = {
   body: string;
   date: string;
   sample: boolean;
+  /** chi l'ha scritta: serve a decidere se mostrare modifica e cestino */
+  autoreId?: string | null;
+  modificata?: boolean;
 };
 
 export type Discussion = {
   id: string;
+  /** chi l'ha aperta: serve a decidere se mostrare modifica e cestino */
+  autoreId?: string | null;
   author: string;
   title: string;
   body: string;
@@ -307,7 +312,7 @@ function commit() {
 
 type RigaProfilo = { nome: string | null } | null;
 type RigaRisposta = {
-  id: string; testo: string; creata_il: string; autore: string; profiles: RigaProfilo;
+  id: string; testo: string; creata_il: string; autore: string; modificata_il?: string | null; profiles: RigaProfilo;
 };
 type RigaDiscussione = {
   id: string; titolo: string; testo: string; argomento: string;
@@ -322,6 +327,7 @@ function daRiga(r: RigaDiscussione): Discussion {
   return {
     id: r.id,
     author: r.profiles?.nome ?? 'Tifoso',
+    autoreId: r.autore,
     title: r.titolo,
     body: r.testo,
     topic: r.argomento as Topic,
@@ -336,6 +342,8 @@ function daRiga(r: RigaDiscussione): Discussion {
         body: x.testo,
         date: soloData(x.creata_il),
         sample: x.autore !== mio ? true : false,
+        autoreId: x.autore,
+        modificata: Boolean((x as { modificata_il?: string | null }).modificata_il),
       })),
   };
 }
@@ -347,7 +355,7 @@ export async function ricarica() {
   if (!supabase) return;
   const { data, error } = await supabase
     .from('discussioni')
-    .select('id, titolo, testo, argomento, creata_il, attiva_il, autore, profiles(nome), risposte(id, testo, creata_il, autore, profiles(nome))')
+    .select('id, titolo, testo, argomento, creata_il, attiva_il, autore, modificata_il, profiles(nome), risposte(id, testo, creata_il, autore, modificata_il, profiles(nome))')
     .order('attiva_il', { ascending: false })
     .limit(100);
   if (error || !data) return;
@@ -485,4 +493,72 @@ export function like(id: string) {
 /** Quante ne ho scritte io, fra discussioni e risposte. */
 export function mineCount() {
   return mine.discussions.length + mine.replies.length;
+}
+
+/* ------------------------------------------------- modifica e cancellazione */
+
+/** Vero se quel pezzo l'ho scritto io: senza account, mai. */
+export function eMio(autoreId: string | null | undefined): boolean {
+  const u = utenteCorrente();
+  return Boolean(u && autoreId && u.id === autoreId);
+}
+
+/**
+ * Corregge una risposta gia pubblicata.
+ *
+ * Il filtro vale anche qui, e non solo nell'app: il trigger nel database scatta
+ * sulle modifiche come sugli inserimenti. Senza, bastava pubblicare pulito e
+ * correggere dopo.
+ */
+export async function modificaRisposta(id: string, testo: string) {
+  const t = testo.trim();
+  if (t.length < 2) throw new Error('Il messaggio è troppo corto.');
+  fermaSeOffensivo(t);
+
+  const u = utenteCorrente();
+  if (supabase && u) {
+    const { error } = await supabase.from('risposte')
+      .update({ testo: t, modificata_il: new Date().toISOString() })
+      .eq('id', id);
+    if (error) throw new Error(tradotto(error.message));
+    await ricarica();
+    return;
+  }
+  mine = {
+    ...mine,
+    replies: mine.replies.map((r) => (r.id === id ? { ...r, body: t } : r)),
+  };
+  commit();
+}
+
+/** Cancella una propria risposta. */
+export async function cancellaRisposta(id: string) {
+  const u = utenteCorrente();
+  if (supabase && u) {
+    const { error } = await supabase.from('risposte').delete().eq('id', id);
+    if (error) throw new Error(error.message);
+    await ricarica();
+    return;
+  }
+  mine = { ...mine, replies: mine.replies.filter((r) => r.id !== id) };
+  commit();
+}
+
+/** Corregge una discussione: titolo e testo insieme, come si e scritta. */
+export async function modificaDiscussione(id: string, titolo: string, testo: string) {
+  fermaSeOffensivo(titolo, testo);
+  const u = utenteCorrente();
+  if (supabase && u) {
+    const { error } = await supabase.from('discussioni')
+      .update({ titolo: titolo.trim(), testo: testo.trim(), modificata_il: new Date().toISOString() })
+      .eq('id', id);
+    if (error) throw new Error(tradotto(error.message));
+    await ricarica();
+    return;
+  }
+  mine = {
+    ...mine,
+    discussions: mine.discussions.map((d) => (d.id === id ? { ...d, title: titolo.trim(), body: testo.trim() } : d)),
+  };
+  commit();
 }

@@ -32,7 +32,7 @@ export default function Pronostici() {
   const giocati = played.filter((m) => myPrediction(m.id)).length;
 
   return (
-    <Screen>
+    <Screen testaFissa>
       <BackBar label="Home" />
       <LargeTitle
         crest={FOGGIA?.crest ?? null}

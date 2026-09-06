@@ -20,7 +20,7 @@ export default function PlayerDetail() {
   const gutter = useGutter();
   const player = playerById(String(id));
 
-  if (!player) return <Screen><Empty text="Giocatore non trovato." /></Screen>;
+  if (!player) return <Screen testaFissa><Empty text="Giocatore non trovato." /></Screen>;
 
   // i gol si ricavano dalle partite: su Wikipedia i marcatori sono per cognome
   const surname = player.name.split(' ').slice(-1)[0]!.toLowerCase();

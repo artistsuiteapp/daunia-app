@@ -55,7 +55,7 @@ export default function Notifiche() {
   const attive = stato?.modo === 'attive' || stato?.modo === 'attive-non-salvate';
 
   return (
-    <Screen>
+    <Screen testaFissa>
       <BackBar label="Home" />
       <LargeTitle
         crest={FOGGIA?.crest ?? null}

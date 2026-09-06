@@ -1,7 +1,8 @@
-import { Fragment, ReactNode } from 'react';
+import { Fragment, ReactNode, useMemo } from 'react';
 import {
-  Pressable, ScrollView, StyleSheet, Text, View, ViewStyle,
+  PanResponder, Platform, Pressable, ScrollView, StyleSheet, Text, View, ViewStyle,
 } from 'react-native';
+import { indietro } from './BackBar';
 import { Ionicons } from '@expo/vector-icons';
 import { colors, radius, ROW_HEIGHT, space, type } from '../theme/tokens';
 import { useLayout } from '../theme/responsive';
@@ -11,7 +12,10 @@ import { useSafeInsets, useKeyboardInset } from '../lib/viewport';
 
 /* -------------------------------------------------------------- contenitore */
 
-export function Screen({ children, scroll = true, edgeToEdge = false, centrato = false, senzaBarra = false }: {
+export function Screen({
+  children, scroll = true, edgeToEdge = false, centrato = false,
+  senzaBarra = false, testaFissa = false,
+}: {
   children: ReactNode;
   scroll?: boolean;
   edgeToEdge?: boolean;
@@ -19,12 +23,31 @@ export function Screen({ children, scroll = true, edgeToEdge = false, centrato =
   centrato?: boolean;
   /** schermate fuori dalle schede: senza barra sotto, senza il suo spazio */
   senzaBarra?: boolean;
+  /** tiene fermo il primo blocco: si usa dove c'e la barra di ritorno */
+  testaFissa?: boolean;
 }) {
   const insets = useSafeInsets();
   const keyboard = useKeyboardInset();
   // Sotto: la barra delle schede galleggia sopra il contenuto, e con la tastiera
   // aperta serve altro spazio, altrimenti l'ultimo blocco finisce sotto i tasti.
   // Con la tastiera aperta la barra si nasconde, quindi il suo spazio si libera.
+  /*
+   * Strisciata dal bordo sinistro per tornare indietro.
+   *
+   * Sul telefono e il gesto che tutti fanno senza pensarci; nella versione web
+   * non esiste e la gente resta bloccata a cercare la freccia. Parte solo dai
+   * primi trenta punti del bordo, altrimenti ruberebbe il gesto a tutto quello
+   * che si scorre in orizzontale, come le pastiglie delle scorciatoie.
+   */
+  const gesti = useMemo(() => PanResponder.create({
+    onMoveShouldSetPanResponder: (e, g) => (
+      e.nativeEvent.pageX < 30 && g.dx > 12 && Math.abs(g.dy) < 24
+    ),
+    onPanResponderRelease: (_e, g) => {
+      if (g.dx > 60 && Math.abs(g.dy) < 80) indietro();
+    },
+  }), []);
+
   const sotto = senzaBarra ? space.xl : TAB_BAR_SPACE;
   const pad = {
     paddingTop: edgeToEdge ? 0 : insets.top,
@@ -32,9 +55,11 @@ export function Screen({ children, scroll = true, edgeToEdge = false, centrato =
       ? keyboard + space.xl
       : sotto + insets.bottom,
   };
-  if (!scroll) return <View style={[styles.screen, pad]}>{children}</View>;
+  if (!scroll) return <View style={[styles.screen, pad]} {...gesti.panHandlers}>{children}</View>;
   return (
     <ScrollView
+      {...gesti.panHandlers}
+      stickyHeaderIndices={testaFissa ? [0] : undefined}
       style={styles.screen}
       contentContainerStyle={[pad, centrato && { flexGrow: 1 }]}
       showsVerticalScrollIndicator={false}

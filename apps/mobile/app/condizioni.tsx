@@ -5,7 +5,7 @@ import { condizioni } from '../lib/legale';
 
 export default function Condizioni() {
   return (
-    <Screen>
+    <Screen testaFissa>
       <BackBar label="Indietro" />
       <Documento titolo="Condizioni d’uso" blocchi={condizioni} />
     </Screen>

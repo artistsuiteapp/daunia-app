@@ -5,7 +5,7 @@ import { privacy } from '../lib/legale';
 
 export default function Privacy() {
   return (
-    <Screen>
+    <Screen testaFissa>
       <BackBar label="Indietro" />
       <Documento titolo="Informativa privacy" blocchi={privacy} />
     </Screen>

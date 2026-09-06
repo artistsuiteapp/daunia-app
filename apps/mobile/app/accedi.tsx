@@ -77,7 +77,7 @@ export default function Accedi() {
 
   if (!backendAttivo) {
     return (
-      <Screen senzaBarra>
+      <Screen testaFissa senzaBarra>
         <SfondoCitta intensita={0.55} />
         <BackBar label="Indietro" />
         <View style={[styles.wrap, gutter]}>

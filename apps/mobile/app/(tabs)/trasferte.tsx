@@ -3,19 +3,18 @@ import { Linking, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
-import { Screen, LargeTitle, GroupLabel, GroupNote, Empty, useGutter } from '../components/ui';
-import { BackBar } from '../components/BackBar';
-import { Crest } from '../components/Crest';
-import { Reveal } from '../components/Reveal';
-import { SoloConAccount } from '../components/SoloConAccount';
-import { Premi } from '../components/anima';
-import { colors, radius, space, type } from '../theme/tokens';
-import { shortDate, time } from '../lib/format';
-import { FOGGIA, matches } from '../lib/data';
-import { useOspite } from '../lib/ospite';
+import { Screen, LargeTitle, GroupLabel, GroupNote, Empty, useGutter } from '../../components/ui';
+import { Crest } from '../../components/Crest';
+import { Reveal } from '../../components/Reveal';
+import { SoloConAccount } from '../../components/SoloConAccount';
+import { Premi } from '../../components/anima';
+import { colors, radius, space, type } from '../../theme/tokens';
+import { shortDate, time } from '../../lib/format';
+import { FOGGIA, matches } from '../../lib/data';
+import { useOspite } from '../../lib/ospite';
 import {
   useTrasferte, divietoDi, perCitta, postiLiberi, chiVa, SPIEGAZIONI, MEZZI,
-} from '../lib/trasferte';
+} from '../../lib/trasferte';
 
 /**
  * Trasferte.
@@ -43,7 +42,6 @@ export default function Trasferte() {
 
   return (
     <Screen>
-      <BackBar label="Home" />
       <LargeTitle
         crest={FOGGIA?.crest ?? null}
         title="Trasferte"

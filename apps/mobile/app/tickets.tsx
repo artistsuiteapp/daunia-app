@@ -18,7 +18,7 @@ export default function Tickets() {
   const totalAvailable = tickets.reduce((a, t) => a + t.available, 0);
 
   return (
-    <Screen>
+    <Screen testaFissa>
       <BackBar />
       <LargeTitle crest={FOGGIA?.crest ?? null} title="Biglietti" subtitle={`Zaccheria · vendita su ${brand.ticketProvider.name}`} />
 

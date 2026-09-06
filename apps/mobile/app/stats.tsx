@@ -18,7 +18,7 @@ export default function Stats() {
   const played = playedTrend();
 
   return (
-    <Screen>
+    <Screen testaFissa>
       <BackBar />
       <LargeTitle crest={FOGGIA?.crest ?? null} title="Statistiche" subtitle={`${meta.competition} e coppa · ${meta.season.replace('-', '/')}`} />
 

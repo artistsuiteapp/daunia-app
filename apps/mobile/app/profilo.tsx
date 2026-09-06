@@ -49,7 +49,7 @@ export default function ProfiloSchermata() {
   }, [utente]);
 
   if (!caricato) {
-    return <Screen><View style={styles.attesa}><ActivityIndicator color={colors.accent} /></View></Screen>;
+    return <Screen testaFissa><View style={styles.attesa}><ActivityIndicator color={colors.accent} /></View></Screen>;
   }
 
   if (!utente) {

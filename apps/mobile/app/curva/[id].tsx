@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useLocalSearchParams, router } from 'expo-router';
-import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Alert, Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import { Screen, Empty, useGutter } from '../../components/ui';
@@ -11,9 +11,7 @@ import { relative, shortDate } from '../../lib/format';
 import { useOspite } from '../../lib/ospite';
 import { SoloConAccount } from '../../components/SoloConAccount';
 import { useKeyboardInset } from '../../lib/viewport';
-import {
-  TOPIC_ICON, addReply, discussionById, like, removeDiscussion, useDiscussions,
-} from '../../lib/community';
+import { TOPIC_ICON, addReply, discussionById, like, removeDiscussion, useDiscussions, eMio, modificaRisposta, cancellaRisposta } from '../../lib/community';
 
 /**
  * Una discussione: il testo di apertura, poi le risposte in ordine di arrivo e
@@ -25,12 +23,45 @@ export default function DiscussionPage() {
   const gutter = useGutter();
   useDiscussions();
   const [draft, setDraft] = useState('');
+  /** id della risposta che si sta correggendo, e il testo in lavorazione */
+  const [correggo, setCorreggo] = useState<string | null>(null);
+  const [bozza, setBozza] = useState('');
+  const [erroreMod, setErroreMod] = useState<string | null>(null);
+
+  const salvaCorrezione = async (id: string) => {
+    try {
+      await modificaRisposta(id, bozza);
+      setCorreggo(null);
+      setErroreMod(null);
+    } catch (e) {
+      setErroreMod(e instanceof Error ? e.message : 'Non è andata.');
+    }
+  };
+
+  const elimina = async (id: string) => {
+    /*
+     * Si chiede conferma. Cancellare per sbaglio un messaggio a cui hanno gia
+     * risposto e uno di quei danni che non si riparano: la conversazione resta
+     * con un buco in mezzo e nessuno capisce piu di cosa si stava parlando.
+     */
+    const domanda = 'Cancellare questo messaggio? Non si torna indietro.';
+    if (Platform.OS === 'web') {
+      // eslint-disable-next-line no-alert
+      if (!window.confirm(domanda)) return;
+      await cancellaRisposta(id);
+      return;
+    }
+    Alert.alert('Cancellare?', domanda, [
+      { text: 'Annulla', style: 'cancel' },
+      { text: 'Cancella', style: 'destructive', onPress: () => { void cancellaRisposta(id); } },
+    ]);
+  };
   const [liked, setLiked] = useState(false);
   const keyboard = useKeyboardInset();
   const ospite = useOspite();
 
   const d = discussionById(String(id));
-  if (!d) return <Screen><Empty text="Discussione non trovata." /></Screen>;
+  if (!d) return <Screen testaFissa><Empty text="Discussione non trovata." /></Screen>;
 
   const send = async () => {
     if (!draft.trim()) return;
@@ -92,17 +123,59 @@ export default function DiscussionPage() {
       </Text>
 
       <View style={[styles.replies, gutter]}>
-        {d.replies.map((rep) => (
-          <View key={rep.id} style={[styles.reply, !rep.sample && styles.replyMine]}>
-            <Avatar uri={null} name={rep.author} size={28} />
-            <View style={{ flex: 1, gap: 2 }}>
-              <Text style={styles.replyAuthor}>
-                {rep.author} <Text style={styles.replyDate}>· {relative(rep.date)}</Text>
-              </Text>
-              <Text style={styles.replyBody}>{rep.body}</Text>
+        {d.replies.map((rep) => {
+          const mia = eMio(rep.autoreId);
+          const inModifica = correggo === rep.id;
+          return (
+            <View key={rep.id} style={[styles.reply, !rep.sample && styles.replyMine]}>
+              <Avatar uri={null} name={rep.author} size={28} />
+              <View style={{ flex: 1, gap: 2 }}>
+                <Text style={styles.replyAuthor}>
+                  {rep.author} <Text style={styles.replyDate}>· {relative(rep.date)}</Text>
+                  {rep.modificata ? <Text style={styles.replyDate}> · modificato</Text> : null}
+                </Text>
+
+                {inModifica ? (
+                  <View style={{ gap: 6 }}>
+                    <TextInput
+                      value={bozza}
+                      onChangeText={setBozza}
+                      style={styles.input}
+                      multiline
+                      autoFocus
+                    />
+                    {erroreMod ? <Text style={styles.erroreMod}>{erroreMod}</Text> : null}
+                    <View style={styles.azioniMod}>
+                      <Pressable onPress={() => { setCorreggo(null); setErroreMod(null); }}>
+                        <Text style={styles.azioneTesto}>Annulla</Text>
+                      </Pressable>
+                      <Pressable onPress={() => salvaCorrezione(rep.id)}>
+                        <Text style={[styles.azioneTesto, styles.azioneForte]}>Salva</Text>
+                      </Pressable>
+                    </View>
+                  </View>
+                ) : (
+                  <Text style={styles.replyBody}>{rep.body}</Text>
+                )}
+              </View>
+
+              {/* i comandi compaiono solo su quello che hai scritto tu */}
+              {mia && !inModifica ? (
+                <View style={styles.comandi}>
+                  <Pressable
+                    hitSlop={8}
+                    onPress={() => { setCorreggo(rep.id); setBozza(rep.body); setErroreMod(null); }}
+                  >
+                    <Ionicons name="pencil" size={15} color={colors.textFaint} />
+                  </Pressable>
+                  <Pressable hitSlop={8} onPress={() => elimina(rep.id)}>
+                    <Ionicons name="trash-outline" size={15} color={colors.textFaint} />
+                  </Pressable>
+                </View>
+              ) : null}
             </View>
-          </View>
-        ))}
+          );
+        })}
 
         {ospite ? <SoloConAccount cosa="Per rispondere in questa discussione serve un account." /> : null}
 
@@ -171,6 +244,11 @@ const styles = StyleSheet.create({
   },
   replyAuthor: { ...type.footnoteBold, color: colors.text },
   replyDate: { ...type.caption, color: colors.textFaint },
+  comandi: { flexDirection: 'row', gap: space.md, paddingTop: 2 },
+  azioniMod: { flexDirection: 'row', gap: space.lg, justifyContent: 'flex-end' },
+  azioneTesto: { ...type.footnoteBold, color: colors.textDim },
+  azioneForte: { color: colors.accentBright },
+  erroreMod: { ...type.caption, color: colors.accentBright },
   replyBody: { ...type.subhead, color: colors.textDim, lineHeight: 20 },
 
   composer: { flexDirection: 'row', alignItems: 'flex-end', gap: space.sm, marginTop: space.sm },

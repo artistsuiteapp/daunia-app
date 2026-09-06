@@ -41,7 +41,7 @@ export default function NuovoPost() {
   };
 
   return (
-    <Screen>
+    <Screen testaFissa>
       <BackBar label="Curva" />
 
       <View style={[styles.wrap, gutter]}>

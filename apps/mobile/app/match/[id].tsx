@@ -34,7 +34,7 @@ export default function MatchDetail() {
   );
   useDatiPartita(match?.id ?? null, true);
 
-  if (!match) return <Screen><Empty text="Partita non trovata." /></Screen>;
+  if (!match) return <Screen testaFissa><Empty text="Partita non trovata." /></Screen>;
 
   const played = match.status === 'finished';
   const h2h = matches.filter(
