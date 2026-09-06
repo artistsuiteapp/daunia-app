@@ -8,6 +8,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Screen, useGutter, ListGroup, ListRow } from '../components/ui';
 import { BackBar } from '../components/BackBar';
 import { Avatar } from '../components/Avatar';
+import { RitagliaAvatar } from '../components/RitagliaAvatar';
 import { colors, radius, space, type } from '../theme/tokens';
 import { stadium } from '../lib/data';
 import {
@@ -23,6 +24,9 @@ import {
  * profilo. Al contrario resterebbe scritto un indirizzo che non esiste.
  */
 export default function ProfiloSchermata() {
+  // sul web il ritaglio lo facciamo noi: expo-image-picker sa ritagliare solo
+  // sulle app native, e oggi l'app si usa dal browser
+  const [daRitagliare, setDaRitagliare] = useState<string | null>(null);
   const gutter = useGutter();
   const { utente, caricato } = useSessione();
   const [profilo, setProfilo] = useState<Profilo | null>(null);
@@ -76,11 +80,18 @@ export default function ProfiloSchermata() {
     }
     const scelta = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ['images'],
-      allowsEditing: true,
+      // sulle app native ritaglia il sistema; sul web non fa niente e ci
+      // pensa la nostra schermata
+      allowsEditing: Platform.OS !== 'web',
       aspect: [1, 1],
-      quality: 0.7,
+      quality: 0.9,
     });
     if (scelta.canceled || !scelta.assets[0]) return;
+
+    if (Platform.OS === 'web') {
+      setDaRitagliare(scelta.assets[0].uri);
+      return;
+    }
 
     setInCorso(true);
     try {
@@ -96,6 +107,25 @@ export default function ProfiloSchermata() {
         setMessaggio('Immagine aggiornata.');
       }
     } catch (e) {
+      setErrore('Non sono riuscito a caricare l’immagine.');
+    } finally {
+      setInCorso(false);
+    }
+  };
+
+  /** Riceve l'immagine gia ritagliata e ridotta, e la carica. */
+  const salvaRitagliata = async (blob: Blob) => {
+    setDaRitagliare(null);
+    setErrore(null);
+    setInCorso(true);
+    try {
+      const r = await caricaAvatar(blob, 'jpeg');
+      if (r.errore) setErrore(r.errore);
+      else {
+        setProfilo((p) => (p ? { ...p, avatar: r.url } : p));
+        setMessaggio('Immagine aggiornata.');
+      }
+    } catch {
       setErrore('Non sono riuscito a caricare l’immagine.');
     } finally {
       setInCorso(false);
@@ -133,6 +163,14 @@ export default function ProfiloSchermata() {
   return (
     <Screen>
       <BackBar label="Indietro" />
+
+      {daRitagliare ? (
+        <RitagliaAvatar
+          uri={daRitagliare}
+          onFatto={salvaRitagliata}
+          onAnnulla={() => setDaRitagliare(null)}
+        />
+      ) : null}
 
       <View style={[styles.testa, gutter]}>
         <Pressable onPress={scegliImmagine} disabled={inCorso}>

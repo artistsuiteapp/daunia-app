@@ -20,6 +20,7 @@ import { ArticleCover } from '../../components/ArticleCover';
 import { photo } from '../../lib/media';
 import { useSafeInsets } from '../../lib/viewport';
 import { useBenvenuto } from '../../lib/ospite';
+import { useProfilo } from '../../lib/auth';
 import {
   FOGGIA, foggiaRow, lastMatch, meta, news, nextMatch, recentForm,
   standingsWindow, topScorers, upcomingMatches,
@@ -31,6 +32,9 @@ export default function Home() {
   // Alla prima apertura si sceglie: account o solo guardare. La scelta si
   // ricorda, cosi chi ha detto "guardo e basta" non se lo sente richiedere.
   const benvenuto = useBenvenuto();
+  // il nome e la foto veri di chi sta usando l'app; i dati di esempio restano
+  // solo per chi guarda senza account
+  const profilo = useProfilo();
 
   useEffect(() => {
     if (benvenuto.mostra) router.replace('/benvenuto' as never);
@@ -51,7 +55,12 @@ export default function Home() {
       {/* aggiunta alla schermata Home l'app parte sotto la barra di stato:
           senza la zona sicura il saluto finisce sopra l'orologio */}
       <View style={[styles.greeting, gutter, { paddingTop: insets.top + space.md }]}>
-        <Greeting name={brand.demoUser.name} crest={null} onBell={() => router.push('/notifiche')} />
+        <Greeting
+          name={profilo?.nome ?? brand.demoUser.name}
+          crest={null}
+          avatar={profilo?.avatar ?? null}
+          onBell={() => router.push('/notifiche')}
+        />
       </View>
 
       <BrandHeader

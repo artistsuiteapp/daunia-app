@@ -60,13 +60,21 @@ export default function Curva() {
         </View>
       ) : null}
 
-      <View style={[styles.notice, gutter]}>
-        <View style={styles.noticeDot} />
-        <Text style={styles.noticeText}>
-          <Text style={styles.noticeStrong}>Dimostrazione.</Text> Non ci sono account né utenti
-          registrati. Quello che scrivi resta nel tuo browser e non viene inviato da nessuna parte.
-        </Text>
-      </View>
+      {/*
+        * L'avviso vale solo per chi guarda senza account. Con un account le
+        * discussioni finiscono nel database e le leggono tutti: lasciarlo
+        * sempre acceso raccontava una cosa non piu vera.
+        */}
+      {ospite ? (
+        <View style={[styles.notice, gutter]}>
+          <View style={styles.noticeDot} />
+          <Text style={styles.noticeText}>
+            <Text style={styles.noticeStrong}>Stai guardando senza account.</Text> Quello che
+            scrivi resta in questo browser e non lo vede nessun altro. Con un account entra nella
+            Curva e lo leggono tutti.
+          </Text>
+        </View>
+      ) : null}
 
       <ScrollView
         horizontal

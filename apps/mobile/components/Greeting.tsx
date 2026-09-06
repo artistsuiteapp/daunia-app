@@ -5,14 +5,15 @@ import { router } from 'expo-router';
 
 import { colors, radius, space, type } from '../theme/tokens';
 import { initials } from '../lib/format';
+import { Avatar } from './Avatar';
 
 /**
  * Riga di benvenuto in cima alla home: chi sta usando l'app a sinistra,
  * stemma del club e campanello a destra. Lo stemma fa una piccola pulsazione
  * all'apertura, giusto per dare vita alla pagina senza distrarre.
  */
-export function Greeting({ name, crest, onBell }: {
-  name: string; crest: string | null; onBell?: () => void;
+export function Greeting({ name, crest, avatar, onBell }: {
+  name: string; crest: string | null; avatar?: string | null; onBell?: () => void;
 }) {
   const beat = useRef(new Animated.Value(0)).current;
 
@@ -33,9 +34,13 @@ export function Greeting({ name, crest, onBell }: {
   return (
     <View style={styles.row}>
       <Pressable onPress={() => router.push('/profilo' as never)} hitSlop={8}>
-        <View style={styles.avatar}>
-          <Text style={styles.avatarText}>{initials(name)}</Text>
-        </View>
+        {avatar
+          ? <Avatar uri={avatar} name={name} size={40} />
+          : (
+            <View style={styles.avatar}>
+              <Text style={styles.avatarText}>{initials(name)}</Text>
+            </View>
+          )}
       </Pressable>
 
       <View style={{ flex: 1 }}>

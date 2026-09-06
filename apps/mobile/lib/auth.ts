@@ -137,6 +137,42 @@ export async function leggiProfilo(id: string): Promise<Profilo | null> {
   return (data as Profilo) ?? null;
 }
 
+/*
+ * Il profilo di chi sta usando l'app, tenuto da parte.
+ *
+ * Serve alla home, che prima salutava "Mario Rossi" preso dai dati di esempio:
+ * uno cambiava nome e metteva la foto nel profilo, tornava sulla home e
+ * trovava ancora il nome finto e nessuna immagine. Sembrava che il profilo non
+ * si salvasse, mentre era salvato benissimo e nessuno lo guardava.
+ */
+let profiloMio: Profilo | null = null;
+let idProfiloMio: string | null = null;
+const perProfilo = new Set<() => void>();
+
+async function caricaProfiloMio(id: string | null) {
+  if (!id) { profiloMio = null; idProfiloMio = null; perProfilo.forEach((f) => f()); return; }
+  if (idProfiloMio === id && profiloMio) return;
+  idProfiloMio = id;
+  profiloMio = await leggiProfilo(id);
+  perProfilo.forEach((f) => f());
+}
+
+/** Il proprio profilo, o null da ospite. Si aggiorna da solo dopo un salvataggio. */
+export function useProfilo(): Profilo | null {
+  const sessione = useSessione();
+  const [, forza] = useState(0);
+
+  useEffect(() => {
+    const l = () => forza((n) => n + 1);
+    perProfilo.add(l);
+    return () => { perProfilo.delete(l); };
+  }, []);
+
+  useEffect(() => { void caricaProfiloMio(sessione.utente?.id ?? null); }, [sessione.utente?.id]);
+
+  return sessione.utente ? profiloMio : null;
+}
+
 export async function salvaProfilo(campi: Partial<Omit<Profilo, 'id'>>) {
   const u = utenteCorrente();
   if (!supabase || !u) return { errore: 'Devi accedere.' };
@@ -147,6 +183,13 @@ export async function salvaProfilo(campi: Partial<Omit<Profilo, 'id'>>) {
     return { errore: 'La presentazione è troppo lunga, massimo 200 caratteri.' };
   }
   const { error } = await supabase.from('profiles').update(campi).eq('id', u.id);
+  // la copia tenuta da parte va aggiornata subito: altrimenti la home resta
+  // indietro finche non si riapre l'app, e sembra che il salvataggio non abbia
+  // funzionato
+  if (!error) {
+    profiloMio = { ...(profiloMio ?? { id: u.id, nome: '', avatar: null, bio: null, settore: null }), ...campi } as Profilo;
+    perProfilo.forEach((f) => f());
+  }
   return { errore: error ? messaggioErrore(error) : null };
 }
 
