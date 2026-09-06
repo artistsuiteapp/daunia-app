@@ -90,7 +90,7 @@ export default function Live() {
       </View>
 
       <View style={[styles.barra, gutter]}>
-        <PallinoLive />
+        <PallinoLive chiusa={!aperta} etichetta={aperta ? 'LIVE CHAT' : 'CHAT CHIUSA'} />
         <Text style={styles.quanti}>
           {messaggi.length === 0 ? 'ancora nessuno' : `${messaggi.length} messaggi`}
         </Text>
@@ -137,7 +137,11 @@ export default function Live() {
             <TextInput
               value={testo}
               onChangeText={(t) => { setTesto(t); if (errore) setErrore(null); }}
-              placeholder={aperta ? 'Scrivi…' : 'La chat apre poco prima del fischio'}
+              placeholder={aperta
+                ? 'Scrivi…'
+                : vivo?.finita
+                  ? 'La chat è chiusa. Qui resta quello che vi siete detti.'
+                  : 'La chat apre dieci minuti prima del fischio'}
               placeholderTextColor={colors.textFaint}
               style={styles.input}
               maxLength={LIMITE}

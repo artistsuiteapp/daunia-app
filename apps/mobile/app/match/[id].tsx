@@ -24,9 +24,15 @@ import { etichettaFase } from '../../lib/live-core';
 type Tab = 'formazione' | 'gioco' | 'eventi' | 'dati';
 
 export default function MatchDetail() {
-  const { id } = useLocalSearchParams<{ id: string }>();
+  // `tab` permette di aprire la scheda gia sulla sezione giusta: il richiamo
+  // delle pagelle in home portava qui ma sulla formazione, e bisognava
+  // cercarla a mano proprio nel momento in cui uno vuole solo votare
+  const { id, tab } = useLocalSearchParams<{ id: string; tab?: string }>();
   const gutter = useGutter();
-  const [view, setView] = useState<Tab>('formazione');
+  const TAB_VALIDE: Tab[] = ['formazione', 'gioco', 'eventi', 'dati'];
+  const [view, setView] = useState<Tab>(
+    TAB_VALIDE.includes(tab as Tab) ? (tab as Tab) : 'formazione',
+  );
   const match = matchById(String(id));
   const vivo = liveDi(match, useLive());
   // la cronologia che il guardiano registra mentre si gioca: minuto e punteggio,
@@ -40,7 +46,15 @@ export default function MatchDetail() {
 
   if (!match) return <Screen testaFissa><Empty text="Partita non trovata." /></Screen>;
 
-  const played = match.status === 'finished';
+  /*
+   * Giocata.
+   *
+   * Il calendario viene da Wikipedia, che mette lo stato "finished" con ore di
+   * ritardo: fidarsi solo di quello vuol dire mostrare il Pronostico e non le
+   * Pagelle proprio nell'ora in cui la gente vuole votare. La fonte dal vivo
+   * sa del triplice fischio subito, e qui vale quanto il calendario.
+   */
+  const played = match.status === 'finished' || Boolean(vivo?.finita);
   const h2h = matches.filter(
     (m) => m.id !== match.id && m.status === 'finished'
       && ((m.home.id === match.home.id && m.away.id === match.away.id)
@@ -67,7 +81,12 @@ export default function MatchDetail() {
           <Side team={match.away} />
         </View>
         <Text style={styles.when}>
-          {vivo ? `In corso · ${etichettaFase(vivo, match.kickoff)}` : longDate(match.kickoff)}
+          {/* "In corso · finita" era una contraddizione stampata sullo schermo */}
+          {vivo && !vivo.finita
+            ? `In corso · ${etichettaFase(vivo, match.kickoff)}`
+            : vivo?.finita
+              ? `Finita · ${longDate(match.kickoff)}`
+              : longDate(match.kickoff)}
         </Text>
       </View>
 
@@ -75,7 +94,9 @@ export default function MatchDetail() {
         <View style={[gutter, { marginTop: space.lg }]}><Countdown kickoff={match.kickoff} /></View>
       ) : null}
 
-      {match.ticketUrl ? (
+      {/* i biglietti solo finche servono: a partita giocata sono un invito a
+          comprare per una gara che non esiste piu */}
+      {match.ticketUrl && !played ? (
         <View style={[gutter, { marginTop: space.xl }]}>
           <Button label="Acquista i biglietti" icon="ticket" onPress={() => Linking.openURL(match.ticketUrl!)} />
         </View>
@@ -191,9 +212,11 @@ export default function MatchDetail() {
             ) : null}
           </>
         ) : (
-          <Empty text={vivo
+          <Empty text={vivo && !vivo.finita
             ? 'Ancora nessun gol in questa partita.'
-            : 'Nessun evento registrato per questa partita.'} />
+            : played || vivo?.finita
+              ? 'I marcatori compaiono quando la fonte pubblica il tabellino, di solito entro qualche ora dalla fine.'
+              : 'Nessun evento registrato per questa partita.'} />
         )
       ) : null}
 

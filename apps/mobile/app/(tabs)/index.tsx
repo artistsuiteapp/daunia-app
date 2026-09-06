@@ -58,7 +58,7 @@ export default function Home() {
   const oggi = next && eOggi(next.kickoff) ? next : null;
   const chatViva = oggi ? salaAperta(oggi.kickoff) : false;
   // a fine partita i voti si danno a caldo o non si danno piu
-  const pagelle = vivo?.finita && adessoFinito ? `/match/${adessoFinito.id}` : null;
+  const pagelle = vivo?.finita && adessoFinito ? `/match/${adessoFinito.id}?tab=gioco` : null;
   const last = lastMatch();
   const row = foggiaRow();
   const scorer = topScorers()[0];

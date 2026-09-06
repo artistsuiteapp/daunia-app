@@ -1,4 +1,4 @@
-import { Linking, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
@@ -9,6 +9,8 @@ import { colors, gradients, radius, space, type } from '../theme/tokens';
 import { shortDate, time } from '../lib/format';
 import { useLive, liveDi } from '../lib/live';
 import { etichettaFase } from '../lib/live-core';
+import { salaAperta } from '../lib/sala';
+import { PallinoLive } from './PallinoLive';
 import { PredictionCallout } from './PredictionCallout';
 
 type Tone = 'accent' | 'dark';
@@ -35,6 +37,7 @@ export function EventCard({ match, tone = 'dark', compatta = false }: {
   const live = match.status === 'live' || Boolean(vivo);
   const casa = vivo ? vivo.casa ?? 0 : match.score?.home ?? 0;
   const ospite = vivo ? vivo.ospite ?? 0 : match.score?.away ?? 0;
+  const chatViva = salaAperta(match.kickoff);
   const fg = accent ? '#FFFFFF' : colors.text;
   const dim = accent ? 'rgba(255,255,255,0.72)' : colors.textDim;
 
@@ -90,15 +93,21 @@ export function EventCard({ match, tone = 'dark', compatta = false }: {
 
       {accent && !compatta ? (
         <View style={styles.actions}>
-          {match.ticketUrl ? (
-            <Pressable
-              style={({ pressed }) => [styles.ctaFilled, pressed && { opacity: 0.75 }]}
-              onPress={() => Linking.openURL(match.ticketUrl!)}
-            >
-              <Ionicons name="ticket" size={15} color="#B10E16" />
-              <Text style={styles.ctaFilledText}>Biglietti</Text>
-            </Pressable>
-          ) : null}
+          {/*
+            * Al posto dei biglietti, la chat.
+            *
+            * I biglietti si comprano una volta e restano nelle scorciatoie in
+            * home; la chat invece va presa nel momento in cui esiste, ed e il
+            * motivo per cui uno riapre l'app la domenica sera. Verde e che si
+            * puo scrivere, rosso che si legge e basta -- e cosi la voce non
+            * sparisce dopo la partita lasciando il dubbio di averla sognata.
+            */}
+          <Pressable
+            style={({ pressed }) => [styles.ctaChat, pressed && { opacity: 0.75 }]}
+            onPress={() => router.push('/live' as never)}
+          >
+            <PallinoLive compatto chiusa={!chatViva} etichetta={chatViva ? 'LIVE CHAT' : 'CHAT CHIUSA'} />
+          </Pressable>
           <Pressable
             style={({ pressed }) => [styles.ctaPlain, pressed && { opacity: 0.75 }]}
             onPress={() => router.push(`/match/${match.id}` as never)}
@@ -113,6 +122,7 @@ export function EventCard({ match, tone = 'dark', compatta = false }: {
 }
 
 const styles = StyleSheet.create({
+  ctaChat: { borderRadius: radius.pill, overflow: 'hidden' },
   card: { borderRadius: radius.xxl, overflow: 'hidden', padding: space.lg, gap: space.md },
   cardCompatta: { padding: space.md, gap: space.sm },
   cardDark: {
