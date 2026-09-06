@@ -102,6 +102,55 @@ export function minutoStimato(
   return null;
 }
 
+/** la chat apre dieci minuti prima del fischio */
+export const CHAT_PRIMA = 10 * 60 * 1000;
+/** e chiude venti minuti dopo il triplice */
+export const CHAT_DOPO = 20 * 60 * 1000;
+/** se la fine non si sa, si chiude a due ore e venti dal fischio d'inizio */
+export const CHAT_TETTO = 140 * 60 * 1000;
+
+/**
+ * Quando la chat della partita e aperta.
+ *
+ * Apre dieci minuti prima del fischio e chiude venti minuti dopo il triplice.
+ * Non venti minuti dopo un orario calcolato: fra recuperi e ritardi la
+ * differenza e di dieci minuti buoni, e sono proprio quelli in cui la gente
+ * commenta. La fine vera la scrive il guardiano in `finita_il`.
+ *
+ * Se quell'istante non c'e -- backend giu, o partita mai cominciata -- si
+ * chiude comunque a due ore e venti dal fischio, altrimenti una stanza
+ * resterebbe aperta per sempre.
+ */
+export function chatAperta(
+  kickoff: string | null | undefined,
+  finitaIl: string | number | null | undefined,
+  adesso = Date.now(),
+): boolean {
+  const t = kickoff ? Date.parse(kickoff) : NaN;
+  if (!Number.isFinite(t)) return false;
+  if (adesso < t - CHAT_PRIMA) return false;
+
+  const fine = typeof finitaIl === 'number' ? finitaIl : finitaIl ? Date.parse(finitaIl) : NaN;
+  if (Number.isFinite(fine)) return adesso <= fine + CHAT_DOPO;
+  return adesso <= t + CHAT_TETTO;
+}
+
+/**
+ * Vero se la partita e oggi: serve alla home per dire che ci sara la chat.
+ *
+ * Si guarda il giorno locale, non le ore mancanti: "oggi si gioca" ha senso
+ * dalla mattina, non da due ore prima.
+ */
+export function eOggi(kickoff: string | null | undefined, adesso = Date.now()): boolean {
+  const t = kickoff ? Date.parse(kickoff) : NaN;
+  if (!Number.isFinite(t)) return false;
+  const a = new Date(t);
+  const b = new Date(adesso);
+  return a.getFullYear() === b.getFullYear()
+    && a.getMonth() === b.getMonth()
+    && a.getDate() === b.getDate();
+}
+
 /** oltre questo, un dato fermo non si fa piu avanzare: il guardiano e giu */
 export const DERIVA_MASSIMA = 5;
 

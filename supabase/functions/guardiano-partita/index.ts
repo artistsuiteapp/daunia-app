@@ -322,6 +322,9 @@ Deno.serve(async (req) => {
   // a partita chiusa il minuto non vuol dire piu niente: lasciarlo scritto
   // faceva restare "90+8" sotto il punteggio per ore
   patch.minuto = FINITE.includes(stato) ? null : minutoVero;
+  // l'istante del triplice fischio: lo segna il primo giro che vede FT, e non
+  // si riscrive piu, cosi la chat chiude venti minuti dopo quello
+  if (FINITE.includes(stato) && !riga.finita_il) patch.finita_il = new Date().toISOString();
 
   if (!riga.inizio_mandato && IN_GIOCO.includes(stato) && !FINITE.includes(stato)) {
     patch.inizio_mandato = true;

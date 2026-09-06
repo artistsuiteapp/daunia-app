@@ -39,6 +39,8 @@ const BATTITO = 15_000;
 let stato: Live | null = null;
 /** i gol della partita in corso, col minuto: la cronologia che il guardiano registra */
 let gol: GolVivo[] = [];
+/** l'istante del triplice fischio, che decide quando chiude la chat */
+let finitaIl: string | null = null;
 let ascoltatori: Array<() => void> = [];
 let timer: ReturnType<typeof setInterval> | null = null;
 let battito: ReturnType<typeof setInterval> | null = null;
@@ -71,6 +73,7 @@ type Riga = {
   ospiti: number | null;
   minuto: string | null;
   aggiornato_il?: string | null;
+  finita_il?: string | null;
   gol?: GolVivo[] | null;
 };
 
@@ -108,11 +111,12 @@ async function chiediAlDatabase(): Promise<boolean> {
   if (!supabase || !id) return false;
   const { data, error } = await supabase
     .from('stato_partita')
-    .select('stato, casa, ospiti, minuto, gol, aggiornato_il')
+    .select('stato, casa, ospiti, minuto, gol, aggiornato_il, finita_il')
     .eq('partita', String(id))
     .maybeSingle();
   if (error || !data) return false;
   const r = data as Riga;
+  finitaIl = r.finita_il ?? null;
   applica(daRiga(r), r.gol ?? []);
   return true;
 }
@@ -154,7 +158,11 @@ function ascoltaIlDatabase() {
     .on(
       'postgres_changes',
       { event: 'UPDATE', schema: 'public', table: 'stato_partita', filter: `partita=eq.${id}` },
-      (m) => applica(daRiga(m.new as Riga), (m.new as Riga).gol ?? []),
+      (m) => {
+        const r = m.new as Riga;
+        finitaIl = r.finita_il ?? null;
+        applica(daRiga(r), r.gol ?? []);
+      },
     )
     .subscribe();
 }
@@ -229,6 +237,10 @@ export function useLive(): Live | null {
  * Vuoto quando non si gioca o quando nessuno ha ancora segnato: la scheda in
  * quel caso mostra quello che ha nei dati, come prima.
  */
+export function fineVera(): string | null {
+  return finitaIl;
+}
+
 export function useGolVivo(): GolVivo[] {
   return useSyncExternalStore(
     (f) => {

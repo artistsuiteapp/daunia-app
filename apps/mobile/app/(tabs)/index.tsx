@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { router } from 'expo-router';
 import { Image } from 'expo-image';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 import {
   Screen, GroupLabel, ListGroup, ListRow, GroupNote, useGutter, BigStat, Card,
@@ -22,6 +23,9 @@ import { useSafeInsets } from '../../lib/viewport';
 import { useBenvenuto } from '../../lib/ospite';
 import { useProfilo } from '../../lib/auth';
 import { useLive } from '../../lib/live';
+import { eOggi } from '../../lib/live-core';
+import { salaAperta } from '../../lib/sala';
+import { PallinoLive } from '../../components/PallinoLive';
 import {
   FOGGIA, foggiaRow, lastMatch, matchInCorso, meta, news, nextMatch, recentForm,
   standingsWindow, topScorers, upcomingMatches,
@@ -41,12 +45,20 @@ export default function Home() {
     if (benvenuto.mostra) router.replace('/benvenuto' as never);
   }, [benvenuto.mostra]);
   const next = nextMatch();
+  // la partita di oggi anche dopo il triplice: serve a puntare alle pagelle
+  const adessoFinito = matchInCorso();
   // se si sta giocando adesso, la scheda in cima e quella, non la prossima.
   // Il calendario da solo non basta: dice che siamo dentro le tre ore della
   // partita, non che si sta ancora giocando. Al triplice fischio la fonte dal
   // vivo lo sa, e l'etichetta deve smettere di dire "si gioca adesso".
   const vivo = useLive();
   const adesso = vivo?.finita ? null : matchInCorso();
+  // il giorno della partita si dice che ci sara la chat, cosi chi apre l'app la
+  // mattina sa di doverci tornare la sera
+  const oggi = next && eOggi(next.kickoff) ? next : null;
+  const chatViva = oggi ? salaAperta(oggi.kickoff) : false;
+  // a fine partita i voti si danno a caldo o non si danno piu
+  const pagelle = vivo?.finita && adessoFinito ? `/match/${adessoFinito.id}` : null;
   const last = lastMatch();
   const row = foggiaRow();
   const scorer = topScorers()[0];
@@ -79,13 +91,56 @@ export default function Home() {
         points={row?.points ?? null}
       />
 
-      <Reveal delay={60}><QuickNav /></Reveal>
+      <Reveal delay={60}><QuickNav pagelle={pagelle} /></Reveal>
+
+      {pagelle ? (
+        <Reveal delay={80}>
+          <Pressable onPress={() => router.push(pagelle as never)} style={[gutter, styles.richiamo]}>
+            <View style={styles.richiamoDentro}>
+              <Ionicons name="star" size={18} color={colors.accentBright} />
+              <View style={{ flex: 1 }}>
+                <Text style={styles.richiamoTitolo}>Partita finita. Dai i voti.</Text>
+                <Text style={styles.richiamoSotto}>
+                  Le pagelle della Curva si scrivono adesso, a caldo.
+                </Text>
+              </View>
+              <Ionicons name="chevron-forward" size={18} color={colors.textDim} />
+            </View>
+          </Pressable>
+        </Reveal>
+      ) : oggi ? (
+        <Reveal delay={80}>
+          <Pressable
+            onPress={() => router.push(chatViva ? '/live' : `/match/${oggi.id}` as never)}
+            style={[gutter, styles.richiamo]}
+          >
+            <View style={styles.richiamoDentro}>
+              {chatViva ? <PallinoLive compatto /> : (
+                <Ionicons name="chatbubbles" size={18} color={colors.accentBright} />
+              )}
+              <View style={{ flex: 1 }}>
+                <Text style={styles.richiamoTitolo}>
+                  {chatViva ? 'La chat è aperta' : 'Oggi si gioca'}
+                </Text>
+                <Text style={styles.richiamoSotto}>
+                  {chatViva
+                    ? 'Entra e commenta con gli altri.'
+                    : 'La chat dal vivo apre dieci minuti prima del fischio.'}
+                </Text>
+              </View>
+              <Ionicons name="chevron-forward" size={18} color={colors.textDim} />
+            </View>
+          </Pressable>
+        </Reveal>
+      ) : null}
 
       {next ? (
         <>
           <GroupLabel action={<Action label="Calendario" onPress={() => router.push('/matches')} />}>
-            {adesso?.id === next.id
-              ? 'Si gioca adesso'
+            {adesso?.id === next.id ? 'Si gioca adesso'
+              // finita ma ancora in cima: per tre ore la scheda resta li col
+              // risultato, e chiamarla "prossima" e falso
+              : vivo?.finita && adessoFinito?.id === next.id ? 'Appena finita'
               : next.foggiaHome ? 'Prossima in casa' : 'Prossima trasferta'}
           </GroupLabel>
           <Reveal delay={120}><View style={gutter}><EventCard match={next} tone="accent" /></View></Reveal>
@@ -207,6 +262,15 @@ function diffLabel(d: number) {
 }
 
 const styles = StyleSheet.create({
+  richiamo: { marginBottom: space.sm },
+  richiamoDentro: {
+    flexDirection: 'row', alignItems: 'center', gap: space.md,
+    padding: space.lg, borderRadius: radius.lg,
+    backgroundColor: colors.surface,
+    borderWidth: StyleSheet.hairlineWidth, borderColor: 'rgba(255,255,255,0.10)',
+  },
+  richiamoTitolo: { ...type.subheadBold, color: colors.text },
+  richiamoSotto: { ...type.footnote, color: colors.textDim, marginTop: 2 },
   greeting: { paddingBottom: space.md, backgroundColor: colors.bg },
   action: { ...type.subhead, color: colors.accentBright },
   stack: { gap: space.sm, marginTop: space.sm },

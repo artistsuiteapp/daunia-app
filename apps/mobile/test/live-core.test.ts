@@ -1,7 +1,7 @@
 import { strict as assert } from 'node:assert';
 import { test } from 'node:test';
 
-import { finestraAperta, leggiEvento, orienta, minutoStimato, etichettaFase, minutoCorrente } from '../lib/live-core.ts';
+import { finestraAperta, leggiEvento, orienta, minutoStimato, etichettaFase, minutoCorrente, chatAperta, eOggi } from '../lib/live-core.ts';
 
 const KICKOFF = '2026-09-06T19:00:00Z';
 const T = Date.parse(KICKOFF);
@@ -178,4 +178,46 @@ test('senza minuto o senza orario non si inventa niente', () => {
 
 test("l'orologio non torna mai indietro", () => {
   assert.equal(minutoCorrente('30', T0, '1H', T0 - 60_000), '30');
+});
+
+/*
+ * La finestra della chat.
+ *
+ * Chiuderla troppo presto taglia i commenti a caldo, che sono il momento in cui
+ * la stanza serve davvero.
+ */
+const KICK = '2026-09-12T16:00:00Z';
+const q = (min: number) => Date.parse(KICK) + min * 60_000;
+
+test('la chat apre dieci minuti prima del fischio, non prima', () => {
+  assert.equal(chatAperta(KICK, null, q(-11)), false);
+  assert.equal(chatAperta(KICK, null, q(-9)), true);
+});
+
+test('resta aperta per tutta la partita', () => {
+  assert.equal(chatAperta(KICK, null, q(50)), true);
+  assert.equal(chatAperta(KICK, null, q(95)), true);
+});
+
+test('chiude venti minuti dopo il triplice vero, non dopo un orario finto', () => {
+  const fine = q(98);   // recupero lungo
+  assert.equal(chatAperta(KICK, fine, q(117)), true);
+  assert.equal(chatAperta(KICK, fine, q(119)), false);
+});
+
+test('senza la fine vera si chiude comunque, per non lasciare stanze aperte', () => {
+  assert.equal(chatAperta(KICK, null, q(139)), true);
+  assert.equal(chatAperta(KICK, null, q(141)), false);
+});
+
+test('senza orario di inizio la chat non apre', () => {
+  assert.equal(chatAperta(null, null, q(10)), false);
+});
+
+test('"oggi si gioca" guarda il giorno, non le ore che mancano', () => {
+  assert.equal(eOggi(KICK, Date.parse('2026-09-12T07:00:00Z')), true);
+  // di proposito a meta giornata: alle 23:30 UTC dell'11 in Italia e gia il 12,
+  // e il confronto e sul giorno locale di chi guarda lo schermo
+  assert.equal(eOggi(KICK, Date.parse('2026-09-11T10:00:00Z')), false);
+  assert.equal(eOggi(null, q(0)), false);
 });

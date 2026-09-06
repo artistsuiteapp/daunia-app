@@ -15,8 +15,9 @@ import { useEffect, useSyncExternalStore } from 'react';
 
 import { supabase } from './supabase';
 import { utenteCorrente } from './auth';
-import { finestraAperta } from './live-core.ts';
+import { chatAperta } from './live-core.ts';
 import { prossima } from './data';
+import { fineVera } from './live';
 
 export type Messaggio = {
   id: string;
@@ -50,9 +51,16 @@ const daRiga = (r: Riga): Messaggio => ({
   avatar: r.profiles?.avatar ?? null,
 });
 
-/** Vero se adesso la chat ha senso: la partita e nella sua finestra. */
+/**
+ * Vero se adesso la chat ha senso.
+ *
+ * Dieci minuti prima del fischio, e fino a venti minuti dopo il triplice vero.
+ * Non dopo un orario calcolato dal calcio d'inizio: fra recuperi e ritardi
+ * ballano dieci minuti, e sono quelli in cui si commenta la partita appena
+ * finita.
+ */
 export function salaAperta(kickoff?: string | null, adesso = Date.now()): boolean {
-  return finestraAperta(kickoff ?? prossima?.kickoff, adesso);
+  return chatAperta(kickoff ?? prossima?.kickoff, fineVera(), adesso);
 }
 
 async function carica(partita: string) {
