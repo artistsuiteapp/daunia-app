@@ -68,7 +68,42 @@ const ORE = 60 * 60 * 1000;
 const PRIMA_DEL_FISCHIO = 2 * ORE;
 const DOPO_IL_FISCHIO = 6 * ORE;
 
+/**
+ * Il budget dell'ingest, in chiamate ad API-Football per giro.
+ *
+ * Il piano gratuito ne da cento al giorno e il guardiano ne tiene
+ * quarantacinque. Il cron dell'ingest gira ogni mezz'ora: con dodici per giro,
+ * anche una giornata storta resta sotto i quaranta, perche la maggior parte
+ * dei giri costa zero (fuori dalla finestra di una partita non chiama).
+ *
+ * Il primo account e stato sospeso il 6 settembre 2026 perche questo numero
+ * non esisteva: c'erano solo le pause fra una lettura e l'altra, che sono una
+ * stima di quante chiamate verranno, non un limite.
+ */
+const TETTO_PER_GIRO = 12;
+
+/**
+ * Quanto si aspetta fra una chiamata e l'altra.
+ *
+ * Il piano gratuito diretto consente dieci richieste al minuto, e superarlo e
+ * proprio il "pattern eccessivo" che fa scattare la sospensione automatica.
+ * Sette secondi tengono il ritmo a otto al minuto.
+ */
+const PAUSA_FRA_CHIAMATE = 7000;
+
+const dormi = (ms) => new Promise((r) => setTimeout(r, ms));
+let ultimaChiamata = 0;
+
 async function chiedi(percorso, chiave, conteggio, via = process.env.API_FOOTBALL_VIA) {
+  if (conteggio.n >= TETTO_PER_GIRO) {
+    return { dati: [], problema: `tetto di ${TETTO_PER_GIRO} chiamate raggiunto in questo giro` };
+  }
+
+  // il ritmo si tiene fra chiamate vere: la prima non aspetta
+  const attesa = PAUSA_FRA_CHIAMATE - (Date.now() - ultimaChiamata);
+  if (ultimaChiamata && attesa > 0) await dormi(attesa);
+  ultimaChiamata = Date.now();
+
   conteggio.n += 1;
   const p = porta(via);
   const r = await fetch(`${p.base}/${percorso}`, { headers: p.intestazioni(chiave) });

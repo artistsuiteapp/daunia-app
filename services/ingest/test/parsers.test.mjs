@@ -6,6 +6,7 @@
  * che si rompa l'app.
  */
 import { test, describe } from 'node:test';
+import { porta } from '../src/sources/apifootball.mjs';
 import { classifica, chiave } from '../src/sources/divieti.mjs';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -431,4 +432,33 @@ describe('divieti di trasferta', () => {
     assert.equal(chiave('A.C. Trapani'), 'trapani');
     assert.equal(chiave('AZ Picerno'), 'az picerno');
   });
+});
+
+/*
+ * Le due porte di API-Football.
+ *
+ * Sbagliare l'intestazione non da un errore chiaro: il servizio risponde 403
+ * "Missing mandatory HTTP Headers", che sembra un problema di chiave. Meglio
+ * accorgersene qui.
+ */
+test('la porta diretta usa x-apisports-key', () => {
+  const p = porta(undefined);
+  assert.equal(p.base, 'https://v3.football.api-sports.io');
+  assert.deepEqual(p.intestazioni('K'), { 'x-apisports-key': 'K' });
+});
+
+test('la porta RapidAPI usa x-rapidapi-key e vuole anche l host', () => {
+  const p = porta('rapidapi');
+  assert.equal(p.base, 'https://api-football-v1.p.rapidapi.com/v3');
+  assert.deepEqual(p.intestazioni('K'), {
+    'x-rapidapi-key': 'K',
+    'x-rapidapi-host': 'api-football-v1.p.rapidapi.com',
+  });
+});
+
+test('qualunque altro valore resta sulla porta diretta', () => {
+  // "diretto", vuoto, un refuso: non deve mai finire per sbaglio su RapidAPI
+  for (const v of ['diretto', '', 'rapid', undefined, null]) {
+    assert.equal(porta(v).base, 'https://v3.football.api-sports.io');
+  }
 });

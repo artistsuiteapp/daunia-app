@@ -60,6 +60,18 @@ const ATTESA_ACCORDO = 2 * MINUTO;
 /** quante volte per partita si paga la terza fonte per rompere una parita */
 const TETTO_PARERI = 3;
 
+/**
+ * Il budget del guardiano, in chiamate ad API-Football al giorno.
+ *
+ * Il piano gratuito ne da cento e l'ingest ne usa fino a quaranta: quarantacinque
+ * qui lasciano quindici di margine. Le pause fra una lettura e l'altra sono una
+ * stima di quante ne verranno; questo e il numero vero, e sa dire di no.
+ *
+ * Il primo account e stato sospeso automaticamente perche quel numero non
+ * esisteva.
+ */
+const BUDGET_AF = 45;
+
 const FINITE = ['FT', 'AET', 'PEN'];
 const IN_GIOCO = ['1H', 'HT', '2H', 'ET', 'BT', 'P'];
 
@@ -85,6 +97,22 @@ async function json(url: string, headers?: HeadersInit) {
   const r = await fetch(url, { headers });
   if (!r.ok) return null;
   return await r.json().catch(() => null);
+}
+
+/**
+ * Chiede al database il permesso di spendere una chiamata di API-Football.
+ *
+ * Il conto e in Postgres e non in memoria perche la funzione muore a ogni
+ * giro: un contatore locale ripartirebbe da zero ogni minuto, che e
+ * esattamente il modo in cui si finisce sospesi senza accorgersene.
+ *
+ * Se il database non risponde si dice di no. Perdere un nome di marcatore
+ * costa molto meno che perdere l'account.
+ */
+async function possoChiamareAF(): Promise<boolean> {
+  const { data, error } = await db.rpc('chiedi_quota', { quante: 1, tetto: BUDGET_AF });
+  if (error) return false;
+  return data === true;
 }
 
 /**
@@ -230,7 +258,8 @@ Deno.serve(async (req) => {
   const daRileggere = !riga.formazioni_viste_il
     || adesso - Date.parse(riga.formazioni_viste_il) > PAUSA_FORMAZIONI;
 
-  if (primaDelFischio && !riga.formazioni_mandate && riga.fixture_id && chiaveAF && daRileggere) {
+  if (primaDelFischio && !riga.formazioni_mandate && riga.fixture_id && chiaveAF && daRileggere
+      && await possoChiamareAF()) {
     patch.formazioni_viste_il = new Date().toISOString();
     const f = await json(`${AF}/fixtures/lineups?fixture=${riga.fixture_id}`, testaAF);
     const lato = (f?.response ?? []).find((x: { team?: { id?: number } }) => x.team?.id === FOGGIA_AF);
@@ -300,7 +329,7 @@ Deno.serve(async (req) => {
   let daEventi: Punteggio | null = null;
   const nuoviGol: Array<{ minuto: number; chi: string; nostro: boolean; autogol: boolean }> = [];
 
-  if (vaLetto) {
+  if (vaLetto && await possoChiamareAF()) {
     patch.eventi_letti_il = new Date().toISOString();
     const d = await json(`${AF}/fixtures/events?fixture=${riga.fixture_id}`, testaAF);
     const lista = (d?.response ?? []) as EventoAF[];
@@ -361,7 +390,8 @@ Deno.serve(async (req) => {
   // partita senza copertura litigherebbe per novanta minuti di fila.
   let arbitro: Punteggio | null = null;
   const pareri = riga.pareri_chiesti ?? 0;
-  if (litigano && nuoviGol.length && chiaveAF && riga.fixture_id && pareri < TETTO_PARERI) {
+  if (litigano && nuoviGol.length && chiaveAF && riga.fixture_id && pareri < TETTO_PARERI
+      && await possoChiamareAF()) {
     patch.pareri_chiesti = pareri + 1;
     const f = await json(`${AF}/fixtures?id=${riga.fixture_id}`, testaAF);
     const g = f?.response?.[0]?.goals;

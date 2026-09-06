@@ -111,6 +111,35 @@ volte, una per fonte.
 | Rosa aggiornata | API-Football (piano gratuito) | 0 |
 | Statistiche di fine partita | **non esistono per la Serie C** | — |
 
+## Il freno che impedisce una seconda sospensione
+
+Il primo account e stato sospeso automaticamente il 6 settembre 2026, a meta
+partita. I termini di API-Football dicono che richieste "sproporzionate o
+eccessive" fanno scattare il firewall, e il conto tornava: il guardiano da solo
+arrivava a sessantacinque chiamate in un pomeriggio, piu una quarantina
+dell'ingest, contro un tetto di cento al giorno e dieci al minuto.
+
+Allungare le pause non bastava. Una pausa e una stima di quante chiamate
+verranno, e una stima sbagliata costa l'account. Adesso c'e un numero vero:
+
+| Chi | Budget | Dove sta il conto |
+|---|---|---|
+| Guardiano | 45 al giorno | tabella `quota_af`, funzione `chiedi_quota()` |
+| Ingest | 12 per giro | contatore in memoria, `TETTO_PER_GIRO` |
+| | | 15 di margine sui 100 |
+
+Il conto del guardiano sta in Postgres e non in memoria perche la funzione
+muore a ogni giro: un contatore locale ripartirebbe da zero ogni minuto, che e
+esattamente il modo in cui si finisce sospesi senza accorgersene.
+`chiedi_quota()` incrementa e decide nella stessa transazione, quindi due giri
+simultanei non possono passare tutti e due l'ultimo posto. **Se il database non
+risponde, la risposta e no**: perdere il nome di un marcatore costa meno che
+perdere l'account.
+
+L'ingest ha anche una pausa di sette secondi fra una chiamata e l'altra, che
+tiene il ritmo a otto al minuto contro un limite di dieci. Il guardiano non ne
+ha bisogno: fa al massimo tre chiamate per giro e i giri sono uno al minuto.
+
 ## Se API-Football si blocca
 
 Lo stesso servizio ha due porte, con account e chiavi separate:
