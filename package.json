@@ -15,7 +15,7 @@
     "ingest": "node services/ingest/run.mjs",
     "ingest:dry": "node services/ingest/run.mjs --dry-run",
     "mobile": "npm run start -w apps/mobile",
-    "test": "node --test services/ingest/test/parsers.test.mjs && node --experimental-strip-types --test apps/mobile/test/prediction-score.test.ts && node --experimental-strip-types --test apps/mobile/test/live-core.test.ts && node --experimental-strip-types --test supabase/functions/guardiano-partita/push.test.ts && node --experimental-strip-types --test apps/mobile/test/filtro-core.test.ts && node --experimental-strip-types --test apps/mobile/test/contatti-core.test.ts && node --experimental-strip-types --test apps/mobile/test/ritaglio-core.test.ts",
+    "test": "node --test services/ingest/test/parsers.test.mjs && node --experimental-strip-types --test apps/mobile/test/prediction-score.test.ts && node --experimental-strip-types --test apps/mobile/test/live-core.test.ts && node --experimental-strip-types --test supabase/functions/guardiano-partita/push.test.ts && node --experimental-strip-types --test apps/mobile/test/filtro-core.test.ts && node --experimental-strip-types --test apps/mobile/test/contatti-core.test.ts && node --experimental-strip-types --test apps/mobile/test/ritaglio-core.test.ts && node --experimental-strip-types --test supabase/functions/guardiano-partita/punteggio.test.ts",
     "build:web": "npm run export -w apps/mobile"
   }
 }

@@ -78,6 +78,28 @@ e in `run.mjs`:
 
 Giornata senza partite: 0 o 1 chiamata. Giornata di partita: una quarantina.
 
+## Il punteggio ha tre fonti, non una
+
+Il guardiano incrocia il tabellone di TheSportsDB con i gol contati dagli eventi
+di API-Football. Il conteggio non costa niente: è la stessa risposta che serve
+per sapere chi ha segnato.
+
+Quando le due non concordano, il numero non si stampa: la notifica dice
+"GOL DEL FOGGIA!" con minuto e marcatore, e il punteggio si tace finché non è
+confermato. Prima prendeva il gol da una fonte e il numero dall'altra, e nel
+momento del disallineamento annunciava "GOL DEL FOGGIA! 0-0".
+
+La terza fonte è `fixtures?id=`, che dà `goals` direttamente. Si paga una
+chiamata, quindi parte solo quando le prime due litigano *e* c'è un gol da
+annunciare in quel momento, con un tetto di sei volte a partita: una gara senza
+copertura litigherebbe per novanta minuti di fila.
+
+Il tabellone da solo può far partire una notifica. Serve perché per la Serie C
+gli eventi di API-Football hanno buchi: senza, una partita senza eventi non
+avrebbe fatto suonare niente. In quel caso il testo dice che il marcatore non
+risulta ancora, e i due minuti di attesa evitano che lo stesso gol arrivi due
+volte, una per fonte.
+
 ## Riepilogo delle fonti
 
 | Dato | Fonte | Costo |

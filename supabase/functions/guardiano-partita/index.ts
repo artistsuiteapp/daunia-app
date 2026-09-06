@@ -14,6 +14,10 @@
  */
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 import { manda, type Iscrizione } from './push.ts';
+import {
+  contaGol, concorda, titoloGol, golVero, golDalTabellone,
+  type EventoAF, type Punteggio,
+} from './punteggio.ts';
 
 const TSDB = 'https://www.thesportsdb.com/api/v1/json/123';
 const AF = 'https://v3.football.api-sports.io';
@@ -26,6 +30,10 @@ const DOPO = 3 * 60 * MINUTO;
 /** ogni quanto si possono rileggere gli eventi: serve a non bruciare la quota */
 const PAUSA_EVENTI = 3 * MINUTO;
 const PAUSA_FORMAZIONI = 10 * MINUTO;
+/** quanto tempo si concede ad API-Football per allinearsi al tabellone */
+const ATTESA_ACCORDO = 2 * MINUTO;
+/** quante volte per partita si paga la terza fonte per rompere una parita */
+const TETTO_PARERI = 6;
 
 const FINITE = ['FT', 'AET', 'PEN'];
 const IN_GIOCO = ['1H', 'HT', '2H', 'ET', 'BT', 'P'];
@@ -203,31 +211,41 @@ Deno.serve(async (req) => {
   const cambiato = casa !== riga.casa || ospiti !== riga.ospiti;
   const finita = FINITE.includes(stato);
 
+  const inCasa = String(e.strHomeTeam ?? '').toLowerCase().includes('foggia');
+  const tabellone: Punteggio | null = casa === null || ospiti === null ? null : { casa, ospiti };
+  const prima: Punteggio | null = riga.casa === null || riga.casa === undefined
+    || riga.ospiti === null || riga.ospiti === undefined
+    ? null : { casa: riga.casa, ospiti: riga.ospiti };
+
   // --------------------------------------------- gol ed espulsioni, dai fatti
   const eventiVecchi = riga.eventi_letti_il ? adesso - Date.parse(riga.eventi_letti_il) : Infinity;
   const vaLetto = chiaveAF && riga.fixture_id
     && (cambiato || (IN_GIOCO.includes(stato) && eventiVecchi > PAUSA_EVENTI));
 
+  /** il punteggio contato dagli eventi: la seconda fonte, gratis */
+  let daEventi: Punteggio | null = null;
+  const nuoviGol: Array<{ minuto: number; chi: string; nostro: boolean; autogol: boolean }> = [];
+
   if (vaLetto) {
     patch.eventi_letti_il = new Date().toISOString();
     const d = await json(`${AF}/fixtures/events?fixture=${riga.fixture_id}`, { 'x-apisports-key': chiaveAF });
+    const lista = (d?.response ?? []) as EventoAF[];
+    if (lista.length) daEventi = contaGol(lista, FOGGIA_AF, inCasa);
 
-    for (const x of (d?.response ?? [])) {
+    for (const x of lista) {
       const minuto = x.time?.elapsed ?? 0;
       const chi = x.player?.name ?? '';
-      const nostro = x.team?.id === FOGGIA_AF;
+      const suoi = x.team?.id === FOGGIA_AF;
 
-      if (x.type === 'Goal') {
+      // `golVero` scarta il rigore sbagliato, che API-Football marca comunque
+      // come "Goal": prima diventava una notifica di gol mai segnato.
+      if (golVero(x)) {
         const firma = `gol-${minuto}-${chi}`;
-        if (detti.has(firma)) continue;
-        detti.add(firma);
-        avvisi.push({
-          tipo: 'gol',
-          titolo: nostro ? `GOL DEL FOGGIA! ${casa ?? 0}-${ospiti ?? 0}` : `Gol subito. ${casa ?? 0}-${ospiti ?? 0}`,
-          testo: `${minuto}' ${chi}`,
-          tag: `punteggio-${riga.partita}`,
-          rotta: '/',
-        });
+        if (!detti.has(firma)) {
+          detti.add(firma);
+          const autogol = x.detail === 'Own Goal';
+          nuoviGol.push({ minuto, chi, nostro: suoi !== autogol, autogol });
+        }
       }
 
       if (x.type === 'Card' && String(x.detail ?? '').includes('Red')) {
@@ -236,7 +254,7 @@ Deno.serve(async (req) => {
         detti.add(firma);
         avvisi.push({
           tipo: 'espulsione',
-          titolo: nostro ? 'Espulso un giocatore del Foggia' : 'Espulso un avversario',
+          titolo: suoi ? 'Espulso un giocatore del Foggia' : 'Espulso un avversario',
           testo: `${minuto}' ${chi}`,
           tag: `rosso-${riga.partita}-${minuto}`,
           rotta: '/',
@@ -246,12 +264,89 @@ Deno.serve(async (req) => {
     patch.eventi_detti = [...detti];
   }
 
+  // -------------------------------------------------- mettere d'accordo le fonti
+  const litigano = !!tabellone && !!daEventi
+    && (tabellone.casa !== daEventi.casa || tabellone.ospiti !== daEventi.ospiti);
+
+  // Si aggiorna solo nei giri in cui gli eventi si sono davvero letti: negli
+  // altri non si sa niente di nuovo, e azzerarlo cancellerebbe l'attesa.
+  if (vaLetto) {
+    patch.disaccordo_dal = litigano ? (riga.disaccordo_dal ?? new Date().toISOString()) : null;
+  }
+
+  // La terza fonte si paga una chiamata, quindi si chiama solo quando le prime
+  // due litigano e c'e un gol da annunciare adesso. Il tetto esiste perche una
+  // partita senza copertura litigherebbe per novanta minuti di fila.
+  let arbitro: Punteggio | null = null;
+  const pareri = riga.pareri_chiesti ?? 0;
+  if (litigano && nuoviGol.length && chiaveAF && riga.fixture_id && pareri < TETTO_PARERI) {
+    patch.pareri_chiesti = pareri + 1;
+    const f = await json(`${AF}/fixtures?id=${riga.fixture_id}`, { 'x-apisports-key': chiaveAF });
+    const g = f?.response?.[0]?.goals;
+    if (g && g.home !== null && g.away !== null) {
+      arbitro = { casa: Number(g.home), ospiti: Number(g.away) };
+    }
+  }
+
+  const accordo = concorda(tabellone, daEventi, arbitro);
+  if (daEventi) {
+    patch.casa_af = daEventi.casa;
+    patch.ospiti_af = daEventi.ospiti;
+  }
+
+  // I gol visti da API-Football: col marcatore, e col punteggio solo se
+  // confermato da una seconda fonte.
+  const giaDetto = daEventi ? detti.has(`tabellone-${daEventi.casa}-${daEventi.ospiti}`) : false;
+  for (const g of nuoviGol) {
+    // quel punteggio l'ha gia annunciato il tabellone: risuonare sarebbe un bis
+    if (giaDetto) continue;
+    avvisi.push({
+      tipo: 'gol',
+      titolo: titoloGol(g.nostro, accordo),
+      testo: g.autogol ? `${g.minuto}' autogol di ${g.chi}` : `${g.minuto}' ${g.chi}`,
+      tag: `punteggio-${riga.partita}`,
+      rotta: '/',
+    });
+  }
+
+  // Il tabellone come fonte a se stante.
+  //
+  // La Serie C ha buchi di copertura su API-Football: senza questo, una partita
+  // senza eventi non fa partire nessuna notifica di gol, mai. Parte solo dopo
+  // che API-Football ha avuto due minuti per dire la sua, altrimenti lo stesso
+  // gol arriverebbe due volte.
+  const attesaFinita = litigano && riga.disaccordo_dal
+    && adesso - Date.parse(riga.disaccordo_dal) > ATTESA_ACCORDO;
+  if (!nuoviGol.length && (!daEventi || attesaFinita)) {
+    const dal = golDalTabellone(prima, tabellone, inCasa);
+    const firma = `tabellone-${casa}-${ospiti}`;
+    if (dal && !detti.has(firma)) {
+      detti.add(firma);
+      patch.eventi_detti = [...detti];
+      avvisi.push({
+        tipo: 'gol',
+        // qui il tabellone e la fonte sia del gol sia del numero: e coerente
+        titolo: `${dal.nostro ? 'GOL DEL FOGGIA!' : 'Gol subito.'} ${casa}-${ospiti}`,
+        testo: 'Dal tabellone. Il marcatore non risulta ancora.',
+        tag: `punteggio-${riga.partita}`,
+        rotta: '/',
+      });
+    }
+  }
+
+  // Finche le due fonti litigano il punteggio del tabellone non si archivia:
+  // cosi `cambiato` resta vero e gli eventi si rileggono ogni minuto invece che
+  // ogni tre. Sono due o tre chiamate in piu per gol, e comprano due minuti.
+  if (litigano && !attesaFinita) {
+    delete patch.casa;
+    delete patch.ospiti;
+  }
+
   // ------------------------------------------------------------ fine partita
   if (finita && !riga.fine_mandata) {
     patch.fine_mandata = true;
-    const nostroCasa = String(e.strHomeTeam ?? '').toLowerCase().includes('foggia');
-    const nostri = nostroCasa ? casa : ospiti;
-    const loro = nostroCasa ? ospiti : casa;
+    const nostri = inCasa ? casa : ospiti;
+    const loro = inCasa ? ospiti : casa;
     const esito = nostri === null || loro === null ? 'Finita'
       : nostri > loro ? 'Vittoria' : nostri < loro ? 'Sconfitta' : 'Pareggio';
     avvisi.push({
