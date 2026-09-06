@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-06T14:17:16.121Z",
+    "generatedAt": "2026-09-06T17:11:47.690Z",
     "season": "2026-2027",
     "competition": "Serie C",
     "sources": {
@@ -3369,7 +3369,28 @@
       "homeAttendanceAvg": 0
     }
   },
-  "live": null,
+  "live": {
+    "fixtureId": 1609016,
+    "date": "2026-09-06",
+    "kickoff": "2026-09-06T19:00:00+00:00",
+    "status": "NS",
+    "minute": null,
+    "competition": "Serie C - Girone C",
+    "round": "Girone C - 3",
+    "home": {
+      "id": 521,
+      "name": "Foggia",
+      "goals": null
+    },
+    "away": {
+      "id": 9539,
+      "name": "Audace Cerignola",
+      "goals": null
+    },
+    "lineups": [],
+    "events": [],
+    "fetchedAt": "2026-09-06T17:11:43.356Z"
+  },
   "lineups": [
     {
       "fixtureId": 1609005,

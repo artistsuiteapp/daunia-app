@@ -1,1 +1,22 @@
-null
+{
+  "fixtureId": 1609016,
+  "date": "2026-09-06",
+  "kickoff": "2026-09-06T19:00:00+00:00",
+  "status": "NS",
+  "minute": null,
+  "competition": "Serie C - Girone C",
+  "round": "Girone C - 3",
+  "home": {
+    "id": 521,
+    "name": "Foggia",
+    "goals": null
+  },
+  "away": {
+    "id": 9539,
+    "name": "Audace Cerignola",
+    "goals": null
+  },
+  "lineups": [],
+  "events": [],
+  "fetchedAt": "2026-09-06T17:11:43.356Z"
+}
