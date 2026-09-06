@@ -251,18 +251,40 @@ function Framing({ orbit, zoom, requestFrame }: {
     const needed = Math.max(radius / Math.sin(vFov / 2), radius / Math.sin(hFov / 2));
 
     // la vasca riempie l'inquadratura, con appena un margine
-    const fit = needed * 0.74;
+    const fit = needed * FIT;
     zoom.current = { min: fit * 0.7, max: fit * 1.35 };
     orbit.current.distance = Math.min(Math.max(orbit.current.distance, zoom.current.min), zoom.current.max);
     if (!orbit.current.fitted) {
       orbit.current.distance = fit;
       orbit.current.fitted = true;
     }
+    /*
+     * Spinge il modello piu in basso nell'inquadratura.
+     *
+     * In cima al canvas galleggiano il titolo e i comandi, e la Curva Nord col
+     * mosaico ci finiva sotto. Si potrebbe alzare il punto verso cui guarda la
+     * telecamera, ma quel numero e in unita del mondo e va indovinato a
+     * tentativi: `setViewOffset` invece sposta l'inquadratura di un numero
+     * esatto di pixel, che e la stessa misura in cui e scritta l'interfaccia.
+     *
+     * Uno scostamento negativo in verticale fa scendere quello che si vede.
+     * Il raycast per la scelta dei settori resta giusto: legge la stessa
+     * matrice di proiezione.
+     */
+    const giu = Math.min(SPINGI_GIU, size.height * 0.2);
+    camera.setViewOffset(size.width, size.height, 0, -giu, size.width, size.height);
+    camera.updateProjectionMatrix();
+
     requestFrame.current?.();
   }, [scene, camera, size.width, size.height, orbit, zoom, requestFrame]);
 
   return null;
 }
+
+/** Quanto la vasca riempie l'inquadratura: piu piccolo, piu vicina. */
+const FIT = 0.82;
+/** Di quanti pixel il modello scende, per non finire sotto al titolo. */
+const SPINGI_GIU = 58;
 
 function OrbitCamera({ orbit, requestFrame, zoom }: {
   orbit: React.MutableRefObject<Orbit>;
