@@ -30,7 +30,7 @@
       "currency": "EUR",
       "capacityIsEstimated": true,
       "priceIsIndicative": true,
-      "occupancy": 0.7511,
+      "occupancy": 0.60146,
       "occupancyIsSimulated": true,
       "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
     },
@@ -53,7 +53,7 @@
       "currency": "EUR",
       "capacityIsEstimated": true,
       "priceIsIndicative": true,
-      "occupancy": 0.7951,
+      "occupancy": 0.6454599999999999,
       "occupancyIsSimulated": true,
       "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
     },
@@ -77,7 +77,7 @@
       "currency": "EUR",
       "capacityIsEstimated": true,
       "priceIsIndicative": true,
-      "occupancy": 0.8908,
+      "occupancy": 0.7411599999999999,
       "occupancyIsSimulated": true,
       "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
     },
@@ -102,7 +102,7 @@
       "currency": "EUR",
       "capacityIsEstimated": true,
       "priceIsIndicative": true,
-      "occupancy": 0.7153,
+      "occupancy": 0.56566,
       "occupancyIsSimulated": true,
       "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
     },
@@ -126,7 +126,7 @@
       "currency": "EUR",
       "capacityIsEstimated": true,
       "priceIsIndicative": true,
-      "occupancy": 0.57524,
+      "occupancy": 0.4256,
       "occupancyIsSimulated": true,
       "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
     }

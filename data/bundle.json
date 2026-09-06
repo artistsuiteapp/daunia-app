@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-06T17:11:47.690Z",
+    "generatedAt": "2026-09-06T19:21:41.496Z",
     "season": "2026-2027",
     "competition": "Serie C",
     "sources": {
@@ -21,6 +21,9 @@
       "Nessuno stemma per \"Barletta\": il sito del club non ha mai incontrato questa squadra.",
       "Nessuno stemma per \"Scafatese\": il sito del club non ha mai incontrato questa squadra.",
       "Solo 3 giocatori su 26 hanno la foto: la rosa sul sito del club e ferma alla stagione precedente.",
+      "Il negozio non ha restituito prodotti: la sezione shop resta vuota.",
+      "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
+      "Divieti, FoggiaToday: HTTP 403 su https://www.foggiatoday.it/rss",
       "Trasferta a Monopoli fra meno di una settimana e nessuna notizia sul divieto: controlla a mano, potrebbe essersi rotto il riconoscimento."
     ]
   },
@@ -2633,7 +2636,7 @@
         "currency": "EUR",
         "capacityIsEstimated": true,
         "priceIsIndicative": true,
-        "occupancy": 0.7511,
+        "occupancy": 0.60146,
         "occupancyIsSimulated": true,
         "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
       },
@@ -2656,7 +2659,7 @@
         "currency": "EUR",
         "capacityIsEstimated": true,
         "priceIsIndicative": true,
-        "occupancy": 0.7951,
+        "occupancy": 0.6454599999999999,
         "occupancyIsSimulated": true,
         "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
       },
@@ -2680,7 +2683,7 @@
         "currency": "EUR",
         "capacityIsEstimated": true,
         "priceIsIndicative": true,
-        "occupancy": 0.8908,
+        "occupancy": 0.7411599999999999,
         "occupancyIsSimulated": true,
         "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
       },
@@ -2705,7 +2708,7 @@
         "currency": "EUR",
         "capacityIsEstimated": true,
         "priceIsIndicative": true,
-        "occupancy": 0.7153,
+        "occupancy": 0.56566,
         "occupancyIsSimulated": true,
         "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
       },
@@ -2729,253 +2732,15 @@
         "currency": "EUR",
         "capacityIsEstimated": true,
         "priceIsIndicative": true,
-        "occupancy": 0.57524,
+        "occupancy": 0.4256,
         "occupancyIsSimulated": true,
         "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
       }
     ]
   },
   "shop": {
-    "products": [
-      {
-        "id": "shop-15560",
-        "name": "TUTA RAPPRESENTANZA RED",
-        "price": 110,
-        "regularPrice": 110,
-        "onSale": false,
-        "currency": "EUR",
-        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_5-scaled.jpg",
-        "images": [
-          "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_5-scaled.jpg",
-          "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_17-scaled.jpg"
-        ],
-        "category": "Tute",
-        "categorySlug": "tute",
-        "url": "https://calciofoggia1920.store/prodotto/tuta-rappresentanza-red/",
-        "inStock": true,
-        "description": "",
-        "source": "shop"
-      },
-      {
-        "id": "shop-15551",
-        "name": "TUTA RAPPRESENTANZA BLACK",
-        "price": 110,
-        "regularPrice": 110,
-        "onSale": false,
-        "currency": "EUR",
-        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_4-scaled.jpg",
-        "images": [
-          "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_4-scaled.jpg",
-          "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_17-scaled.jpg"
-        ],
-        "category": "Tute",
-        "categorySlug": "tute",
-        "url": "https://calciofoggia1920.store/prodotto/tuta-rappresentanza-black/",
-        "inStock": true,
-        "description": "",
-        "source": "shop"
-      },
-      {
-        "id": "shop-15519",
-        "name": "MAGLIA GARA THIRD",
-        "price": 85,
-        "regularPrice": 85,
-        "onSale": false,
-        "currency": "EUR",
-        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-06-scaled.jpg",
-        "images": [
-          "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-06-scaled.jpg",
-          "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-08-scaled.jpg",
-          "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-07-scaled.jpg",
-          "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-09-scaled.jpg"
-        ],
-        "category": "Maglie Gara",
-        "categorySlug": "maglie-gara",
-        "url": "https://calciofoggia1920.store/prodotto/maglia-gara-third/",
-        "inStock": true,
-        "description": "",
-        "source": "shop"
-      },
-      {
-        "id": "shop-15505",
-        "name": "MAGLIA GARA AWAY",
-        "price": 85,
-        "regularPrice": 85,
-        "onSale": false,
-        "currency": "EUR",
-        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-01-scaled.jpg",
-        "images": [
-          "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-01-scaled.jpg",
-          "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-02-scaled.jpg",
-          "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-03-scaled.jpg",
-          "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-04-scaled.jpg"
-        ],
-        "category": "Maglie Gara",
-        "categorySlug": "maglie-gara",
-        "url": "https://calciofoggia1920.store/prodotto/maglia-gara-away/",
-        "inStock": true,
-        "description": "",
-        "source": "shop"
-      },
-      {
-        "id": "shop-15549",
-        "name": "ZAINO",
-        "price": 55,
-        "regularPrice": 55,
-        "onSale": false,
-        "currency": "EUR",
-        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_19-scaled.jpg",
-        "images": [
-          "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_19-scaled.jpg"
-        ],
-        "category": null,
-        "categorySlug": null,
-        "url": "https://calciofoggia1920.store/prodotto/zaino/",
-        "inStock": true,
-        "description": "",
-        "source": "shop"
-      },
-      {
-        "id": "shop-15582",
-        "name": "POLO DI RAPPRESENTANZA BLACK",
-        "price": 50,
-        "regularPrice": 50,
-        "onSale": false,
-        "currency": "EUR",
-        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/IMG-20260831-WA0021.jpeg",
-        "images": [
-          "https://calciofoggia1920.store/wp-content/uploads/2026/08/IMG-20260831-WA0021.jpeg"
-        ],
-        "category": "Polo",
-        "categorySlug": "polo",
-        "url": "https://calciofoggia1920.store/prodotto/polo-di-rappresentanza-black/",
-        "inStock": true,
-        "description": "",
-        "source": "shop"
-      },
-      {
-        "id": "shop-15541",
-        "name": "POLO DI RAPPRESENTANZA",
-        "price": 50,
-        "regularPrice": 50,
-        "onSale": false,
-        "currency": "EUR",
-        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_8-1-scaled.jpg",
-        "images": [
-          "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_8-1-scaled.jpg"
-        ],
-        "category": "Allenamento",
-        "categorySlug": "allenamento",
-        "url": "https://calciofoggia1920.store/prodotto/polo-di-rappresentanza/",
-        "inStock": true,
-        "description": "",
-        "source": "shop"
-      },
-      {
-        "id": "shop-15532",
-        "name": "MAGLIA ALLENAMENTO",
-        "price": 30,
-        "regularPrice": 30,
-        "onSale": false,
-        "currency": "EUR",
-        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_10-scaled.jpg",
-        "images": [
-          "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_10-scaled.jpg"
-        ],
-        "category": "Allenamento",
-        "categorySlug": "allenamento",
-        "url": "https://calciofoggia1920.store/prodotto/maglia-allenamento/",
-        "inStock": true,
-        "description": "",
-        "source": "shop"
-      },
-      {
-        "id": "shop-15526",
-        "name": "PANTALONCINO DA GARA THIRD",
-        "price": 25,
-        "regularPrice": 25,
-        "onSale": false,
-        "currency": "EUR",
-        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-10-1-scaled.jpg",
-        "images": [
-          "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-10-1-scaled.jpg"
-        ],
-        "category": "Pantaloncini",
-        "categorySlug": "pantaloncini",
-        "url": "https://calciofoggia1920.store/prodotto/pantaloncino-da-gara-third/",
-        "inStock": true,
-        "description": "",
-        "source": "shop"
-      },
-      {
-        "id": "shop-15513",
-        "name": "PANTALONCINO GARA AWAY",
-        "price": 25,
-        "regularPrice": 25,
-        "onSale": false,
-        "currency": "EUR",
-        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-05-scaled.jpg",
-        "images": [
-          "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-05-scaled.jpg"
-        ],
-        "category": "Pantaloncini",
-        "categorySlug": "pantaloncini",
-        "url": "https://calciofoggia1920.store/prodotto/pantaloncino-gara-away/",
-        "inStock": true,
-        "description": "",
-        "source": "shop"
-      },
-      {
-        "id": "shop-15503",
-        "name": "CALZA HOME",
-        "price": 12,
-        "regularPrice": 12,
-        "onSale": false,
-        "currency": "EUR",
-        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_30-scaled.jpg",
-        "images": [
-          "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_30-scaled.jpg"
-        ],
-        "category": "Calze",
-        "categorySlug": "calze",
-        "url": "https://calciofoggia1920.store/prodotto/calza-home/",
-        "inStock": true,
-        "description": "",
-        "source": "shop"
-      }
-    ],
-    "categories": [
-      {
-        "slug": "allenamento",
-        "name": "Allenamento",
-        "count": 2
-      },
-      {
-        "slug": "maglie-gara",
-        "name": "Maglie Gara",
-        "count": 2
-      },
-      {
-        "slug": "pantaloncini",
-        "name": "Pantaloncini",
-        "count": 2
-      },
-      {
-        "slug": "tute",
-        "name": "Tute",
-        "count": 2
-      },
-      {
-        "slug": "calze",
-        "name": "Calze",
-        "count": 1
-      },
-      {
-        "slug": "polo",
-        "name": "Polo",
-        "count": 1
-      }
-    ]
+    "products": [],
+    "categories": []
   },
   "tickets": [
     {
@@ -2986,7 +2751,7 @@
       "reducedPrice": 17,
       "currency": "EUR",
       "covered": true,
-      "available": 796,
+      "available": 1275,
       "capacity": 3200,
       "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
     },
@@ -2998,7 +2763,7 @@
       "reducedPrice": 13,
       "currency": "EUR",
       "covered": false,
-      "available": 840,
+      "available": 1454,
       "capacity": 4100,
       "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
     },
@@ -3010,7 +2775,7 @@
       "reducedPrice": null,
       "currency": "EUR",
       "covered": false,
-      "available": 415,
+      "available": 984,
       "capacity": 3800,
       "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
     },
@@ -3022,7 +2787,7 @@
       "reducedPrice": null,
       "currency": "EUR",
       "covered": false,
-      "available": 683,
+      "available": 1042,
       "capacity": 2400,
       "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
     },
@@ -3034,7 +2799,7 @@
       "reducedPrice": 7,
       "currency": "EUR",
       "covered": false,
-      "available": 438,
+      "available": 592,
       "capacity": 1030,
       "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
     }
