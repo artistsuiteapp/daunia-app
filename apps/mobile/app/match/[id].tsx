@@ -18,7 +18,8 @@ import { matchById, matches } from '../../lib/data';
 import { Pagelle } from '../../components/Pagelle';
 import { Pronostico } from '../../components/Pronostico';
 import { useDatiPartita } from '../../lib/fanplay';
-import { useLive, liveDi } from '../../lib/live';
+import { useLive, liveDi, useGolVivo } from '../../lib/live';
+import { etichettaFase } from '../../lib/live-core';
 
 type Tab = 'formazione' | 'gioco' | 'eventi' | 'dati';
 
@@ -28,6 +29,9 @@ export default function MatchDetail() {
   const [view, setView] = useState<Tab>('formazione');
   const match = matchById(String(id));
   const vivo = liveDi(match, useLive());
+  // la cronologia che il guardiano registra mentre si gioca: minuto e punteggio,
+  // senza il nome di chi ha segnato
+  const golVivo = useGolVivo();
   const lineup = useMemo(
     () => lineupPerPartita(match?.kickoff ? match.kickoff.slice(0, 10) : undefined),
     [match?.kickoff],
@@ -63,7 +67,7 @@ export default function MatchDetail() {
           <Side team={match.away} />
         </View>
         <Text style={styles.when}>
-          {vivo ? `In corso · ${vivo.fase}` : longDate(match.kickoff)}
+          {vivo ? `In corso · ${etichettaFase(vivo, match.kickoff)}` : longDate(match.kickoff)}
         </Text>
       </View>
 
@@ -178,8 +182,39 @@ export default function MatchDetail() {
               })}
             </View>
           </>
+        ) : golVivo.length ? (
+          <>
+            <GroupLabel>Cronaca</GroupLabel>
+            <View style={gutter}>
+              {golVivo.map((g, i) => (
+                <View key={`${g.minuto}-${i}`} style={styles.event}>
+                  <View style={[styles.eventSide, !g.nostro && styles.eventSideRight]}>
+                    <View style={styles.eventBubble}>
+                      <Ionicons name="football" size={13} color={colors.text} />
+                      <Text style={styles.eventName} numberOfLines={1}>
+                        {g.casa ?? 0}–{g.ospiti ?? 0}
+                      </Text>
+                    </View>
+                  </View>
+                  <View style={styles.eventLine}>
+                    <View style={styles.eventDot} />
+                    <Text style={styles.eventMinute}>
+                      {g.minuto ? `${g.fonte === 'stimato' ? '~' : ''}${g.minuto}'` : '–'}
+                    </Text>
+                  </View>
+                  <View style={styles.eventSide} />
+                </View>
+              ))}
+            </View>
+            <GroupNote>
+              Minuto e punteggio arrivano dal tabellone. Il nome di chi ha segnato compare a
+              fine partita, quando i dati ufficiali sono completi.
+            </GroupNote>
+          </>
         ) : (
-          <Empty text="Nessun evento registrato per questa partita." />
+          <Empty text={vivo
+            ? 'Ancora nessun gol in questa partita.'
+            : 'Nessun evento registrato per questa partita.'} />
         )
       ) : null}
 

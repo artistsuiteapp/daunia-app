@@ -244,6 +244,7 @@ Deno.serve(async (req) => {
 
   if (!riga.inizio_mandato && IN_GIOCO.includes(stato) && !FINITE.includes(stato)) {
     patch.inizio_mandato = true;
+    patch.gol = [];
     avvisi.push({
       tipo: 'inizio', titolo: 'Si comincia', testo: etichetta,
       tag: `inizio-${riga.partita}`, rotta: '/',
@@ -377,6 +378,13 @@ Deno.serve(async (req) => {
     if (dal && !detti.has(firma)) {
       detti.add(firma);
       patch.eventi_detti = [...detti];
+      // La cronologia che la scheda partita mostra durante la gara. Il nome di
+      // chi ha segnato non c'e -- quello lo da solo API-Football -- ma minuto e
+      // punteggio si sanno, e sono la meta che serve mentre si gioca.
+      patch.gol = [
+        ...((riga.gol ?? []) as unknown[]),
+        { minuto, casa, ospiti, nostro: dal.nostro, fonte: minutoVero ? 'vero' : 'stimato' },
+      ];
       avvisi.push({
         tipo: 'gol',
         // qui il tabellone e la fonte sia del gol sia del numero: e coerente

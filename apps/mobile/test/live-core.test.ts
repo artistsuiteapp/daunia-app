@@ -21,8 +21,16 @@ test('senza calcio d inizio la finestra resta chiusa', () => {
 test('legge punteggio e fase da lookupevent', () => {
   const l = leggiEvento({ strStatus: '2H', intHomeScore: '2', intAwayScore: '1' }, 1000);
   assert.deepEqual(l, {
-    stato: '2H', fase: 'secondo tempo', casa: 2, ospite: 1, finita: false, aggiornato: 1000,
+    stato: '2H', fase: 'secondo tempo', casa: 2, ospite: 1,
+    minuto: null, finita: false, aggiornato: 1000,
   });
+});
+
+test('il minuto vero arriva dalla lista del dal vivo, recupero compreso', () => {
+  const l = leggiEvento({ strStatus: '1H', intHomeScore: '0', intAwayScore: '0', strProgress: '45+5' });
+  assert.equal(l?.minuto, '45+5');
+  // e quando c'e, batte la stima calcolata dall'orologio
+  assert.equal(etichettaFase(l, '2026-09-06T19:00:00Z', Date.parse('2026-09-06T19:30:00Z')), "1° tempo · 45+5'");
 });
 
 test('zero a zero non diventa nullo', () => {

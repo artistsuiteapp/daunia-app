@@ -11,6 +11,8 @@ export type Live = {
   fase: string;
   casa: number | null;
   ospite: number | null;
+  /** il minuto vero quando la fonte ce l'ha: "48", col recupero "45+5" */
+  minuto: string | null;
   finita: boolean;
   aggiornato: number;
 };
@@ -60,6 +62,7 @@ export function leggiEvento(e: unknown, adesso = Date.now()): Live | null {
     fase: FASI[s] ?? s.toLowerCase(),
     casa: numero(r.intHomeScore),
     ospite: numero(r.intAwayScore),
+    minuto: r.strProgress ? String(r.strProgress).trim() || null : null,
     finita: FINITE.includes(s),
     aggiornato: adesso,
   };
@@ -112,7 +115,8 @@ export function etichettaFase(
   adesso = Date.now(),
 ): string {
   if (!live) return '';
-  const m = minutoStimato(kickoff, live.stato, adesso);
+  // il minuto vero, quando c'e, batte sempre la stima: porta anche il recupero
+  const m = live.minuto ?? minutoStimato(kickoff, live.stato, adesso);
   const nome = live.stato === '1H' ? '1° tempo' : live.stato === '2H' ? '2° tempo' : live.fase;
   return m === null ? nome : `${nome} · ${m}'`;
 }
