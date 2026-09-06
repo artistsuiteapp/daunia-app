@@ -30,6 +30,8 @@ const DOPO = 3 * 60 * MINUTO;
 /** ogni quanto si possono rileggere gli eventi: serve a non bruciare la quota */
 const PAUSA_EVENTI = 3 * MINUTO;
 const PAUSA_FORMAZIONI = 10 * MINUTO;
+/** dopo quante risposte inutili di fila si smette di chiedere ad API-Football */
+const RESE = 3;
 /** quanto tempo si concede ad API-Football per allinearsi al tabellone */
 const ATTESA_ACCORDO = 2 * MINUTO;
 /** quante volte per partita si paga la terza fonte per rompere una parita */
@@ -219,7 +221,10 @@ Deno.serve(async (req) => {
 
   // --------------------------------------------- gol ed espulsioni, dai fatti
   const eventiVecchi = riga.eventi_letti_il ? adesso - Date.parse(riga.eventi_letti_il) : Infinity;
-  const vaLetto = chiaveAF && riga.fixture_id
+  // Se API-Football ha gia risposto a vuoto tre volte per questa partita, non
+  // si insiste: le chiamate del piano gratuito sono cento al giorno e una
+  // partita non coperta se le mangia tutte senza dare niente in cambio.
+  const vaLetto = chiaveAF && riga.fixture_id && (riga.af_a_vuoto ?? 0) < RESE
     && (cambiato || (IN_GIOCO.includes(stato) && eventiVecchi > PAUSA_EVENTI));
 
   /** il punteggio contato dagli eventi: la seconda fonte, gratis */
@@ -231,6 +236,14 @@ Deno.serve(async (req) => {
     const d = await json(`${AF}/fixtures/events?fixture=${riga.fixture_id}`, { 'x-apisports-key': chiaveAF });
     const lista = (d?.response ?? []) as EventoAF[];
     if (lista.length) daEventi = contaGol(lista, FOGGIA_AF, inCasa);
+
+    // `errors` non vuoto vuol dire quota finita o account sospeso: la risposta
+    // arriva con stato 200 e non si distingue da una partita senza eventi se
+    // non guardando qui dentro.
+    const rifiutata = !d
+      || (d.errors && !Array.isArray(d.errors) && Object.keys(d.errors).length > 0);
+    const inutile = rifiutata || (IN_GIOCO.includes(stato) && !lista.length);
+    patch.af_a_vuoto = inutile ? (riga.af_a_vuoto ?? 0) + 1 : 0;
 
     for (const x of lista) {
       const minuto = x.time?.elapsed ?? 0;
