@@ -110,3 +110,40 @@ volte, una per fonte.
 | Formazioni, eventi, punteggio dal vivo | API-Football (piano gratuito) | 0 |
 | Rosa aggiornata | API-Football (piano gratuito) | 0 |
 | Statistiche di fine partita | **non esistono per la Serie C** | — |
+
+## Se API-Football si blocca
+
+Lo stesso servizio ha due porte, con account e chiavi separate:
+
+| Porta | Host | Intestazione |
+|---|---|---|
+| Diretta | `v3.football.api-sports.io` | `x-apisports-key` |
+| RapidAPI | `api-football-v1.p.rapidapi.com/v3` | `x-rapidapi-key` + `x-rapidapi-host` |
+
+Piano gratuito da entrambe le parti: cento chiamate al giorno, risposte
+identiche. Se un account resta bloccato, se ne apre uno dall'altra porta e si
+cambia una variabile, non una riga di codice:
+
+```bash
+npx supabase secrets set API_FOOTBALL_KEY=<chiave> API_FOOTBALL_VIA=rapidapi
+```
+
+Senza `API_FOOTBALL_VIA` si usa la porta diretta. Lo stesso vale per l'ingest,
+che legge le stesse due variabili d'ambiente.
+
+## Cosa funziona senza API-Football
+
+| Dato | Fonte | Serve API-Football? |
+|---|---|---|
+| Punteggio dal vivo | `livescore.php` | no |
+| Minuto di gioco, recupero compreso | `livescore.php` (`strProgress`) | no |
+| Inizio, intervallo, fine | `livescore.php` | no |
+| Notifiche dei gol | tabellone | no |
+| Cronaca con minuto e punteggio | tabellone | no |
+| **Nome di chi ha segnato** | eventi | **sì** |
+| **Formazioni ufficiali** | lineups | **sì** |
+
+Le ultime due non hanno alternativa gratuita per la Serie C: TheSportsDB tiene
+`lookuptimeline` e `lookuplineup` dietro il piano a pagamento (tornano `null`
+con la chiave pubblica anche per la Serie A, quindi e un limite della chiave,
+non un buco di copertura), e le v2 rispondono "Invalid Premium API key".

@@ -31,7 +31,34 @@
  * finche manca qualcosa. A partita finita e archiviata, zero chiamate.
  */
 
-const BASE = 'https://v3.football.api-sports.io';
+/**
+ * Le due porte di API-Football.
+ *
+ * Lo stesso servizio si raggiunge da due parti, con account e chiavi separate:
+ * il portale diretto (api-sports.io) e RapidAPI. Chi ha sbattuto contro un
+ * account bloccato da una parte puo aprirne uno gratuito dall'altra senza che
+ * cambi una riga di codice: il piano gratuito e cento chiamate al giorno in
+ * entrambi i casi, e la forma delle risposte e identica.
+ *
+ * Si sceglie in base a quale variabile e valorizzata. Se ci sono tutte e due
+ * vince quella diretta, che non ha l'intermediario in mezzo.
+ */
+const DIRETTO = {
+  base: 'https://v3.football.api-sports.io',
+  intestazioni: (chiave) => ({ 'x-apisports-key': chiave }),
+};
+const RAPIDAPI = {
+  base: 'https://api-football-v1.p.rapidapi.com/v3',
+  intestazioni: (chiave) => ({
+    'x-rapidapi-key': chiave,
+    'x-rapidapi-host': 'api-football-v1.p.rapidapi.com',
+  }),
+};
+
+/** Quale porta usare per questa chiave. `via` lo decide chi chiama. */
+export function porta(via) {
+  return via === 'rapidapi' ? RAPIDAPI : DIRETTO;
+}
 
 export const FOGGIA_TEAM_ID = 521;
 /** Girone A, B, C e la Coppa Italia di Serie C. */
@@ -41,9 +68,10 @@ const ORE = 60 * 60 * 1000;
 const PRIMA_DEL_FISCHIO = 2 * ORE;
 const DOPO_IL_FISCHIO = 6 * ORE;
 
-async function chiedi(percorso, chiave, conteggio) {
+async function chiedi(percorso, chiave, conteggio, via = process.env.API_FOOTBALL_VIA) {
   conteggio.n += 1;
-  const r = await fetch(`${BASE}/${percorso}`, { headers: { 'x-apisports-key': chiave } });
+  const p = porta(via);
+  const r = await fetch(`${p.base}/${percorso}`, { headers: p.intestazioni(chiave) });
   if (!r.ok) return { dati: [], problema: `HTTP ${r.status}` };
   const j = await r.json();
   const errori = j.errors && !Array.isArray(j.errors) ? Object.values(j.errors) : [];

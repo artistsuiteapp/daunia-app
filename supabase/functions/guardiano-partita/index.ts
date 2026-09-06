@@ -20,7 +20,16 @@ import {
 } from './punteggio.ts';
 
 const TSDB = 'https://www.thesportsdb.com/api/v1/json/123';
-const AF = 'https://v3.football.api-sports.io';
+/**
+ * Le due porte di API-Football.
+ *
+ * Lo stesso servizio, due account separati: il portale diretto e RapidAPI. Se
+ * uno dei due si blocca, l'altro si apre gratis senza toccare il codice --
+ * cento chiamate al giorno e risposte identiche da entrambe le parti. Si
+ * sceglie con il secret API_FOOTBALL_VIA: "rapidapi" oppure niente.
+ */
+const AF_DIRETTO = 'https://v3.football.api-sports.io';
+const AF_RAPIDAPI = 'https://api-football-v1.p.rapidapi.com/v3';
 const FOGGIA_TSDB = 134682;
 const FOGGIA_AF = 521;
 
@@ -49,6 +58,11 @@ const db = createClient(
 );
 
 const chiaveAF = Deno.env.get('API_FOOTBALL_KEY') ?? '';
+const viaRapid = (Deno.env.get('API_FOOTBALL_VIA') ?? '').toLowerCase() === 'rapidapi';
+const AF = viaRapid ? AF_RAPIDAPI : AF_DIRETTO;
+const testaAF: HeadersInit = viaRapid
+  ? { 'x-rapidapi-key': chiaveAF, 'x-rapidapi-host': 'api-football-v1.p.rapidapi.com' }
+  : testaAF;
 const jwk = JSON.parse(Deno.env.get('VAPID_JWK') ?? '{}') as JsonWebKey;
 const pubblica = Deno.env.get('VAPID_PUBLIC') ?? '';
 const CONTATTO = 'https://daunia.vercel.app';
@@ -204,7 +218,7 @@ Deno.serve(async (req) => {
 
   if (primaDelFischio && !riga.formazioni_mandate && riga.fixture_id && chiaveAF && daRileggere) {
     patch.formazioni_viste_il = new Date().toISOString();
-    const f = await json(`${AF}/fixtures/lineups?fixture=${riga.fixture_id}`, { 'x-apisports-key': chiaveAF });
+    const f = await json(`${AF}/fixtures/lineups?fixture=${riga.fixture_id}`, testaAF);
     const lato = (f?.response ?? []).find((x: { team?: { id?: number } }) => x.team?.id === FOGGIA_AF);
     if (lato?.startXI?.length) {
       patch.formazioni_mandate = true;
@@ -274,7 +288,7 @@ Deno.serve(async (req) => {
 
   if (vaLetto) {
     patch.eventi_letti_il = new Date().toISOString();
-    const d = await json(`${AF}/fixtures/events?fixture=${riga.fixture_id}`, { 'x-apisports-key': chiaveAF });
+    const d = await json(`${AF}/fixtures/events?fixture=${riga.fixture_id}`, testaAF);
     const lista = (d?.response ?? []) as EventoAF[];
     if (lista.length) daEventi = contaGol(lista, FOGGIA_AF, inCasa);
 
@@ -335,7 +349,7 @@ Deno.serve(async (req) => {
   const pareri = riga.pareri_chiesti ?? 0;
   if (litigano && nuoviGol.length && chiaveAF && riga.fixture_id && pareri < TETTO_PARERI) {
     patch.pareri_chiesti = pareri + 1;
-    const f = await json(`${AF}/fixtures?id=${riga.fixture_id}`, { 'x-apisports-key': chiaveAF });
+    const f = await json(`${AF}/fixtures?id=${riga.fixture_id}`, testaAF);
     const g = f?.response?.[0]?.goals;
     if (g && g.home !== null && g.away !== null) {
       arbitro = { casa: Number(g.home), ospiti: Number(g.away) };
