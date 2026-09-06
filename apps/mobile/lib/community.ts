@@ -2,6 +2,7 @@ import { useEffect, useSyncExternalStore } from 'react';
 import type { Ionicons } from '@expo/vector-icons';
 
 import { supabase, backendAttivo } from './supabase';
+import { controlla, spiegazione } from './filtro-core.ts';
 import { utenteCorrente } from './auth';
 
 /**
@@ -359,7 +360,39 @@ export function discussionById(id: string): Discussion | null {
 
 const today = () => new Date().toISOString().slice(0, 10);
 
+/**
+ * Ferma qui quello che il database fermerebbe comunque.
+ *
+ * Il cancello vero e il trigger in Postgres: un controllo nell'app si aggira
+ * chiamando l'API con la chiave anonima. Questo serve a un'altra cosa, a dire
+ * subito perche, invece di far premere invia e rispondere con un errore.
+ *
+ * Vale anche per la modalita senza account, dove il database non c'e proprio.
+ */
+function fermaSeOffensivo(...pezzi: Array<string | undefined>) {
+  const esito = controlla(pezzi.filter(Boolean).join(' '));
+  if (!esito.pulito) throw new Error(spiegazione(esito) ?? 'Messaggio non pubblicabile.');
+}
+
+/**
+ * Traduce il rifiuto del database in una frase leggibile.
+ *
+ * Il trigger alza 'bestemmia' o 'parolaccia', che va bene per i registri e non
+ * per una persona. Se il messaggio arriva cosi com'e, chi legge non capisce e
+ * riscrive peggio.
+ */
+function tradotto(messaggio: string): string {
+  if (messaggio.includes('bestemmia')) {
+    return 'Qui le bestemmie non passano. Riscrivi senza e il messaggio parte.';
+  }
+  if (messaggio.includes('parolaccia')) {
+    return 'C\'è una parola che qui non passa. Riscrivi e il messaggio parte.';
+  }
+  return messaggio;
+}
+
 export async function addDiscussion(input: { author: string; title: string; body: string; topic: Topic }) {
+  fermaSeOffensivo(input.title, input.body);
   const u = utenteCorrente();
   if (supabase && u) {
     const { data, error } = await supabase.from('discussioni').insert({
@@ -368,7 +401,7 @@ export async function addDiscussion(input: { author: string; title: string; body
       testo: input.body.trim(),
       argomento: input.topic,
     }).select('id').single();
-    if (error) throw new Error(error.message);
+    if (error) throw new Error(tradotto(error.message));
     await ricarica();
     return { id: (data as { id: string }).id } as Discussion;
   }
@@ -395,12 +428,13 @@ function aggiungiInLocale(input: { author: string; title: string; body: string; 
 export async function addReply(on: string, author: string, body: string) {
   const text = body.trim();
   if (!text) return;
+  fermaSeOffensivo(text);
   const u = utenteCorrente();
   if (supabase && u) {
     const { error } = await supabase.from('risposte').insert({
       discussione: on, autore: u.id, testo: text,
     });
-    if (error) throw new Error(error.message);
+    if (error) throw new Error(tradotto(error.message));
     await ricarica();
     return;
   }

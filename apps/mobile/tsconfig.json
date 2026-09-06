@@ -13,7 +13,8 @@
       "@data/*": [
         "../../data/*"
       ]
-    }
+    },
+    "allowImportingTsExtensions": true
   },
   "include": [
     "**/*.ts",
