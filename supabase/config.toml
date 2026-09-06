@@ -1,7 +1,90 @@
-# Configurazione minima: serve alla CLI per sapere di quale progetto si tratta.
-# L'identificativo vero arriva da "supabase link" e finisce in .temp, che non
-# viene versionato.
+# Configurazione del progetto Supabase.
+#
+# ATTENZIONE PRIMA DI TOCCARE: `supabase config push` sovrascrive sul progetto
+# remoto quello che sta qui. Se una impostazione viene cambiata dal pannello di
+# Supabase e non anche in questo file, il primo push la riporta indietro.
+# Quindi: questo file e la fonte, il pannello no.
+
 project_id = "daunia"
 
 [db]
 major_version = 17
+
+[auth]
+# Dove tornano i collegamenti delle email. Se resta l'indirizzo locale, chi si
+# iscrive riceve un link che sul suo telefono non porta da nessuna parte: e il
+# modo piu comune di rompere la registrazione senza accorgersene.
+site_url = "https://daunia.vercel.app"
+additional_redirect_urls = [
+  "https://daunia.vercel.app",
+  "https://daunia.vercel.app/accedi",
+  "http://localhost:8081",
+  "http://localhost:8899",
+]
+
+enable_signup = true
+# La sessione dura a lungo apposta: e un'app da stadio, non una banca, e
+# rifare l'accesso ogni settimana e il motivo per cui si smette di aprirla.
+jwt_expiry = 3600
+enable_refresh_token_rotation = true
+refresh_token_reuse_interval = 10
+
+[auth.email]
+enable_signup = true
+# La conferma via email resta accesa: senza, entra chiunque con un indirizzo
+# inventato e il recupero password non ha piu un indirizzo a cui scrivere.
+enable_confirmations = true
+# Cambiare indirizzo chiede conferma sia al vecchio che al nuovo: altrimenti
+# chi entra in un account puo portarselo via cambiando la mail.
+double_confirm_changes = true
+secure_password_change = true
+
+# I template in italiano stanno in supabase/templates/ e sono pronti, ma
+# Supabase non lascia cambiarli finche il progetto usa il servizio email
+# interno: "Email template modification is not available for free tier projects
+# using the default email provider". Si accendono insieme all'SMTP, togliendo
+# il commento qui sotto.
+#
+# [auth.email.template.confirmation]
+# subject = "Conferma la tua email — Il Tifo della Daunia"
+# content_path = "./supabase/templates/conferma.html"
+#
+# [auth.email.template.recovery]
+# subject = "Cambia la password — Il Tifo della Daunia"
+# content_path = "./supabase/templates/recupero.html"
+#
+# [auth.email.template.magic_link]
+# subject = "Entra in Il Tifo della Daunia"
+# content_path = "./supabase/templates/accesso.html"
+#
+# [auth.email.template.email_change]
+# subject = "Conferma il nuovo indirizzo — Il Tifo della Daunia"
+# content_path = "./supabase/templates/cambio-email.html"
+
+# ---------------------------------------------------------------------------
+# SMTP: da accendere quando il dominio e verificato su Resend.
+#
+# Il servizio email interno di Supabase consegna SOLO agli indirizzi del team
+# del progetto, con un tetto di due messaggi all'ora. Vuol dire che oggi nessuno
+# puo registrarsi tranne il proprietario: si iscrive, la conferma non arriva
+# mai, e resta fuori.
+#
+# Resend pretende un dominio verificato: non si spedisce da un indirizzo
+# gratuito tipo @gmail o @aol, perche dal febbraio 2024 Gmail e Yahoo rifiutano
+# o mandano in spam i messaggi che non passano la verifica del dominio.
+#
+# Quando il dominio c'e:
+#   1. su Resend, verificare il dominio (tre record DNS) e creare una chiave
+#   2. scrivere in un file .env accanto a questo, MAI nel repository:
+#        SMTP_USER=resend
+#        SMTP_PASS=<la chiave di Resend>
+#   3. togliere il commento qui sotto e lanciare `supabase config push`
+#
+# [auth.email.smtp]
+# enabled = true
+# host = "smtp.resend.com"
+# port = 587
+# user = "env(SMTP_USER)"
+# pass = "env(SMTP_PASS)"
+# admin_email = "no-reply@iltifodelladaunia.it"
+# sender_name = "Il Tifo della Daunia"
