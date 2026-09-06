@@ -59,6 +59,39 @@ async function json(url: string, headers?: HeadersInit) {
   return await r.json().catch(() => null);
 }
 
+/**
+ * Il punteggio dal vivo, dall'endpoint fatto apposta per quello.
+ *
+ * `lookupevent.php` e la scheda dell'evento e si aggiorna con calma: stasera
+ * diceva ancora "HT" mentre la partita era al 48esimo, ed e da li che venivano
+ * i cinque minuti di ritardo sulle notifiche. `livescore.php` invece e la
+ * lista delle partite in corso adesso, aggiornata di continuo, e porta un campo
+ * che la scheda non ha: `strProgress`, cioe il minuto vero, recupero compreso
+ * ("45+5"). Con quello il minuto non si stima piu.
+ *
+ * Costa: la risposta sono tutte le partite del mondo, una sessantina di
+ * chilobyte. Sul server passa, sul telefono no -- per questo il minuto lo
+ * scrive qui il guardiano e l'app se lo legge dal database.
+ *
+ * Il campo `l=` esiste ma viene ignorato dalla fonte: filtrare tocca a noi.
+ */
+async function daLivescore(eventId: number) {
+  const d = await json(`${TSDB}/livescore.php?s=Soccer`);
+  const righe = (d?.livescore ?? []) as Array<Record<string, unknown>>;
+  const x = righe.find((y) => Number(y.idEvent) === eventId);
+  if (!x) return null;
+  // stesse chiavi di lookupevent.php, cosi il resto del codice non cambia
+  return {
+    strStatus: x.strStatus,
+    intHomeScore: x.intHomeScore,
+    intAwayScore: x.intAwayScore,
+    strHomeTeam: x.strHomeTeam,
+    strAwayTeam: x.strAwayTeam,
+    strEvent: `${x.strHomeTeam} vs ${x.strAwayTeam}`,
+    strProgress: x.strProgress,
+  } as Record<string, unknown>;
+}
+
 /** La prossima partita del Foggia, chiesta a TheSportsDB e messa da parte. */
 async function trovaProssima() {
   const d = await json(`${TSDB}/eventsnext.php?id=${FOGGIA_TSDB}`);
@@ -189,8 +222,11 @@ Deno.serve(async (req) => {
   }
 
   // ------------------------------------------------- punteggio e stato gara
-  const ev = await json(`${TSDB}/lookupevent.php?id=${riga.event_id}`);
-  const e = ev?.events?.[0];
+  // Prima la lista del dal vivo: e quella fresca. Se la partita non c'e --
+  // non e ancora cominciata, o e gia finita -- si torna alla scheda.
+  const dalVivo = await daLivescore(Number(riga.event_id));
+  const ev = dalVivo ? null : await json(`${TSDB}/lookupevent.php?id=${riga.event_id}`);
+  const e = dalVivo ?? ev?.events?.[0];
   if (!e) return Response.json({ fatto: 'fonte muta', avvisi: 0 });
 
   const stato = String(e.strStatus ?? '').trim() || 'NS';
@@ -198,9 +234,13 @@ Deno.serve(async (req) => {
   const ospiti = e.intAwayScore === null || e.intAwayScore === '' ? null : Number(e.intAwayScore);
   const etichetta = riga.etichetta ?? e.strEvent ?? 'Foggia';
 
+  /** il minuto vero, quando la fonte del dal vivo ce l'ha: "48", "45+5" */
+  const minutoVero = e.strProgress ? String(e.strProgress).trim() || null : null;
+
   patch.stato = stato;
   patch.casa = casa;
   patch.ospiti = ospiti;
+  patch.minuto = minutoVero;
 
   if (!riga.inizio_mandato && IN_GIOCO.includes(stato) && !FINITE.includes(stato)) {
     patch.inizio_mandato = true;
@@ -332,7 +372,7 @@ Deno.serve(async (req) => {
     && adesso - Date.parse(riga.disaccordo_dal) > ATTESA_ACCORDO;
   if (!nuoviGol.length && (!daEventi || attesaFinita)) {
     const dal = golDalTabellone(prima, tabellone, inCasa);
-    const minuto = minutoStimato(riga.kickoff, stato, adesso);
+    const minuto = minutoVero ?? minutoStimato(riga.kickoff, stato, adesso);
     const firma = `tabellone-${casa}-${ospiti}`;
     if (dal && !detti.has(firma)) {
       detti.add(firma);
@@ -342,8 +382,9 @@ Deno.serve(async (req) => {
         // qui il tabellone e la fonte sia del gol sia del numero: e coerente
         titolo: `${dal.nostro ? 'GOL DEL FOGGIA!' : 'Gol subito.'} ${casa}-${ospiti}`,
         // il minuto e stimato dall'orario: senza gli eventi non esiste altrove
+        // col minuto vero si scrive secco, con quello stimato si dice "circa"
         testo: minuto
-          ? `Circa ${minuto}'. Il marcatore non risulta ancora.`
+          ? `${minutoVero ? '' : 'Circa '}${minuto}'. Il marcatore non risulta ancora.`
           : 'Dal tabellone. Il marcatore non risulta ancora.',
         tag: `punteggio-${riga.partita}`,
         rotta: '/',
