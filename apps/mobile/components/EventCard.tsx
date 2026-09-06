@@ -1,4 +1,5 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useEffect, useRef } from 'react';
+import { Animated, Easing, Pressable, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
@@ -10,7 +11,6 @@ import { shortDate, time } from '../lib/format';
 import { useLive, liveDi } from '../lib/live';
 import { etichettaFase } from '../lib/live-core';
 import { salaAperta } from '../lib/sala';
-import { PallinoLive } from './PallinoLive';
 import { PredictionCallout } from './PredictionCallout';
 
 type Tone = 'accent' | 'dark';
@@ -103,10 +103,11 @@ export function EventCard({ match, tone = 'dark', compatta = false }: {
             * sparisce dopo la partita lasciando il dubbio di averla sognata.
             */}
           <Pressable
-            style={({ pressed }) => [styles.ctaChat, pressed && { opacity: 0.75 }]}
+            style={({ pressed }) => [styles.ctaFilled, pressed && { opacity: 0.75 }]}
             onPress={() => router.push('/live' as never)}
           >
-            <PallinoLive compatto chiusa={!chatViva} etichetta={chatViva ? 'LIVE CHAT' : 'CHAT CHIUSA'} />
+            <Pastiglia acceso={chatViva} />
+            <Text style={styles.ctaFilledText}>{chatViva ? 'Live chat' : 'Chat chiusa'}</Text>
           </Pressable>
           <Pressable
             style={({ pressed }) => [styles.ctaPlain, pressed && { opacity: 0.75 }]}
@@ -121,8 +122,39 @@ export function EventCard({ match, tone = 'dark', compatta = false }: {
   );
 }
 
+/**
+ * Il pallino dentro il bottone della chat.
+ *
+ * Sta nel bottone bianco insieme agli altri, non in una pastiglia a parte:
+ * doveva somigliare al tasto che ha sostituito, non gridare piu forte.
+ * Verde e pulsante quando si puo scrivere, rosso e fermo quando si legge e
+ * basta -- un pallino che pulsa promette qualcosa che sta succedendo.
+ */
+function Pastiglia({ acceso }: { acceso: boolean }) {
+  const v = useRef(new Animated.Value(1)).current;
+  useEffect(() => {
+    if (!acceso) return;
+    const ciclo = Animated.loop(Animated.sequence([
+      Animated.timing(v, { toValue: 0.25, duration: 750, easing: Easing.inOut(Easing.quad), useNativeDriver: true }),
+      Animated.timing(v, { toValue: 1, duration: 750, easing: Easing.inOut(Easing.quad), useNativeDriver: true }),
+    ]));
+    ciclo.start();
+    return () => ciclo.stop();
+  }, [acceso, v]);
+
+  return (
+    <Animated.View
+      style={[
+        styles.pallino,
+        { backgroundColor: acceso ? '#1FA845' : '#B10E16' },
+        acceso ? { opacity: v } : null,
+      ]}
+    />
+  );
+}
+
 const styles = StyleSheet.create({
-  ctaChat: { borderRadius: radius.pill, overflow: 'hidden' },
+  pallino: { width: 8, height: 8, borderRadius: 4 },
   card: { borderRadius: radius.xxl, overflow: 'hidden', padding: space.lg, gap: space.md },
   cardCompatta: { padding: space.md, gap: space.sm },
   cardDark: {

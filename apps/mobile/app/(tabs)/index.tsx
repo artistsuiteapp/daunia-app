@@ -26,6 +26,7 @@ import { useLive } from '../../lib/live';
 import { eOggi } from '../../lib/live-core';
 import { salaAperta } from '../../lib/sala';
 import { PallinoLive } from '../../components/PallinoLive';
+import { PagelleInHome } from '../../components/PagelleInHome';
 import {
   FOGGIA, foggiaRow, lastMatch, matchInCorso, meta, news, nextMatch, recentForm,
   standingsWindow, topScorers, upcomingMatches,
@@ -176,6 +177,15 @@ export default function Home() {
         ) : null}
       </View>
       </Reveal>
+
+      {/* le pagelle votate ieri sera, prima dell'ultimo risultato: chi apre
+          l'app il giorno dopo vuole quelle, il punteggio lo sa gia */}
+      {/* la partita di ieri sera, non quella prima: il calendario di Wikipedia
+          la marca "finita" con ore di ritardo, e in quelle ore in home
+          uscirebbero le pagelle della gara sbagliata */}
+      {(vivo?.finita && adessoFinito) || last
+        ? <PagelleInHome match={(vivo?.finita && adessoFinito) || last!} />
+        : null}
 
       {last ? (
         <>
