@@ -36,15 +36,29 @@ const FOGGIA_AF = 521;
 const MINUTO = 60_000;
 const PRIMA = 90 * MINUTO;
 const DOPO = 3 * 60 * MINUTO;
-/** ogni quanto si possono rileggere gli eventi: serve a non bruciare la quota */
-const PAUSA_EVENTI = 3 * MINUTO;
-const PAUSA_FORMAZIONI = 10 * MINUTO;
+/*
+ * Il budget di API-Football, contato.
+ *
+ * Il piano gratuito e cento chiamate al giorno, e i loro termini dicono che un
+ * uso "sproporzionato o eccessivo" fa scattare una sospensione automatica dal
+ * firewall. E successo il 6 settembre a meta partita, e il conto tornava: con
+ * gli eventi ogni tre minuti e le formazioni ogni dieci, il guardiano da solo
+ * arrivava a sessantacinque chiamate in un pomeriggio, e l'ingest ne fa altre
+ * quaranta. Sopra il limite.
+ *
+ * La rilettura periodica non serve a sapere che si e segnato -- quello lo dice
+ * il tabellone, gratis e subito -- serve a prendere il nome del marcatore e le
+ * espulsioni. Otto minuti di ritardo su un nome sono accettabili; una
+ * sospensione no. Con questi numeri il guardiano sta sotto le trenta chiamate.
+ */
+const PAUSA_EVENTI = 8 * MINUTO;
+const PAUSA_FORMAZIONI = 15 * MINUTO;
 /** dopo quante risposte inutili di fila si smette di chiedere ad API-Football */
 const RESE = 3;
 /** quanto tempo si concede ad API-Football per allinearsi al tabellone */
 const ATTESA_ACCORDO = 2 * MINUTO;
 /** quante volte per partita si paga la terza fonte per rompere una parita */
-const TETTO_PARERI = 6;
+const TETTO_PARERI = 3;
 
 const FINITE = ['FT', 'AET', 'PEN'];
 const IN_GIOCO = ['1H', 'HT', '2H', 'ET', 'BT', 'P'];
