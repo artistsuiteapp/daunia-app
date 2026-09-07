@@ -44,7 +44,8 @@ export function EventCard({ match, tone = 'dark', compatta = false }: {
   return (
     <Pressable
       onPress={() => router.push(`/match/${match.id}` as never)}
-      disabled={compatta}
+      // anche le compatte si aprono: erano l'unica scheda non toccabile
+      disabled={false}
       style={({ pressed }) => [
         styles.card, !accent && styles.cardDark,
         compatta && styles.cardCompatta,
@@ -71,7 +72,7 @@ export function EventCard({ match, tone = 'dark', compatta = false }: {
       </View>
 
       <View style={styles.body}>
-        <Crest uri={match.home.crest} name={match.home.shortName} size={compatta ? 34 : 46} />
+        <Crest uri={match.home.crest} name={match.home.shortName} size={compatta ? 26 : 46} />
         <View style={styles.centre}>
           <Text style={[styles.score, compatta && styles.scoreCompatto, { color: fg }]}>
             {played || live ? `${casa} : ${ospite}` : time(match.kickoff)}
@@ -79,7 +80,7 @@ export function EventCard({ match, tone = 'dark', compatta = false }: {
           <Text style={[styles.sub, { color: dim }]}>{day(match)}</Text>
           <Text style={[styles.sub, { color: dim }]}>{shortDate(match.kickoff)}</Text>
         </View>
-        <Crest uri={match.away.crest} name={match.away.shortName} size={compatta ? 34 : 46} />
+        <Crest uri={match.away.crest} name={match.away.shortName} size={compatta ? 26 : 46} />
       </View>
 
       <View style={styles.names}>
@@ -156,7 +157,10 @@ function Pastiglia({ acceso }: { acceso: boolean }) {
 const styles = StyleSheet.create({
   pallino: { width: 8, height: 8, borderRadius: 4 },
   card: { borderRadius: radius.xxl, overflow: 'hidden', padding: space.lg, gap: space.md },
-  cardCompatta: { padding: space.md, gap: space.sm },
+  // le partite dopo la prossima: servono a sapere che ci sono, non a essere
+  // guardate. Stemmi piu piccoli, meno aria intorno, e ce ne stanno quattro
+  // nello spazio che prima ne teneva due
+  cardCompatta: { paddingHorizontal: space.md, paddingVertical: 9, gap: 6 },
   cardDark: {
     backgroundColor: colors.surface,
     borderWidth: StyleSheet.hairlineWidth, borderColor: 'rgba(255,255,255,0.07)',

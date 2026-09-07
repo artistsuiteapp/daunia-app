@@ -29,6 +29,10 @@ import { PallinoLive } from '../../components/PallinoLive';
 import { BanneriAzione, type Azione } from '../../components/BanneriAzione';
 import { PagelleInHome } from '../../components/PagelleInHome';
 import { MvpDelMese } from '../../components/MvpDelMese';
+import { caricaMigliore, migliorePartita, caricaMvpMese, mvpDelMese, useFanplay } from '../../lib/fanplay';
+import { statoMigliore, statoMese } from '../../lib/premi-core';
+import { fineVera } from '../../lib/live';
+import { squad } from '../../lib/data';
 import {
   FOGGIA, foggiaRow, lastMatch, matchInCorso, meta, news, nextMatch, recentForm,
   standingsWindow, topScorers, upcomingMatches,
@@ -63,6 +67,15 @@ export default function Home() {
   // a fine partita i voti si danno a caldo o non si danno piu
   const pagelle = vivo?.finita && adessoFinito ? `/match/${adessoFinito.id}?tab=gioco` : null;
 
+  // i premi finiscono anche nelle slide, non solo nei loro riquadri: sono la
+  // cosa per cui uno riapre l'app, e in fondo alla home non li vedrebbe
+  useFanplay();
+  const mese = statoMese();
+  const vivoPremio = statoMigliore(fineVera() ?? adessoFinito?.kickoff, next?.kickoff);
+  useEffect(() => { if (adessoFinito) void caricaMigliore(adessoFinito.id); }, [adessoFinito]);
+  const miglioreOra = adessoFinito ? migliorePartita(adessoFinito.id) : null;
+  const mvpOra = mvpDelMese()[0] ?? null;
+
   /*
    * I richiami, in ordine di urgenza.
    *
@@ -78,9 +91,47 @@ export default function Home() {
    */
   const azioni = useMemo<Azione[]>(() => {
     const a: Azione[] = [];
+
+    /*
+     * I premi in cima, quando sono vivi.
+     *
+     * Il migliore in campo dura un giorno e poi sparisce, quindi quando c'e
+     * viene prima di tutto il resto: e la cosa che scade.
+     */
+    if (adessoFinito && vivoPremio.fase !== 'niente' && miglioreOra) {
+      const p = squad.find((g) => g.id === miglioreOra.giocatore);
+      a.push({
+        chiave: 'mvp',
+        occhiello: vivoPremio.fase === 'votazione' ? 'si vota adesso' : 'migliore in campo',
+        titolo: p?.shortName ?? p?.name ?? miglioreOra.giocatore,
+        sotto: vivoPremio.fase === 'votazione'
+          ? `In testa con ${miglioreOra.quanti} voti. Puoi ancora cambiare le carte.`
+          : `Il migliore dell'ultima partita, scelto dalla Curva.`,
+        cifra: miglioreOra.media.toFixed(1),
+        icona: 'trophy',
+        rotta: `/match/${adessoFinito.id}?tab=gioco`,
+      });
+    }
+
+    if (mvpOra) {
+      const p = squad.find((g) => g.id === mvpOra.giocatore);
+      a.push({
+        chiave: 'mvp-mese',
+        occhiello: mese.chiuso ? 'migliore del mese' : 'classifica del mese',
+        titolo: p?.shortName ?? p?.name ?? mvpOra.giocatore,
+        sotto: mese.chiuso
+          ? `Il migliore del mese, con ${mvpOra.quanti} voti in ${mvpOra.partite} partite.`
+          : `In testa questo mese. Ogni voto lo può spostare.`,
+        cifra: mvpOra.media.toFixed(1),
+        icona: 'star',
+        rotta: adessoFinito ? `/match/${adessoFinito.id}?tab=gioco` : '/pronostici',
+      });
+    }
+
     if (chatViva && oggi) {
       a.push({
         chiave: 'chat', vivo: true,
+        occhiello: 'in corso',
         titolo: 'La chat è aperta',
         sotto: 'Commenta la partita con gli altri, adesso.',
         icona: 'chatbubbles', rotta: '/live',
@@ -89,6 +140,7 @@ export default function Home() {
     if (pagelle) {
       a.push({
         chiave: 'pagelle',
+        occhiello: 'pagelle',
         titolo: 'Dai i voti alla partita',
         sotto: 'Le pagelle della Curva si scrivono a caldo.',
         icona: 'star', rotta: pagelle,
@@ -97,6 +149,7 @@ export default function Home() {
     if (oggi && !chatViva) {
       a.push({
         chiave: 'oggi',
+        occhiello: 'oggi',
         titolo: 'Oggi si gioca',
         sotto: 'La chat dal vivo apre dieci minuti prima del fischio.',
         icona: 'football', rotta: `/match/${oggi.id}`,
@@ -105,6 +158,7 @@ export default function Home() {
     if (next && !oggi) {
       a.push({
         chiave: 'pronostico',
+        occhiello: 'pronostico',
         titolo: 'Fai il tuo pronostico',
         sotto: `${next.home.shortName}–${next.away.shortName}, prima del fischio.`,
         icona: 'trophy', rotta: `/match/${next.id}?tab=gioco`,
@@ -113,6 +167,7 @@ export default function Home() {
     if (next && !next.foggiaHome) {
       a.push({
         chiave: 'trasferta',
+        occhiello: 'trasferta',
         titolo: 'Vai in trasferta?',
         sotto: 'Dillo agli altri e organizzatevi il viaggio.',
         icona: 'car', rotta: '/trasferte',
@@ -121,6 +176,7 @@ export default function Home() {
     if (next?.foggiaHome) {
       a.push({
         chiave: 'stadio',
+        occhiello: 'allo stadio',
         titolo: 'Ci sei allo Zaccheria?',
         sotto: 'Scegli il settore e vedi chi altro ci va.',
         icona: 'location', rotta: '/stadium',
@@ -128,12 +184,13 @@ export default function Home() {
     }
     a.push({
       chiave: 'curva',
+      occhiello: 'la curva',
       titolo: 'Scrivi nella Curva',
       sotto: 'Il posto dove si discute fra una partita e l’altra.',
       icona: 'megaphone', rotta: '/curva',
     });
     return a;
-  }, [chatViva, oggi, pagelle, next]);
+  }, [chatViva, oggi, pagelle, next, adessoFinito, vivoPremio, miglioreOra, mvpOra, mese]);
   const last = lastMatch();
   const row = foggiaRow();
   const scorer = topScorers()[0];
@@ -191,7 +248,7 @@ export default function Home() {
         <View style={[gutter, styles.stack]}>
           {/* quella di riferimento resta grande, le successive compatte:
               servono a sapere che ci sono, non a essere guardate */}
-          {upcoming.slice(1, 4).map((m, i) => (
+          {upcoming.slice(1, 5).map((m, i) => (
             <Reveal key={m.id} delay={180 + i * 60}><EventCard match={m} compatta /></Reveal>
           ))}
         </View>

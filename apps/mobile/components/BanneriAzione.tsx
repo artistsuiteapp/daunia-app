@@ -7,6 +7,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 
 import { useGutter } from './ui';
+import { SfondoCurva } from './SfondoCurva';
 import { colors, radius, space, type } from '../theme/tokens';
 
 export type Azione = {
@@ -17,6 +18,10 @@ export type Azione = {
   rotta: string;
   /** il pallino verde che pulsa: usato solo per le cose che stanno accadendo */
   vivo?: boolean;
+  /** la riga in alto: dice di cosa si tratta prima che uno legga il titolo */
+  occhiello?: string;
+  /** il numero grande a destra: un voto, una posizione */
+  cifra?: string;
 };
 
 const OGNI = 5000;
@@ -82,17 +87,34 @@ export function BanneriAzione({ azioni }: { azioni: Azione[] }) {
             key={a.chiave}
             onPress={() => router.push(a.rotta as never)}
             style={({ pressed }) => [
-              styles.scheda, { width: larghezza - space.sm }, pressed && { opacity: 0.85 },
+              styles.scheda, { width: larghezza - space.sm }, pressed && { opacity: 0.9 },
             ]}
           >
-            {a.vivo ? <Pallino /> : (
-              <Ionicons name={a.icona} size={19} color={colors.accentBright} />
-            )}
-            <View style={{ flex: 1 }}>
-              <Text style={styles.titolo} numberOfLines={1}>{a.titolo}</Text>
-              <Text style={styles.sotto} numberOfLines={1}>{a.sotto}</Text>
+            <SfondoCurva intensita={a.vivo ? 1.15 : 0.85} />
+
+            <View style={styles.dentro}>
+              <View style={styles.riga}>
+                {a.vivo ? <Pallino /> : (
+                  <Ionicons name={a.icona} size={16} color="#FF8A7A" />
+                )}
+                <Text style={styles.occhiello} numberOfLines={1}>
+                  {(a.occhiello ?? 'da fare').toUpperCase()}
+                </Text>
+              </View>
+
+              <View style={styles.corpo}>
+                <View style={{ flex: 1 }}>
+                  <Text style={styles.titolo} numberOfLines={2}>{a.titolo}</Text>
+                  <Text style={styles.sotto} numberOfLines={2}>{a.sotto}</Text>
+                </View>
+                {a.cifra ? <Text style={styles.cifra}>{a.cifra}</Text> : null}
+              </View>
+
+              <View style={styles.piede}>
+                <Text style={styles.vai}>Apri</Text>
+                <Ionicons name="arrow-forward" size={14} color="#fff" />
+              </View>
             </View>
-            <Ionicons name="chevron-forward" size={17} color={colors.textDim} />
           </Pressable>
         ))}
       </ScrollView>
@@ -125,15 +147,23 @@ function Pallino() {
 const styles = StyleSheet.create({
   blocco: { marginBottom: space.sm },
   scheda: {
-    flexDirection: 'row', alignItems: 'center', gap: space.md,
     marginRight: space.sm,
-    paddingHorizontal: space.lg, paddingVertical: 14,
+    // alta abbastanza da reggere lo sfondo: sotto i centosessanta punti il
+    // fumo si schiaccia e sembra una macchia, non un'atmosfera
+    height: 172,
     borderRadius: radius.lg,
-    backgroundColor: colors.surface,
-    borderWidth: StyleSheet.hairlineWidth, borderColor: 'rgba(255,255,255,0.10)',
+    overflow: 'hidden',
+    borderWidth: StyleSheet.hairlineWidth, borderColor: 'rgba(255,255,255,0.12)',
   },
-  titolo: { ...type.subheadBold, color: colors.text },
-  sotto: { ...type.footnote, color: colors.textDim, marginTop: 2 },
+  dentro: { flex: 1, padding: space.lg, justifyContent: 'space-between' },
+  riga: { flexDirection: 'row', alignItems: 'center', gap: 7 },
+  occhiello: { ...type.captionBold, color: '#FF8A7A', letterSpacing: 0.8, fontSize: 10 },
+  corpo: { flexDirection: 'row', alignItems: 'flex-end', gap: space.md },
+  titolo: { ...type.title3, color: '#fff' },
+  sotto: { ...type.footnote, color: 'rgba(255,255,255,0.78)', marginTop: 3 },
+  cifra: { ...type.largeTitle, color: '#fff', fontSize: 40, lineHeight: 42 },
+  piede: { flexDirection: 'row', alignItems: 'center', gap: 5 },
+  vai: { ...type.footnoteBold, color: '#fff' },
   vivo: { width: 10, height: 10, borderRadius: 5, backgroundColor: '#32D74B' },
   pallini: { flexDirection: 'row', justifyContent: 'center', gap: 5, marginTop: 10 },
   pallinoNav: {
