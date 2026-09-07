@@ -33,9 +33,13 @@ type Store = {
   ratings: Record<string, Record<string, number>>;
   /** pronostici: id partita -> [gol casa, gol trasferta] */
   predictions: Record<string, [number, number]>;
+  /** il migliore scelto: id partita -> id giocatore */
+  mvp?: Record<string, string>;
+  /** il migliore del mese scelto: "2026-09" -> id giocatore */
+  mvpMese?: Record<string, string>;
 };
 
-const EMPTY: Store = { presence: {}, ratings: {}, predictions: {} };
+const EMPTY: Store = { presence: {}, ratings: {}, predictions: {}, mvp: {}, mvpMese: {} };
 
 function read(): Store {
   try {
@@ -286,47 +290,80 @@ export function myPredictionTotals(
 
 /* ------------------------------------------------------------- i migliori */
 
-export type Migliore = { giocatore: string; media: number; quanti: number; partite?: number };
-
-let migliori: Record<string, Migliore | null> = {};
-let mvpMese: Migliore[] = [];
-
-/**
- * Il migliore di una partita, contato dal database.
+/*
+ * MVP e migliore del mese non sono le pagelle.
  *
- * Serve un minimo di voti: senza, il primo che vota decide da solo, e un 10
- * isolato batterebbe un 7.5 dato da trenta persone.
+ * Prima li ricavavo dalla media dei voti da 4 a 10, ma sono due cose diverse:
+ * la pagella e un giudizio su ognuno, l'MVP e una scelta sola fra tutti. Uno
+ * puo dare 7 a tutta la squadra e pensare comunque che il migliore sia stato
+ * il portiere -- e con la media quel pensiero non si vede.
+ *
+ * Qui si conta chi ha preso piu preferenze, come un'elezione.
  */
-export async function caricaMigliore(matchId: string) {
-  if (!supabase || caricate.has(`b:${matchId}`)) return;
-  caricate.add(`b:${matchId}`);
-  const { data } = await supabase.rpc('migliore_partita', { p_partita: matchId, p_minimo: 3 });
-  migliori[matchId] = (data as Migliore[] | null)?.[0] ?? null;
+
+export type Preferenza = { giocatore: string; voti: number };
+
+let mvpPartite: Record<string, Preferenza[]> = {};
+let mvpMesi: Record<string, Preferenza[]> = {};
+
+export async function caricaMvpPartita(matchId: string) {
+  if (!supabase || caricate.has(`mv:${matchId}`)) return;
+  caricate.add(`mv:${matchId}`);
+  const { data } = await supabase.rpc('mvp_partita', { p_partita: matchId });
+  mvpPartite[matchId] = (data as Preferenza[] | null) ?? [];
   version += 1;
   listeners.forEach((l) => l());
 }
 
-export function migliorePartita(matchId: string): Migliore | null {
-  return migliori[matchId] ?? null;
-}
-
-/**
- * I migliori del mese, sulle partite che gli passa l'app.
- *
- * Le partite arrivano da fuori invece di filtrare per data: `voti` sa quando
- * e stato dato il voto, non quando si e giocato.
- */
-export async function caricaMvpMese(idPartite: string[]) {
-  if (!supabase || !idPartite.length) return;
-  const chiave = `mvp:${idPartite.join(',')}`;
-  if (caricate.has(chiave)) return;
-  caricate.add(chiave);
-  const { data } = await supabase.rpc('migliore_mese', { p_partite: idPartite, p_minimo: 10 });
-  mvpMese = (data as Migliore[] | null) ?? [];
+export async function caricaMvpMese(mese: string) {
+  if (!supabase || caricate.has(`mm:${mese}`)) return;
+  caricate.add(`mm:${mese}`);
+  const { data } = await supabase.rpc('mvp_mese', { p_mese: mese });
+  mvpMesi[mese] = (data as Preferenza[] | null) ?? [];
   version += 1;
   listeners.forEach((l) => l());
 }
 
-export function mvpDelMese(): Migliore[] {
-  return mvpMese;
+export function classificaMvp(matchId: string): Preferenza[] {
+  return mvpPartite[matchId] ?? [];
+}
+
+export function classificaMvpMese(mese: string): Preferenza[] {
+  return mvpMesi[mese] ?? [];
+}
+
+/**
+ * La mia preferenza, tenuta anche sul dispositivo.
+ *
+ * Il database e la verita, ma senza copia locale il nome scelto sparisce
+ * finche il server non risponde, e sembra che il tocco non abbia funzionato.
+ */
+export function miaPreferenza(matchId: string): string | null {
+  return store.mvp?.[matchId] ?? null;
+}
+
+export function miaPreferenzaMese(mese: string): string | null {
+  return store.mvpMese?.[mese] ?? null;
+}
+
+export function scegliMvp(matchId: string, giocatore: string) {
+  store = { ...store, mvp: { ...(store.mvp ?? {}), [matchId]: giocatore } };
+  commit();
+  const u = utenteCorrente();
+  if (supabase && u) {
+    void supabase.from('mvp_voti')
+      .upsert({ utente: u.id, partita: matchId, giocatore })
+      .then(() => { caricate.delete(`mv:${matchId}`); return caricaMvpPartita(matchId); });
+  }
+}
+
+export function scegliMvpMese(mese: string, giocatore: string) {
+  store = { ...store, mvpMese: { ...(store.mvpMese ?? {}), [mese]: giocatore } };
+  commit();
+  const u = utenteCorrente();
+  if (supabase && u) {
+    void supabase.from('mvp_mese_voti')
+      .upsert({ utente: u.id, mese, giocatore })
+      .then(() => { caricate.delete(`mm:${mese}`); return caricaMvpMese(mese); });
+  }
 }

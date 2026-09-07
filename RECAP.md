@@ -176,9 +176,24 @@ un contatore locale ripartirebbe da zero ogni minuto.
 **Serve un account.** Senza, la scala dei voti non compare: si vede solo la
 media, e un riquadro che dice perché.
 
-Con l'account, nella scheda partita → **Pagelle**, sotto ogni giocatore c'è una
-fila di numeri **da 4 a 10**: si tocca quello che si vuole dare. Il voto si può
-cambiare finché la finestra è aperta.
+Ci sono **due voti diversi**, e non vanno confusi:
+
+**Il migliore in campo** — scheda partita → Pagelle, in cima. Si sceglie **un
+nome solo** fra chi è sceso in campo: si tocca la riga del giocatore. Vince chi
+prende più preferenze, come un'elezione.
+
+**Le pagelle** — sotto, una fila di numeri **da 4 a 10** per ogni giocatore.
+
+Sono due domande diverse: uno può dare 7 a tutta la squadra e pensare comunque
+che il migliore sia stato il portiere, e nella media quel pensiero non si vede.
+Il migliore viene prima perché è la domanda più facile: si risponde d'istinto,
+mentre mettere undici voti è un lavoro.
+
+**Il migliore del mese** è ancora un'altra cosa: si vota in home, fra chi ha
+giocato almeno una partita del mese, e si può cambiare idea fino all'ultimo
+giorno.
+
+Tutti e tre si cambiano finché la finestra è aperta.
 
 I voti singoli **restano privati**: le medie le calcola il database con funzioni
 dedicate (`medie_voti`, `migliore_partita`, `migliore_mese`), e l'app riceve solo

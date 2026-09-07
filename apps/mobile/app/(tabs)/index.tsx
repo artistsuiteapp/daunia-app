@@ -29,7 +29,7 @@ import { PallinoLive } from '../../components/PallinoLive';
 import { BanneriAzione, type Azione } from '../../components/BanneriAzione';
 import { PagelleInHome } from '../../components/PagelleInHome';
 import { MvpDelMese } from '../../components/MvpDelMese';
-import { caricaMigliore, migliorePartita, caricaMvpMese, mvpDelMese, useFanplay } from '../../lib/fanplay';
+import { caricaMvpPartita, classificaMvp, useFanplay } from '../../lib/fanplay';
 import { statoMigliore, statoMese } from '../../lib/premi-core';
 import { fineVera } from '../../lib/live';
 import { squad } from '../../lib/data';
@@ -72,9 +72,9 @@ export default function Home() {
   useFanplay();
   const mese = statoMese();
   const vivoPremio = statoMigliore(fineVera() ?? adessoFinito?.kickoff, next?.kickoff);
-  useEffect(() => { if (adessoFinito) void caricaMigliore(adessoFinito.id); }, [adessoFinito]);
-  const miglioreOra = adessoFinito ? migliorePartita(adessoFinito.id) : null;
-  const mvpOra = mvpDelMese()[0] ?? null;
+  useEffect(() => { if (adessoFinito) void caricaMvpPartita(adessoFinito.id); }, [adessoFinito]);
+  const miglioreOra = adessoFinito ? classificaMvp(adessoFinito.id)[0] ?? null : null;
+  const mvpOra = null;
 
   /*
    * I richiami, in ordine di urgenza.
@@ -105,26 +105,11 @@ export default function Home() {
         occhiello: vivoPremio.fase === 'votazione' ? 'si vota adesso' : 'migliore in campo',
         titolo: p?.shortName ?? p?.name ?? miglioreOra.giocatore,
         sotto: vivoPremio.fase === 'votazione'
-          ? `In testa con ${miglioreOra.quanti} voti. Puoi ancora cambiare le carte.`
+          ? `In testa con ${miglioreOra.voti} ${miglioreOra.voti === 1 ? 'voto' : 'voti'}. Puoi ancora cambiare.`
           : `Il migliore dell'ultima partita, scelto dalla Curva.`,
-        cifra: miglioreOra.media.toFixed(1),
+        cifra: String(miglioreOra.voti),
         icona: 'trophy',
         rotta: `/match/${adessoFinito.id}?tab=gioco`,
-      });
-    }
-
-    if (mvpOra) {
-      const p = squad.find((g) => g.id === mvpOra.giocatore);
-      a.push({
-        chiave: 'mvp-mese',
-        occhiello: mese.chiuso ? 'migliore del mese' : 'classifica del mese',
-        titolo: p?.shortName ?? p?.name ?? mvpOra.giocatore,
-        sotto: mese.chiuso
-          ? `Il migliore del mese, con ${mvpOra.quanti} voti in ${mvpOra.partite} partite.`
-          : `In testa questo mese. Ogni voto lo può spostare.`,
-        cifra: mvpOra.media.toFixed(1),
-        icona: 'star',
-        rotta: adessoFinito ? `/match/${adessoFinito.id}?tab=gioco` : '/pronostici',
       });
     }
 
@@ -190,7 +175,7 @@ export default function Home() {
       icona: 'megaphone', rotta: '/curva',
     });
     return a;
-  }, [chatViva, oggi, pagelle, next, adessoFinito, vivoPremio, miglioreOra, mvpOra, mese]);
+  }, [chatViva, oggi, pagelle, next, adessoFinito, vivoPremio, miglioreOra]);
   const last = lastMatch();
   const row = foggiaRow();
   const scorer = topScorers()[0];

@@ -16,6 +16,9 @@ import { colors, radius, space, type } from '../../theme/tokens';
 import { longDate, shortDate, thousands } from '../../lib/format';
 import { matchById, matches } from '../../lib/data';
 import { Pagelle } from '../../components/Pagelle';
+import { VotaMvp } from '../../components/VotaMvp';
+import { statoMigliore } from '../../lib/premi-core';
+import { fineVera } from '../../lib/live';
 import { Pronostico } from '../../components/Pronostico';
 import { useDatiPartita } from '../../lib/fanplay';
 import { useLive, liveDi, useGolVivo } from '../../lib/live';
@@ -164,6 +167,27 @@ export default function MatchDetail() {
 
       {view === 'gioco' ? (
         <>
+          {/*
+            * Prima il migliore, poi le pagelle.
+            *
+            * Sono due domande diverse e la prima e piu facile: "chi ti e
+            * piaciuto di piu" si risponde d'istinto, mettere undici voti da
+            * 4 a 10 e un lavoro. Chi arriva a caldo fa la prima e magari si
+            * ferma li, ed e gia un voto in piu.
+            */}
+          {played ? (
+            <>
+              <GroupLabel>Il migliore in campo</GroupLabel>
+              <View style={[gutter, { marginBottom: space.lg }]}>
+                <VotaMvp
+                  matchId={match.id}
+                  giocatori={lineup.slots.map((sl) => sl.player).filter((pl): pl is NonNullable<typeof pl> => !!pl)}
+                  chiuso={statoMigliore(fineVera() ?? match.kickoff, undefined).fase !== 'votazione'}
+                />
+              </View>
+            </>
+          ) : null}
+
           <GroupLabel>{played ? 'Le pagelle della Curva' : 'Il pronostico'}</GroupLabel>
           <View style={gutter}>
             {played ? (

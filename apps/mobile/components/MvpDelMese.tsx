@@ -5,7 +5,13 @@ import { Ionicons } from '@expo/vector-icons';
 import { GroupLabel, GroupNote, useGutter } from './ui';
 import { Avatar } from './Avatar';
 import { matches, squad } from '../lib/data';
-import { caricaMvpMese, mvpDelMese, useFanplay } from '../lib/fanplay';
+import {
+  caricaMvpMese, classificaMvpMese, miaPreferenzaMese, scegliMvpMese, useFanplay,
+} from '../lib/fanplay';
+import { statoMese, meseChiuso } from '../lib/premi-core';
+import { lineupPerPartita } from '../lib/lineup';
+import { useOspite } from '../lib/ospite';
+import { Pressable } from 'react-native';
 import { colors, radius, space, type } from '../theme/tokens';
 
 const MESI = [
@@ -28,100 +34,136 @@ const MESI = [
  */
 export function MvpDelMese() {
   const gutter = useGutter();
+  const ospite = useOspite();
   useFanplay();
 
-  // il mese in corso, o quello appena chiuso se ancora non si e giocato
-  const { idPartite, etichetta } = useMemo(() => {
-    const ora = new Date();
-    const giocate = matches
-      .filter((m): m is typeof m & { kickoff: string } => m.status === 'finished' && Boolean(m.kickoff))
-      .sort((a, b) => b.kickoff.localeCompare(a.kickoff));
-    if (!giocate.length) return { idPartite: [] as string[], etichetta: '' };
+  const { mese, chiuso } = statoMese();
 
-    const ultima = new Date(giocate[0]!.kickoff);
-    // se nel mese corrente non si e ancora giocato, vale quello dell'ultima gara
-    const rif = ultima.getMonth() === ora.getMonth() && ultima.getFullYear() === ora.getFullYear()
-      ? ora : ultima;
+  /*
+   * Chi si puo votare: chi ha giocato almeno una partita del mese.
+   *
+   * Non tutta la rosa: un premio dove si puo scegliere anche chi non e mai
+   * sceso in campo non e un premio, e una lista di nomi.
+   */
+  const candidati = useMemo(() => {
+    const delMese = matches.filter(
+      (m): m is typeof m & { kickoff: string } =>
+        m.status === 'finished' && Boolean(m.kickoff) && String(m.kickoff).slice(0, 7) === mese,
+    );
+    const visti = new Set<string>();
+    for (const m of delMese) {
+      for (const s of lineupPerPartita(m.kickoff.slice(0, 10), m.id).slots) {
+        if (s.player) visti.add(s.player.id);
+      }
+    }
+    return squad.filter((p) => visti.has(p.id));
+  }, [mese]);
 
-    const delMese = giocate.filter((m) => {
-      const d = new Date(m.kickoff);
-      return d.getMonth() === rif.getMonth() && d.getFullYear() === rif.getFullYear();
-    });
-    return {
-      idPartite: delMese.map((m) => m.id),
-      etichetta: `${MESI[rif.getMonth()]} ${rif.getFullYear()}`,
-    };
-  }, []);
+  useEffect(() => { void caricaMvpMese(mese); }, [mese]);
 
-  useEffect(() => { void caricaMvpMese(idPartite); }, [idPartite]);
-  const classifica = mvpDelMese();
+  const classifica = classificaMvpMese(mese);
+  const mia = miaPreferenzaMese(mese);
+  const totale = classifica.reduce((s, x) => s + x.voti, 0);
+  const votiDi = (id: string) => classifica.find((x) => x.giocatore === id)?.voti ?? 0;
+  const vincitore = classifica[0];
+  const finito = chiuso || meseChiuso(mese);
 
-  // niente voti abbastanza: meglio non far comparire una classifica di uno
-  if (!classifica.length) return null;
+  // niente partite quel mese: non c'e niente da votare e niente da mostrare
+  if (!candidati.length) return null;
 
-  const primo = classifica[0]!;
-  const giocatore = squad.find((p) => p.id === primo.giocatore);
+  const etichetta = `${MESI[Number(mese.slice(5, 7)) - 1]} ${mese.slice(0, 4)}`;
 
   return (
     <>
-      <GroupLabel>{`Il migliore di ${etichetta}`}</GroupLabel>
-      <View style={gutter}>
-        <View style={styles.scatola}>
-          <View style={styles.testa}>
-            <Avatar uri={giocatore?.photo ?? null} name={giocatore?.name ?? primo.giocatore} size={52} />
+      <GroupLabel>{finito ? `Il migliore di ${etichetta}` : `Il migliore di ${etichetta}, finora`}</GroupLabel>
+      <View style={[gutter, { gap: space.xs }]}>
+        {finito && vincitore ? (
+          <View style={styles.vinto}>
+            <Avatar
+              uri={squad.find((p) => p.id === vincitore.giocatore)?.photo ?? null}
+              name={vincitore.giocatore}
+              size={44}
+            />
             <View style={{ flex: 1 }}>
-              <Text style={styles.nome} numberOfLines={1}>
-                {giocatore?.shortName ?? giocatore?.name ?? primo.giocatore}
+              <Text style={styles.nomeVinto} numberOfLines={1}>
+                {squad.find((p) => p.id === vincitore.giocatore)?.shortName ?? vincitore.giocatore}
               </Text>
-              <Text style={styles.sotto}>
-                {primo.partite} {primo.partite === 1 ? 'partita' : 'partite'} · {primo.quanti} voti
+              <Text style={styles.sottoVinto}>
+                {`${vincitore.voti} ${vincitore.voti === 1 ? 'voto' : 'voti'} · mese chiuso`}
               </Text>
             </View>
-            <View style={styles.medaglia}>
-              <Ionicons name="star" size={13} color="#1A1A1A" />
-              <Text style={styles.voto}>{primo.media.toFixed(1)}</Text>
-            </View>
+            <Ionicons name="trophy" size={22} color="#E8C547" />
           </View>
+        ) : null}
 
-          {classifica.slice(1, 4).map((x, i) => {
-            const p = squad.find((g) => g.id === x.giocatore);
+        {/* i primi cinque: la lista intera sarebbe venticinque nomi e nessuno
+            la scorre fino in fondo */}
+        {candidati
+          .map((p) => ({ p, voti: votiDi(p.id) }))
+          .sort((a, b) => b.voti - a.voti || (a.p.shortName ?? '').localeCompare(b.p.shortName ?? ''))
+          .slice(0, finito ? 5 : 8)
+          .map(({ p, voti }) => {
+            const mio = mia === p.id;
+            const quota = totale ? voti / totale : 0;
             return (
-              <View key={x.giocatore} style={[styles.riga, i === 0 && styles.rigaPrima]}>
-                <Text style={styles.posto}>{i + 2}</Text>
-                <Text style={styles.rigaNome} numberOfLines={1}>
-                  {p?.shortName ?? p?.name ?? x.giocatore}
-                </Text>
-                <Text style={styles.rigaVoto}>{x.media.toFixed(1)}</Text>
-              </View>
+              <Pressable
+                key={p.id}
+                disabled={ospite || finito}
+                onPress={() => scegliMvpMese(mese, p.id)}
+                style={({ pressed }) => [
+                  styles.riga, mio && styles.rigaMia, pressed && !finito && { opacity: 0.85 },
+                ]}
+              >
+                <View style={[styles.barra, { width: `${Math.round(quota * 100)}%` }]} />
+                <Avatar uri={p.photo ?? null} name={p.shortName ?? p.name} number={p.number} size={30} />
+                <View style={{ flex: 1 }}>
+                  <Text style={[styles.nome, mio && styles.nomeMio]} numberOfLines={1}>
+                    {p.shortName ?? p.name}
+                  </Text>
+                  {voti > 0 ? (
+                    <Text style={styles.quanti}>{voti === 1 ? '1 voto' : `${voti} voti`}</Text>
+                  ) : null}
+                </View>
+                {mio ? (
+                  <View style={styles.scelto}>
+                    <Ionicons name="checkmark" size={12} color={colors.onAccent} />
+                  </View>
+                ) : null}
+              </Pressable>
             );
           })}
-        </View>
       </View>
       <GroupNote>
-        Media di tutti i voti del mese, non delle singole partite: chi gioca di più pesa di più.
+        {finito
+          ? 'Le votazioni del mese sono chiuse. Il prossimo verdetto arriva il primo del mese.'
+          : 'Si vota fra chi è sceso in campo questo mese. Puoi cambiare idea fino all’ultimo giorno.'}
       </GroupNote>
     </>
   );
 }
 
 const styles = StyleSheet.create({
-  scatola: {
-    backgroundColor: colors.surface, borderRadius: radius.lg,
-    borderWidth: StyleSheet.hairlineWidth, borderColor: 'rgba(255,255,255,0.08)',
-    paddingHorizontal: space.lg, paddingVertical: space.sm,
+  nome: { ...type.subhead, color: colors.text },
+  riga: {
+    flexDirection: 'row', alignItems: 'center', gap: space.md,
+    paddingHorizontal: space.md, paddingVertical: 9,
+    borderRadius: radius.md, overflow: 'hidden',
+    backgroundColor: colors.surface,
+    borderWidth: StyleSheet.hairlineWidth, borderColor: 'rgba(255,255,255,0.07)',
   },
-  testa: { flexDirection: 'row', alignItems: 'center', gap: space.md, paddingVertical: space.sm },
-  nome: { ...type.title3, color: colors.text },
-  sotto: { ...type.caption, color: colors.textDim, marginTop: 2 },
-  medaglia: {
-    flexDirection: 'row', alignItems: 'center', gap: 4,
-    backgroundColor: '#E8C547', borderRadius: radius.pill,
-    paddingHorizontal: 10, paddingVertical: 5,
+  rigaMia: { borderColor: colors.accentBright },
+  barra: { position: 'absolute', left: 0, top: 0, bottom: 0, backgroundColor: 'rgba(229,52,62,0.16)' },
+  nomeMio: { ...type.subheadBold, color: colors.text },
+  quanti: { ...type.caption, color: colors.textDim, marginTop: 1 },
+  scelto: {
+    backgroundColor: colors.accent, borderRadius: radius.pill,
+    paddingHorizontal: 7, paddingVertical: 4,
   },
-  voto: { ...type.subheadBold, color: '#1A1A1A' },
-  riga: { flexDirection: 'row', alignItems: 'center', gap: space.md, paddingVertical: 9 },
-  rigaPrima: { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: 'rgba(255,255,255,0.08)' },
-  posto: { ...type.captionBold, color: colors.textDim, width: 14 },
-  rigaNome: { ...type.subhead, color: colors.text, flex: 1 },
-  rigaVoto: { ...type.subheadBold, color: colors.accentBright },
+  vinto: {
+    flexDirection: 'row', alignItems: 'center', gap: space.md,
+    backgroundColor: 'rgba(232,197,71,0.12)', borderRadius: radius.lg,
+    padding: space.md, marginBottom: space.xs,
+  },
+  nomeVinto: { ...type.title3, color: colors.text },
+  sottoVinto: { ...type.caption, color: colors.textDim, marginTop: 2 },
 });
