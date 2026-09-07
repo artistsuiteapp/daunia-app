@@ -25,8 +25,8 @@ export function PagelleInHome({ match }: { match: Match }) {
   useDatiPartita(match.id, true);
 
   const formazione = useMemo(
-    () => lineupPerPartita(match.kickoff ? match.kickoff.slice(0, 10) : undefined),
-    [match.kickoff],
+    () => lineupPerPartita(match.kickoff ? match.kickoff.slice(0, 10) : undefined, match.id),
+    [match.kickoff, match.id],
   );
 
   const classifica = useMemo(() => {

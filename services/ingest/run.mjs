@@ -18,6 +18,7 @@ import * as shopSrc from './src/sources/shop.mjs';
 import { fetchPartita, fetchPartitaPerId, fetchRosa, dentroLaFinestra } from './src/sources/apifootball.mjs';
 import { fetchIdPartite, fetchProssima, fetchRisultati } from './src/sources/thesportsdb.mjs';
 import { arricchisciPartite } from './src/sources/livescore.mjs';
+import { fetchFormazioni } from './src/sources/legapro.mjs';
 import { fetchDivieti } from './src/sources/divieti.mjs';
 import { buildStadium } from './src/stadium.mjs';
 import { normalize, validate } from './src/normalize.mjs';
@@ -105,6 +106,25 @@ async function main() {
   const marcatori = await step('marcatori (live-score-api)', () => arricchisciPartite(wikiSeason.matches));
 
   /*
+   * Le formazioni ufficiali, dal sito della Lega.
+   *
+   * Nessuna delle API le da per la Serie C: API-Football le ha ma l'account e
+   * stato sospeso due volte, live-score-api le tiene dietro il piano da 26
+   * euro. seriec.com le pubblica, il suo robots.txt consente tutti i bot, e
+   * l'endpoint del calendario risponde con l'undici, il modulo e l'allenatore.
+   *
+   * Si guardano solo la partita appena giocata e quella in arrivo: le altre o
+   * ce l'hanno gia o non le avranno mai.
+   */
+  const diInteresse = wikiSeason.matches
+    .filter((m) => m.kickoff)
+    .sort((a, b) => Math.abs(Date.parse(a.kickoff) - Date.now()) - Math.abs(Date.parse(b.kickoff) - Date.now()))
+    .slice(0, 2);
+  const cacheId = (await letto('legapro-ids.json')) ?? {};
+  const formazioni = await step('formazioni ufficiali (Lega Pro)',
+    () => fetchFormazioni(diInteresse, cacheId));
+
+  /*
    * Divieti di trasferta, letti dalla stampa locale.
    *
    * Propone, non pubblica: quello che esce qui e una proposta che diventa vera
@@ -149,8 +169,9 @@ async function main() {
   bundle.live = live.partita;
   bundle.lineups = storico.archivio;
   bundle.prossima = prossima.prossima;
+  bundle.formazioniUfficiali = formazioni.formazioni;
   bundle.divietiProposti = divieti.proposte;
-  bundle.meta.warnings.push(...live.warnings, ...storico.warnings, ...rosaApi.warnings, ...prossima.warnings, ...divieti.warnings, ...esiti.warnings, ...marcatori.warnings);
+  bundle.meta.warnings.push(...live.warnings, ...storico.warnings, ...rosaApi.warnings, ...prossima.warnings, ...divieti.warnings, ...esiti.warnings, ...marcatori.warnings, ...formazioni.warnings);
 
   const errors = validate(bundle);
   summary(bundle, nextHome, Date.now() - t0);
@@ -179,6 +200,7 @@ async function main() {
     'stats.json': bundle.stats,
     'live.json': bundle.live,
     'prossima.json': bundle.prossima,
+    'legapro-ids.json': formazioni.cache,
     'divieti-proposti.json': bundle.divietiProposti,
     'lineups.json': bundle.lineups,
     'bundle.json': bundle,

@@ -58,6 +58,23 @@ export const lineups = ((base as unknown as { lineups?: MatchLineup[] }).lineups
 /** La prossima partita con l'id TheSportsDB: serve al punteggio dal vivo. */
 export const prossima = ((base as unknown as { prossima?: Prossima | null }).prossima ?? null);
 
+/** Un giocatore nell'undici pubblicato dalla Lega. */
+export type GiocatoreLega = { numero: number | null; nome: string; ruolo: string | null };
+export type ColonnaLega = {
+  squadra: string; modulo: string | null; allenatore: string | null; giocatori: GiocatoreLega[];
+};
+
+/**
+ * Le formazioni ufficiali, dal sito della Lega, per id di partita.
+ *
+ * E l'unica fonte trovata che dia l'undici della Serie C senza abbonamento, e
+ * l'unica in assoluto che dia anche il modulo e l'allenatore.
+ */
+export const formazioniUfficiali = (
+  (base as unknown as { formazioniUfficiali?: Record<string, { casa: ColonnaLega; ospiti: ColonnaLega }> })
+    .formazioniUfficiali ?? {}
+);
+
 export type Prossima = {
   eventId: number;
   fixtureId: number | null;

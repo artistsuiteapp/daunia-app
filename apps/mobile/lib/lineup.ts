@@ -1,5 +1,5 @@
 import type { Player } from '@satanelli/core';
-import { squad, lineups, type LineupPlayer, type MatchLineup } from './data';
+import { squad, lineups, formazioniUfficiali, type LineupPlayer, type MatchLineup } from './data';
 import { DEPARTED, spotOf, type Spot } from './squad-overrides';
 
 /**
@@ -225,6 +225,67 @@ export function lineupFromMatch(m: MatchLineup): Formazione | null {
 }
 
 /**
+ * L'undici ufficiale pubblicato dalla Lega.
+ *
+ * Arriva da seriec.com col numero di maglia, il ruolo e **il modulo vero** --
+ * cose che nessuna delle API dava per la Serie C. Il modulo serve a disporre i
+ * giocatori come sono davvero schierati, invece che nel 3-5-2 di comodo che
+ * usavamo per tutti.
+ */
+function daLegaPro(matchId: string): Formazione | null {
+  const f = formazioniUfficiali[matchId];
+  if (!f) return null;
+
+  // la colonna del Foggia: il nome della squadra arriva in maiuscolo
+  const nostra = /foggia/i.test(f.casa.squadra) ? f.casa
+    : /foggia/i.test(f.ospiti.squadra) ? f.ospiti : null;
+  if (!nostra?.giocatori.length) return null;
+
+  const estranei: string[] = [];
+  const trovato = nostra.giocatori.map((g) => {
+    // dalla Lega il nome e "Cognome Nome": la rosa lo tiene al contrario
+    const cognome = g.nome.split(' ')[0] ?? '';
+    const p = squad.find((x) => x.number === g.numero)
+      ?? squad.find((x) => x.name.toLowerCase().includes(cognome.toLowerCase()));
+    if (!p) estranei.push(g.nome);
+    return { player: p ?? null, ruolo: g.ruolo ?? '', numero: g.numero ?? 0 };
+  });
+
+  const per = (r: RegExp) => trovato.filter((x) => r.test(x.ruolo));
+  const portiere = per(/portiere/i)[0] ?? trovato[0];
+  const difensori = per(/difensore/i);
+  const centrocampisti = per(/centrocamp/i);
+  const attaccanti = per(/attacc/i);
+
+  /** le x di una riga, distribuite in modo simmetrico attorno al centro */
+  const larghezze = (n: number): number[] => {
+    if (n <= 0) return [];
+    if (n === 1) return [50];
+    const bordo = n >= 5 ? 8 : n === 4 ? 14 : 24;
+    const passo = (100 - bordo * 2) / (n - 1);
+    return Array.from({ length: n }, (_, i) => Math.round(bordo + passo * i));
+  };
+  const riga = (gruppo: typeof trovato, y: number): Slot[] =>
+    larghezze(gruppo.length).map((x, i) => ({ player: gruppo[i]?.player ?? null, x, y }));
+
+  const slots: Slot[] = [
+    { player: portiere?.player ?? null, x: 50, y: 2 },
+    ...riga(difensori, 26),
+    ...riga(centrocampisti, 56),
+    ...riga(attaccanti, 86),
+  ];
+
+  return {
+    slots,
+    bench: [],
+    formation: nostra.modulo ?? FORMATION,
+    fonte: 'ufficiale',
+    dataUltima: null,
+    estranei,
+  };
+}
+
+/**
  * La formazione da mostrare per una partita.
  *
  * Se la partita e stata giocata si mostra l'undici vero. Se non lo e ancora si
@@ -236,7 +297,13 @@ export function lineupFromMatch(m: MatchLineup): Formazione | null {
  * Non si chiama mai probabile ufficiale, perche non lo e: la schermata dice da
  * che partita viene.
  */
-export function lineupPerPartita(date?: string): Formazione {
+export function lineupPerPartita(date?: string, matchId?: string): Formazione {
+  // prima la Lega: e l'undici ufficiale, col modulo vero
+  if (matchId) {
+    const dallaLega = daLegaPro(matchId);
+    if (dallaLega) return dallaLega;
+  }
+
   const diQuesta = realLineup(date);
   if (diQuesta) {
     const disposta = lineupFromMatch(diQuesta);

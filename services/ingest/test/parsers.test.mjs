@@ -7,6 +7,7 @@
  */
 import { test, describe } from 'node:test';
 import { porta } from '../src/sources/apifootball.mjs';
+import { leggiFormazioni } from '../src/sources/legapro.mjs';
 import { classifica, chiave } from '../src/sources/divieti.mjs';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -490,4 +491,60 @@ test('qualunque altro valore resta sulla porta diretta', () => {
   for (const v of ['diretto', '', 'rapid', undefined, null]) {
     assert.equal(porta(v).base, 'https://v3.football.api-sports.io');
   }
+});
+
+/*
+ * Le formazioni dal sito della Lega.
+ *
+ * La fixture e la risposta vera dell'endpoint per Foggia-Audace Cerignola del
+ * 6 settembre 2026. Se cambiano il markup questi test si rompono prima che si
+ * rompa l'app, che e il motivo per cui esistono.
+ */
+describe('formazioni Lega Pro', () => {
+  const grezzo = JSON.parse(fixture('legapro-dettagli-partita.json'));
+  const html = grezzo['#match-details-modal-content'];
+  const f = leggiFormazioni(html);
+
+  test('trova tutte e due le squadre', () => {
+    assert.ok(f, 'nessuna formazione letta');
+    assert.equal(f.casa.squadra, 'FOGGIA');
+    assert.equal(f.ospiti.squadra, 'AUDACE CERIGNOLA');
+  });
+
+  test('undici titolari per parte', () => {
+    assert.equal(f.casa.giocatori.length, 11);
+    assert.equal(f.ospiti.giocatori.length, 11);
+  });
+
+  test('numero di maglia, nome e ruolo', () => {
+    const saro = f.casa.giocatori[0];
+    assert.equal(saro.numero, 22);
+    assert.equal(saro.nome, 'Saro Gianluca');
+    assert.equal(saro.ruolo, 'Portiere');
+  });
+
+  test('il modulo e l allenatore, che le API non davano', () => {
+    assert.equal(f.casa.modulo, '4-2-3-1');
+    assert.equal(f.casa.allenatore, 'Auteri Gaetano');
+    assert.equal(f.ospiti.modulo, '5-4-1');
+  });
+
+  test('i nomi con l accento restano interi', () => {
+    assert.ok(f.casa.giocatori.some((g) => g.nome === 'Touré Isyakha'), 'Toure perso o storpiato');
+  });
+
+  test('senza la sezione formazioni torna null, non una lista vuota', () => {
+    // la differenza fra "non le hanno ancora pubblicate" e "il parser e rotto"
+    assert.equal(leggiFormazioni('<div>partita non iniziata</div>'), null);
+    assert.equal(leggiFormazioni(''), null);
+    assert.equal(leggiFormazioni(null), null);
+  });
+
+  test('una sola colonna non basta: meglio niente che meta formazione', () => {
+    const meta = '<div class="lineups-section"><div class="lineup-col">'
+      + '<div class="lineup-header"><strong>FOGGIA</strong></div>'
+      + '<ul class="lineup-list"><li class="lineup-player"><span class="jersey">1</span>'
+      + '<span class="player-name">Tizio</span></li></ul></div></div>';
+    assert.equal(leggiFormazioni(meta), null);
+  });
 });

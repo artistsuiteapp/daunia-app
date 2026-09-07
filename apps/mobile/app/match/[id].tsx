@@ -81,8 +81,8 @@ export default function MatchDetail() {
     return voci.sort((a, b) => a.minuto - b.minuto);
   }, [match]);
   const lineup = useMemo(
-    () => lineupPerPartita(match?.kickoff ? match.kickoff.slice(0, 10) : undefined),
-    [match?.kickoff],
+    () => lineupPerPartita(match?.kickoff ? match.kickoff.slice(0, 10) : undefined, match?.id),
+    [match?.kickoff, match?.id],
   );
   useDatiPartita(match?.id ?? null, true);
 
@@ -223,7 +223,9 @@ export default function MatchDetail() {
           </View>
           <GroupNote>
             {lineup.fonte === 'ufficiale'
-              ? 'Undici sceso in campo, da API-Football. La disposizione è la nostra: il modulo per la Serie C non lo pubblica nessuno.'
+              // il modulo adesso e quello vero, pubblicato dalla Lega: la nota
+              // diceva ancora che non lo pubblica nessuno
+              ? 'Undici ufficiale e modulo dal sito della Lega Serie C.'
               : lineup.fonte === 'ultima'
                 ? `Questo è l'undici sceso in campo il ${lineup.dataUltima ? shortDate(lineup.dataUltima) : 'match precedente'}. Le formazioni ufficiali escono circa un'ora prima del fischio: quando esce, questa si aggiorna da sola.`
                 : 'Nessuna partita in archivio: questa formazione è costruita dalla rosa e va letta come una supposizione.'}
