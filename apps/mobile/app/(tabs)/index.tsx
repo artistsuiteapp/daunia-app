@@ -75,8 +75,10 @@ export default function Home() {
       {/* aggiunta alla schermata Home l'app parte sotto la barra di stato:
           senza la zona sicura il saluto finisce sopra l'orologio */}
       <View style={[styles.greeting, gutter, { paddingTop: insets.top + space.md }]}>
+        {/* senza account non si inventa un nome: prima diceva "Mario Rossi" a
+            chiunque, e il saluto sembrava rivolto a qualcun altro */}
         <Greeting
-          name={profilo?.nome ?? brand.demoUser.name}
+          name={profilo?.nome ?? null}
           crest={null}
           avatar={profilo?.avatar ?? null}
           onBell={() => router.push('/notifiche')}

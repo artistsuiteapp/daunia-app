@@ -8,7 +8,7 @@
     "width": 68
   },
   "ticketUrl": "https://calciofoggia1920.vivaticket.it/",
-  "priceNote": "I prezzi cambiano a ogni partita: questi sono quelli dell'ultima gara in casa. Quello valido e sempre il prezzo su Vivaticket.",
+  "priceNote": "I prezzi sono su Vivaticket: qui non li abbiamo.",
   "sectors": [
     {
       "id": "tribuna-centrale",
@@ -16,8 +16,6 @@
       "side": "west",
       "capacity": 3200,
       "covered": true,
-      "priceFrom": 28,
-      "priceTo": 50,
       "note": "Si divide in Centralissima, Centrale e Laterale Superiore, Inferiore Centrale e Laterale.",
       "geometry": {
         "length": 112,
@@ -29,9 +27,6 @@
       },
       "currency": "EUR",
       "capacityIsEstimated": true,
-      "priceIsIndicative": true,
-      "occupancy": 0.60146,
-      "occupancyIsSimulated": true,
       "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
     },
     {
@@ -40,8 +35,6 @@
       "side": "east",
       "capacity": 4100,
       "covered": false,
-      "priceFrom": 22,
-      "reduced": 17,
       "geometry": {
         "length": 112,
         "depth": 19,
@@ -52,9 +45,6 @@
       },
       "currency": "EUR",
       "capacityIsEstimated": true,
-      "priceIsIndicative": true,
-      "occupancy": 0.6454599999999999,
-      "occupancyIsSimulated": true,
       "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
     },
     {
@@ -63,9 +53,6 @@
       "side": "north",
       "capacity": 3800,
       "covered": false,
-      "priceFrom": null,
-      "soldOut": true,
-      "note": "Esaurita con gli abbonamenti: mille posti andati in prelazione.",
       "geometry": {
         "length": 74,
         "depth": 21,
@@ -76,9 +63,6 @@
       },
       "currency": "EUR",
       "capacityIsEstimated": true,
-      "priceIsIndicative": true,
-      "occupancy": 0.7411599999999999,
-      "occupancyIsSimulated": true,
       "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
     },
     {
@@ -87,9 +71,6 @@
       "side": "south",
       "capacity": 2400,
       "covered": false,
-      "priceFrom": null,
-      "soldOut": true,
-      "note": "Esaurita con gli abbonamenti: duemila posti andati in prelazione.",
       "geometry": {
         "length": 52,
         "depth": 21,
@@ -101,9 +82,6 @@
       },
       "currency": "EUR",
       "capacityIsEstimated": true,
-      "priceIsIndicative": true,
-      "occupancy": 0.56566,
-      "occupancyIsSimulated": true,
       "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
     },
     {
@@ -112,7 +90,6 @@
       "side": "south",
       "capacity": 1030,
       "covered": false,
-      "priceFrom": 12,
       "note": "Riservato ai tifosi ospiti, in vendita solo nella loro citta.",
       "geometry": {
         "length": 22,
@@ -125,9 +102,6 @@
       },
       "currency": "EUR",
       "capacityIsEstimated": true,
-      "priceIsIndicative": true,
-      "occupancy": 0.4256,
-      "occupancyIsSimulated": true,
       "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
     }
   ]

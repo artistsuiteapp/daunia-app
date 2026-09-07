@@ -90,185 +90,14 @@ export function lastActivity(d: Discussion): string {
   return d.replies.length ? d.replies[d.replies.length - 1]!.date : d.date;
 }
 
-/* ------------------------------------------------------------------ esempi */
-
-let n = 0;
-const r = (author: string, body: string, date: string): Reply =>
-  ({ id: `r${++n}`, author, body, date, sample: true });
-
-const SAMPLES: Discussion[] = [
-  {
-    id: 's1',
-    author: 'Michele P.',
-    topic: 'Partita',
-    date: '2026-09-01',
-    title: 'Una rete subita in centottanta minuti',
-    body: `Quattro punti in due giornate si commentano da soli e non dicono granché. Il numero che mi ha fatto rileggere due volte il tabellino è un altro: una rete subita in centottanta minuti.
-
-Chi va allo stadio da un po' sa cosa vuol dire. Non è che siamo diventati una corazzata, è che finalmente la squadra torna dietro tutta insieme. Il centrocampo scala, i due centrali non restano mai da soli, e quando ripartono gli avversari trovano gente davanti.
-
-Poi certo, davanti si fa fatica. Ma preferisco una squadra che impara a non prenderle e poi trova il gol, che il contrario. Il contrario l'abbiamo già visto e sappiamo come finisce.`,
-    likes: 34,
-    sample: true,
-    replies: [
-      r('Antonio', "Concordo. Aggiungo che anche i terzini stanno più bassi rispetto all'anno scorso.", '2026-09-01'),
-      r('Rita', 'Speriamo regga anche quando alzeremo il baricentro.', '2026-09-02'),
-      r('Nicola', 'Basta un gol e poi la difendiamo. Dietro stiamo messi bene davvero.', '2026-09-03'),
-    ],
-  },
-  {
-    id: 's2',
-    author: 'Giuseppe L.',
-    topic: 'Zaccheria',
-    date: '2026-08-28',
-    title: 'Il rumore della Est quando entra la squadra',
-    body: `Ho portato mio figlio la prima volta a maggio. Aveva sette anni e per tutta la settimana mi aveva chiesto se era vero che si sente da fuori.
-
-Siamo entrati venti minuti prima. Lui guardava il campo vuoto e non capiva perché fossimo arrivati così presto. Poi la gradinata ha cominciato a riempirsi, e quando è uscita la squadra per il riscaldamento si è girato verso di me con gli occhi larghi e non ha detto niente.
-
-Ecco, quello. Nessun dato sulla percentuale di riempimento riesce a spiegarlo, e va bene così.`,
-    likes: 61,
-    sample: true,
-    replies: [
-      r('Salvo', 'La prima volta di mio nipote è stata identica. Non ha parlato per dieci minuti.', '2026-08-29'),
-      r('Francesca D.', 'Il bello è che poi ci tornano da soli, a vent\'anni, senza che glielo dica nessuno.', '2026-08-30'),
-    ],
-  },
-  {
-    id: 's3',
-    author: 'Francesca D.',
-    topic: 'Partita',
-    date: '2026-09-02',
-    title: 'Perché il Cerignola non è una partita come le altre',
-    body: `Ogni volta che spiego questa partita a qualcuno che non è di qua devo partire dalla geografia. Quaranta chilometri. Molti di noi hanno parenti là, o ci lavorano, o ci hanno studiato.
-
-Non è una rivalità costruita a tavolino né una di quelle inventate dai social negli ultimi anni. È semplicemente che il lunedì mattina qualcuno in ufficio ha da dire qualcosa, e per una settimana la partita continua fuori dal campo.
-
-Per questo il risultato pesa il doppio anche a settembre, quando la classifica non vuol dire ancora niente.`,
-    likes: 48,
-    sample: true,
-    replies: [
-      r('Michele P.', 'Confermo, mia moglie è di Cerignola. In casa è una settimana complicata.', '2026-09-03'),
-      r('Nicola', 'E poi vinciamo e non se ne parla più.', '2026-09-03'),
-      r('Giuseppe L.', "Ricordati che l'hai scritto, poi te lo rileggiamo lunedì.", '2026-09-04'),
-    ],
-  },
-  {
-    id: 's4',
-    author: 'Nicola R.',
-    topic: 'Trasferte',
-    date: '2026-08-30',
-    title: 'Monopoli il 13: chi si organizza in macchina?',
-    body: `Apro il discorso adesso così c'è tempo. Per Monopoli si va in macchina, sono poco più di due ore, e da soli non ha senso.
-
-Io parto dal centro e ho tre posti. Se qualcuno viene dalla zona di via Napoli conviene trovarsi lì e fare due macchine invece di quattro.
-
-Sul settore ospiti aspettiamo la comunicazione ufficiale prima di dire cavolate: appena esce la mettiamo qui.`,
-    likes: 22,
-    sample: true,
-    replies: [
-      r('Pasquale', 'Io ho due posti e parto dalla zona università.', '2026-08-30'),
-      r('Rita', 'Aspettiamo la comunicazione sul settore ospiti prima di prenotare qualsiasi cosa.', '2026-08-31'),
-    ],
-  },
-  {
-    id: 's5',
-    author: 'Antonio V.',
-    topic: 'Formazione',
-    date: '2026-09-04',
-    title: 'Ravasio dentro subito o si aspetta?',
-    body: `È arrivato da tre giorni. Io lo terrei in panchina e lo farei entrare nella ripresa, quando gli altri sono stanchi.
-
-Del Sole invece lo vedo titolare: serve uno che salti l'uomo, e finora non ne abbiamo avuti.
-
-A centrocampo con Zuccon cambia parecchio: è la prima volta quest'anno che c'è una vera alternativa in mezzo.`,
-    likes: 29,
-    sample: true,
-    replies: [
-      r('Giuseppe L.', 'Io non toccherei la difesa. Una rete presa in centottanta minuti non si tocca.', '2026-09-04'),
-      r('Francesca D.', "D'accordo su Del Sole. Ma Ravasio ha bisogno di minuti, non di panchina.", '2026-09-04'),
-    ],
-  },
-  {
-    id: 's6',
-    author: 'Rita C.',
-    topic: 'Memoria',
-    date: '2026-08-20',
-    title: "Per chi non c'era negli anni di Zeman",
-    body: `Mi capita spesso che qualcuno più giovane mi chieda com'era davvero. È una domanda difficile, perché il rischio è raccontarla come una favola.
-
-La verità è che era una squadra che giocava in un modo che a quei tempi non faceva nessuno, e che perdeva anche parecchio proprio per quello. Ma allo stadio ci andavi sapendo che qualcosa sarebbe successo, in un senso o nell'altro.
-
-Non credo che si possa rifare, e non credo nemmeno che serva. Però quella cosa lì, uscire di casa sapendo che ti divertirai comunque vada, quella sì che me la riprenderei.`,
-    likes: 95,
-    sample: true,
-    replies: [
-      r('Giuseppe L.', 'Ben detto. Non rifacciamola, raccontiamola e basta.', '2026-08-21'),
-      r('Nicola', 'Il punto non era vincere. Era che uscivi di casa sapendo che ti saresti divertito.', '2026-08-22'),
-    ],
-  },
-  {
-    id: 's7',
-    author: 'Nicola R.',
-    topic: 'Mercato',
-    date: '2026-09-01',
-    title: 'Chiuso con tre arrivi: bilancio onesto',
-    body: `Del Sole, Ravasio e Zuccon. Onestamente meglio di come temevo a luglio, quando sembrava che non arrivasse nessuno.
-
-Due davanti erano l'urgenza vera e sono arrivati. Adesso resta da vedere se si incastrano con chi c'era già, e quella è una cosa che si capisce a novembre, non adesso.
-
-Il giudizio vero si dà a gennaio.`,
-    likes: 18,
-    sample: true,
-    replies: [
-      r('Rita', 'Sono d\'accordo. A settembre le pagelle di mercato non le ho mai capite.', '2026-09-02'),
-    ],
-  },
-  {
-    id: 's8',
-    author: 'Francesca D.',
-    topic: 'Zaccheria',
-    date: '2026-09-04',
-    title: '5.329 abbonati: per la Serie C è tanta roba',
-    body: `Vuol dire mezza gradinata già impegnata prima ancora di cominciare, e in questa categoria è un numero che poche piazze fanno.
-
-Il punto adesso è un altro: riempirla anche a novembre, quando piove e siamo a metà classifica. Quello è il momento in cui si vede chi c'è davvero.`,
-    likes: 41,
-    sample: true,
-    replies: [
-      r('Antonio', 'Novembre è sempre il mese della verità, ogni anno.', '2026-09-04'),
-      r('Michele P.', 'Con questi numeri qualche partita in più la reggiamo anche sotto la pioggia.', '2026-09-05'),
-    ],
-  },
-  {
-    id: 's9',
-    author: 'Rita C.',
-    topic: 'Giovanili',
-    date: '2026-09-03',
-    title: 'Qualcuno segue la Primavera?',
-    body: `Mi hanno parlato di un centrocampista del 2008 che sta facendo bene. Qualcuno li vede giocare?
-
-Se cresce uno di qui vale il doppio, sempre, e mi sembra che nessuno ne parli mai.`,
-    likes: 12,
-    sample: true,
-    replies: [
-      r('Michele P.', 'Vero. Se cresce uno di qui vale il doppio.', '2026-09-03'),
-    ],
-  },
-  {
-    id: 's10',
-    author: 'Pasquale M.',
-    topic: 'Fuori tema',
-    date: '2026-09-05',
-    title: 'Domenica c\'è la navetta dal centro?',
-    body: `L'anno scorso c'era, quest'anno non ho visto nessuna comunicazione. Qualcuno sa qualcosa?`,
-    likes: 6,
-    sample: true,
-    replies: [
-      r('Antonio', "Non ho visto niente nemmeno io. Se scopro qualcosa lo scrivo qui.", '2026-09-05'),
-    ],
-  },
-];
+/*
+ * Qui c'erano dieci discussioni finte, con autori inventati -- Michele P.,
+ * Rita C. -- e risposte scritte a tavolino. Servivano a far vedere come
+ * sarebbe stata la Curva piena, ma un tifoso che apre l'app e legge un
+ * commento non ha modo di sapere che nessuno l'ha scritto.
+ *
+ * Una bacheca vuota dice la verita: che si comincia adesso.
+ */
 
 /* ---------------------------------------------------- quello che scrivi tu */
 
@@ -290,7 +119,7 @@ const listeners = new Set<() => void>();
 let all: Discussion[] = [];
 
 function rebuild() {
-  const merged = [...mine.discussions, ...SAMPLES].map((d) => ({
+  const merged = [...mine.discussions].map((d) => ({
     ...d,
     replies: [...d.replies, ...mine.replies.filter((x) => x.on === d.id)],
   }));

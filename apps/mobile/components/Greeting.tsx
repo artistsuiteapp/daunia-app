@@ -13,7 +13,8 @@ import { Avatar } from './Avatar';
  * all'apertura, giusto per dare vita alla pagina senza distrarre.
  */
 export function Greeting({ name, crest, avatar, onBell }: {
-  name: string; crest: string | null; avatar?: string | null; onBell?: () => void;
+  /** null quando non c'e un account: non si inventa un nome */
+  name: string | null; crest: string | null; avatar?: string | null; onBell?: () => void;
 }) {
   const beat = useRef(new Animated.Value(0)).current;
 
@@ -35,17 +36,20 @@ export function Greeting({ name, crest, avatar, onBell }: {
     <View style={styles.row}>
       <Pressable onPress={() => router.push('/profilo' as never)} hitSlop={8}>
         {avatar
-          ? <Avatar uri={avatar} name={name} size={40} />
+          ? <Avatar uri={avatar} name={name ?? ''} size={40} />
           : (
             <View style={styles.avatar}>
-              <Text style={styles.avatarText}>{initials(name)}</Text>
+              {name
+                ? <Text style={styles.avatarText}>{initials(name)}</Text>
+                : <Ionicons name="person-outline" size={19} color={colors.textDim} />}
             </View>
           )}
       </Pressable>
 
       <View style={{ flex: 1 }}>
         <Text style={styles.salute}>{salute}</Text>
-        <Text style={styles.name} numberOfLines={1}>{name}</Text>
+        {/* senza account il saluto resta senza nome, e il tocco porta a farlo */}
+        <Text style={styles.name} numberOfLines={1}>{name ?? 'Entra o registrati'}</Text>
       </View>
 
 

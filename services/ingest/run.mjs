@@ -17,6 +17,7 @@ import { fetchEditorial } from './src/sources/blog.mjs';
 import * as shopSrc from './src/sources/shop.mjs';
 import { fetchPartita, fetchPartitaPerId, fetchRosa, dentroLaFinestra } from './src/sources/apifootball.mjs';
 import { fetchIdPartite, fetchProssima, fetchRisultati } from './src/sources/thesportsdb.mjs';
+import { arricchisciPartite } from './src/sources/livescore.mjs';
 import { fetchDivieti } from './src/sources/divieti.mjs';
 import { buildStadium } from './src/stadium.mjs';
 import { normalize, validate } from './src/normalize.mjs';
@@ -91,6 +92,19 @@ async function main() {
   applicaRisultati(wikiSeason.matches, esiti.risultati);
 
   /*
+   * I marcatori delle partite giocate.
+   *
+   * Wikipedia i gol li ha, ma con ore o giorni di ritardo, e sulle giornate
+   * vecchie a volte non li ha affatto: nella scheda partita la cronaca restava
+   * vuota senza che si capisse perche. live-score-api li da col nome e il
+   * minuto, piu cartellini e sostituzioni.
+   *
+   * Tocca solo le partite finite che non hanno gia i gol, quindi una stagione
+   * intera costa una manciata di chiamate e solo per le giornate nuove.
+   */
+  const marcatori = await step('marcatori (live-score-api)', () => arricchisciPartite(wikiSeason.matches));
+
+  /*
    * Divieti di trasferta, letti dalla stampa locale.
    *
    * Propone, non pubblica: quello che esce qui e una proposta che diventa vera
@@ -136,7 +150,7 @@ async function main() {
   bundle.lineups = storico.archivio;
   bundle.prossima = prossima.prossima;
   bundle.divietiProposti = divieti.proposte;
-  bundle.meta.warnings.push(...live.warnings, ...storico.warnings, ...rosaApi.warnings, ...prossima.warnings, ...divieti.warnings, ...esiti.warnings);
+  bundle.meta.warnings.push(...live.warnings, ...storico.warnings, ...rosaApi.warnings, ...prossima.warnings, ...divieti.warnings, ...esiti.warnings, ...marcatori.warnings);
 
   const errors = validate(bundle);
   summary(bundle, nextHome, Date.now() - t0);

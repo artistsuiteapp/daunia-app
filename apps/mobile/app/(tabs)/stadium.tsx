@@ -139,9 +139,6 @@ export default function StadiumScreen() {
               <Text style={styles.presenceTitle}>
                 {thousands(totalDeclared)} hanno detto che ci sono
               </Text>
-              {!presenzeVere(match.id) ? (
-                <View style={styles.sampleTag}><Text style={styles.sampleText}>esempio</Text></View>
-              ) : null}
             </View>
             <Text style={styles.presenceNote}>
               {mySector
@@ -202,10 +199,9 @@ export default function StadiumScreen() {
         </View>
 
         <Text style={[styles.note, pad]}>
-          {stadium.priceNote} Le capienze per settore sono stime nostre. Il riempimento degli
-          spalti nel modello segue le presenze dichiarate qui dentro, non i biglietti venduti:
-          quelli li conosce solo la biglietteria. In questa dimostrazione i numeri di partenza
-          sono di esempio.
+          Le capienze per settore sono stime nostre. Il riempimento degli spalti nel modello
+          segue solo le presenze dichiarate qui dentro, non i biglietti venduti: quelli li
+          conosce la biglietteria, e non li abbiamo.
         </Text>
       </ScrollView>
     </View>

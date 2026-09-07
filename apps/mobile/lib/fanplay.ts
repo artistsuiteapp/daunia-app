@@ -126,13 +126,15 @@ function seed(s: string): number {
 
 /* --------------------------------------------------------------- presenze */
 
-/** Presenze di esempio per settore, stabili e dichiarate come tali. */
-export function samplePresence(matchId: string, sectorId: string, capacity: number): number {
-  // fra il 4% e il 12% della capienza: un numero plausibile per una comunita
-  // agli inizi, non una previsione di quanti biglietti si venderanno
-  const h = seed(`${matchId}:${sectorId}`);
-  return Math.round(capacity * (0.04 + (h % 80) / 1000));
-}
+/*
+ * Qui c'era `samplePresence`, che riempiva ogni settore con il 4-12 per cento
+ * della capienza. Erano numeri stabili e plausibili -- e per questo peggio di
+ * numeri assurdi: nessuno li metteva in dubbio. Chi apriva la sezione stadio
+ * leggeva "312 in Curva Nord" e credeva che ci fosse gia una comunita.
+ *
+ * Adesso si contano solo le persone che hanno davvero detto che ci vanno.
+ * Zero e un dato: dice che si comincia adesso.
+ */
 
 export function myPresence(matchId: string): string | null {
   return store.presence[matchId] ?? null;
@@ -161,21 +163,21 @@ export function clearPresence(matchId: string) {
   }
 }
 
-/** Totale per settore: esempi piu la tua dichiarazione, se e in quel settore. */
-export function presenceOf(matchId: string, sectorId: string, capacity: number) {
+/** Quante persone hanno detto che vanno in quel settore. Solo quelle vere. */
+export function presenceOf(matchId: string, sectorId: string, _capacity?: number) {
   const vere = reali.presenze[matchId];
   const mine = myPresence(matchId) === sectorId ? 1 : 0;
-  // con il database attivo il numero e quello vero, senza aggiunte di esempio
   if (vere) return { total: vere[sectorId] ?? 0, sample: 0, mine: mine === 1 };
-  const sample = samplePresence(matchId, sectorId, capacity);
-  return { total: sample + mine, sample, mine: mine === 1 };
+  // senza database resta solo la propria dichiarazione, che e vera anche lei
+  return { total: mine, sample: 0, mine: mine === 1 };
 }
 
-/** true quando i numeri mostrati vengono dal database e non dagli esempi. */
-export function presenzeVere(matchId: string): boolean {
-  return Boolean(reali.presenze[matchId]);
+/** I numeri sono sempre veri adesso: la funzione resta per non toccare le schermate. */
+export function presenzeVere(_matchId: string): boolean {
+  return true;
 }
 
+/** Le medie sono sempre vere adesso; resta true quando c'e almeno un voto. */
 export function medieVere(matchId: string): boolean {
   return Boolean(reali.medie[matchId]);
 }
@@ -183,10 +185,14 @@ export function medieVere(matchId: string): boolean {
 /* ---------------------------------------------------------------- pagelle */
 
 /** Media di esempio per un giocatore, stabile fra 5.0 e 7.4. */
-export function sampleRating(matchId: string, playerId: string) {
-  const h = seed(`${matchId}#${playerId}`);
-  return { avg: 5 + ((h % 25) / 10), votes: 40 + (h % 160) };
-}
+/*
+ * Qui c'era `sampleRating`, che dava a ogni giocatore una media fra 5.0 e 7.5
+ * su 40-200 voti inventati. In pagella si leggeva "6.8 · 127 voti" e sembrava
+ * il giudizio della Curva: era un numero derivato dal nome del giocatore.
+ *
+ * Adesso un giocatore senza voti mostra zero voti, e la media compare quando
+ * qualcuno ha votato davvero.
+ */
 
 export function myRating(matchId: string, playerId: string): number | null {
   return store.ratings[matchId]?.[playerId] ?? null;
@@ -212,9 +218,9 @@ export function ratingOf(matchId: string, playerId: string) {
     // il proprio voto e gia dentro la media del server: non va sommato di nuovo
     return { avg: vere?.media ?? 0, votes: vere?.quanti ?? 0, mine };
   }
-  const { avg, votes } = sampleRating(matchId, playerId);
-  if (mine == null) return { avg, votes, mine: null as number | null };
-  return { avg: (avg * votes + mine) / (votes + 1), votes: votes + 1, mine };
+  // senza database c'e solo il proprio voto, e vale uno
+  if (mine == null) return { avg: 0, votes: 0, mine: null as number | null };
+  return { avg: mine, votes: 1, mine };
 }
 
 export function myRatingCount(matchId: string): number {
@@ -248,19 +254,18 @@ export { scorePrediction } from './prediction-score';
 
 export type LeaderRow = { name: string; points: number; exact: number; sample: boolean };
 
-/** Classifica di esempio, con te dentro se hai giocato almeno una volta. */
+/**
+ * La classifica dei pronostici.
+ *
+ * Prima c'erano sette avversari inventati -- Michele P. con 14 punti, Rita C.
+ * con 12 -- e tu in fondo. Chi apriva la sezione credeva di essere ultimo fra
+ * gente vera, e di essere arrivato tardi a una cosa gia avviata.
+ *
+ * Adesso ci sei solo tu, finche non ci sono gli altri. Il primo posto in una
+ * classifica di uno e onesto: dice che sei il primo ad arrivare.
+ */
 export function leaderboard(myPoints: number, myExact: number): LeaderRow[] {
-  const rows: LeaderRow[] = [
-    { name: 'Michele P.', points: 14, exact: 3, sample: true },
-    { name: 'Rita C.', points: 12, exact: 2, sample: true },
-    { name: 'Nicola R.', points: 11, exact: 2, sample: true },
-    { name: 'Francesca D.', points: 9, exact: 1, sample: true },
-    { name: 'Giuseppe L.', points: 8, exact: 1, sample: true },
-    { name: 'Antonio V.', points: 6, exact: 0, sample: true },
-    { name: 'Pasquale M.', points: 4, exact: 0, sample: true },
-  ];
-  rows.push({ name: 'Tu', points: myPoints, exact: myExact, sample: false });
-  return rows.sort((a, b) => b.points - a.points || b.exact - a.exact);
+  return [{ name: 'Tu', points: myPoints, exact: myExact, sample: false }];
 }
 
 export function myPredictionTotals(

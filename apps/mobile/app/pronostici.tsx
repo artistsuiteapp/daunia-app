@@ -66,7 +66,7 @@ export default function Pronostici() {
         </View>
       ) : null}
 
-      <GroupLabel action={<Text style={styles.sampleTag}>esempio</Text>}>
+      <GroupLabel>
         Classifica della stagione
       </GroupLabel>
       <View style={[styles.table, gutter]}>
@@ -115,7 +115,7 @@ export default function Pronostici() {
         Tre punti il risultato esatto, uno se indovini solo come finisce: vittoria, pareggio o
         sconfitta. Nessuna quota e nessun
         premio: si gioca per la classifica. I pronostici restano su questo dispositivo finché
-        non ci sono gli account, e la classifica qui sopra è di esempio.
+        non ci sono gli account.
       </GroupNote>
     </Screen>
   );

@@ -245,19 +245,34 @@ describe('stadio', () => {
     }
   });
 
-  test('il riempimento simulato e deterministico e nel range valido', () => {
+  /*
+   * Prima qui si verificava che il riempimento simulato fosse deterministico e
+   * nel range giusto: un dato inventato, con dei test a garantirne la buona
+   * educazione. Adesso si verifica che non esista.
+   */
+  test('nessun riempimento inventato', () => {
     const a = buildStadium({ id: 'm1', homeName: 'Foggia', awayName: 'Cerignola' }, null);
-    const b = buildStadium({ id: 'm1', homeName: 'Foggia', awayName: 'Cerignola' }, null);
-    for (let i = 0; i < a.sectors.length; i++) {
-      assert.equal(a.sectors[i].occupancy, b.sectors[i].occupancy, 'riempimento non deterministico');
-      assert.ok(a.sectors[i].occupancy > 0 && a.sectors[i].occupancy < 1);
-      assert.equal(a.sectors[i].occupancyIsSimulated, true, 'il dato simulato deve essere dichiarato');
+    for (const s of a.sectors) {
+      assert.equal(s.occupancy, undefined, `${s.name}: riempimento inventato`);
+      assert.equal(s.occupancyIsSimulated, undefined, s.name);
     }
   });
 
-  test('senza partita non si inventa un riempimento', () => {
-    const empty = buildStadium(null, null);
-    assert.ok(empty.sectors.every((s) => s.occupancy === null));
+  test('nessun prezzo scritto a mano', () => {
+    const a = buildStadium({ id: 'm1', homeName: 'Foggia', awayName: 'Cerignola' }, null);
+    for (const s of a.sectors) {
+      assert.equal(s.priceFrom, undefined, `${s.name}: prezzo inventato`);
+      assert.equal(s.priceTo, undefined, s.name);
+      assert.equal(s.soldOut, undefined, `${s.name}: "esaurito" lo dice la biglietteria`);
+    }
+  });
+
+  test('la capienza resta, dichiarata come stima', () => {
+    const a = buildStadium({ id: 'm1', homeName: 'Foggia', awayName: 'Cerignola' }, null);
+    for (const s of a.sectors) {
+      assert.ok(s.capacity > 0, s.name);
+      assert.equal(s.capacityIsEstimated, true, s.name);
+    }
   });
 });
 

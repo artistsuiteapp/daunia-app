@@ -45,5 +45,4 @@ export const brand = {
 
   officialSite: 'https://www.calciofoggia1920.net',
 
-  demoUser: { name: 'Mario Rossi' },
 } as const;

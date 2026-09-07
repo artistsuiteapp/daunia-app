@@ -35,9 +35,6 @@ export function Pagelle({ matchId, players }: { matchId: string; players: Player
             ? 'Dai il tuo voto: si aggiunge alla media.'
             : `Hai votato ${given} ${given === 1 ? 'giocatore' : 'giocatori'}.`}
         </Text>
-        {!medieVere(matchId) ? (
-          <View style={styles.sampleTag}><Text style={styles.sampleText}>medie di esempio</Text></View>
-        ) : null}
       </View>
 
       {players.map((p) => {
