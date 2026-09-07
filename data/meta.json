@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-07T07:15:59.398Z",
+  "generatedAt": "2026-09-07T07:20:38.692Z",
   "season": "2026-2027",
   "competition": "Serie C",
   "sources": {
@@ -20,7 +20,8 @@
     "Nessuno stemma per \"Barletta\": il sito del club non ha mai incontrato questa squadra.",
     "Nessuno stemma per \"Scafatese\": il sito del club non ha mai incontrato questa squadra.",
     "Solo 3 giocatori su 26 hanno la foto: la rosa sul sito del club e ferma alla stagione precedente.",
-    "API-Football: nessuna chiave, formazioni vere non disponibili.",
-    "Trasferta a Monopoli fra meno di una settimana e nessuna notizia sul divieto: controlla a mano, potrebbe essersi rotto il riconoscimento."
+    "Il negozio non ha restituito prodotti: la sezione shop resta vuota.",
+    "Trasferta a Monopoli fra meno di una settimana e nessuna notizia sul divieto: controlla a mano, potrebbe essersi rotto il riconoscimento.",
+    "live-score-api: nessuna credenziale, 1 partite restano senza marcatori"
   ]
 }
