@@ -85,3 +85,40 @@ export async function fetchProssima() {
     warnings: [],
   };
 }
+
+
+/**
+ * I risultati delle ultime partite giocate.
+ *
+ * Serve perche Wikipedia arriva tardi: la mattina dopo Foggia-Cerignola la
+ * pagina della stagione dava ancora la partita come "in programma", quindi
+ * nell'app non compariva fra le giocate e in home restava scritto "prossima in
+ * casa" su una gara finita da dodici ore. TheSportsDB il risultato ce l'aveva
+ * gia la sera stessa.
+ *
+ * Non sostituisce Wikipedia: quella porta i marcatori, e quando arriva vince
+ * lei. Questo riempie solo il buco fra il triplice fischio e l'aggiornamento.
+ */
+export async function fetchRisultati() {
+  let dati;
+  try {
+    dati = await getJson(`${BASE}/eventslast.php?id=${FOGGIA_TEAM_ID}`, { ttl: ORE });
+  } catch (err) {
+    return { risultati: [], warnings: [`TheSportsDB risultati: ${err.message}`] };
+  }
+
+  const righe = (dati?.results ?? [])
+    .filter((e) => FINITE.has(String(e.strStatus ?? '').trim()))
+    .map((e) => ({
+      data: e.dateEvent ?? null,
+      casa: e.strHomeTeam ?? null,
+      ospiti: e.strAwayTeam ?? null,
+      golCasa: e.intHomeScore === null || e.intHomeScore === '' ? null : Number(e.intHomeScore),
+      golOspiti: e.intAwayScore === null || e.intAwayScore === '' ? null : Number(e.intAwayScore),
+    }))
+    .filter((r) => r.data && r.golCasa !== null && r.golOspiti !== null);
+
+  return { risultati: righe, warnings: [] };
+}
+
+const FINITE = new Set(['FT', 'AET', 'PEN']);

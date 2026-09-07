@@ -268,15 +268,15 @@
     }
   ],
   "derived": {
-    "played": 3,
+    "played": 4,
     "cleanSheets": 1,
-    "failedToScore": 0,
+    "failedToScore": 1,
     "goalsFor": 3,
-    "goalsAgainst": 3,
-    "avgGoalsFor": 1,
-    "avgGoalsAgainst": 1,
+    "goalsAgainst": 5,
+    "avgGoalsFor": 0.75,
+    "avgGoalsAgainst": 1.25,
     "biggestWin": "Crotone 0-1 Foggia",
-    "worstLoss": "Foggia 1-2 Team Altamura",
+    "worstLoss": "Foggia 0-2 Audace Cerignola",
     "bestPosition": 6,
     "worstPosition": 8,
     "byWindow": [

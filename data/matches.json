@@ -155,11 +155,14 @@
   {
     "id": "wp-2026-2027-003",
     "kickoff": "2026-09-06T19:00:00.000Z",
-    "status": "scheduled",
+    "status": "finished",
     "matchday": 3,
     "competition": "Serie C",
     "season": "2026-2027",
-    "score": null,
+    "score": {
+      "home": 0,
+      "away": 2
+    },
     "venue": "Stadio Pino Zaccheria",
     "city": "Foggia",
     "attendance": null,
@@ -181,7 +184,7 @@
       "shortName": "Audace Cerignola",
       "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2019/09/LOGO-CERIGNOLA-296x300.png"
     },
-    "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
+    "ticketUrl": null
   },
   {
     "id": "wp-2026-2027-004",

@@ -19,12 +19,19 @@ import {
   clearPresence, declarePresence, myPresence, presenceOf, presenzeVere, useDatiPartita, useFanplay,
 } from '../../lib/fanplay';
 
-/** Un settore esaurito non ha un prezzo: mostrarne uno sarebbe fuorviante. */
-function prezzoDi(s: StadiumSector): string {
+/**
+ * Cosa si scrive a destra del settore.
+ *
+ * Non il prezzo. I prezzi in `stadium.json` sono stime scritte a mano -- il
+ * flag `priceIsIndicative` lo dice da sempre -- ma in app uscivano come
+ * "28 €–50 €", cioe come un listino. Chi decide se andare allo stadio lo fa
+ * anche sul prezzo, e un prezzo sbagliato e peggio di nessun prezzo.
+ *
+ * Resta se il settore e coperto, che e vero e serve quando piove.
+ */
+function dettaglioDi(s: StadiumSector): string {
   if (s.soldOut) return 'esaurito';
-  if (s.priceFrom == null) return 'n.d.';
-  if (s.priceTo && s.priceTo !== s.priceFrom) return `${euro(s.priceFrom)}–${euro(s.priceTo)}`;
-  return `da ${euro(s.priceFrom)}`;
+  return s.covered ? 'coperto' : 'scoperto';
 }
 
 export default function StadiumScreen() {
@@ -182,7 +189,7 @@ export default function StadiumScreen() {
                   </Text>
                 </View>
                 <View style={styles.rowRight}>
-                  <Text style={[styles.rowPrice, s.soldOut && styles.rowPriceOut]}>{prezzoDi(s)}</Text>
+                  <Text style={[styles.rowPrice, s.soldOut && styles.rowPriceOut]}>{dettaglioDi(s)}</Text>
                   {match ? (
                     <Text style={[styles.rowGoing, mySector === s.id && styles.rowGoingMine]}>
                       {thousands(presenceOf(match.id, s.id, s.capacity).total)} vanno
@@ -217,7 +224,7 @@ function SectorCard({ sector, matchId, onDeclare, mine }: {
             {thousands(sector.capacity)} posti · {sector.covered ? 'coperto' : 'scoperto'}
           </Text>
         </View>
-        <Text style={[styles.cardPrice, sector.soldOut && styles.rowPriceOut]}>{prezzoDi(sector)}</Text>
+        <Text style={[styles.cardPrice, sector.soldOut && styles.rowPriceOut]}>{dettaglioDi(sector)}</Text>
       </View>
 
       {sector.note ? <Text style={styles.cardNota}>{sector.note}</Text> : null}

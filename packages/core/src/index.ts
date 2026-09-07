@@ -203,17 +203,25 @@ export interface ShopCategory {
 
 /* ---------------------------------------------------------------- biglietti */
 
+/**
+ * Un settore dello stadio, e dove si comprano i biglietti per entrarci.
+ *
+ * Prezzo, ridotto e posti disponibili sono usciti da qui apposta: erano stime
+ * -- occupazione simulata, ridotto al sessanta per cento del pieno -- che in
+ * app comparivano come fatti. Un tifoso che legge "984 disponibili" e ci
+ * organizza sopra una domenica e stato ingannato da noi, non dalla fonte.
+ *
+ * Tornano quando il club apre i dati di biglietteria, non prima.
+ */
 export interface TicketOffer {
   id: string;
   sectorId: string;
   sectorName: string;
-  price: number;
-  /** prezzo ridotto per under 16, over 65 e donne dove previsto */
-  reducedPrice: number | null;
   currency: 'EUR';
   covered: boolean;
-  available: number;
+  /** capienza del settore: indicativa, e il flag lo dice */
   capacity: number;
+  capacityIsEstimated?: boolean;
   ticketUrl: string;
 }
 

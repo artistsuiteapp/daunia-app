@@ -367,15 +367,29 @@ describe('biglietti', () => {
     assert.equal(offers.length, stadium.sectors.length);
   });
 
-  test('i disponibili non superano la capienza', () => {
+  /*
+   * Questi tre test dicono cosa NON deve tornare.
+   *
+   * Prima ce n'erano due che verificavano che i disponibili stessero dentro la
+   * capienza e che il ridotto costasse meno dell'intero: numeri coerenti fra
+   * loro e inventati tutti e due. La coerenza di un dato falso non lo rende
+   * vero, e quei test proteggevano proprio quello che andava tolto.
+   */
+  test('nessun prezzo: quelli veri li ha Vivaticket', () => {
     for (const o of offers) {
-      assert.ok(o.available >= 0 && o.available <= o.capacity, `${o.sectorName}: ${o.available}/${o.capacity}`);
+      assert.equal(o.price, undefined, o.sectorName);
+      assert.equal(o.reducedPrice, undefined, o.sectorName);
     }
   });
 
-  test('il ridotto costa meno dell intero', () => {
+  test('nessun posto disponibile inventato', () => {
+    for (const o of offers) assert.equal(o.available, undefined, o.sectorName);
+  });
+
+  test('la capienza resta, e dichiara di essere una stima', () => {
     for (const o of offers) {
-      if (o.reducedPrice != null) assert.ok(o.reducedPrice < o.price, o.sectorName);
+      assert.ok(o.capacity > 0, o.sectorName);
+      assert.equal(o.capacityIsEstimated, true, o.sectorName);
     }
   });
 });

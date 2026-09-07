@@ -83,24 +83,32 @@ export function deriveStats(matches, trend) {
 const round = (n) => Math.round(n * 100) / 100;
 
 /**
- * Offerte biglietti per la prossima gara in casa.
- * Il ridotto e una stima sulla prassi delle societa di Serie C, dichiarata
- * come tale in app: il prezzo che vale resta quello di Vivaticket.
+ * I settori dove si entra, e dove si comprano i biglietti.
+ *
+ * Niente prezzi, niente posti disponibili, niente ridotto.
+ *
+ * Prima c'erano tutti e tre, e nessuno era vero: la disponibilita usciva da
+ * `capacity * (1 - occupancy)` con un'occupazione simulata, il ridotto era il
+ * sessanta per cento del prezzo pieno "sulla prassi delle societa di Serie C",
+ * e il prezzo pieno era una stima scritta a mano in stadium.json. In app
+ * comparivano come "1275 disponibili" e "ridotto 17 EUR", cioe come fatti.
+ *
+ * Un tifoso che legge "984 disponibili in Curva Nord" e ci va sopra una
+ * decisione -- parte da Bologna, porta il figlio -- e stato ingannato da noi,
+ * non dalla fonte. Meglio una riga in meno che un numero inventato.
+ *
+ * Quando il club aprira i dati di biglietteria, questi campi tornano con
+ * dentro qualcosa di vero.
  */
 export function buildTickets(stadium) {
-  return stadium.sectors.map((s) => {
-    const occupancy = s.occupancy ?? 0;
-    return {
-      id: `ticket-${s.id}`,
-      sectorId: s.id,
-      sectorName: s.name,
-      price: s.priceFrom ?? 0,
-      reducedPrice: s.priceFrom ? Math.round(s.priceFrom * 0.6 * 2) / 2 : null,
-      currency: 'EUR',
-      covered: s.covered,
-      available: Math.max(0, Math.round(s.capacity * (1 - occupancy))),
-      capacity: s.capacity,
-      ticketUrl: s.ticketUrl ?? stadium.ticketUrl,
-    };
-  });
+  return stadium.sectors.map((s) => ({
+    id: `ticket-${s.id}`,
+    sectorId: s.id,
+    sectorName: s.name,
+    currency: 'EUR',
+    covered: s.covered,
+    capacity: s.capacity,
+    capacityIsEstimated: s.capacityIsEstimated ?? true,
+    ticketUrl: s.ticketUrl ?? stadium.ticketUrl,
+  }));
 }

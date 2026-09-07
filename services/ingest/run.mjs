@@ -16,7 +16,7 @@ import * as wiki from './src/sources/wikipedia.mjs';
 import { fetchEditorial } from './src/sources/blog.mjs';
 import * as shopSrc from './src/sources/shop.mjs';
 import { fetchPartita, fetchPartitaPerId, fetchRosa, dentroLaFinestra } from './src/sources/apifootball.mjs';
-import { fetchIdPartite, fetchProssima } from './src/sources/thesportsdb.mjs';
+import { fetchIdPartite, fetchProssima, fetchRisultati } from './src/sources/thesportsdb.mjs';
 import { fetchDivieti } from './src/sources/divieti.mjs';
 import { buildStadium } from './src/stadium.mjs';
 import { normalize, validate } from './src/normalize.mjs';
@@ -79,6 +79,18 @@ async function main() {
   const prossima = await step('prossima partita (TheSportsDB)', () => fetchProssima());
 
   /*
+   * I risultati appena giocati.
+   *
+   * Wikipedia arriva tardi: la mattina dopo Foggia-Cerignola la pagina della
+   * stagione dava ancora la partita "in programma", quindi nell'app non stava
+   * fra le giocate e in home compariva "prossima in casa" su una gara finita
+   * da dodici ore. Questo riempie il buco fra il triplice fischio e
+   * l'aggiornamento della pagina.
+   */
+  const esiti = await step('risultati recenti (TheSportsDB)', () => fetchRisultati());
+  applicaRisultati(wikiSeason.matches, esiti.risultati);
+
+  /*
    * Divieti di trasferta, letti dalla stampa locale.
    *
    * Propone, non pubblica: quello che esce qui e una proposta che diventa vera
@@ -124,7 +136,7 @@ async function main() {
   bundle.lineups = storico.archivio;
   bundle.prossima = prossima.prossima;
   bundle.divietiProposti = divieti.proposte;
-  bundle.meta.warnings.push(...live.warnings, ...storico.warnings, ...rosaApi.warnings, ...prossima.warnings, ...divieti.warnings);
+  bundle.meta.warnings.push(...live.warnings, ...storico.warnings, ...rosaApi.warnings, ...prossima.warnings, ...divieti.warnings, ...esiti.warnings);
 
   const errors = validate(bundle);
   summary(bundle, nextHome, Date.now() - t0);
@@ -345,3 +357,41 @@ prossima in casa  ${nextHome ? `${nextHome.homeName} - ${nextHome.awayName} il $
 const log = (m) => console.log(m);
 
 main().catch((err) => { console.error('\nERRORE:', err.message); process.exit(1); });
+
+
+/** Normalizza un nome squadra per confrontarlo fra fonti diverse. */
+const stessaSquadra = (a, b) => {
+  const pulisci = (x) => String(x ?? '').toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z]/g, '');
+  const [p, q] = [pulisci(a), pulisci(b)];
+  return Boolean(p) && Boolean(q) && (p.includes(q) || q.includes(p));
+};
+
+/**
+ * Scrive nel calendario i risultati che Wikipedia non ha ancora.
+ *
+ * Tocca solo le partite ancora "in programma" con il calcio d'inizio passato:
+ * dove Wikipedia ha gia scritto vince lei, perche porta anche i marcatori.
+ * I gol restano vuoti -- il punteggio si sa, chi ha segnato no -- e la scheda
+ * partita lo dice invece di lasciare la cronaca vuota senza spiegazione.
+ */
+function applicaRisultati(partite, risultati) {
+  if (!risultati?.length) return;
+  const adesso = Date.now();
+
+  for (const m of partite) {
+    if (m.status === 'finished' || !m.kickoff) continue;
+    if (Date.parse(m.kickoff) > adesso) continue;
+
+    const giorno = m.kickoff.slice(0, 10);
+    // qui il calendario e ancora quello grezzo di Wikipedia: le squadre sono
+    // nomi, non oggetti -- gli oggetti arrivano dopo, in normalize
+    const r = risultati.find((x) => x.data === giorno
+      && stessaSquadra(x.casa, m.homeName)
+      && stessaSquadra(x.ospiti, m.awayName));
+    if (!r) continue;
+
+    m.status = 'finished';
+    m.score = { home: r.golCasa, away: r.golOspiti };
+  }
+}
