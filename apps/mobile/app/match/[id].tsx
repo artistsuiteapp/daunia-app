@@ -81,8 +81,9 @@ export default function MatchDetail() {
     return voci.sort((a, b) => a.minuto - b.minuto);
   }, [match]);
   const lineup = useMemo(
-    () => lineupPerPartita(match?.kickoff ? match.kickoff.slice(0, 10) : undefined, match?.id),
-    [match?.kickoff, match?.id],
+    // `vivo` dice che questa e la partita che il guardiano sta seguendo
+    () => lineupPerPartita(match?.kickoff ? match.kickoff.slice(0, 10) : undefined, match?.id, Boolean(vivo)),
+    [match?.kickoff, match?.id, vivo],
   );
   useDatiPartita(match?.id ?? null, true);
 

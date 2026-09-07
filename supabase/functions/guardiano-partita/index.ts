@@ -14,6 +14,7 @@
  */
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 import { manda, type Iscrizione } from './push.ts';
+import { trovaId, formazioniDi } from './legapro.ts';
 import {
   contaGol, concorda, titoloGol, golVero, golDalTabellone, minutoStimato, cronologia,
   type EventoAF, type Punteggio,
@@ -53,6 +54,16 @@ const DOPO = 3 * 60 * MINUTO;
  */
 const PAUSA_EVENTI = 8 * MINUTO;
 const PAUSA_FORMAZIONI = 15 * MINUTO;
+/**
+ * Ogni quanto si guarda il sito della Lega per le formazioni.
+ *
+ * Escono fra i sessanta e i venti minuti prima del fischio. Tre minuti danno
+ * abbastanza tentativi dentro quella finestra senza bussare di continuo a un
+ * sito che non ci deve niente.
+ */
+const PAUSA_LEGA = 3 * MINUTO;
+/** da quanto prima del fischio si comincia a cercarle */
+const CERCA_DA = 90 * MINUTO;
 /** dopo quante risposte inutili di fila si smette di chiedere ad API-Football */
 const RESE = 3;
 /** quanto tempo si concede ad API-Football per allinearsi al tabellone */
@@ -235,6 +246,27 @@ Deno.serve(async (req) => {
     return Response.json({ prova: true, ...esito });
   }
 
+  /*
+   * Prova delle formazioni, senza notificare e senza toccare il database.
+   *
+   * Serve a verificare la catena -- calendario, id, pannello, parser -- senza
+   * aspettare la partita: fino a sabato non ci sarebbe altro modo di sapere se
+   * funziona, e scoprirlo a fischio d'inizio e tardi.
+   */
+  if (corpo?.prova_formazioni) {
+    const [casa, ospiti] = String(corpo.prova_formazioni).split('|');
+    const id = await trovaId(casa ?? '', ospiti ?? '');
+    if (!id) return Response.json({ prova: 'formazioni', casa, ospiti, id: null, motivo: 'nessun id nel calendario' });
+    const f = await formazioniDi(id);
+    return Response.json({
+      prova: 'formazioni',
+      id,
+      trovate: Boolean(f),
+      casa: f && { squadra: f.casa.squadra, modulo: f.casa.modulo, quanti: f.casa.giocatori.length },
+      ospiti: f && { squadra: f.ospiti.squadra, modulo: f.ospiti.modulo, quanti: f.ospiti.giocatori.length },
+    });
+  }
+
   const adesso = Date.now();
 
   // la partita di riferimento: quella salvata, se ancora attuale
@@ -279,6 +311,56 @@ Deno.serve(async (req) => {
         tag: `formazioni-${riga.partita}`,
         rotta: '/',
       });
+    }
+  }
+
+  /*
+   * Le formazioni ufficiali, per la via veloce.
+   *
+   * Passando dall'ingest ci vogliono fino a venti minuti fra cron e deploy, e
+   * le formazioni escono anche a venti minuti dal fischio: si arriverebbe a
+   * partita cominciata. Qui si scrive nel database e l'app legge in tempo
+   * reale, come fa gia per il punteggio.
+   *
+   * Si guarda solo nell'ora e mezza prima del calcio d'inizio, e si smette
+   * appena trovate: dopo, la formazione non cambia piu.
+   */
+  const daGuardare = !riga.formazione
+    && adesso < t
+    && t - adesso < CERCA_DA
+    && (!riga.formazione_vista_il
+      || adesso - Date.parse(riga.formazione_vista_il) > PAUSA_LEGA);
+
+  if (daGuardare) {
+    patch.formazione_vista_il = new Date().toISOString();
+    let idLega: string | null = riga.legapro_id ?? null;
+
+    if (!idLega) {
+      // il calendario pesa quattro megabyte: si scarica una volta sola, e
+      // l'id trovato resta. Prima che la Lega apra la partita non c'e.
+      const casa = String(riga.etichetta ?? '').split(/\s+vs\s+/i)[0] ?? '';
+      const ospiti = String(riga.etichetta ?? '').split(/\s+vs\s+/i)[1] ?? '';
+      if (casa && ospiti) {
+        idLega = await trovaId(casa, ospiti);
+        if (idLega) patch.legapro_id = idLega;
+      }
+    }
+
+    if (idLega) {
+      const f = await formazioniDi(idLega);
+      if (f) {
+        patch.formazione = f;
+        avvisi.push({
+          tipo: 'formazioni',
+          titolo: 'Formazioni ufficiali',
+          testo: [f.casa, f.ospiti]
+            .find((c) => /foggia/i.test(c.squadra))
+            ?.giocatori.map((g) => g.nome.split(' ')[0]).join(', ')
+            ?? etichettaDaFormazione(f),
+          tag: `formazioni-${riga.partita}`,
+          rotta: '/',
+        });
+      }
     }
   }
 
@@ -564,3 +646,9 @@ Deno.serve(async (req) => {
 
   return Response.json({ partita: etichetta, stato, casa, ospiti, avvisi: esiti });
 });
+
+
+/** Quando il Foggia non si riconosce nei nomi delle squadre, si dice il modulo. */
+function etichettaDaFormazione(f: { casa: { modulo: string | null }; ospiti: { modulo: string | null } }): string {
+  return `${f.casa.modulo ?? '?'} contro ${f.ospiti.modulo ?? '?'}`;
+}

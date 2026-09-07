@@ -2,6 +2,7 @@ import type { Player } from '@satanelli/core';
 import { squad, lineups, formazioniUfficiali, type LineupPlayer, type MatchLineup } from './data';
 import { DEPARTED, spotOf, type Spot } from './squad-overrides';
 import { inOrdine, postiDelModulo } from './modulo-core';
+import { formazioneDalVivo } from './live';
 
 /**
  * Formazione: quella vera se la partita e stata giocata, altrimenti la probabile.
@@ -233,8 +234,10 @@ export function lineupFromMatch(m: MatchLineup): Formazione | null {
  * giocatori come sono davvero schierati, invece che nel 3-5-2 di comodo che
  * usavamo per tutti.
  */
-function daLegaPro(matchId: string): Formazione | null {
-  const f = formazioniUfficiali[matchId];
+function daLegaPro(matchId: string, viva?: boolean): Formazione | null {
+  // il guardiano la scrive nel database appena esce, l'ingest la mette nel
+  // bundle solo al deploy dopo: per la partita in corso vince il guardiano
+  const f = (viva ? formazioneDalVivo() : null) ?? formazioniUfficiali[matchId];
   if (!f) return null;
 
   // la colonna del Foggia: il nome della squadra arriva in maiuscolo
@@ -293,10 +296,10 @@ function daLegaPro(matchId: string): Formazione | null {
  * Non si chiama mai probabile ufficiale, perche non lo e: la schermata dice da
  * che partita viene.
  */
-export function lineupPerPartita(date?: string, matchId?: string): Formazione {
+export function lineupPerPartita(date?: string, matchId?: string, viva = false): Formazione {
   // prima la Lega: e l'undici ufficiale, col modulo vero
   if (matchId) {
-    const dallaLega = daLegaPro(matchId);
+    const dallaLega = daLegaPro(matchId, viva);
     if (dallaLega) return dallaLega;
   }
 

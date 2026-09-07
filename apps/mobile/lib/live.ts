@@ -41,6 +41,14 @@ let stato: Live | null = null;
 let gol: GolVivo[] = [];
 /** l'istante del triplice fischio, che decide quando chiude la chat */
 let finitaIl: string | null = null;
+/**
+ * La formazione ufficiale, appena la Lega la pubblica.
+ *
+ * Arriva dal guardiano invece che dal bundle: fra cron e deploy l'ingest ci
+ * mette fino a venti minuti, e le formazioni escono anche a venti minuti dal
+ * fischio.
+ */
+let formazioneVivo: FormazioneVivo | null = null;
 let ascoltatori: Array<() => void> = [];
 let timer: ReturnType<typeof setInterval> | null = null;
 let battito: ReturnType<typeof setInterval> | null = null;
@@ -75,7 +83,15 @@ type Riga = {
   aggiornato_il?: string | null;
   finita_il?: string | null;
   gol?: GolVivo[] | null;
+  formazione?: FormazioneVivo | null;
 };
+
+/** L'undici ufficiale scritto dal guardiano, com'e nel database. */
+export type ColonnaVivo = {
+  squadra: string; modulo: string | null; allenatore: string | null;
+  giocatori: Array<{ numero: number | null; nome: string; ruolo: string | null }>;
+};
+export type FormazioneVivo = { casa: ColonnaVivo; ospiti: ColonnaVivo };
 
 function daRiga(r: Riga | null): Live | null {
   if (!r?.stato) return null;
@@ -111,12 +127,13 @@ async function chiediAlDatabase(): Promise<boolean> {
   if (!supabase || !id) return false;
   const { data, error } = await supabase
     .from('stato_partita')
-    .select('stato, casa, ospiti, minuto, gol, aggiornato_il, finita_il')
+    .select('stato, casa, ospiti, minuto, gol, aggiornato_il, finita_il, formazione')
     .eq('partita', String(id))
     .maybeSingle();
   if (error || !data) return false;
   const r = data as Riga;
   finitaIl = r.finita_il ?? null;
+  formazioneVivo = r.formazione ?? null;
   applica(daRiga(r), r.gol ?? []);
   return true;
 }
@@ -161,6 +178,7 @@ function ascoltaIlDatabase() {
       (m) => {
         const r = m.new as Riga;
         finitaIl = r.finita_il ?? null;
+        formazioneVivo = r.formazione ?? null;
         applica(daRiga(r), r.gol ?? []);
       },
     )
@@ -239,6 +257,11 @@ export function useLive(): Live | null {
  */
 export function fineVera(): string | null {
   return finitaIl;
+}
+
+/** L'undici ufficiale della partita in corso, se il guardiano l'ha gia preso. */
+export function formazioneDalVivo(): FormazioneVivo | null {
+  return formazioneVivo;
 }
 
 export function useGolVivo(): GolVivo[] {
