@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-07T01:09:46.664Z",
+    "generatedAt": "2026-09-07T06:19:13.509Z",
     "season": "2026-2027",
     "competition": "Serie C",
     "sources": {
@@ -21,6 +21,7 @@
       "Nessuno stemma per \"Barletta\": il sito del club non ha mai incontrato questa squadra.",
       "Nessuno stemma per \"Scafatese\": il sito del club non ha mai incontrato questa squadra.",
       "Solo 3 giocatori su 26 hanno la foto: la rosa sul sito del club e ferma alla stagione precedente.",
+      "Il negozio non ha restituito prodotti: la sezione shop resta vuota.",
       "Trasferta a Monopoli fra meno di una settimana e nessuna notizia sul divieto: controlla a mano, potrebbe essersi rotto il riconoscimento."
     ]
   },
@@ -1491,6 +1492,23 @@
     },
     {
       "position": 4,
+      "teamId": "audace-cerignola",
+      "teamName": "Audace Cerignola",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2019/09/LOGO-CERIGNOLA-296x300.png",
+      "played": 3,
+      "won": 2,
+      "drawn": 0,
+      "lost": 1,
+      "goalsFor": 6,
+      "goalsAgainst": 4,
+      "goalDiff": 2,
+      "points": 6,
+      "penalty": 0,
+      "isFoggia": false,
+      "zone": "playoff"
+    },
+    {
+      "position": 5,
       "teamId": "ssc-bari",
       "teamName": "Ssc Bari",
       "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/822px-SSC_Bari_logo.png",
@@ -1507,7 +1525,7 @@
       "zone": "playoff"
     },
     {
-      "position": 5,
+      "position": 6,
       "teamId": "barletta",
       "teamName": "Barletta",
       "crest": null,
@@ -1524,24 +1542,24 @@
       "zone": "playoff"
     },
     {
-      "position": 6,
+      "position": 7,
       "teamId": "casertana",
       "teamName": "Casertana",
       "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/casertana.png",
-      "played": 2,
+      "played": 3,
       "won": 1,
-      "drawn": 1,
+      "drawn": 2,
       "lost": 0,
-      "goalsFor": 5,
-      "goalsAgainst": 4,
+      "goalsFor": 7,
+      "goalsAgainst": 6,
       "goalDiff": 1,
-      "points": 4,
+      "points": 5,
       "penalty": 0,
       "isFoggia": false,
       "zone": "playoff"
     },
     {
-      "position": 7,
+      "position": 8,
       "teamId": "inter-u23",
       "teamName": "Inter U23",
       "crest": null,
@@ -1558,41 +1576,58 @@
       "zone": "playoff"
     },
     {
-      "position": 8,
+      "position": 9,
       "teamId": "team-altamura",
       "teamName": "Team Altamura",
       "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2024/07/Team_Altamura_marchio-472x500.png",
-      "played": 2,
+      "played": 3,
       "won": 1,
       "drawn": 1,
-      "lost": 0,
+      "lost": 1,
       "goalsFor": 2,
-      "goalsAgainst": 1,
-      "goalDiff": 1,
+      "goalsAgainst": 3,
+      "goalDiff": -1,
       "points": 4,
       "penalty": 0,
       "isFoggia": false,
       "zone": "playoff"
     },
     {
-      "position": 9,
+      "position": 10,
       "teamId": "foggia",
       "teamName": "Foggia",
       "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png",
-      "played": 2,
+      "played": 3,
       "won": 1,
       "drawn": 1,
-      "lost": 0,
+      "lost": 1,
       "goalsFor": 2,
-      "goalsAgainst": 1,
-      "goalDiff": 1,
+      "goalsAgainst": 3,
+      "goalDiff": -1,
       "points": 4,
       "penalty": 0,
       "isFoggia": true,
       "zone": "playoff"
     },
     {
-      "position": 10,
+      "position": 11,
+      "teamId": "cavese",
+      "teamName": "Cavese",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/Cavese_stemma.png",
+      "played": 3,
+      "won": 1,
+      "drawn": 1,
+      "lost": 1,
+      "goalsFor": 4,
+      "goalsAgainst": 5,
+      "goalDiff": -1,
+      "points": 4,
+      "penalty": 0,
+      "isFoggia": false,
+      "zone": null
+    },
+    {
+      "position": 12,
       "teamId": "monopoli",
       "teamName": "Monopoli",
       "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/Monopoli_SS_1966_Since_2014-1.png",
@@ -1606,19 +1641,19 @@
       "points": 3,
       "penalty": 0,
       "isFoggia": false,
-      "zone": "playoff"
+      "zone": null
     },
     {
-      "position": 11,
-      "teamId": "audace-cerignola",
-      "teamName": "Audace Cerignola",
-      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2019/09/LOGO-CERIGNOLA-296x300.png",
-      "played": 2,
+      "position": 13,
+      "teamId": "savoia",
+      "teamName": "Savoia",
+      "crest": null,
+      "played": 3,
       "won": 1,
       "drawn": 0,
-      "lost": 1,
-      "goalsFor": 4,
-      "goalsAgainst": 4,
+      "lost": 2,
+      "goalsFor": 5,
+      "goalsAgainst": 5,
       "goalDiff": 0,
       "points": 3,
       "penalty": 0,
@@ -1626,24 +1661,7 @@
       "zone": null
     },
     {
-      "position": 12,
-      "teamId": "cavese",
-      "teamName": "Cavese",
-      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/Cavese_stemma.png",
-      "played": 2,
-      "won": 1,
-      "drawn": 0,
-      "lost": 1,
-      "goalsFor": 3,
-      "goalsAgainst": 4,
-      "goalDiff": -1,
-      "points": 3,
-      "penalty": 0,
-      "isFoggia": false,
-      "zone": null
-    },
-    {
-      "position": 13,
+      "position": 14,
       "teamId": "casarano",
       "teamName": "Casarano",
       "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2019/09/Logo_Casarano-296x300.png",
@@ -1660,7 +1678,41 @@
       "zone": null
     },
     {
-      "position": 14,
+      "position": 15,
+      "teamId": "salernitana",
+      "teamName": "Salernitana",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2025/08/us-salernitana-768x768.png",
+      "played": 3,
+      "won": 0,
+      "drawn": 2,
+      "lost": 1,
+      "goalsFor": 3,
+      "goalsAgainst": 4,
+      "goalDiff": -1,
+      "points": 2,
+      "penalty": 0,
+      "isFoggia": false,
+      "zone": null
+    },
+    {
+      "position": 16,
+      "teamId": "scafatese",
+      "teamName": "Scafatese",
+      "crest": null,
+      "played": 3,
+      "won": 0,
+      "drawn": 2,
+      "lost": 1,
+      "goalsFor": 5,
+      "goalsAgainst": 7,
+      "goalDiff": -2,
+      "points": 2,
+      "penalty": 0,
+      "isFoggia": false,
+      "zone": "playout"
+    },
+    {
+      "position": 17,
       "teamId": "giugliano",
       "teamName": "Giugliano",
       "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2022/08/giugliano.png",
@@ -1672,57 +1724,6 @@
       "goalsAgainst": 9,
       "goalDiff": -3,
       "points": 1,
-      "penalty": 0,
-      "isFoggia": false,
-      "zone": null
-    },
-    {
-      "position": 15,
-      "teamId": "salernitana",
-      "teamName": "Salernitana",
-      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2025/08/us-salernitana-768x768.png",
-      "played": 2,
-      "won": 0,
-      "drawn": 1,
-      "lost": 1,
-      "goalsFor": 2,
-      "goalsAgainst": 3,
-      "goalDiff": -1,
-      "points": 1,
-      "penalty": 0,
-      "isFoggia": false,
-      "zone": null
-    },
-    {
-      "position": 16,
-      "teamId": "scafatese",
-      "teamName": "Scafatese",
-      "crest": null,
-      "played": 2,
-      "won": 0,
-      "drawn": 1,
-      "lost": 1,
-      "goalsFor": 3,
-      "goalsAgainst": 5,
-      "goalDiff": -2,
-      "points": 1,
-      "penalty": 0,
-      "isFoggia": false,
-      "zone": "playout"
-    },
-    {
-      "position": 17,
-      "teamId": "savoia",
-      "teamName": "Savoia",
-      "crest": null,
-      "played": 2,
-      "won": 0,
-      "drawn": 0,
-      "lost": 2,
-      "goalsFor": 3,
-      "goalsAgainst": 5,
-      "goalDiff": -2,
-      "points": 0,
       "penalty": 0,
       "isFoggia": false,
       "zone": "playout"
@@ -2736,246 +2737,8 @@
     ]
   },
   "shop": {
-    "products": [
-      {
-        "id": "shop-15560",
-        "name": "TUTA RAPPRESENTANZA RED",
-        "price": 110,
-        "regularPrice": 110,
-        "onSale": false,
-        "currency": "EUR",
-        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_5-scaled.jpg",
-        "images": [
-          "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_5-scaled.jpg",
-          "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_17-scaled.jpg"
-        ],
-        "category": "Tute",
-        "categorySlug": "tute",
-        "url": "https://calciofoggia1920.store/prodotto/tuta-rappresentanza-red/",
-        "inStock": true,
-        "description": "",
-        "source": "shop"
-      },
-      {
-        "id": "shop-15551",
-        "name": "TUTA RAPPRESENTANZA BLACK",
-        "price": 110,
-        "regularPrice": 110,
-        "onSale": false,
-        "currency": "EUR",
-        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_4-scaled.jpg",
-        "images": [
-          "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_4-scaled.jpg",
-          "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_17-scaled.jpg"
-        ],
-        "category": "Tute",
-        "categorySlug": "tute",
-        "url": "https://calciofoggia1920.store/prodotto/tuta-rappresentanza-black/",
-        "inStock": true,
-        "description": "",
-        "source": "shop"
-      },
-      {
-        "id": "shop-15519",
-        "name": "MAGLIA GARA THIRD",
-        "price": 85,
-        "regularPrice": 85,
-        "onSale": false,
-        "currency": "EUR",
-        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-06-scaled.jpg",
-        "images": [
-          "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-06-scaled.jpg",
-          "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-08-scaled.jpg",
-          "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-07-scaled.jpg",
-          "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-09-scaled.jpg"
-        ],
-        "category": "Maglie Gara",
-        "categorySlug": "maglie-gara",
-        "url": "https://calciofoggia1920.store/prodotto/maglia-gara-third/",
-        "inStock": true,
-        "description": "",
-        "source": "shop"
-      },
-      {
-        "id": "shop-15505",
-        "name": "MAGLIA GARA AWAY",
-        "price": 85,
-        "regularPrice": 85,
-        "onSale": false,
-        "currency": "EUR",
-        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-01-scaled.jpg",
-        "images": [
-          "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-01-scaled.jpg",
-          "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-02-scaled.jpg",
-          "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-03-scaled.jpg",
-          "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-04-scaled.jpg"
-        ],
-        "category": "Maglie Gara",
-        "categorySlug": "maglie-gara",
-        "url": "https://calciofoggia1920.store/prodotto/maglia-gara-away/",
-        "inStock": true,
-        "description": "",
-        "source": "shop"
-      },
-      {
-        "id": "shop-15549",
-        "name": "ZAINO",
-        "price": 55,
-        "regularPrice": 55,
-        "onSale": false,
-        "currency": "EUR",
-        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_19-scaled.jpg",
-        "images": [
-          "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_19-scaled.jpg"
-        ],
-        "category": null,
-        "categorySlug": null,
-        "url": "https://calciofoggia1920.store/prodotto/zaino/",
-        "inStock": true,
-        "description": "",
-        "source": "shop"
-      },
-      {
-        "id": "shop-15582",
-        "name": "POLO DI RAPPRESENTANZA BLACK",
-        "price": 50,
-        "regularPrice": 50,
-        "onSale": false,
-        "currency": "EUR",
-        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/IMG-20260831-WA0021.jpeg",
-        "images": [
-          "https://calciofoggia1920.store/wp-content/uploads/2026/08/IMG-20260831-WA0021.jpeg"
-        ],
-        "category": "Polo",
-        "categorySlug": "polo",
-        "url": "https://calciofoggia1920.store/prodotto/polo-di-rappresentanza-black/",
-        "inStock": true,
-        "description": "",
-        "source": "shop"
-      },
-      {
-        "id": "shop-15541",
-        "name": "POLO DI RAPPRESENTANZA",
-        "price": 50,
-        "regularPrice": 50,
-        "onSale": false,
-        "currency": "EUR",
-        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_8-1-scaled.jpg",
-        "images": [
-          "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_8-1-scaled.jpg"
-        ],
-        "category": "Allenamento",
-        "categorySlug": "allenamento",
-        "url": "https://calciofoggia1920.store/prodotto/polo-di-rappresentanza/",
-        "inStock": true,
-        "description": "",
-        "source": "shop"
-      },
-      {
-        "id": "shop-15532",
-        "name": "MAGLIA ALLENAMENTO",
-        "price": 30,
-        "regularPrice": 30,
-        "onSale": false,
-        "currency": "EUR",
-        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_10-scaled.jpg",
-        "images": [
-          "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_10-scaled.jpg"
-        ],
-        "category": "Allenamento",
-        "categorySlug": "allenamento",
-        "url": "https://calciofoggia1920.store/prodotto/maglia-allenamento/",
-        "inStock": true,
-        "description": "",
-        "source": "shop"
-      },
-      {
-        "id": "shop-15526",
-        "name": "PANTALONCINO DA GARA THIRD",
-        "price": 25,
-        "regularPrice": 25,
-        "onSale": false,
-        "currency": "EUR",
-        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-10-1-scaled.jpg",
-        "images": [
-          "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-10-1-scaled.jpg"
-        ],
-        "category": "Pantaloncini",
-        "categorySlug": "pantaloncini",
-        "url": "https://calciofoggia1920.store/prodotto/pantaloncino-da-gara-third/",
-        "inStock": true,
-        "description": "",
-        "source": "shop"
-      },
-      {
-        "id": "shop-15513",
-        "name": "PANTALONCINO GARA AWAY",
-        "price": 25,
-        "regularPrice": 25,
-        "onSale": false,
-        "currency": "EUR",
-        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-05-scaled.jpg",
-        "images": [
-          "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-05-scaled.jpg"
-        ],
-        "category": "Pantaloncini",
-        "categorySlug": "pantaloncini",
-        "url": "https://calciofoggia1920.store/prodotto/pantaloncino-gara-away/",
-        "inStock": true,
-        "description": "",
-        "source": "shop"
-      },
-      {
-        "id": "shop-15503",
-        "name": "CALZA HOME",
-        "price": 12,
-        "regularPrice": 12,
-        "onSale": false,
-        "currency": "EUR",
-        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_30-scaled.jpg",
-        "images": [
-          "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_30-scaled.jpg"
-        ],
-        "category": "Calze",
-        "categorySlug": "calze",
-        "url": "https://calciofoggia1920.store/prodotto/calza-home/",
-        "inStock": true,
-        "description": "",
-        "source": "shop"
-      }
-    ],
-    "categories": [
-      {
-        "slug": "allenamento",
-        "name": "Allenamento",
-        "count": 2
-      },
-      {
-        "slug": "maglie-gara",
-        "name": "Maglie Gara",
-        "count": 2
-      },
-      {
-        "slug": "pantaloncini",
-        "name": "Pantaloncini",
-        "count": 2
-      },
-      {
-        "slug": "tute",
-        "name": "Tute",
-        "count": 2
-      },
-      {
-        "slug": "calze",
-        "name": "Calze",
-        "count": 1
-      },
-      {
-        "slug": "polo",
-        "name": "Polo",
-        "count": 1
-      }
-    ]
+    "products": [],
+    "categories": []
   },
   "tickets": [
     {
