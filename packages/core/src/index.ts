@@ -21,6 +21,20 @@ export interface Team {
   isFoggia: boolean;
 }
 
+export interface Card {
+  minute: number;
+  player: string | null;
+  side: 'home' | 'away';
+  rosso: boolean;
+}
+
+export interface Sub {
+  minute: number;
+  esce: string | null;
+  entra: string | null;
+  side: 'home' | 'away';
+}
+
 export interface MatchTeam {
   id: string;
   name: string;
@@ -53,6 +67,15 @@ export interface Match {
   attendance: number | null;
   referee: string | null;
   goals: Goal[];
+  /**
+   * Cartellini e sostituzioni, quando la fonte degli eventi li ha.
+   *
+   * Wikipedia da solo i gol; live-score-api da anche questi, e le
+   * sostituzioni con i due nomi -- chi esce e chi entra. Senza, la cronaca di
+   * una partita sono due righe in novanta minuti.
+   */
+  cards?: Card[];
+  subs?: Sub[];
   /** true se il Foggia gioca in casa */
   foggiaHome: boolean;
   /** 'W' | 'D' | 'L' dal punto di vista del Foggia, null se non giocata */

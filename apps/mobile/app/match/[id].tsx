@@ -29,15 +29,57 @@ export default function MatchDetail() {
   // cercarla a mano proprio nel momento in cui uno vuole solo votare
   const { id, tab } = useLocalSearchParams<{ id: string; tab?: string }>();
   const gutter = useGutter();
-  const TAB_VALIDE: Tab[] = ['formazione', 'gioco', 'eventi', 'dati'];
+  const TAB_VALIDE: Tab[] = ['eventi', 'formazione', 'gioco', 'dati'];
   const [view, setView] = useState<Tab>(
-    TAB_VALIDE.includes(tab as Tab) ? (tab as Tab) : 'formazione',
+    TAB_VALIDE.includes(tab as Tab) ? (tab as Tab) : 'eventi',
   );
   const match = matchById(String(id));
   const vivo = liveDi(match, useLive());
   // la cronologia che il guardiano registra mentre si gioca: minuto e punteggio,
   // senza il nome di chi ha segnato
   const golVivo = useGolVivo();
+
+  /**
+   * La cronaca: gol, cartellini e cambi in un elenco solo, in ordine di minuto.
+   *
+   * Prima si vedevano solo i gol, e per Foggia-Cerignola erano due righe in
+   * novanta minuti. Cartellini e sostituzioni c'erano gia nei dati e restavano
+   * inutilizzati: sono quelli che raccontano come e andata la partita fra un
+   * gol e l'altro.
+   */
+  const cronaca = useMemo(() => {
+    if (!match) return [];
+    type Voce = { minuto: number; inCasa: boolean; testo: string; icona: keyof typeof Ionicons.glyphMap };
+    const voci: Voce[] = [];
+
+    for (const g of match.goals ?? []) {
+      voci.push({
+        // il minuto puo mancare nei dati di Wikipedia: in fondo, non in cima
+        minuto: (g.minute ?? 999) + (g.extra ?? 0),
+        inCasa: g.side === 'home',
+        testo: `${g.scorer}${g.penalty ? ' (rig.)' : ''}${g.ownGoal ? ' (aut.)' : ''}`,
+        icona: 'football',
+      });
+    }
+    for (const c of match.cards ?? []) {
+      voci.push({
+        minuto: c.minute,
+        inCasa: c.side === 'home',
+        testo: c.player ?? 'espulso',
+        // il rosso ha un'icona sua: in un elenco lungo il colore da solo non basta
+        icona: c.rosso ? 'close-circle' : 'square',
+      });
+    }
+    for (const sc of match.subs ?? []) {
+      voci.push({
+        minuto: sc.minute,
+        inCasa: sc.side === 'home',
+        testo: sc.entra && sc.esce ? `${sc.entra} ← ${sc.esce}` : (sc.entra ?? sc.esce ?? 'cambio'),
+        icona: 'swap-horizontal',
+      });
+    }
+    return voci.sort((a, b) => a.minuto - b.minuto);
+  }, [match]);
   const lineup = useMemo(
     () => lineupPerPartita(match?.kickoff ? match.kickoff.slice(0, 10) : undefined),
     [match?.kickoff],
@@ -107,11 +149,13 @@ export default function MatchDetail() {
           value={view}
           onChange={setView}
           items={[
+            // la cronaca per prima: e quello che si cerca aprendo una partita,
+            // durante e dopo. La formazione la si guarda una volta, prima
+            { key: 'eventi' as Tab, label: 'Cronaca' },
             { key: 'formazione' as Tab, label: 'Formazione' },
             // prima della partita si pronostica, dopo si danno i voti:
             // la stessa casella cambia mestiere al fischio finale
             { key: 'gioco' as Tab, label: played ? 'Pagelle' : 'Pronostico' },
-            { key: 'eventi' as Tab, label: 'Eventi' },
             { key: 'dati' as Tab, label: 'Dati' },
           ]}
         />
@@ -188,16 +232,17 @@ export default function MatchDetail() {
       ) : null}
 
       {view === 'eventi' ? (
-        match.goals.length ? (
+        cronaca.length ? (
           <>
             <GroupLabel>Cronaca</GroupLabel>
             <View style={gutter}>
-              {match.goals.map((g, i) => (
+              {cronaca.map((e, i) => (
                 <RigaEvento
-                  key={`${g.scorer}-${g.minute}-${i}`}
-                  inCasa={g.side === 'home'}
-                  minuto={`${g.minute}${g.extra ? `+${g.extra}` : ''}'`}
-                  testo={`${g.scorer}${g.penalty ? ' (rig.)' : ''}${g.ownGoal ? ' (aut.)' : ''}`}
+                  key={`${e.minuto}-${e.testo}-${i}`}
+                  inCasa={e.inCasa}
+                  minuto={`${e.minuto}'`}
+                  testo={e.testo}
+                  icona={e.icona}
                 />
               ))}
             </View>
@@ -303,12 +348,17 @@ function Side({ team }: { team: { crest: string | null; shortName: string } }) {
  * `inCasa` e il lato della scheda, non "il Foggia": la colonna di sinistra e
  * sempre la squadra di casa di quella partita, come il punteggio sopra.
  */
-function RigaEvento({ inCasa, minuto, testo }: {
+function RigaEvento({ inCasa, minuto, testo, icona = 'football' }: {
   inCasa: boolean; minuto: string; testo: string;
+  icona?: keyof typeof Ionicons.glyphMap;
 }) {
   const bolla = (
     <View style={styles.eventBubble}>
-      <Ionicons name="football" size={13} color={colors.text} />
+      <Ionicons
+        name={icona}
+        size={13}
+        color={icona === 'close-circle' ? '#E5343E' : icona === 'square' ? '#E8C547' : colors.text}
+      />
       <Text style={styles.eventName} numberOfLines={1}>{testo}</Text>
     </View>
   );
