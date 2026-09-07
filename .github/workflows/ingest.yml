@@ -80,10 +80,8 @@ jobs:
             echo "::warning::VERCEL_TOKEN assente: i dati sono aggiornati ma il sito resta indietro"
             exit 0
           fi
-          # l'ingest non ha dipendenze, ma il build dell'app si: senza questo
-          # `expo` non esiste e il passo muore con "command not found"
-          npm ci
-          npm run build:web
+          # niente build qui: Vercel lo rifa comunque lato suo, e farlo due
+          # volte costava tre minuti e un `npm ci` per niente
           npx --yes vercel@latest deploy --prod --yes --token "$VERCEL_TOKEN" > /tmp/deploy.txt 2>&1 || true
           URL=$(grep -oE 'https://[a-z0-9-]+\.vercel\.app' /tmp/deploy.txt | tail -1)
           if [ -z "$URL" ]; then

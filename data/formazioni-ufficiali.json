@@ -1,0 +1,380 @@
+{
+  "wp-2026-2027-003": {
+    "casa": {
+      "squadra": "FOGGIA",
+      "modulo": "4-2-3-1",
+      "allenatore": "Auteri Gaetano",
+      "giocatori": [
+        {
+          "numero": 22,
+          "nome": "Saro Gianluca",
+          "ruolo": "Portiere"
+        },
+        {
+          "numero": 2,
+          "nome": "Todisco Gianmarco",
+          "ruolo": "Difensore"
+        },
+        {
+          "numero": 32,
+          "nome": "Smeraldi Andrea",
+          "ruolo": "Difensore"
+        },
+        {
+          "numero": 4,
+          "nome": "Gallo Andrea",
+          "ruolo": "Difensore"
+        },
+        {
+          "numero": 21,
+          "nome": "Berra Filippo",
+          "ruolo": "Difensore"
+        },
+        {
+          "numero": 51,
+          "nome": "Parisy Corentin",
+          "ruolo": "Difensore"
+        },
+        {
+          "numero": 16,
+          "nome": "Haoudi Hamza",
+          "ruolo": "Difensore"
+        },
+        {
+          "numero": 11,
+          "nome": "Petito Francesco Pio",
+          "ruolo": "Centrocampista"
+        },
+        {
+          "numero": 17,
+          "nome": "Panico Giuseppe Antonio",
+          "ruolo": "Centrocampista"
+        },
+        {
+          "numero": 28,
+          "nome": "Touré Isyakha",
+          "ruolo": "Centrocampista"
+        },
+        {
+          "numero": 18,
+          "nome": "Luciani Pierluca",
+          "ruolo": "Attaccante"
+        }
+      ]
+    },
+    "ospiti": {
+      "squadra": "AUDACE CERIGNOLA",
+      "modulo": "5-4-1",
+      "allenatore": "Catalano Raimondo",
+      "giocatori": [
+        {
+          "numero": 22,
+          "nome": "Viola Antonino",
+          "ruolo": "Portiere"
+        },
+        {
+          "numero": 27,
+          "nome": "Boccadamo Antonio",
+          "ruolo": "Difensore"
+        },
+        {
+          "numero": 4,
+          "nome": "Vitale Gaetano",
+          "ruolo": "Difensore"
+        },
+        {
+          "numero": 24,
+          "nome": "Romano Alessandro",
+          "ruolo": "Difensore"
+        },
+        {
+          "numero": 23,
+          "nome": "Gasbarro Andrea",
+          "ruolo": "Difensore"
+        },
+        {
+          "numero": 55,
+          "nome": "Cocorocchio Martin",
+          "ruolo": "Difensore"
+        },
+        {
+          "numero": 33,
+          "nome": "Perlingieri Mario",
+          "ruolo": "Centrocampista"
+        },
+        {
+          "numero": 8,
+          "nome": "Moreso Arjona Oscar",
+          "ruolo": "Centrocampista"
+        },
+        {
+          "numero": 58,
+          "nome": "Cretella Carmine",
+          "ruolo": "Centrocampista"
+        },
+        {
+          "numero": 7,
+          "nome": "Vinciguerra Alessandro",
+          "ruolo": "Centrocampista"
+        },
+        {
+          "numero": 9,
+          "nome": "Gambale Diego",
+          "ruolo": "Attaccante"
+        }
+      ]
+    }
+  },
+  "wp-2026-2027-002": {
+    "casa": {
+      "squadra": "FOGGIA",
+      "modulo": "4-2-3-1",
+      "allenatore": "Auteri Gaetano",
+      "giocatori": [
+        {
+          "numero": 22,
+          "nome": "Saro Gianluca",
+          "ruolo": "Portiere"
+        },
+        {
+          "numero": 2,
+          "nome": "Todisco Gianmarco",
+          "ruolo": "Difensore"
+        },
+        {
+          "numero": 32,
+          "nome": "Smeraldi Andrea",
+          "ruolo": "Difensore"
+        },
+        {
+          "numero": 4,
+          "nome": "Gallo Andrea",
+          "ruolo": "Difensore"
+        },
+        {
+          "numero": 21,
+          "nome": "Berra Filippo",
+          "ruolo": "Difensore"
+        },
+        {
+          "numero": 51,
+          "nome": "Parisy Corentin",
+          "ruolo": "Difensore"
+        },
+        {
+          "numero": 16,
+          "nome": "Haoudi Hamza",
+          "ruolo": "Difensore"
+        },
+        {
+          "numero": 11,
+          "nome": "Petito Francesco Pio",
+          "ruolo": "Centrocampista"
+        },
+        {
+          "numero": 17,
+          "nome": "Panico Giuseppe Antonio",
+          "ruolo": "Centrocampista"
+        },
+        {
+          "numero": 28,
+          "nome": "Touré Isyakha",
+          "ruolo": "Centrocampista"
+        },
+        {
+          "numero": 18,
+          "nome": "Luciani Pierluca",
+          "ruolo": "Attaccante"
+        }
+      ]
+    },
+    "ospiti": {
+      "squadra": "SALERNITANA",
+      "modulo": "5-4-1",
+      "allenatore": "Cosmi Serse",
+      "giocatori": [
+        {
+          "numero": 12,
+          "nome": "Galeotti Cesare",
+          "ruolo": "Portiere"
+        },
+        {
+          "numero": 16,
+          "nome": "Llano Massa Manuel Tadeo",
+          "ruolo": "Difensore"
+        },
+        {
+          "numero": 14,
+          "nome": "Villa Luca",
+          "ruolo": "Difensore"
+        },
+        {
+          "numero": 33,
+          "nome": "Anastasio Armando",
+          "ruolo": "Difensore"
+        },
+        {
+          "numero": 19,
+          "nome": "Capuano Marco",
+          "ruolo": "Difensore"
+        },
+        {
+          "numero": 73,
+          "nome": "Pieraccini Simone",
+          "ruolo": "Difensore"
+        },
+        {
+          "numero": 32,
+          "nome": "Vitale Mattia",
+          "ruolo": "Centrocampista"
+        },
+        {
+          "numero": 4,
+          "nome": "Gyabuaa Manu Emmanuel",
+          "ruolo": "Centrocampista"
+        },
+        {
+          "numero": 8,
+          "nome": "Tascone Mattia",
+          "ruolo": "Centrocampista"
+        },
+        {
+          "numero": 7,
+          "nome": "Achik Ismail",
+          "ruolo": "Centrocampista"
+        },
+        {
+          "numero": 10,
+          "nome": "Lescano Facundo",
+          "ruolo": "Attaccante"
+        }
+      ]
+    }
+  },
+  "wp-2026-2027-001": {
+    "casa": {
+      "squadra": "CROTONE",
+      "modulo": "4-4-2",
+      "allenatore": "Greco Leandro",
+      "giocatori": [
+        {
+          "numero": 1,
+          "nome": "Merelli Davide",
+          "ruolo": "Portiere"
+        },
+        {
+          "numero": 63,
+          "nome": "Veltri Angelo",
+          "ruolo": "Difensore"
+        },
+        {
+          "numero": 23,
+          "nome": "Groppelli Filippo",
+          "ruolo": "Difensore"
+        },
+        {
+          "numero": 13,
+          "nome": "Armini Nicolò",
+          "ruolo": "Difensore"
+        },
+        {
+          "numero": 26,
+          "nome": "Tanco Simmermacher Gregorio José",
+          "ruolo": "Difensore"
+        },
+        {
+          "numero": 8,
+          "nome": "Torres Delgado Iker",
+          "ruolo": "Centrocampista"
+        },
+        {
+          "numero": 90,
+          "nome": "Spadoni Arthur",
+          "ruolo": "Centrocampista"
+        },
+        {
+          "numero": 83,
+          "nome": "Ruggiero Zak",
+          "ruolo": "Centrocampista"
+        },
+        {
+          "numero": 96,
+          "nome": "Zunno Marco",
+          "ruolo": "Centrocampista"
+        },
+        {
+          "numero": 10,
+          "nome": "Musso Antonino",
+          "ruolo": "Attaccante"
+        },
+        {
+          "numero": 99,
+          "nome": "Crapisto Francesco",
+          "ruolo": "Attaccante"
+        }
+      ]
+    },
+    "ospiti": {
+      "squadra": "FOGGIA",
+      "modulo": "4-4-2",
+      "allenatore": "Auteri Gaetano",
+      "giocatori": [
+        {
+          "numero": 22,
+          "nome": "Saro Gianluca",
+          "ruolo": "Portiere"
+        },
+        {
+          "numero": 2,
+          "nome": "Todisco Gianmarco",
+          "ruolo": "Difensore"
+        },
+        {
+          "numero": 32,
+          "nome": "Smeraldi Andrea",
+          "ruolo": "Difensore"
+        },
+        {
+          "numero": 3,
+          "nome": "Seck Mohamed",
+          "ruolo": "Difensore"
+        },
+        {
+          "numero": 6,
+          "nome": "Di Pasquale Davide",
+          "ruolo": "Difensore"
+        },
+        {
+          "numero": 4,
+          "nome": "Gallo Andrea",
+          "ruolo": "Centrocampista"
+        },
+        {
+          "numero": 11,
+          "nome": "Petito Francesco Pio",
+          "ruolo": "Centrocampista"
+        },
+        {
+          "numero": 16,
+          "nome": "Haoudi Hamza",
+          "ruolo": "Centrocampista"
+        },
+        {
+          "numero": 7,
+          "nome": "Oviszach Enrico",
+          "ruolo": "Centrocampista"
+        },
+        {
+          "numero": 18,
+          "nome": "Luciani Pierluca",
+          "ruolo": "Attaccante"
+        },
+        {
+          "numero": 17,
+          "nome": "Panico Giuseppe Antonio",
+          "ruolo": "Attaccante"
+        }
+      ]
+    }
+  }
+}

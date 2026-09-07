@@ -116,13 +116,29 @@ async function main() {
    * Si guardano solo la partita appena giocata e quella in arrivo: le altre o
    * ce l'hanno gia o non le avranno mai.
    */
+  /*
+   * Tutte le giocate che non hanno ancora la formazione, piu la prossima.
+   *
+   * Prima erano solo le due piu vicine a oggi, e le giornate vecchie
+   * restavano senza. Costa una chiamata a partita, ma solo la prima volta:
+   * quelle gia archiviate non si richiedono piu.
+   */
+  const gia = new Set(Object.keys((await letto('formazioni-ufficiali.json')) ?? {}));
+  const adesso = Date.now();
   const diInteresse = wikiSeason.matches
-    .filter((m) => m.kickoff)
-    .sort((a, b) => Math.abs(Date.parse(a.kickoff) - Date.now()) - Math.abs(Date.parse(b.kickoff) - Date.now()))
-    .slice(0, 2);
+    .filter((m) => m.kickoff && !gia.has(m.id))
+    .filter((m) => Date.parse(m.kickoff) < adesso
+      || Date.parse(m.kickoff) - adesso < 6 * 60 * 60 * 1000)
+    .sort((a, b) => Date.parse(b.kickoff) - Date.parse(a.kickoff));
   const cacheId = (await letto('legapro-ids.json')) ?? {};
   const formazioni = await step('formazioni ufficiali (Lega Pro)',
     () => fetchFormazioni(diInteresse, cacheId));
+  // le formazioni gia trovate restano: la Lega non le ripubblica, e
+  // richiederle a ogni giro sarebbe una chiamata sprecata per sempre
+  const formazioniTutte = {
+    ...((await letto('formazioni-ufficiali.json')) ?? {}),
+    ...formazioni.formazioni,
+  };
 
   /*
    * Divieti di trasferta, letti dalla stampa locale.
@@ -169,7 +185,7 @@ async function main() {
   bundle.live = live.partita;
   bundle.lineups = storico.archivio;
   bundle.prossima = prossima.prossima;
-  bundle.formazioniUfficiali = formazioni.formazioni;
+  bundle.formazioniUfficiali = formazioniTutte;
   bundle.divietiProposti = divieti.proposte;
   bundle.meta.warnings.push(...live.warnings, ...storico.warnings, ...rosaApi.warnings, ...prossima.warnings, ...divieti.warnings, ...esiti.warnings, ...marcatori.warnings, ...formazioni.warnings);
 
@@ -201,6 +217,7 @@ async function main() {
     'live.json': bundle.live,
     'prossima.json': bundle.prossima,
     'legapro-ids.json': formazioni.cache,
+    'formazioni-ufficiali.json': formazioniTutte,
     'divieti-proposti.json': bundle.divietiProposti,
     'lineups.json': bundle.lineups,
     'bundle.json': bundle,

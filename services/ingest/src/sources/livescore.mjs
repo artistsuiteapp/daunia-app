@@ -22,6 +22,8 @@ const BASE = 'https://livescore-api.com/api-client';
 
 /** Serie C italiana. In catalogo c'e anche una Serie C brasiliana, la 253. */
 export const SERIE_C_ITALIA = '181';
+/** La Coppa Italia di Serie C: il Foggia ci gioca ad agosto, ed e un'altra competizione. */
+export const COPPA_ITALIA_C = '180';
 
 const ORE = 60 * 60 * 1000;
 
@@ -102,8 +104,12 @@ export async function arricchisciPartite(partite) {
   const conteggio = { n: 0 };
   const warnings = [];
 
+  // Anche le partite che hanno gia i gol: Wikipedia da solo quelli, e senza
+  // questo cartellini e sostituzioni restavano vuoti su tutte le giornate
+  // vecchie -- cioe la cronaca era due righe invece di sedici.
   const daFare = (partite ?? []).filter((m) =>
-    m.status === 'finished' && !(m.goals ?? []).length && m.kickoff);
+    m.status === 'finished' && m.kickoff
+    && (!(m.goals ?? []).length || !(m.cards ?? []).length));
   if (!daFare.length) return { arricchite: 0, chiamate: 0, warnings: [] };
 
   if (!process.env.LSA_KEY || !process.env.LSA_SECRET) {
@@ -113,27 +119,40 @@ export async function arricchisciPartite(partite) {
     };
   }
 
-  // una sola chiamata per tutto il girone, invece di una per partita
-  const dal = daFare.map((m) => m.kickoff.slice(0, 10)).sort()[0];
-  const storia = await chiedi('matches/history',
-    { competition_id: SERIE_C_ITALIA, from: dal, to: new Date().toISOString().slice(0, 10) },
-    conteggio);
-
-  if (storia.problema) {
-    return { arricchite: 0, chiamate: conteggio.n, warnings: [`live-score-api: ${storia.problema}`] };
-  }
-
-  const trovate = storia.dati?.match ?? [];
+  /*
+   * Una chiamata per giornata, non una per tutto il periodo.
+   *
+   * `matches/history` risponde trenta partite alla volta e un girone ne gioca
+   * venti a giornata: chiedendo tre settimane in un colpo le giornate vecchie
+   * restavano fuori dalla prima pagina, e i cartellini non arrivavano mai.
+   * Chiedere il singolo giorno costa una chiamata in piu e non sbaglia.
+   */
+  const perGiorno = new Map();
   let arricchite = 0;
 
   for (const m of daFare) {
     const giorno = m.kickoff.slice(0, 10);
+
+    if (!perGiorno.has(giorno)) {
+      // il campionato prima, la coppa solo se in quel giorno non si trova
+      // niente: ad agosto il Foggia gioca la Coppa Italia di Serie C, che ha
+      // un id suo e stava fuori da tutto
+      const righe = [];
+      for (const comp of [SERIE_C_ITALIA, COPPA_ITALIA_C]) {
+        const r = await chiedi('matches/history',
+          { competition_id: comp, from: giorno, to: giorno }, conteggio);
+        if (r.problema) { warnings.push(`live-score-api ${giorno}: ${r.problema}`); continue; }
+        righe.push(...(r.dati?.match ?? []));
+        if (righe.some((x) => /foggia/i.test(`${x.home?.name} ${x.away?.name}`))) break;
+      }
+      perGiorno.set(giorno, righe);
+    }
+
     // il calendario qui e ancora quello grezzo di Wikipedia: le squadre sono
     // nomi, non oggetti -- gli oggetti li costruisce normalize, piu tardi
     const casa = m.homeName ?? m.home?.name ?? m.home?.shortName;
     const ospiti = m.awayName ?? m.away?.name ?? m.away?.shortName;
-    const loro = trovate.find((x) => x.date === giorno
-      && stessaSquadra(x.home?.name, casa)
+    const loro = (perGiorno.get(giorno) ?? []).find((x) => stessaSquadra(x.home?.name, casa)
       && stessaSquadra(x.away?.name, ospiti));
     if (!loro) continue;
 
@@ -141,7 +160,9 @@ export async function arricchisciPartite(partite) {
     if (ev.problema) { warnings.push(`live-score-api eventi ${giorno}: ${ev.problema}`); continue; }
 
     const { gol, cartellini, cambi } = traduci(ev.dati?.event ?? []);
-    if (gol.length) { m.goals = gol; arricchite += 1; }
+    // i gol di Wikipedia hanno nomi piu leggibili ("Luciani" invece di
+    // "P. Luciani"): se ci sono gia si tengono, e si prende solo il resto
+    if (gol.length && !(m.goals ?? []).length) { m.goals = gol; arricchite += 1; }
     if (cartellini.length) m.cards = cartellini;
     if (cambi.length) m.subs = cambi;
   }

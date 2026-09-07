@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-07T08:18:52.549Z",
+    "generatedAt": "2026-09-07T08:35:34.780Z",
     "season": "2026-2027",
     "competition": "Serie C",
     "sources": {
@@ -21,6 +21,7 @@
       "Nessuno stemma per \"Barletta\": il sito del club non ha mai incontrato questa squadra.",
       "Nessuno stemma per \"Scafatese\": il sito del club non ha mai incontrato questa squadra.",
       "Solo 3 giocatori su 26 hanno la foto: la rosa sul sito del club e ferma alla stagione precedente.",
+      "API-Football: nessuna chiave, formazioni vere non disponibili.",
       "Trasferta a Monopoli fra meno di una settimana e nessuna notizia sul divieto: controlla a mano, potrebbe essersi rotto il riconoscimento."
     ]
   },
@@ -255,6 +256,94 @@
       "foggiaResult": "W",
       "reportUrl": "https://www.transfermarkt.it/spielbericht/index/spielbericht/4979169",
       "source": "wikipedia",
+      "cards": [
+        {
+          "minute": 6,
+          "player": "G. Panico",
+          "side": "away",
+          "rosso": false
+        },
+        {
+          "minute": 49,
+          "player": "A. Gallo",
+          "side": "away",
+          "rosso": false
+        },
+        {
+          "minute": 77,
+          "player": "N. Armini",
+          "side": "home",
+          "rosso": false
+        },
+        {
+          "minute": 90,
+          "player": "F. Crapisto",
+          "side": "home",
+          "rosso": false
+        }
+      ],
+      "subs": [
+        {
+          "minute": 46,
+          "esce": "D. Di Pasquale",
+          "entra": "C. Parisy",
+          "side": "away"
+        },
+        {
+          "minute": 56,
+          "esce": "E. Oviszach",
+          "entra": "M. Bigonzoni",
+          "side": "away"
+        },
+        {
+          "minute": 56,
+          "esce": "F. Petito",
+          "entra": "I. Toure",
+          "side": "away"
+        },
+        {
+          "minute": 60,
+          "esce": "A. Spadoni",
+          "entra": "P. Rodriguez",
+          "side": "home"
+        },
+        {
+          "minute": 62,
+          "esce": "G. Panico",
+          "entra": "Y. Merdji",
+          "side": "away"
+        },
+        {
+          "minute": 73,
+          "esce": "Z. Ruggiero",
+          "entra": "M. Tordini",
+          "side": "home"
+        },
+        {
+          "minute": 73,
+          "esce": "G. J. Tanco",
+          "entra": "W. Feola",
+          "side": "home"
+        },
+        {
+          "minute": 83,
+          "esce": "I. Torres",
+          "entra": "B. Stauciuc",
+          "side": "home"
+        },
+        {
+          "minute": 83,
+          "esce": "F. Groppelli",
+          "entra": "W. Guerra",
+          "side": "home"
+        },
+        {
+          "minute": 88,
+          "esce": "A. Smeraldi",
+          "entra": "T. Azarovs",
+          "side": "away"
+        }
+      ],
       "home": {
         "id": "crotone",
         "name": "F.C. CROTONE",
@@ -306,6 +395,82 @@
       "foggiaResult": "D",
       "reportUrl": "https://www.transfermarkt.it/spielbericht/index/spielbericht/4979183",
       "source": "wikipedia",
+      "cards": [
+        {
+          "minute": 43,
+          "player": "M. Gyabuaa",
+          "side": "away",
+          "rosso": false
+        },
+        {
+          "minute": 45,
+          "player": "M. Tascone",
+          "side": "away",
+          "rosso": false
+        }
+      ],
+      "subs": [
+        {
+          "minute": 41,
+          "esce": "G. Saro",
+          "entra": "D. Marfella",
+          "side": "home"
+        },
+        {
+          "minute": 46,
+          "esce": "I. Achik",
+          "entra": "E. D'Ursi",
+          "side": "away"
+        },
+        {
+          "minute": 46,
+          "esce": "F. Lescano",
+          "entra": "A. La Gumina",
+          "side": "away"
+        },
+        {
+          "minute": 58,
+          "esce": "G. Panico",
+          "entra": "Y. Merdji",
+          "side": "home"
+        },
+        {
+          "minute": 58,
+          "esce": "F. Berra",
+          "entra": "M. Seck",
+          "side": "home"
+        },
+        {
+          "minute": 75,
+          "esce": "M. Gyabuaa",
+          "entra": "R. Di Vico",
+          "side": "away"
+        },
+        {
+          "minute": 81,
+          "esce": "M. Vitale",
+          "entra": "M. Djibril",
+          "side": "away"
+        },
+        {
+          "minute": 86,
+          "esce": "S. Pieraccini",
+          "entra": "R. Zoia",
+          "side": "away"
+        },
+        {
+          "minute": 89,
+          "esce": "A. Gallo",
+          "entra": "M. Bigonzoni",
+          "side": "home"
+        },
+        {
+          "minute": 89,
+          "esce": "F. Petito",
+          "entra": "V. Ngana",
+          "side": "home"
+        }
+      ],
       "home": {
         "id": "foggia",
         "name": "CALCIO FOGGIA 1920",
@@ -2230,7 +2395,7 @@
     },
     {
       "id": "club-18486",
-      "date": "2026-09-02T13:06:48.000Z",
+      "date": "2026-09-02T11:06:48.000Z",
       "title": "FOGGIA-AUDACE CERIGNOLA: INFO TAGLIANDI",
       "excerpt": "Il Calcio Foggia 1920 comunica che, a partire dalle ore 17.00 di mercoledì 02 settembre 2026, verranno messi in vendita i tagliandi per assistere alla gara Foggia-Audace Cerignola, seconda giornata del campionato Serie C SKy Wifi – Girone C stagione sportiva 2026/2027, in programma domenica 06 settembre 2026 allo stadio comunale Pino Zaccheria con fischio d’inizio alle…",
       "url": "https://www.calciofoggia1920.net/foggia-audace-cerignola-info-tagliandi/",
@@ -2242,7 +2407,7 @@
     },
     {
       "id": "club-18464",
-      "date": "2026-09-01T21:59:33.000Z",
+      "date": "2026-09-01T19:59:33.000Z",
       "title": "DALL’ATALANTA ARRIVA FEDERICO ZUCCON",
       "excerpt": "Il Calcio Foggia 1920 comunica di aver acquisito a titolo definitivo, le prestazioni sportive del calciatore Federico Zuccon, che si lega al club rossonero fino al 30 giugno 2028. Centrocampista centrale, nato a Genova il 1° aprile 2003, Zuccon è cresciuto nei settori giovanili di Sampdoria e Atalanta, conquistando con la Primavera nerazzurra palcoscenici di…",
       "url": "https://www.calciofoggia1920.net/dallatalanta-arriva-federico-zuccon/",
@@ -2254,7 +2419,7 @@
     },
     {
       "id": "club-18477",
-      "date": "2026-09-01T21:53:19.000Z",
+      "date": "2026-09-01T19:53:19.000Z",
       "title": "DALL’ASCOLI ARRIVA FERDINANDO DEL SOLE",
       "excerpt": "Il Calcio Foggia 1920 comunica di aver acquisito a titolo definitivo dall’Ascoli Calcio, le prestazioni sportive del calciatore Ferdinando Del Sole, che si lega al club rossonero fino al 30 giugno 2028. Attaccante esterno, nato a Napoli il 17 gennaio 1998, Del Sole cresce calcisticamente nel settore giovanile del Pescara, arrivando a indossare la maglia della…",
       "url": "https://www.calciofoggia1920.net/dallascoli-arriva-ferdinando-del-sole/",
@@ -2266,7 +2431,7 @@
     },
     {
       "id": "club-18466",
-      "date": "2026-09-01T15:29:46.000Z",
+      "date": "2026-09-01T13:29:46.000Z",
       "title": "RAVASIO PER L’ATTACCO ROSSONERO",
       "excerpt": "Il Calcio Foggia 1920 comunica di aver acquisito dalla SS Arezzo a titolo temporaneo, con obbligo di riscatto a condizione stabilita, le prestazioni sportive del calciatore Mario Ravasio, che si lega al club rossonero fino al 30 giugno 2027. Punta centrale, nato a Bergamo il 19 luglio 1998, Ravasio si è formato nel settore giovanile…",
       "url": "https://www.calciofoggia1920.net/ravasio-per-lattacco-rossonero/",
@@ -2278,7 +2443,7 @@
     },
     {
       "id": "club-18444",
-      "date": "2026-08-28T19:52:28.000Z",
+      "date": "2026-08-28T17:52:28.000Z",
       "title": "DALLA JUVENTUS ARRIVA VALDES NGANA",
       "excerpt": "Il Calcio Foggia 1920 comunica di aver acquisito dalla Juventus, con la formula del prestito secco, le prestazioni sportive del calciatore Valdes Ngana, che si lega al club rossonero fino al 30 giugno 2027. Centrocampista di grande struttura fisica, nato a Torino il 17 agosto 2006, Ngana vanta una formazione di alto profilo nel settore…",
       "url": "https://www.calciofoggia1920.net/dalla-juventus-arriva-valdes-ngana/",
@@ -2290,7 +2455,7 @@
     },
     {
       "id": "club-18451",
-      "date": "2026-08-28T19:52:00.000Z",
+      "date": "2026-08-28T17:52:00.000Z",
       "title": "BERRA È UN NUOVO GIOCATORE DEL FOGGIA",
       "excerpt": "Il Calcio Foggia 1920 comunica di aver acquisito a titolo definitivo le prestazioni sportive del calciatore Filippo Berra, che si lega al club rossonero fino al 30 giugno 2028. Difensore, nato a Udine il 6 febbraio 1995, Berra cresce calcisticamente nel settore giovanile dell’Udinese, arrivando a indossare la maglia della Nazionale Italiana Under 20. Dopo…",
       "url": "https://www.calciofoggia1920.net/berra-e-un-nuovo-giocatore-del-foggia/",
@@ -2302,7 +2467,7 @@
     },
     {
       "id": "club-18387",
-      "date": "2026-08-21T20:10:50.000Z",
+      "date": "2026-08-21T18:10:50.000Z",
       "title": "IN ATTACCO ARRIVA LUCIANI",
       "excerpt": "Il Calcio Foggia 1920 comunica di aver acquisito dal Ravenna FC 1913 a titolo temporaneo e con obbligo di riscatto, a condizione già stabilita, le prestazioni sportive del calciatore Pierluca Luciani, che si lega al club rossonero fino al 30 giugno 2027. Punta centrale, nato a Palestrina il 28 agosto 2002, Luciani vanta già una…",
       "url": "https://www.calciofoggia1920.net/in-attacco-arriva-luciani/",
@@ -2314,7 +2479,7 @@
     },
     {
       "id": "club-18385",
-      "date": "2026-08-21T20:01:17.000Z",
+      "date": "2026-08-21T18:01:17.000Z",
       "title": "PETITO E’ ROSSONERO",
       "excerpt": "Il Calcio Foggia 1920 comunica di aver acquisito dalle Dolomiti Bellunesi, a titolo temporaneo, le prestazioni sportive del calciatore Francesco Pio Petito, che si lega al club rossonero fino al 30 giugno 2027. Attaccante versatile (seconda punta ed esterno d’attacco), nato a Benevento il 2 dicembre 2002, Petito vanta un percorso di costante crescita tra…",
       "url": "https://www.calciofoggia1920.net/petito-e-rossonero/",
@@ -2326,7 +2491,7 @@
     },
     {
       "id": "club-18379",
-      "date": "2026-08-18T20:39:16.000Z",
+      "date": "2026-08-18T18:39:16.000Z",
       "title": "CONTE CEDUTO IN PRESITITO ALL’HERACLEA",
       "excerpt": "Il Calcio Foggia 1920 è lieto di comunicare l’acquisizione a titolo definitivo delle prestazioni sportive del calciatore Claudio Pio Conte. Nato a Foggia il 22 aprile 2007, Conte è un centrocampista versatile ed estremamente dinamico, dotato di grande qualità tecnica e visione di gioco, può ricoprire sia il ruolo di mezzala o interno di centrocampo…",
       "url": "https://www.calciofoggia1920.net/conte-ceduto-in-presitito-allheraclea/",
@@ -2338,7 +2503,7 @@
     },
     {
       "id": "club-18348",
-      "date": "2026-08-16T09:54:30.000Z",
+      "date": "2026-08-16T07:54:30.000Z",
       "title": "MAESTRELLI, SMERALDI, CHIARA, MIU E PAOLINO A DISPOSIZIONE DI AUTERI",
       "excerpt": "Il Calcio Foggia 1920 comunica di aver acquisito a titolo definitivo il diritto alle prestazioni sportive di cinque nuovi calciatori, che andranno a far parte della rosa a disposizione di Mister Auteri, con un importante sguardo rivolto sia al presente che al futuro, tesserando dei giovani calciatori di prospettiva. I dettagli sui nuovi arrivi: Rinaldo…",
       "url": "https://www.calciofoggia1920.net/maestrelli-smeraldi-chiara-miu-e-paolino-a-disposizione-di-auteri/",
@@ -2350,7 +2515,7 @@
     },
     {
       "id": "club-18362",
-      "date": "2026-08-16T09:49:56.000Z",
+      "date": "2026-08-16T07:49:56.000Z",
       "title": "LE PAROLE DI MISTER AUTERI ALLA VIGLIA DI FOGGIA-ALTAMURA",
       "excerpt": "Alla vigilia del debutto ufficiale in Coppa Italia tra Calcio Foggia 1920 e Team Altamura, il tecnico rossonero Gaetano Auteri ha analizzato il momento della squadra, soffermandosi sul percorso di crescita del gruppo e sull’importanza della sfida. Di seguito le dichiarazioni del mister ai microfoni del club: “Stiamo lavorando in maniera importante, con l’obiettivo di…",
       "url": "https://www.calciofoggia1920.net/le-parole-di-mister-auteri-alla-viglia-di-foggia-altamura/",
@@ -2362,7 +2527,7 @@
     },
     {
       "id": "club-18354",
-      "date": "2026-08-14T23:12:00.000Z",
+      "date": "2026-08-14T21:12:00.000Z",
       "title": "DALLA ROMA ARRIVA SECK",
       "excerpt": "Il Calcio Foggia 1920 comunica di aver acquisito, a titolo temporaneo dall’A.S. Roma, le prestazioni sportive del calciatore Mohamed Seck. Difensore centrale, nato a Dakar (Senegal) il 10 febbraio 2006, Seck muove i suoi primi passi calcistici di rilievo nel settore giovanile della Pro Vercelli. Con il club piemontese compie un percorso di crescita rapido…",
       "url": "https://www.calciofoggia1920.net/dalla-roma-arriva-seck/",
@@ -2374,7 +2539,7 @@
     },
     {
       "id": "club-18360",
-      "date": "2026-08-14T23:11:41.000Z",
+      "date": "2026-08-14T21:11:41.000Z",
       "title": "MILÁN DEMETER È UN NUOVO CALCIATORE DEL FOGGIA",
       "excerpt": "Il Calcio Foggia 1920 comunica di aver acquisito a titolo definitivo le prestazioni sportive del calciatore Milán Demeter, che si lega al club rossonero fino al 30 giugno 2028. Terzino sinistro, dotato di un’imponente stazza fisica (192 cm di altezza), nato a Miskolc (Ungheria) il 21 febbraio 2005, Demeter cresce calcisticamente nel settore giovanile del…",
       "url": "https://www.calciofoggia1920.net/milan-demeter-e-un-nuovo-calciatore-del-foggia/",
@@ -2386,7 +2551,7 @@
     },
     {
       "id": "club-18337",
-      "date": "2026-08-13T21:04:49.000Z",
+      "date": "2026-08-13T19:04:49.000Z",
       "title": "DALLA CREMONESE ARRIVA BIGONZONI",
       "excerpt": "Il Calcio Foggia 1920 comunica di aver acquisito a titolo definitivo le prestazioni sportive del calciatore Michele Bigonzoni, che si lega al club rossonero fino al 30 giugno 2027. Nato a Roma il 31 maggio 2004, Bigonzoni compie la propria crescita calcistica nel settore giovanile della Cremonese. Nel corso della sua giovane carriera ha maturato…",
       "url": "https://www.calciofoggia1920.net/dalla-cremonese-arriva-bigonzoni/",
@@ -2398,7 +2563,7 @@
     },
     {
       "id": "club-18333",
-      "date": "2026-08-13T21:04:49.000Z",
+      "date": "2026-08-13T19:04:49.000Z",
       "title": "MERDJI PER L’ATTACCO DEL FOGGIA",
       "excerpt": "Il Calcio Foggia 1920 comunica di aver acquisito a titolo definitivo le prestazioni sportive del calciatore Yanis Merdji, che si lega al club rossonero fino al 30 giugno 2027. Attaccante esperto e duttile, nato a Roanne il 29 ottobre 1993, Merdji vanta una ricca carriera nel calcio francese. Cresciuto nei settori giovanili di Rhins Trambouze…",
       "url": "https://www.calciofoggia1920.net/merdji-per-lattacco-del-foggia/",
@@ -2410,7 +2575,7 @@
     },
     {
       "id": "club-18311",
-      "date": "2026-08-11T13:13:51.000Z",
+      "date": "2026-08-11T11:13:51.000Z",
       "title": "BENTORNATO ANDREA GALLO",
       "excerpt": "Il Calcio Foggia 1920 comunica di aver acquisito dal F.C. Crotone a titolo temporaneo e con obbligo di riscatto, a condizione già stabilita, le prestazioni sportive del calciatore Andrea Gallo, che si lega al club rossonero fino al 30 giugno 2027. Centrocampista di personalità, nato a Castellammare di Stabia il 15 giugno 1997, Gallo vanta…",
       "url": "https://www.calciofoggia1920.net/bentornato-andrea-gallo/",
@@ -2422,7 +2587,7 @@
     },
     {
       "id": "club-18323",
-      "date": "2026-08-11T11:59:28.000Z",
+      "date": "2026-08-11T09:59:28.000Z",
       "title": "FOGGIA-ALTAMURA: INFO ACCREDITI STAMPA",
       "excerpt": "Il Calcio Foggia 1920 comunica che da questo momento sono aperte le richieste di accredito stampa, radio-tv e fotografi per la gara di campionato/coppa Calcio Foggia 1920 – Team Altamura, in programma domenica 16 agosto 2026 alle ore 21:00 presso lo stadio Pino Zaccheria. Le richieste dovranno pervenire tassativamente entro e non oltre le ore…",
       "url": "https://www.calciofoggia1920.net/foggia-altamura-info-accrediti-stampa/",
@@ -2434,7 +2599,7 @@
     },
     {
       "id": "club-18314",
-      "date": "2026-08-10T20:49:19.000Z",
+      "date": "2026-08-10T18:49:19.000Z",
       "title": "IN DIFESA ARRIVA PARISY",
       "excerpt": "Il Calcio Foggia 1920 comunica di aver acquisito a titolo definitivo le prestazioni sportive del calciatore Corentin Parisy, che si lega al club rossonero fino al 30 giugno 2027. Difensore centrale, nato a Romilly sur Seine il 24 marzo 2004, Parisy compie i primi passi della propria formazione calcistica nei settori giovanili d’oltralpe. Le sue…",
       "url": "https://www.calciofoggia1920.net/in-difesa-arriva-parisy/",
@@ -2446,7 +2611,7 @@
     },
     {
       "id": "club-18299",
-      "date": "2026-08-06T20:50:20.000Z",
+      "date": "2026-08-06T18:50:20.000Z",
       "title": "TOURÈ È DEL FOGGIA",
       "excerpt": "Il Calcio Foggia 1920 comunica di aver acquisito a titolo definitivo le prestazioni sportive del calciatore Isyakha Tourè, che si lega al club rossonero fino al 30 giugno 2027. Esterno offensivo, Tourè nasce a Montreuil (Francia) nel 2001, cresce calcisticamente tra i settori giovanili di Metz e Paris FC, prima di maturare un’importante esperienza militando…",
       "url": "https://www.calciofoggia1920.net/toure-e-del-foggia/",
@@ -2458,7 +2623,7 @@
     },
     {
       "id": "club-18297",
-      "date": "2026-08-06T20:44:21.000Z",
+      "date": "2026-08-06T18:44:21.000Z",
       "title": "AZAROVS PER LA DIFESA ROSSONERA",
       "excerpt": "Il Calcio Foggia 1920 comunica di aver acquisito a titolo definitivo le prestazioni sportive del calciatore Timurs Azarovs, che si lega al club rossonero fino al 30 giugno 2027. Difensore centrale, nato a Liepāja, in Lettonia, il 23 marzo 2006, Azarovs compie i primi passi della propria formazione calcistica nei settori giovanili della sua terra…",
       "url": "https://www.calciofoggia1920.net/azarovs-per-la-difesa-rossonera/",
@@ -2470,7 +2635,7 @@
     },
     {
       "id": "club-18293",
-      "date": "2026-08-06T16:47:24.000Z",
+      "date": "2026-08-06T14:47:24.000Z",
       "title": "VICINI ALLA FAMIGLIA MARCHIORO",
       "excerpt": "Il Calcio Foggia 1920 si stringe intorno alla famiglia Marchioro per la scomparsa del caro Giuseppe, da tutti conosciuto come “Pippo”. Marchioro guidò la formazione rossonera nella stagione 1987/88, lasciando un ricordo indelebile sulla panchina dello Zaccheria. Sotto la sua guida, il Foggia fu protagonista anche della storica sfida contro il Real Madrid del 14…",
       "url": "https://www.calciofoggia1920.net/vicini-alla-famiglia-marchioro/",
@@ -2482,7 +2647,7 @@
     },
     {
       "id": "club-18282",
-      "date": "2026-08-05T20:24:28.000Z",
+      "date": "2026-08-05T18:24:28.000Z",
       "title": "OVISZACH PER L’ATTACCO DEL FOGGIA",
       "excerpt": "Il Calcio Foggia 1920 comunica di aver acquisito, a titolo temporaneo con diritto di riscatto dall’Ascoli Calcio 1898 FC, le prestazioni sportive del calciatore Enrico Oviszach. Attaccante esterno e ala sinistra, nato ad Udine il 26 marzo 2001, Oviszach cresce calcisticamente nel settore giovanile dell’Udinese, completando poi il proprio percorso nel vivaio del Torino. Nel…",
       "url": "https://www.calciofoggia1920.net/oviszach-per-lattacco-del-foggia/",
@@ -2494,7 +2659,7 @@
     },
     {
       "id": "club-18269",
-      "date": "2026-08-05T20:03:01.000Z",
+      "date": "2026-08-05T18:03:01.000Z",
       "title": "MARFELLA È ROSSONERO",
       "excerpt": "Il Calcio Foggia 1920 comunica di aver acquisito a titolo definitivo le prestazioni sportive del calciatore Davide Marfella, che si lega al club rossonero fino al 30 giugno 2027. Portiere, nato a Pozzuoli il 15 settembre 1999, Marfella cresce nel settore giovanile del Napoli, compiendo l’intero percorso fino alla formazione Primavera. Muove i primi passi…",
       "url": "https://www.calciofoggia1920.net/marfella-e-rossonero/",
@@ -2506,7 +2671,7 @@
     },
     {
       "id": "club-18254",
-      "date": "2026-08-03T20:37:22.000Z",
+      "date": "2026-08-03T18:37:22.000Z",
       "title": "PER L’ATTACCO ARRIVA PANICO",
       "excerpt": "Il Calcio Foggia 1920 comunica di aver acquisito a titolo definitivo dall’U.S. Avellino 1912 le prestazioni sportive del calciatore Giuseppe Panico, che si lega al club rossonero fino al 30 giugno 2028. Attaccante e seconda punta, nato ad Ottaviano il 10 maggio 1997, Panico cresce calcisticamente nel settore giovanile della Polisportiva Calcio Sezze prima di…",
       "url": "https://www.calciofoggia1920.net/per-lattacco-arriva-panico/",
@@ -2518,7 +2683,7 @@
     },
     {
       "id": "club-18257",
-      "date": "2026-08-02T19:37:06.000Z",
+      "date": "2026-08-02T17:37:06.000Z",
       "title": "HAOUDI PER IL CENTROCAMPO DEL FOGGIA",
       "excerpt": "Il Calcio Foggia 1920 comunica di aver acquisito a titolo definitivo le prestazioni sportive del calciatore Hamza Haoudi, che si lega al club rossonero fino al 30 giugno 2028. Centrocampista/trequartista, nato a Lucca il 9 marzo 2001, Haoudi cresce calcisticamente nel settore giovanile del Livorno, con cui fa anche l’esordio tra i professionisti. Successivamente passa…",
       "url": "https://www.calciofoggia1920.net/haoudi-per-il-centrocampo-del-foggia/",
@@ -2530,7 +2695,7 @@
     },
     {
       "id": "club-18259",
-      "date": "2026-08-01T19:53:43.000Z",
+      "date": "2026-08-01T17:53:43.000Z",
       "title": "DI PASQUALE TORNA IN ROSSONERO",
       "excerpt": "Il Calcio Foggia 1920 comunica di aver acquisito, dall’FC Crotone, le prestazioni sportive del calciatore Davide Di Pasquale, che si lega al club rossonero fino al 30 giugno 2028. Difensore centrale, nato a Pescara il 27 gennaio 1996, Di Pasquale muove i suoi primi passi nel settore giovanile del Pescara. Nel corso della sua carriera…",
       "url": "https://www.calciofoggia1920.net/di-pasquale-torna-in-rossonero/",
@@ -2542,7 +2707,7 @@
     },
     {
       "id": "club-18241",
-      "date": "2026-07-30T19:39:59.000Z",
+      "date": "2026-07-30T17:39:59.000Z",
       "title": "COULIBALY È DEL FOGGIA",
       "excerpt": "Il Calcio Foggia 1920 comunica di aver acquisito, dall’FC Südtirol, le prestazioni sportive del calciatore Mamadou Coulibaly, che si lega al club rossonero fino al 30 giugno 2028. Centrocampista centrale, nato a Thiès (Senegal) il 3 febbraio 1999, Coulibaly cresce calcisticamente nel settore giovanile del Pescara, squadra con cui fa il suo esordio tra i…",
       "url": "https://www.calciofoggia1920.net/coulibaly-e-del-foggia/",
@@ -2554,7 +2719,7 @@
     },
     {
       "id": "club-18236",
-      "date": "2026-07-30T13:03:08.000Z",
+      "date": "2026-07-30T11:03:08.000Z",
       "title": "SARO PER LA PORTA ROSSONERA",
       "excerpt": "Il Calcio Foggia 1920 comunica di aver acquisito a titolo definitivo dall’U.S. Cremonese le prestazioni sportive del calciatore Gianluca Saro, che si lega al club rossonero fino al 30 giugno 2028. Portiere, nato a San Daniele del Friuli il 25 giugno 2000, Saro cresce calcisticamente tra i settori giovanili di Pro Vercelli, Juventus, Cesena ed…",
       "url": "https://www.calciofoggia1920.net/saro-per-la-porta-rossonera/",
@@ -2566,7 +2731,7 @@
     },
     {
       "id": "club-18238",
-      "date": "2026-07-29T21:46:56.000Z",
+      "date": "2026-07-29T19:46:56.000Z",
       "title": "TODISCO E’ ROSSONERO",
       "excerpt": "Il Calcio Foggia 1920 comunica di aver acquisito a titolo definitivo dall’U.S. Avellino 1912 le prestazioni sportive del calciatore Gianmarco Todisco, che si lega al club rossonero fino al 30 giugno 2028. Terzino destro, nato a Torre del Greco il 30 aprile 2002, Todisco cresce calcisticamente nei settori giovanili di Verona, Torino e Juve Stabia,…",
       "url": "https://www.calciofoggia1920.net/todisco-e-rossonero/",
@@ -2578,7 +2743,7 @@
     },
     {
       "id": "club-18233",
-      "date": "2026-07-20T15:38:50.000Z",
+      "date": "2026-07-20T13:38:50.000Z",
       "title": "COMUNICATO STAMPA",
       "excerpt": "Il Calcio Foggia 1920 comunica che, dopo aver già provveduto al completamento dell’intero iter previsto per l’iscrizione al Campionato di Serie D 2026/2027, nella giornata di venerdì 17 luglio, è stata depositata tutta la documentazione propedeutica alla presentazione della richiesta di riammissione al Campionato di Serie C Sky Wifi 2026/2027. La Società resta in attesa…",
       "url": "https://www.calciofoggia1920.net/comunicato-stampa-54/",
@@ -2590,7 +2755,7 @@
     },
     {
       "id": "club-18228",
-      "date": "2026-07-20T12:53:28.000Z",
+      "date": "2026-07-20T10:53:28.000Z",
       "title": "COMUNICATO STAMPA",
       "excerpt": "La Società Calcio Foggia 1920 srl comunica che in data odierna ha ricevuto il decreto di revoca dell’amministrazione giudiziaria emesso in data 20/07/2026 dal Tribunale di Bari – Terza Sezione Penale in funzione di Tribunale della Prevenzione. Il Tribunale di Bari, nel predetto provvedimento, ha posto in rilievo l’esito positivo del programma di sostegno e…",
       "url": "https://www.calciofoggia1920.net/comunicato-stampa-53/",
@@ -2602,7 +2767,7 @@
     },
     {
       "id": "club-18224",
-      "date": "2026-07-09T18:57:53.000Z",
+      "date": "2026-07-09T16:57:53.000Z",
       "title": "RITIRO PRE-SEASON 2026/27",
       "excerpt": "Il Calcio Foggia 1920 comunica che la sede del ritiro estivo in vista della stagione sportiva 2026/27 sarà San Gregorio Magno (SA). ​Il gruppo squadra svolgerà il periodo di preparazione in terra campana dal 25 luglio al 7 agosto.",
       "url": "https://www.calciofoggia1920.net/ritiro-pre-season-2026-27/",
@@ -2614,7 +2779,7 @@
     },
     {
       "id": "club-18210",
-      "date": "2026-07-08T13:17:09.000Z",
+      "date": "2026-07-08T11:17:09.000Z",
       "title": "“IO SONO FOGGIA” AL VIA LA CAMPAGNA ABBONAMENTI 2026/27",
       "excerpt": "[vc_row][vc_column][vc_column_text css=””]“IO SONO FOGGIA” Parte la campagna abbonamenti per la s.s. 2026/2027 PRELAZIONE A partire dalle ore 16:30 di mercoledì 08 luglio e fino alle ore 00.00 di martedì 14 luglio, online sul sito Vivaticket e presso i botteghini dello stadio Pino Zaccheria in Via Gioberti 1, (seguiranno orari) sarà possibile sottoscrivere la tessera stagionale…",
       "url": "https://www.calciofoggia1920.net/io-sono-foggia-al-via-la-campagna-abbonamenti-26-27/",
@@ -2626,7 +2791,7 @@
     },
     {
       "id": "club-18190",
-      "date": "2026-04-20T20:09:24.000Z",
+      "date": "2026-04-20T18:09:24.000Z",
       "title": "IN PANCHINA TORNA BARILARI",
       "excerpt": "Il Calcio Foggia 1920, previa informazione preventiva resa come legge all’Amministrazione giudiziaria, comunica di aver affidato nuovamente la guida tecnica della Prima Squadra a Enrico Barilari. Il tecnico sarà affiancato dal preparatore atletico Renzo Ricci e dall’allenatore in seconda Dino Bitetto. Al mister Enrico Barilari e al suo staff il Club rivolge un augurio di…",
       "url": "https://www.calciofoggia1920.net/in-panchina-torna-barilari/",
@@ -2638,7 +2803,7 @@
     },
     {
       "id": "club-18189",
-      "date": "2026-04-20T20:06:20.000Z",
+      "date": "2026-04-20T18:06:20.000Z",
       "title": "PAZIENZA ESONERATO",
       "excerpt": "Il Calcio Foggia 1920, previa informazione preventiva resa come legge all’Amministrazione giudiziaria, comunica di aver sollevato Michele Pazienza dall’incarico di responsabile tecnico della Prima Squadra. Contestualmente, sono stati sollevati dall’incarico anche il vice allenatore Antonio La Porta e il preparatore atletico Leandro Zoila. Il Club ringrazia Michele Pazienza e il suo staff per il lavoro…",
       "url": "https://www.calciofoggia1920.net/pazienza-esonerato/",
@@ -2650,7 +2815,7 @@
     },
     {
       "id": "club-18186",
-      "date": "2026-04-20T16:26:45.000Z",
+      "date": "2026-04-20T14:26:45.000Z",
       "title": "COMUNICATO STAMPA",
       "excerpt": "Il Calcio Foggia 1920 congiuntamente con l’amministrazione giudiziaria, condannano con fermezza e senza alcuna ambiguità l’episodio di violenza verificatosi ieri a Monopoli, un fatto grave che nulla ha a che vedere con i valori dello sport e con il modo di vivere il calcio che da sempre contraddistingue la nostra comunità. Il Club intende ribadire…",
       "url": "https://www.calciofoggia1920.net/comunicato-stampa-52/",
@@ -2662,7 +2827,7 @@
     },
     {
       "id": "club-18179",
-      "date": "2026-04-09T15:39:00.000Z",
+      "date": "2026-04-09T13:39:00.000Z",
       "title": "FOGGIA-SIRACUSA: INFO SETTORE OSPITI",
       "excerpt": "Il Calcio Foggia 1920 comunica la messa in vendita dei tagliandi per assistere alla gara Foggia-Siracusa, trentaseiesima giornata del campionato Serie C SKy Wifi – Girone C stagione sportiva 2025/2026, in programma domenica 12 aprile 2026 allo stadio comunale Pino Zaccheria con fischio d’inizio alle ore 14:30. Il costo del biglietto è di euro 10.00 + di diritti…",
       "url": "https://www.calciofoggia1920.net/foggia-siracusa-info-settore-ospiti/",
@@ -2674,7 +2839,7 @@
     },
     {
       "id": "club-18176",
-      "date": "2026-04-07T16:50:49.000Z",
+      "date": "2026-04-07T14:50:49.000Z",
       "title": "FOGGIA – SIRACUSA: INFO TAGLIANDI",
       "excerpt": "Il Calcio Foggia 1920 comunica la messa in vendita dei tagliandi per assistere alla gara Foggia-Siracusa, trentaseiesima giornata del campionato Serie C SKy Wifi – Girone C stagione sportiva 2025/2026, in programma domenica 12 aprile 2026 allo stadio comunale Pino Zaccheria con fischio d’inizio alle ore 14:30. Prezzi INTERO RIDOTTO TRIBUNA CENTRALISSIMA € 45,00…",
       "url": "https://www.calciofoggia1920.net/foggia-siracusa-info-tagliandi/",
@@ -2686,7 +2851,7 @@
     },
     {
       "id": "club-18171",
-      "date": "2026-03-26T14:09:48.000Z",
+      "date": "2026-03-26T13:09:48.000Z",
       "title": "FOGGIA-TRAPANI: INFO TAGLIANDI",
       "excerpt": "Il Calcio Foggia 1920 comunica la messa in vendita dei tagliandi per assistere alla gara Foggia-Trapani, trentaquattresima giornata del campionato Serie C SKy Wifi – Girone C stagione sportiva 2025/2026, in programma domenica 29 marzo 2026 allo stadio comunale Pino Zaccheria con fischio d’inizio alle ore 14:30. Prezzi INTERO RIDOTTO TRIBUNA CENTRALISSIMA € 45,00 €…",
       "url": "https://www.calciofoggia1920.net/foggia-trapani-info-tagliandi-2/",
@@ -2698,7 +2863,7 @@
     },
     {
       "id": "club-18166",
-      "date": "2026-03-07T21:00:27.000Z",
+      "date": "2026-03-07T20:00:27.000Z",
       "title": "STAMPA SI DIVENTA MAIN SPONSOR",
       "excerpt": "Si rafforza la collaborazione tra il Calcio Foggia 1920 e Stampasi.it, realtà leader nella stampa online di gadget, abbigliamento, abbigliamento sportivo e da lavoro, che ha deciso di supportare il club rossonero diventando Main Sponsor per la stagione in corso. StampaSi offre soluzioni dedicate alla promozione del brand e al merchandising attraverso articoli personalizzabili. Il…",
       "url": "https://www.calciofoggia1920.net/stampa-si-diventa-main-sponsor/",
@@ -4430,6 +4595,258 @@
           {
             "numero": 9,
             "nome": "Gambale Diego",
+            "ruolo": "Attaccante"
+          }
+        ]
+      }
+    },
+    "wp-2026-2027-002": {
+      "casa": {
+        "squadra": "FOGGIA",
+        "modulo": "4-2-3-1",
+        "allenatore": "Auteri Gaetano",
+        "giocatori": [
+          {
+            "numero": 22,
+            "nome": "Saro Gianluca",
+            "ruolo": "Portiere"
+          },
+          {
+            "numero": 2,
+            "nome": "Todisco Gianmarco",
+            "ruolo": "Difensore"
+          },
+          {
+            "numero": 32,
+            "nome": "Smeraldi Andrea",
+            "ruolo": "Difensore"
+          },
+          {
+            "numero": 4,
+            "nome": "Gallo Andrea",
+            "ruolo": "Difensore"
+          },
+          {
+            "numero": 21,
+            "nome": "Berra Filippo",
+            "ruolo": "Difensore"
+          },
+          {
+            "numero": 51,
+            "nome": "Parisy Corentin",
+            "ruolo": "Difensore"
+          },
+          {
+            "numero": 16,
+            "nome": "Haoudi Hamza",
+            "ruolo": "Difensore"
+          },
+          {
+            "numero": 11,
+            "nome": "Petito Francesco Pio",
+            "ruolo": "Centrocampista"
+          },
+          {
+            "numero": 17,
+            "nome": "Panico Giuseppe Antonio",
+            "ruolo": "Centrocampista"
+          },
+          {
+            "numero": 28,
+            "nome": "Touré Isyakha",
+            "ruolo": "Centrocampista"
+          },
+          {
+            "numero": 18,
+            "nome": "Luciani Pierluca",
+            "ruolo": "Attaccante"
+          }
+        ]
+      },
+      "ospiti": {
+        "squadra": "SALERNITANA",
+        "modulo": "5-4-1",
+        "allenatore": "Cosmi Serse",
+        "giocatori": [
+          {
+            "numero": 12,
+            "nome": "Galeotti Cesare",
+            "ruolo": "Portiere"
+          },
+          {
+            "numero": 16,
+            "nome": "Llano Massa Manuel Tadeo",
+            "ruolo": "Difensore"
+          },
+          {
+            "numero": 14,
+            "nome": "Villa Luca",
+            "ruolo": "Difensore"
+          },
+          {
+            "numero": 33,
+            "nome": "Anastasio Armando",
+            "ruolo": "Difensore"
+          },
+          {
+            "numero": 19,
+            "nome": "Capuano Marco",
+            "ruolo": "Difensore"
+          },
+          {
+            "numero": 73,
+            "nome": "Pieraccini Simone",
+            "ruolo": "Difensore"
+          },
+          {
+            "numero": 32,
+            "nome": "Vitale Mattia",
+            "ruolo": "Centrocampista"
+          },
+          {
+            "numero": 4,
+            "nome": "Gyabuaa Manu Emmanuel",
+            "ruolo": "Centrocampista"
+          },
+          {
+            "numero": 8,
+            "nome": "Tascone Mattia",
+            "ruolo": "Centrocampista"
+          },
+          {
+            "numero": 7,
+            "nome": "Achik Ismail",
+            "ruolo": "Centrocampista"
+          },
+          {
+            "numero": 10,
+            "nome": "Lescano Facundo",
+            "ruolo": "Attaccante"
+          }
+        ]
+      }
+    },
+    "wp-2026-2027-001": {
+      "casa": {
+        "squadra": "CROTONE",
+        "modulo": "4-4-2",
+        "allenatore": "Greco Leandro",
+        "giocatori": [
+          {
+            "numero": 1,
+            "nome": "Merelli Davide",
+            "ruolo": "Portiere"
+          },
+          {
+            "numero": 63,
+            "nome": "Veltri Angelo",
+            "ruolo": "Difensore"
+          },
+          {
+            "numero": 23,
+            "nome": "Groppelli Filippo",
+            "ruolo": "Difensore"
+          },
+          {
+            "numero": 13,
+            "nome": "Armini Nicolò",
+            "ruolo": "Difensore"
+          },
+          {
+            "numero": 26,
+            "nome": "Tanco Simmermacher Gregorio José",
+            "ruolo": "Difensore"
+          },
+          {
+            "numero": 8,
+            "nome": "Torres Delgado Iker",
+            "ruolo": "Centrocampista"
+          },
+          {
+            "numero": 90,
+            "nome": "Spadoni Arthur",
+            "ruolo": "Centrocampista"
+          },
+          {
+            "numero": 83,
+            "nome": "Ruggiero Zak",
+            "ruolo": "Centrocampista"
+          },
+          {
+            "numero": 96,
+            "nome": "Zunno Marco",
+            "ruolo": "Centrocampista"
+          },
+          {
+            "numero": 10,
+            "nome": "Musso Antonino",
+            "ruolo": "Attaccante"
+          },
+          {
+            "numero": 99,
+            "nome": "Crapisto Francesco",
+            "ruolo": "Attaccante"
+          }
+        ]
+      },
+      "ospiti": {
+        "squadra": "FOGGIA",
+        "modulo": "4-4-2",
+        "allenatore": "Auteri Gaetano",
+        "giocatori": [
+          {
+            "numero": 22,
+            "nome": "Saro Gianluca",
+            "ruolo": "Portiere"
+          },
+          {
+            "numero": 2,
+            "nome": "Todisco Gianmarco",
+            "ruolo": "Difensore"
+          },
+          {
+            "numero": 32,
+            "nome": "Smeraldi Andrea",
+            "ruolo": "Difensore"
+          },
+          {
+            "numero": 3,
+            "nome": "Seck Mohamed",
+            "ruolo": "Difensore"
+          },
+          {
+            "numero": 6,
+            "nome": "Di Pasquale Davide",
+            "ruolo": "Difensore"
+          },
+          {
+            "numero": 4,
+            "nome": "Gallo Andrea",
+            "ruolo": "Centrocampista"
+          },
+          {
+            "numero": 11,
+            "nome": "Petito Francesco Pio",
+            "ruolo": "Centrocampista"
+          },
+          {
+            "numero": 16,
+            "nome": "Haoudi Hamza",
+            "ruolo": "Centrocampista"
+          },
+          {
+            "numero": 7,
+            "nome": "Oviszach Enrico",
+            "ruolo": "Centrocampista"
+          },
+          {
+            "numero": 18,
+            "nome": "Luciani Pierluca",
+            "ruolo": "Attaccante"
+          },
+          {
+            "numero": 17,
+            "nome": "Panico Giuseppe Antonio",
             "ruolo": "Attaccante"
           }
         ]
