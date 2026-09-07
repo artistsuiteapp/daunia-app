@@ -70,6 +70,11 @@ jobs:
         if: steps.commit.outputs.cambiato == 'si'
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          # `.vercel/` e gitignorato, quindi qui il CLI non sa a quale progetto
+          # pubblicare: senza questi due id il deploy non parte. Sono
+          # identificatori, non credenziali -- da soli non aprono niente.
+          VERCEL_ORG_ID: team_VGV6aA6Wxde9DLsK3m40Zfou
+          VERCEL_PROJECT_ID: prj_ArSo71wKaFTenDF67HCvPmGXOMkc
         run: |
           if [ -z "$VERCEL_TOKEN" ]; then
             echo "::warning::VERCEL_TOKEN assente: i dati sono aggiornati ma il sito resta indietro"
@@ -79,9 +84,12 @@ jobs:
           # `expo` non esiste e il passo muore con "command not found"
           npm ci
           npm run build:web
-          URL=$(npx --yes vercel@latest deploy --prod --yes --token "$VERCEL_TOKEN" 2>&1 | grep -oE 'https://daunia-[a-z0-9]+-[a-z-]+\.vercel\.app' | head -1)
+          npx --yes vercel@latest deploy --prod --yes --token "$VERCEL_TOKEN" > /tmp/deploy.txt 2>&1 || true
+          URL=$(grep -oE 'https://[a-z0-9-]+\.vercel\.app' /tmp/deploy.txt | tail -1)
           if [ -z "$URL" ]; then
             echo "::error::deploy non riuscito"
+            # senza l'output vero il prossimo che guarda non sa da dove ripartire
+            tail -30 /tmp/deploy.txt
             exit 1
           fi
           echo "pubblicato: $URL"
