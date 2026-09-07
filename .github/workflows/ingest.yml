@@ -46,9 +46,11 @@ jobs:
         run: node services/ingest/run.mjs
 
       - name: Committa se cambiato
+        id: commit
         run: |
           if [ -z "$(git status --porcelain data/)" ]; then
             echo "nessuna variazione"
+            echo "cambiato=no" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           git config user.name  "satanelli-bot"
@@ -56,3 +58,30 @@ jobs:
           git add data/
           git commit -m "dati: aggiornamento $(date -u +'%Y-%m-%d %H:%M UTC')"
           git push
+          echo "cambiato=si" >> "$GITHUB_OUTPUT"
+
+      # I dati vivono nel bundle dell'app, quindi committarli non basta: senza
+      # questo passo le formazioni pubblicate un'ora prima del fischio
+      # finivano nel repository e nell'app non si vedevano.
+      #
+      # Gira solo quando qualcosa e cambiato davvero: la maggior parte dei
+      # giri non tocca niente e non ha senso ricostruire il sito.
+      - name: Ricostruisci e pubblica
+        if: steps.commit.outputs.cambiato == 'si'
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "::warning::VERCEL_TOKEN assente: i dati sono aggiornati ma il sito resta indietro"
+            exit 0
+          fi
+          npm run build:web
+          URL=$(npx --yes vercel@latest deploy --prod --yes --token "$VERCEL_TOKEN" 2>&1 | grep -oE 'https://daunia-[a-z0-9]+-[a-z-]+\.vercel\.app' | head -1)
+          if [ -z "$URL" ]; then
+            echo "::error::deploy non riuscito"
+            exit 1
+          fi
+          echo "pubblicato: $URL"
+          # l'alias non si sposta da solo: senza questo daunia.vercel.app
+          # continua a puntare al deploy precedente
+          npx --yes vercel@latest alias set "$URL" daunia.vercel.app --token "$VERCEL_TOKEN"
