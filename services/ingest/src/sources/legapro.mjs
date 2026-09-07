@@ -25,7 +25,8 @@ const UA = 'daunia-app/1.0 (app tifosi non ufficiale; contatto via github.com/ar
 /** Il gruppo C: e' quello del Foggia. */
 export const GIRONE_C = 'girone-c';
 
-const ORE = 60 * 60 * 1000;
+const MINUTI = 60 * 1000;
+const ORE = 60 * MINUTI;
 
 const senzaTag = (s) => String(s ?? '')
   .replace(/<[^>]*>/g, ' ')
@@ -162,14 +163,18 @@ export async function fetchFormazioni(partite, cache = {}) {
       const trovata = ids.find((x) => combacia(x.casa, nome(m, 'casa')) && combacia(x.ospiti, nome(m, 'ospiti')));
       if (!trovata) {
         /*
-         * Nel calendario il bottone dei dettagli compare solo per le partite
-         * che la Lega ha gia aperto. Se manca a poche ore dal fischio, o
-         * l'aprono piu tardi o e cambiato qualcosa: in entrambi i casi
-         * qualcuno deve saperlo prima della partita, non dopo.
+         * Nel calendario il bottone dei dettagli compare solo quando la Lega
+         * apre la partita, e lo fa a ridosso del fischio: mancare due ore
+         * prima e la norma, non un guasto.
+         *
+         * L'avviso scatta solo sotto i venti minuti, cioe quando le
+         * formazioni sono gia uscite e l'id doveva esserci. Prima urlerebbe
+         * al lupo a ogni partita, e un allarme che suona sempre non lo guarda
+         * piu nessuno.
          */
         const mancano = Date.parse(m.kickoff) - Date.now();
-        if (mancano > 0 && mancano < 4 * ORE) {
-          warnings.push(`Lega Pro: ${nome(m, 'casa')}-${nome(m, 'ospiti')} fra meno di quattro ore e nel calendario non ha ancora un id: le formazioni potrebbero non arrivare`);
+        if (mancano > 0 && mancano < 20 * MINUTI) {
+          warnings.push(`Lega Pro: ${nome(m, 'casa')}-${nome(m, 'ospiti')} fra venti minuti e nel calendario non ha ancora un id: le formazioni non arriveranno`);
         }
         continue;
       }
@@ -182,12 +187,13 @@ export async function fetchFormazioni(partite, cache = {}) {
     const f = leggiFormazioni(d.html);
     if (f) fuori[m.id ?? chiave] = f;
     else {
-      // l'id c'e ma il pannello non ha le formazioni: o non le hanno ancora
-      // pubblicate, o il markup e cambiato. A ridosso del fischio la
-      // differenza conta, e va detta.
+      // L'id c'e ma il pannello non ha le formazioni. Fino a un quarto d'ora
+      // dal fischio puo essere solo che non le hanno ancora messe; sotto,
+      // o sono in ritardo loro o il markup e cambiato, e in entrambi i casi
+      // va saputo prima della partita.
       const mancano = Date.parse(m.kickoff) - Date.now();
-      if (mancano > 0 && mancano < 2 * ORE) {
-        warnings.push(`Lega Pro: ${nome(m, 'casa')}-${nome(m, 'ospiti')} fra meno di due ore e le formazioni non sono ancora pubblicate`);
+      if (mancano > 0 && mancano < 15 * MINUTI) {
+        warnings.push(`Lega Pro: ${nome(m, 'casa')}-${nome(m, 'ospiti')} fra un quarto d'ora e le formazioni non sono ancora pubblicate`);
       }
     }
     cache.per = { ...(cache.per ?? {}), [chiave]: id };
