@@ -8,6 +8,8 @@ import { lineupPerPartita } from '../lib/lineup';
 import {
   medieVere, ratingOf, useDatiPartita, caricaMigliore, migliorePartita,
 } from '../lib/fanplay';
+import { statoMigliore } from '../lib/premi-core';
+import { fineVera } from '../lib/live';
 import { colors, radius, space, type } from '../theme/tokens';
 import type { Match } from '@satanelli/core';
 
@@ -22,7 +24,11 @@ import type { Match } from '@satanelli/core';
  * Compare solo con voti veri. Le medie di esempio servono a far vedere come
  * funziona dentro la scheda; in home sarebbero una bugia in prima pagina.
  */
-export function PagelleInHome({ match }: { match: Match }) {
+export function PagelleInHome({ match, prossimoKickoff }: {
+  match: Match;
+  /** il calcio d'inizio della gara successiva: da un giorno prima il premio esce di scena */
+  prossimoKickoff?: string | null;
+}) {
   const gutter = useGutter();
   useDatiPartita(match.id, true);
   // il migliore lo conta il database: in app servirebbero tutti i voti, e
@@ -46,6 +52,16 @@ export function PagelleInHome({ match }: { match: Match }) {
       .slice(0, 3);
   }, [formazione, match.id]);
 
+  /*
+   * La finestra del premio.
+   *
+   * Si vota nelle ventiquattro ore dopo il triplice fischio, poi resta il
+   * verdetto, e il giorno prima della gara successiva sparisce: da li in
+   * avanti la testa e gia alla prossima, e un premio vecchio in home diventa
+   * arredamento. I conti stanno in premi-core, sotto test.
+   */
+  const stato = statoMigliore(fineVera() ?? match.kickoff, prossimoKickoff);
+  if (stato.fase === 'niente') return null;
   if (!medieVere(match.id) || !classifica.length) return null;
 
   const quanti = Math.max(...classifica.map((x) => x.votes));
@@ -73,7 +89,13 @@ export function PagelleInHome({ match }: { match: Match }) {
                 <Text style={styles.miglioreNome} numberOfLines={1}>
                   {nomeCorto(migliore.giocatore, formazione)}
                 </Text>
-                <Text style={styles.miglioreSotto}>migliore in campo</Text>
+                <Text style={styles.miglioreSotto}>
+                  {/* mentre si vota il nome puo ancora cambiare, e va detto:
+                      un verdetto che si sposta senza preavviso sembra un errore */}
+                  {stato.fase === 'votazione'
+                    ? `in testa · si vota per altre ${Math.max(1, Math.round(stato.scadeFra / 3_600_000))} ore`
+                    : 'migliore in campo'}
+                </Text>
               </View>
               <Text style={styles.miglioreVoto}>{migliore.media.toFixed(1)}</Text>
             </View>

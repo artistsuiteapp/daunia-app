@@ -62,8 +62,13 @@ const PAUSA_FORMAZIONI = 15 * MINUTO;
  * sito che non ci deve niente.
  */
 const PAUSA_LEGA = 3 * MINUTO;
-/** da quanto prima del fischio si comincia a cercarle */
-const CERCA_DA = 90 * MINUTO;
+/**
+ * Per quanto si cercano dopo il triplice fischio.
+ *
+ * La Lega le pubblica a gara finita, ma non all'istante: mezz'ora di
+ * tentativi copre il ritardo senza restare a bussare per ore.
+ */
+const CERCA_FINO_A = 30 * MINUTO;
 /** dopo quante risposte inutili di fila si smette di chiedere ad API-Football */
 const RESE = 3;
 /** quanto tempo si concede ad API-Football per allinearsi al tabellone */
@@ -315,19 +320,25 @@ Deno.serve(async (req) => {
   }
 
   /*
-   * Le formazioni ufficiali, per la via veloce.
+   * Le formazioni ufficiali: si cercano DOPO il fischio finale, non prima.
    *
-   * Passando dall'ingest ci vogliono fino a venti minuti fra cron e deploy, e
-   * le formazioni escono anche a venti minuti dal fischio: si arriverebbe a
-   * partita cominciata. Qui si scrive nel database e l'app legge in tempo
-   * reale, come fa gia per il punteggio.
+   * Provato il 7 settembre su Catania-Cosenza, a venti, dieci e zero minuti
+   * dal calcio d'inizio: nel calendario della Lega la partita non aveva
+   * ancora un id, e senza id non c'e pannello. A gara finita l'id c'era e le
+   * formazioni pure, complete di modulo.
    *
-   * Si guarda solo nell'ora e mezza prima del calcio d'inizio, e si smette
-   * appena trovate: dopo, la formazione non cambia piu.
+   * Quindi la Lega le pubblica a partita conclusa, e cercarle prima e tempo
+   * sprecato. Va bene lo stesso: servono per votare le pagelle, e si vota
+   * dopo. Averle entro un minuto dal triplice fischio e esattamente quando
+   * servono.
+   *
+   * Per l'undici prima del fischio l'app continua a mostrare l'ultimo sceso
+   * in campo, dicendo che e quello.
    */
+  const finitaDaPoco = riga.finita_il
+    && adesso - Date.parse(riga.finita_il) < CERCA_FINO_A;
   const daGuardare = !riga.formazione
-    && adesso < t
-    && t - adesso < CERCA_DA
+    && Boolean(finitaDaPoco)
     && (!riga.formazione_vista_il
       || adesso - Date.parse(riga.formazione_vista_il) > PAUSA_LEGA);
 

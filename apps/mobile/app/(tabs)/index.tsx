@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { router } from 'expo-router';
 import { Image } from 'expo-image';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
@@ -26,6 +26,7 @@ import { useLive } from '../../lib/live';
 import { eOggi } from '../../lib/live-core';
 import { salaAperta } from '../../lib/sala';
 import { PallinoLive } from '../../components/PallinoLive';
+import { BanneriAzione, type Azione } from '../../components/BanneriAzione';
 import { PagelleInHome } from '../../components/PagelleInHome';
 import { MvpDelMese } from '../../components/MvpDelMese';
 import {
@@ -61,6 +62,78 @@ export default function Home() {
   const chatViva = oggi ? salaAperta(oggi.kickoff) : false;
   // a fine partita i voti si danno a caldo o non si danno piu
   const pagelle = vivo?.finita && adessoFinito ? `/match/${adessoFinito.id}?tab=gioco` : null;
+
+  /*
+   * I richiami, in ordine di urgenza.
+   *
+   * Scorrono in un carosello invece di impilarsi: prima erano riquadri uno
+   * sotto l'altro, e ogni funzione nuova ne aggiungeva uno finche la home
+   * diventava un elenco di avvisi.
+   *
+   * Portano tutti a fare qualcosa -- votare, scrivere, dire se ci sei -- non a
+   * leggere. Le cose da leggere stanno nella scheda News.
+   *
+   * L'ordine non e casuale: prima quello che scade (la chat vive un'ora, le
+   * pagelle un giorno), poi quello che resta li.
+   */
+  const azioni = useMemo<Azione[]>(() => {
+    const a: Azione[] = [];
+    if (chatViva && oggi) {
+      a.push({
+        chiave: 'chat', vivo: true,
+        titolo: 'La chat è aperta',
+        sotto: 'Commenta la partita con gli altri, adesso.',
+        icona: 'chatbubbles', rotta: '/live',
+      });
+    }
+    if (pagelle) {
+      a.push({
+        chiave: 'pagelle',
+        titolo: 'Dai i voti alla partita',
+        sotto: 'Le pagelle della Curva si scrivono a caldo.',
+        icona: 'star', rotta: pagelle,
+      });
+    }
+    if (oggi && !chatViva) {
+      a.push({
+        chiave: 'oggi',
+        titolo: 'Oggi si gioca',
+        sotto: 'La chat dal vivo apre dieci minuti prima del fischio.',
+        icona: 'football', rotta: `/match/${oggi.id}`,
+      });
+    }
+    if (next && !oggi) {
+      a.push({
+        chiave: 'pronostico',
+        titolo: 'Fai il tuo pronostico',
+        sotto: `${next.home.shortName}–${next.away.shortName}, prima del fischio.`,
+        icona: 'trophy', rotta: `/match/${next.id}?tab=gioco`,
+      });
+    }
+    if (next && !next.foggiaHome) {
+      a.push({
+        chiave: 'trasferta',
+        titolo: 'Vai in trasferta?',
+        sotto: 'Dillo agli altri e organizzatevi il viaggio.',
+        icona: 'car', rotta: '/trasferte',
+      });
+    }
+    if (next?.foggiaHome) {
+      a.push({
+        chiave: 'stadio',
+        titolo: 'Ci sei allo Zaccheria?',
+        sotto: 'Scegli il settore e vedi chi altro ci va.',
+        icona: 'location', rotta: '/stadium',
+      });
+    }
+    a.push({
+      chiave: 'curva',
+      titolo: 'Scrivi nella Curva',
+      sotto: 'Il posto dove si discute fra una partita e l’altra.',
+      icona: 'megaphone', rotta: '/curva',
+    });
+    return a;
+  }, [chatViva, oggi, pagelle, next]);
   const last = lastMatch();
   const row = foggiaRow();
   const scorer = topScorers()[0];
@@ -97,46 +170,7 @@ export default function Home() {
 
       <Reveal delay={60}><QuickNav pagelle={pagelle} /></Reveal>
 
-      {pagelle ? (
-        <Reveal delay={80}>
-          <Pressable onPress={() => router.push(pagelle as never)} style={[gutter, styles.richiamo]}>
-            <View style={styles.richiamoDentro}>
-              <Ionicons name="star" size={18} color={colors.accentBright} />
-              <View style={{ flex: 1 }}>
-                <Text style={styles.richiamoTitolo}>Partita finita. Dai i voti.</Text>
-                <Text style={styles.richiamoSotto}>
-                  Le pagelle della Curva si scrivono adesso, a caldo.
-                </Text>
-              </View>
-              <Ionicons name="chevron-forward" size={18} color={colors.textDim} />
-            </View>
-          </Pressable>
-        </Reveal>
-      ) : oggi ? (
-        <Reveal delay={80}>
-          <Pressable
-            onPress={() => router.push(chatViva ? '/live' : `/match/${oggi.id}` as never)}
-            style={[gutter, styles.richiamo]}
-          >
-            <View style={styles.richiamoDentro}>
-              {chatViva ? <PallinoLive compatto /> : (
-                <Ionicons name="chatbubbles" size={18} color={colors.accentBright} />
-              )}
-              <View style={{ flex: 1 }}>
-                <Text style={styles.richiamoTitolo}>
-                  {chatViva ? 'La chat è aperta' : 'Oggi si gioca'}
-                </Text>
-                <Text style={styles.richiamoSotto}>
-                  {chatViva
-                    ? 'Entra e commenta con gli altri.'
-                    : 'La chat dal vivo apre dieci minuti prima del fischio.'}
-                </Text>
-              </View>
-              <Ionicons name="chevron-forward" size={18} color={colors.textDim} />
-            </View>
-          </Pressable>
-        </Reveal>
-      ) : null}
+      <Reveal delay={80}><BanneriAzione azioni={azioni} /></Reveal>
 
       {next ? (
         <>
@@ -155,8 +189,10 @@ export default function Home() {
           reference: stessa scheda, ma scura, così si legge subito quale conta */}
       {upcoming.length > 1 ? (
         <View style={[gutter, styles.stack]}>
-          {upcoming.slice(1, 3).map((m, i) => (
-            <Reveal key={m.id} delay={180 + i * 60}><EventCard match={m} /></Reveal>
+          {/* quella di riferimento resta grande, le successive compatte:
+              servono a sapere che ci sono, non a essere guardate */}
+          {upcoming.slice(1, 4).map((m, i) => (
+            <Reveal key={m.id} delay={180 + i * 60}><EventCard match={m} compatta /></Reveal>
           ))}
         </View>
       ) : null}
@@ -187,7 +223,7 @@ export default function Home() {
           la marca "finita" con ore di ritardo, e in quelle ore in home
           uscirebbero le pagelle della gara sbagliata */}
       {(vivo?.finita && adessoFinito) || last
-        ? <PagelleInHome match={(vivo?.finita && adessoFinito) || last!} />
+        ? <PagelleInHome match={(vivo?.finita && adessoFinito) || last!} prossimoKickoff={next?.kickoff} />
         : null}
 
       {/* dopo le pagelle della singola gara: prima com'e andata ieri, poi come
@@ -226,40 +262,9 @@ export default function Home() {
         </ListGroup>
       </View>
 
-      <GroupLabel action={<Action label="Tutte" onPress={() => router.push('/news')} />}>
-        Ultime dal club
-      </GroupLabel>
-      {lead ? (
-        <View style={gutter}>
-          <Pressable
-            onPress={() => router.push(`/post/${lead.slug}` as never)}
-            style={({ pressed }) => [styles.lead, pressed && { opacity: 0.85 }]}
-          >
-            {coverOf(lead.slug) ? <ArticleCover cover={coverOf(lead.slug)!} height={170} /> : null}
-            <View style={styles.leadBody}>
-              <Text style={styles.leadKicker}>{lead.kind === 'club' ? 'Ufficiale' : 'Redazione'}</Text>
-              <Text style={styles.leadTitle} numberOfLines={3}>{lead.title}</Text>
-              <Text style={styles.leadMeta}>{relative(lead.date)}</Text>
-            </View>
-          </Pressable>
-        </View>
-      ) : null}
-
-      <View style={[gutter, { marginTop: space.md }]}>
-        <ListGroup>
-          {rest.map((n) => (
-            <ListRow key={n.id} onPress={() => router.push(`/post/${n.slug}` as never)} chevron height={64}>
-              {coverOf(n.slug) ? (
-                <View style={styles.thumb}><ArticleCover cover={coverOf(n.slug)!} height={40} compact /></View>
-              ) : null}
-              <View style={{ flex: 1, gap: 2 }}>
-                <Text style={styles.newsTitle} numberOfLines={2}>{n.title}</Text>
-                <Text style={styles.newsMeta}>{relative(n.date)}</Text>
-              </View>
-            </ListRow>
-          ))}
-        </ListGroup>
-      </View>
+      {/* Le notizie stanno nella loro scheda, non in home.
+          In home ci vanno le cose da fare -- votare, scrivere, dire se ci
+          sei -- non quelle da leggere: chi vuole leggere apre News. */}
 
       <GroupNote>{meta.attribution}</GroupNote>
     </Screen>
