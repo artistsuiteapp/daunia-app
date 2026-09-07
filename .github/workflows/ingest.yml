@@ -75,6 +75,9 @@ jobs:
             echo "::warning::VERCEL_TOKEN assente: i dati sono aggiornati ma il sito resta indietro"
             exit 0
           fi
+          # l'ingest non ha dipendenze, ma il build dell'app si: senza questo
+          # `expo` non esiste e il passo muore con "command not found"
+          npm ci
           npm run build:web
           URL=$(npx --yes vercel@latest deploy --prod --yes --token "$VERCEL_TOKEN" 2>&1 | grep -oE 'https://daunia-[a-z0-9]+-[a-z-]+\.vercel\.app' | head -1)
           if [ -z "$URL" ]; then
