@@ -167,11 +167,116 @@
     "city": "Foggia",
     "attendance": null,
     "referee": "Mastrodomenico",
-    "goals": [],
+    "goals": [
+      {
+        "minute": 2,
+        "extra": null,
+        "scorer": "A. Boccadamo",
+        "side": "away",
+        "ownGoal": false,
+        "penalty": false
+      },
+      {
+        "minute": 21,
+        "extra": null,
+        "scorer": "M. Perlingieri",
+        "side": "away",
+        "ownGoal": false,
+        "penalty": false
+      }
+    ],
     "foggiaHome": true,
     "foggiaResult": null,
     "reportUrl": "https://www.transfermarkt.it/spielbericht/index/spielbericht/4979188",
     "source": "wikipedia",
+    "cards": [
+      {
+        "minute": 26,
+        "player": "M. Perlingieri",
+        "side": "away",
+        "rosso": false
+      },
+      {
+        "minute": 28,
+        "player": "A. Romano",
+        "side": "away",
+        "rosso": false
+      },
+      {
+        "minute": 90,
+        "player": "F. Petito",
+        "side": "home",
+        "rosso": false
+      },
+      {
+        "minute": 90,
+        "player": "M. Cocorocchio",
+        "side": "away",
+        "rosso": false
+      }
+    ],
+    "subs": [
+      {
+        "minute": 46,
+        "esce": "M. Perlingieri",
+        "entra": "M. Sellaf",
+        "side": "away"
+      },
+      {
+        "minute": 46,
+        "esce": "I. Toure",
+        "entra": "M. Ravasio",
+        "side": "home"
+      },
+      {
+        "minute": 46,
+        "esce": "A. Gallo",
+        "entra": "M. Coulibaly",
+        "side": "home"
+      },
+      {
+        "minute": 60,
+        "esce": "G. Panico",
+        "entra": "F. Zuccon",
+        "side": "home"
+      },
+      {
+        "minute": 66,
+        "esce": "A. Romano",
+        "entra": "A. Kurti",
+        "side": "away"
+      },
+      {
+        "minute": 66,
+        "esce": "G. Vitale",
+        "entra": "K. Miranda",
+        "side": "away"
+      },
+      {
+        "minute": 78,
+        "esce": "C. Cretella",
+        "entra": "L. D'Orazio",
+        "side": "away"
+      },
+      {
+        "minute": 79,
+        "esce": "A. Smeraldi",
+        "entra": "M. Bigonzoni",
+        "side": "home"
+      },
+      {
+        "minute": 79,
+        "esce": "H. Haoudi",
+        "entra": "Y. Merdji",
+        "side": "home"
+      },
+      {
+        "minute": 84,
+        "esce": "D. Gambale",
+        "entra": "C. Padula",
+        "side": "away"
+      }
+    ],
     "home": {
       "id": "foggia",
       "name": "CALCIO FOGGIA 1920",
