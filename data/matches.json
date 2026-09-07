@@ -329,13 +329,13 @@
     },
     "venue": "Stadio Pino Zaccheria",
     "city": "Foggia",
-    "attendance": null,
+    "attendance": 10348,
     "referee": "Mastrodomenico",
     "goals": [
       {
         "minute": 2,
         "extra": null,
-        "scorer": "A. Boccadamo",
+        "scorer": "Boccadamo",
         "side": "away",
         "ownGoal": false,
         "penalty": false
@@ -343,14 +343,14 @@
       {
         "minute": 21,
         "extra": null,
-        "scorer": "M. Perlingieri",
+        "scorer": "Perlingieri",
         "side": "away",
         "ownGoal": false,
         "penalty": false
       }
     ],
     "foggiaHome": true,
-    "foggiaResult": null,
+    "foggiaResult": "L",
     "reportUrl": "https://www.transfermarkt.it/spielbericht/index/spielbericht/4979188",
     "source": "wikipedia",
     "cards": [

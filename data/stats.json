@@ -6,9 +6,9 @@
       "home": {
         "won": 0,
         "drawn": 1,
-        "lost": 0,
+        "lost": 1,
         "goalsFor": 1,
-        "goalsAgainst": 1
+        "goalsAgainst": 3
       },
       "away": {
         "won": 1,
@@ -53,8 +53,8 @@
     {
       "matchday": 3,
       "venue": "away",
-      "result": null,
-      "position": null
+      "result": "L",
+      "position": 10
     },
     {
       "matchday": 4,
@@ -278,7 +278,7 @@
     "biggestWin": "Crotone 0-1 Foggia",
     "worstLoss": "Foggia 0-2 Audace Cerignola",
     "bestPosition": 6,
-    "worstPosition": 8,
+    "worstPosition": 10,
     "byWindow": [
       {
         "label": "1-15'",
@@ -325,6 +325,6 @@
         "goals": 1
       }
     ],
-    "homeAttendanceAvg": 0
+    "homeAttendanceAvg": 3449
   }
 }

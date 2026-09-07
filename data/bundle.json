@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-07T12:51:25.598Z",
+    "generatedAt": "2026-09-07T18:01:39.761Z",
     "season": "2026-2027",
     "competition": "Serie C",
     "sources": {
@@ -21,6 +21,7 @@
       "Nessuno stemma per \"Barletta\": il sito del club non ha mai incontrato questa squadra.",
       "Nessuno stemma per \"Scafatese\": il sito del club non ha mai incontrato questa squadra.",
       "Solo 3 giocatori su 26 hanno la foto: la rosa sul sito del club e ferma alla stagione precedente.",
+      "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
       "Trasferta a Monopoli fra meno di una settimana e nessuna notizia sul divieto: controlla a mano, potrebbe essersi rotto il riconoscimento."
     ]
   },
@@ -497,13 +498,13 @@
       },
       "venue": "Stadio Pino Zaccheria",
       "city": "Foggia",
-      "attendance": null,
+      "attendance": 10348,
       "referee": "Mastrodomenico",
       "goals": [
         {
           "minute": 2,
           "extra": null,
-          "scorer": "A. Boccadamo",
+          "scorer": "Boccadamo",
           "side": "away",
           "ownGoal": false,
           "penalty": false
@@ -511,14 +512,14 @@
         {
           "minute": 21,
           "extra": null,
-          "scorer": "M. Perlingieri",
+          "scorer": "Perlingieri",
           "side": "away",
           "ownGoal": false,
           "penalty": false
         }
       ],
       "foggiaHome": true,
-      "foggiaResult": null,
+      "foggiaResult": "L",
       "reportUrl": "https://www.transfermarkt.it/spielbericht/index/spielbericht/4979188",
       "source": "wikipedia",
       "cards": [
@@ -1848,6 +1849,23 @@
     },
     {
       "position": 9,
+      "teamId": "cavese",
+      "teamName": "Cavese",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/Cavese_stemma.png",
+      "played": 3,
+      "won": 1,
+      "drawn": 1,
+      "lost": 1,
+      "goalsFor": 4,
+      "goalsAgainst": 5,
+      "goalDiff": -1,
+      "points": 4,
+      "penalty": 0,
+      "isFoggia": false,
+      "zone": "playoff"
+    },
+    {
+      "position": 10,
       "teamId": "team-altamura",
       "teamName": "Team Altamura",
       "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2024/07/Team_Altamura_marchio-472x500.png",
@@ -1864,7 +1882,7 @@
       "zone": "playoff"
     },
     {
-      "position": 10,
+      "position": 11,
       "teamId": "foggia",
       "teamName": "Foggia",
       "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png",
@@ -1878,44 +1896,10 @@
       "points": 4,
       "penalty": 0,
       "isFoggia": true,
-      "zone": "playoff"
-    },
-    {
-      "position": 11,
-      "teamId": "cavese",
-      "teamName": "Cavese",
-      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/Cavese_stemma.png",
-      "played": 3,
-      "won": 1,
-      "drawn": 1,
-      "lost": 1,
-      "goalsFor": 4,
-      "goalsAgainst": 5,
-      "goalDiff": -1,
-      "points": 4,
-      "penalty": 0,
-      "isFoggia": false,
       "zone": null
     },
     {
       "position": 12,
-      "teamId": "monopoli",
-      "teamName": "Monopoli",
-      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/Monopoli_SS_1966_Since_2014-1.png",
-      "played": 3,
-      "won": 1,
-      "drawn": 0,
-      "lost": 2,
-      "goalsFor": 2,
-      "goalsAgainst": 2,
-      "goalDiff": 0,
-      "points": 3,
-      "penalty": 0,
-      "isFoggia": false,
-      "zone": null
-    },
-    {
-      "position": 13,
       "teamId": "savoia",
       "teamName": "Savoia",
       "crest": null,
@@ -1925,6 +1909,23 @@
       "lost": 2,
       "goalsFor": 5,
       "goalsAgainst": 5,
+      "goalDiff": 0,
+      "points": 3,
+      "penalty": 0,
+      "isFoggia": false,
+      "zone": null
+    },
+    {
+      "position": 13,
+      "teamId": "monopoli",
+      "teamName": "Monopoli",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/Monopoli_SS_1966_Since_2014-1.png",
+      "played": 3,
+      "won": 1,
+      "drawn": 0,
+      "lost": 2,
+      "goalsFor": 2,
+      "goalsAgainst": 2,
       "goalDiff": 0,
       "points": 3,
       "penalty": 0,
@@ -3070,12 +3071,12 @@
         "regularPrice": 55,
         "onSale": false,
         "currency": "EUR",
-        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_19-scaled.jpg",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_19-1-scaled.jpg",
         "images": [
-          "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_19-scaled.jpg"
+          "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_19-1-scaled.jpg"
         ],
-        "category": null,
-        "categorySlug": null,
+        "category": "Gadget",
+        "categorySlug": "gadget",
         "url": "https://calciofoggia1920.store/prodotto/zaino/",
         "inStock": true,
         "description": "",
@@ -3188,9 +3189,50 @@
         "inStock": true,
         "description": "",
         "source": "shop"
+      },
+      {
+        "id": "shop-15598",
+        "name": "PORTACHIAVI CALCIO FOGGIA 1920",
+        "price": 5,
+        "regularPrice": 5,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/09/portachiaviFG.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/09/portachiaviFG.jpg"
+        ],
+        "category": "Gadget",
+        "categorySlug": "gadget",
+        "url": "https://calciofoggia1920.store/prodotto/portachiavi-calcio-foggia-1920/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15595",
+        "name": "BRACCIALETTO CALCIO FOGGIA 1920",
+        "price": 3,
+        "regularPrice": 3,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/09/mockup_braccialetti-silicone-foggia_1080x1080.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/09/mockup_braccialetti-silicone-foggia_1080x1080.jpg"
+        ],
+        "category": "Gadget",
+        "categorySlug": "gadget",
+        "url": "https://calciofoggia1920.store/prodotto/braccialetto-calcio-foggia-1920/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
       }
     ],
     "categories": [
+      {
+        "slug": "gadget",
+        "name": "Gadget",
+        "count": 3
+      },
       {
         "slug": "allenamento",
         "name": "Allenamento",
@@ -3283,9 +3325,9 @@
         "home": {
           "won": 0,
           "drawn": 1,
-          "lost": 0,
+          "lost": 1,
           "goalsFor": 1,
-          "goalsAgainst": 1
+          "goalsAgainst": 3
         },
         "away": {
           "won": 1,
@@ -3330,8 +3372,8 @@
       {
         "matchday": 3,
         "venue": "away",
-        "result": null,
-        "position": null
+        "result": "L",
+        "position": 10
       },
       {
         "matchday": 4,
@@ -3555,7 +3597,7 @@
       "biggestWin": "Crotone 0-1 Foggia",
       "worstLoss": "Foggia 0-2 Audace Cerignola",
       "bestPosition": 6,
-      "worstPosition": 8,
+      "worstPosition": 10,
       "byWindow": [
         {
           "label": "1-15'",
@@ -3602,7 +3644,7 @@
           "goals": 1
         }
       ],
-      "homeAttendanceAvg": 0
+      "homeAttendanceAvg": 3449
     }
   },
   "live": {

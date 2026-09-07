@@ -87,12 +87,12 @@
       "regularPrice": 55,
       "onSale": false,
       "currency": "EUR",
-      "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_19-scaled.jpg",
+      "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_19-1-scaled.jpg",
       "images": [
-        "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_19-scaled.jpg"
+        "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_19-1-scaled.jpg"
       ],
-      "category": null,
-      "categorySlug": null,
+      "category": "Gadget",
+      "categorySlug": "gadget",
       "url": "https://calciofoggia1920.store/prodotto/zaino/",
       "inStock": true,
       "description": "",
@@ -205,9 +205,50 @@
       "inStock": true,
       "description": "",
       "source": "shop"
+    },
+    {
+      "id": "shop-15598",
+      "name": "PORTACHIAVI CALCIO FOGGIA 1920",
+      "price": 5,
+      "regularPrice": 5,
+      "onSale": false,
+      "currency": "EUR",
+      "image": "https://calciofoggia1920.store/wp-content/uploads/2026/09/portachiaviFG.jpg",
+      "images": [
+        "https://calciofoggia1920.store/wp-content/uploads/2026/09/portachiaviFG.jpg"
+      ],
+      "category": "Gadget",
+      "categorySlug": "gadget",
+      "url": "https://calciofoggia1920.store/prodotto/portachiavi-calcio-foggia-1920/",
+      "inStock": true,
+      "description": "",
+      "source": "shop"
+    },
+    {
+      "id": "shop-15595",
+      "name": "BRACCIALETTO CALCIO FOGGIA 1920",
+      "price": 3,
+      "regularPrice": 3,
+      "onSale": false,
+      "currency": "EUR",
+      "image": "https://calciofoggia1920.store/wp-content/uploads/2026/09/mockup_braccialetti-silicone-foggia_1080x1080.jpg",
+      "images": [
+        "https://calciofoggia1920.store/wp-content/uploads/2026/09/mockup_braccialetti-silicone-foggia_1080x1080.jpg"
+      ],
+      "category": "Gadget",
+      "categorySlug": "gadget",
+      "url": "https://calciofoggia1920.store/prodotto/braccialetto-calcio-foggia-1920/",
+      "inStock": true,
+      "description": "",
+      "source": "shop"
     }
   ],
   "categories": [
+    {
+      "slug": "gadget",
+      "name": "Gadget",
+      "count": 3
+    },
     {
       "slug": "allenamento",
       "name": "Allenamento",
