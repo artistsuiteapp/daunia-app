@@ -1,4 +1,4 @@
-import { Fragment, ReactNode, useMemo } from 'react';
+import { Fragment, ReactNode, RefObject, useMemo } from 'react';
 import {
   PanResponder, Platform, Pressable, ScrollView, StyleSheet, Text, View, ViewStyle,
 } from 'react-native';
@@ -14,7 +14,7 @@ import { useSafeInsets, useKeyboardInset } from '../lib/viewport';
 
 export function Screen({
   children, scroll = true, edgeToEdge = false, centrato = false,
-  senzaBarra = false, testaFissa = false,
+  senzaBarra = false, testaFissa = false, riferimento,
 }: {
   children: ReactNode;
   scroll?: boolean;
@@ -25,6 +25,11 @@ export function Screen({
   senzaBarra?: boolean;
   /** tiene fermo il primo blocco: si usa dove c'e la barra di ritorno */
   testaFissa?: boolean;
+  /**
+   * Per chi deve scorrere da fuori -- il tasto "vai all'ultima risposta" in
+   * una discussione lunga. Senza, l'unico modo e trascinare a mano.
+   */
+  riferimento?: RefObject<ScrollView | null>;
 }) {
   const insets = useSafeInsets();
   const keyboard = useKeyboardInset();
@@ -58,6 +63,7 @@ export function Screen({
   if (!scroll) return <View style={[styles.screen, pad]} {...gesti.panHandlers}>{children}</View>;
   return (
     <ScrollView
+      ref={riferimento}
       {...gesti.panHandlers}
       stickyHeaderIndices={testaFissa ? [0] : undefined}
       style={styles.screen}

@@ -1,11 +1,14 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useLocalSearchParams, router } from 'expo-router';
-import { Alert, Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import {
+  Alert, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View,
+} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import { Screen, Empty, useGutter } from '../../components/ui';
 import { BackBar } from '../../components/BackBar';
 import { Avatar } from '../../components/Avatar';
+import { controlla, spiegazione } from '../../lib/filtro-core.ts';
 import { colors, radius, space, type } from '../../theme/tokens';
 import { relative, shortDate } from '../../lib/format';
 import { useOspite } from '../../lib/ospite';
@@ -27,6 +30,11 @@ export default function DiscussionPage() {
   const [correggo, setCorreggo] = useState<string | null>(null);
   const [bozza, setBozza] = useState('');
   const [erroreMod, setErroreMod] = useState<string | null>(null);
+  /** l'avviso del filtro, mostrato mentre si scrive e non solo all'invio */
+  const [avviso, setAvviso] = useState<string | null>(null);
+  /** quante risposte vecchie si mostrano: le altre stanno dietro un tasto */
+  const [quante, setQuante] = useState(PAGINA);
+  const lista = useRef<ScrollView>(null);
 
   const salvaCorrezione = async (id: string) => {
     try {
@@ -64,19 +72,42 @@ export default function DiscussionPage() {
   if (!d) return <Screen testaFissa><Empty text="Discussione non trovata." /></Screen>;
 
   const send = async () => {
-    if (!draft.trim()) return;
-    const testo = draft;
+    const testo = draft.trim();
+    if (!testo) return;
+
+    /*
+     * Il filtro parla prima del database.
+     *
+     * Il controllo vero sta in Postgres e non si aggira, ma se lasciassimo
+     * decidere solo lui l'utente vedrebbe il testo tornare nel campo senza
+     * una parola di spiegazione, e riscriverebbe la stessa cosa.
+     */
+    const esito = controlla(testo);
+    if (!esito.pulito) { setAvviso(spiegazione(esito)); return; }
+
     setDraft('');
+    setAvviso(null);
     try {
       await addReply(d.id, 'Tu', testo);
-    } catch {
+    } catch (e) {
       // se il salvataggio fallisce il testo torna nel campo, invece di sparire
       setDraft(testo);
+      setAvviso(e instanceof Error && /23514|offes|bestemm/i.test(e.message)
+        ? 'Il messaggio non è passato: contiene una parola che qui non si usa.'
+        : 'Non è partito. Riprova fra un momento.');
     }
   };
 
+  /** Mentre si scrive: l'avviso compare appena la frase e completa. */
+  const scrivendo = (t: string) => {
+    setDraft(t);
+    if (!avviso) return;
+    // sparisce da solo appena il testo torna pulito, senza dover reinviare
+    if (controlla(t.trim()).pulito) setAvviso(null);
+  };
+
   return (
-    <Screen>
+    <Screen riferimento={lista}>
       <BackBar label="Curva" />
 
       <View style={[styles.head, gutter]}>
@@ -123,7 +154,24 @@ export default function DiscussionPage() {
       </Text>
 
       <View style={[styles.replies, gutter]}>
-        {d.replies.map((rep) => {
+        {/*
+          * Le risposte vecchie stanno dietro un tasto.
+          *
+          * Su un filo lungo caricarle tutte vuol dire aprire la discussione e
+          * trovarsi in cima a mesi di conversazione. Le pagine numerate qui
+          * non servono: in una chat si va indietro finche basta, non si salta
+          * alla pagina sette.
+          */}
+        {d.replies.length > quante ? (
+          <Pressable onPress={() => setQuante((q) => q + PAGINA)} style={styles.altre}>
+            <Ionicons name="chevron-up" size={15} color={colors.accentBright} />
+            <Text style={styles.altreTesto}>
+              {`Mostra le ${Math.min(PAGINA, d.replies.length - quante)} precedenti`}
+            </Text>
+          </Pressable>
+        ) : null}
+
+        {d.replies.slice(Math.max(0, d.replies.length - quante)).map((rep) => {
           const mia = eMio(rep.autoreId);
           const inModifica = correggo === rep.id;
           return (
@@ -179,11 +227,34 @@ export default function DiscussionPage() {
 
         {ospite ? <SoloConAccount cosa="Per rispondere in questa discussione serve un account." /> : null}
 
+        {/*
+          * Il salto all'ultima risposta.
+          *
+          * Compare solo quando ce n'e abbastanza da doverle scorrere: sotto
+          * la decina si arriva in fondo prima di accorgersi del tasto.
+          */}
+        {d.replies.length > 10 ? (
+          <Pressable
+            onPress={() => lista.current?.scrollToEnd({ animated: true })}
+            style={({ pressed }) => [styles.giu, pressed && { opacity: 0.85 }]}
+          >
+            <Ionicons name="arrow-down" size={15} color={colors.onAccent} />
+            <Text style={styles.giuTesto}>Ultima risposta</Text>
+          </Pressable>
+        ) : null}
+
+        {avviso ? (
+          <View style={styles.avviso}>
+            <Ionicons name="alert-circle" size={16} color="#E5343E" />
+            <Text style={styles.avvisoTesto}>{avviso}</Text>
+          </View>
+        ) : null}
+
         {!ospite ? (
         <View style={styles.composer}>
           <TextInput
             value={draft}
-            onChangeText={setDraft}
+            onChangeText={scrivendo}
             placeholder="Scrivi una risposta"
             placeholderTextColor={colors.textFaint}
             style={styles.input}
@@ -210,7 +281,28 @@ export default function DiscussionPage() {
   );
 }
 
+/** quante risposte si mostrano prima di chiedere "mostra le precedenti" */
+const PAGINA = 30;
+
 const styles = StyleSheet.create({
+  avviso: {
+    flexDirection: 'row', alignItems: 'center', gap: 8,
+    backgroundColor: 'rgba(229,52,62,0.12)', borderRadius: radius.md,
+    paddingHorizontal: space.md, paddingVertical: 10, marginBottom: space.sm,
+  },
+  avvisoTesto: { ...type.footnote, color: '#E5343E', flex: 1 },
+  altre: {
+    flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6,
+    paddingVertical: 10, marginBottom: space.sm,
+  },
+  altreTesto: { ...type.footnoteBold, color: colors.accentBright },
+  giu: {
+    position: 'absolute', right: space.lg, bottom: 92,
+    flexDirection: 'row', alignItems: 'center', gap: 6,
+    backgroundColor: colors.accent, borderRadius: radius.pill,
+    paddingHorizontal: 14, paddingVertical: 9,
+  },
+  giuTesto: { ...type.footnoteBold, color: colors.onAccent },
   head: { flexDirection: 'row', alignItems: 'center', gap: space.sm, marginTop: space.md },
   author: { ...type.headline, color: colors.text },
   meta: { ...type.caption, color: colors.textFaint },
