@@ -1,6 +1,23 @@
 [
   {
     "position": 1,
+    "teamId": "az-picerno",
+    "teamName": "AZ Picerno",
+    "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2021/08/picerno-logo-new-768x923.png",
+    "played": 3,
+    "won": 3,
+    "drawn": 0,
+    "lost": 0,
+    "goalsFor": 9,
+    "goalsAgainst": 3,
+    "goalDiff": 6,
+    "points": 9,
+    "penalty": 0,
+    "isFoggia": false,
+    "zone": "promotion"
+  },
+  {
+    "position": 2,
     "teamId": "potenza",
     "teamName": "Potenza",
     "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/potenza-1.png",
@@ -14,7 +31,7 @@
     "points": 9,
     "penalty": 0,
     "isFoggia": false,
-    "zone": "promotion"
+    "zone": "playoff"
   },
   {
     "position": 2,
@@ -29,23 +46,6 @@
     "goalsAgainst": 1,
     "goalDiff": 4,
     "points": 9,
-    "penalty": 0,
-    "isFoggia": false,
-    "zone": "playoff"
-  },
-  {
-    "position": 3,
-    "teamId": "az-picerno",
-    "teamName": "AZ Picerno",
-    "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2021/08/picerno-logo-new-768x923.png",
-    "played": 2,
-    "won": 2,
-    "drawn": 0,
-    "lost": 0,
-    "goalsFor": 5,
-    "goalsAgainst": 2,
-    "goalDiff": 3,
-    "points": 6,
     "penalty": 0,
     "isFoggia": false,
     "zone": "playoff"
@@ -120,23 +120,6 @@
   },
   {
     "position": 8,
-    "teamId": "inter-u23",
-    "teamName": "Inter U23",
-    "crest": null,
-    "played": 2,
-    "won": 1,
-    "drawn": 1,
-    "lost": 0,
-    "goalsFor": 3,
-    "goalsAgainst": 2,
-    "goalDiff": 1,
-    "points": 4,
-    "penalty": 0,
-    "isFoggia": false,
-    "zone": "playoff"
-  },
-  {
-    "position": 9,
     "teamId": "cavese",
     "teamName": "Cavese",
     "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/Cavese_stemma.png",
@@ -153,7 +136,7 @@
     "zone": "playoff"
   },
   {
-    "position": 10,
+    "position": 9,
     "teamId": "team-altamura",
     "teamName": "Team Altamura",
     "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2024/07/Team_Altamura_marchio-472x500.png",
@@ -170,7 +153,7 @@
     "zone": "playoff"
   },
   {
-    "position": 11,
+    "position": 10,
     "teamId": "foggia",
     "teamName": "Foggia",
     "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png",
@@ -184,10 +167,44 @@
     "points": 4,
     "penalty": 0,
     "isFoggia": true,
+    "zone": "playoff"
+  },
+  {
+    "position": 11,
+    "teamId": "inter-u23",
+    "teamName": "Inter U23",
+    "crest": null,
+    "played": 3,
+    "won": 1,
+    "drawn": 1,
+    "lost": 1,
+    "goalsFor": 4,
+    "goalsAgainst": 6,
+    "goalDiff": -2,
+    "points": 4,
+    "penalty": 0,
+    "isFoggia": false,
     "zone": null
   },
   {
     "position": 12,
+    "teamId": "catania",
+    "teamName": "Catania",
+    "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/catania.png",
+    "played": 3,
+    "won": 1,
+    "drawn": 0,
+    "lost": 2,
+    "goalsFor": 5,
+    "goalsAgainst": 4,
+    "goalDiff": 1,
+    "points": 3,
+    "penalty": 0,
+    "isFoggia": false,
+    "zone": null
+  },
+  {
+    "position": 13,
     "teamId": "savoia",
     "teamName": "Savoia",
     "crest": null,
@@ -204,7 +221,7 @@
     "zone": null
   },
   {
-    "position": 13,
+    "position": 14,
     "teamId": "monopoli",
     "teamName": "Monopoli",
     "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/Monopoli_SS_1966_Since_2014-1.png",
@@ -221,7 +238,7 @@
     "zone": null
   },
   {
-    "position": 14,
+    "position": 15,
     "teamId": "casarano",
     "teamName": "Casarano",
     "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2019/09/Logo_Casarano-296x300.png",
@@ -238,7 +255,7 @@
     "zone": null
   },
   {
-    "position": 15,
+    "position": 16,
     "teamId": "salernitana",
     "teamName": "Salernitana",
     "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2025/08/us-salernitana-768x768.png",
@@ -252,10 +269,10 @@
     "points": 2,
     "penalty": 0,
     "isFoggia": false,
-    "zone": null
+    "zone": "playout"
   },
   {
-    "position": 16,
+    "position": 17,
     "teamId": "scafatese",
     "teamName": "Scafatese",
     "crest": null,
@@ -272,7 +289,7 @@
     "zone": "playout"
   },
   {
-    "position": 17,
+    "position": 18,
     "teamId": "giugliano",
     "teamName": "Giugliano",
     "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2022/08/giugliano.png",
@@ -289,34 +306,17 @@
     "zone": "playout"
   },
   {
-    "position": 18,
+    "position": 19,
     "teamId": "cosenza",
     "teamName": "Cosenza",
     "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2025/08/logo-cosenza-768x1041.png",
-    "played": 2,
+    "played": 3,
     "won": 0,
     "drawn": 0,
-    "lost": 2,
+    "lost": 3,
     "goalsFor": 2,
-    "goalsAgainst": 5,
-    "goalDiff": -3,
-    "points": 0,
-    "penalty": 0,
-    "isFoggia": false,
-    "zone": "playout"
-  },
-  {
-    "position": 19,
-    "teamId": "catania",
-    "teamName": "Catania",
-    "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/catania.png",
-    "played": 2,
-    "won": 0,
-    "drawn": 0,
-    "lost": 2,
-    "goalsFor": 1,
-    "goalsAgainst": 4,
-    "goalDiff": -3,
+    "goalsAgainst": 9,
+    "goalDiff": -7,
     "points": 0,
     "penalty": 0,
     "isFoggia": false,
