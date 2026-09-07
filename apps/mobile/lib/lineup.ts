@@ -1,5 +1,5 @@
 import type { Player } from '@satanelli/core';
-import { squad, lineups, formazioniUfficiali, type LineupPlayer, type MatchLineup } from './data';
+import { squad, lineups, matches, formazioniUfficiali, type LineupPlayer, type MatchLineup } from './data';
 import { DEPARTED, spotOf, type Spot } from './squad-overrides';
 import { inOrdine, postiDelModulo } from './modulo-core';
 import { formazioneDalVivo } from './live';
@@ -296,6 +296,26 @@ function daLegaPro(matchId: string, viva?: boolean): Formazione | null {
  * Non si chiama mai probabile ufficiale, perche non lo e: la schermata dice da
  * che partita viene.
  */
+/**
+ * L'ultima formazione davvero scesa in campo, cercata fra quelle della Lega.
+ *
+ * Il ripiego guardava solo `lineups`, che arriva da API-Football e si ferma al
+ * 29 agosto: prima di Monopoli-Foggia mostrava l'undici della Salernitana
+ * invece di quello del Cerignola, e chi guardava vedeva una formazione vecchia
+ * di due giornate senza capire perche.
+ *
+ * Le formazioni della Lega arrivano fino all'ultima gara giocata, quindi si
+ * cerca prima li, e si prende la piu recente fra quelle precedenti alla
+ * partita che si sta guardando.
+ */
+function ultimaDallaLega(primaDi?: string): { id: string; data: string } | null {
+  const candidate = Object.keys(formazioniUfficiali)
+    .map((id) => ({ id, data: matches.find((m) => m.id === id)?.kickoff?.slice(0, 10) ?? '' }))
+    .filter((x) => x.data && (!primaDi || x.data < primaDi))
+    .sort((a, b) => b.data.localeCompare(a.data));
+  return candidate[0] ?? null;
+}
+
 export function lineupPerPartita(date?: string, matchId?: string, viva = false): Formazione {
   // prima la Lega: e l'undici ufficiale, col modulo vero
   if (matchId) {
@@ -309,7 +329,14 @@ export function lineupPerPartita(date?: string, matchId?: string, viva = false):
     if (disposta) return disposta;
   }
 
-  // niente per questa partita: si prende l'ultima giocata
+  // niente per questa partita: si prende l'ultima davvero giocata, cercata
+  // prima fra quelle della Lega, che arrivano piu avanti nel tempo
+  const dallaLega = ultimaDallaLega(date);
+  if (dallaLega) {
+    const disposta = daLegaPro(dallaLega.id);
+    if (disposta) return { ...disposta, fonte: 'ultima', dataUltima: dallaLega.data };
+  }
+
   const precedente = date ? realLineup() : null;
   if (precedente && precedente.date !== date) {
     const disposta = lineupFromMatch(precedente);

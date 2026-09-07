@@ -1,11 +1,13 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { router } from 'expo-router';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import { GroupLabel, useGutter } from './ui';
 import { lineupPerPartita } from '../lib/lineup';
-import { medieVere, ratingOf, useDatiPartita } from '../lib/fanplay';
+import {
+  medieVere, ratingOf, useDatiPartita, caricaMigliore, migliorePartita,
+} from '../lib/fanplay';
 import { colors, radius, space, type } from '../theme/tokens';
 import type { Match } from '@satanelli/core';
 
@@ -23,6 +25,10 @@ import type { Match } from '@satanelli/core';
 export function PagelleInHome({ match }: { match: Match }) {
   const gutter = useGutter();
   useDatiPartita(match.id, true);
+  // il migliore lo conta il database: in app servirebbero tutti i voti, e
+  // quelli restano privati
+  useEffect(() => { void caricaMigliore(match.id); }, [match.id]);
+  const migliore = migliorePartita(match.id);
 
   const formazione = useMemo(
     () => lineupPerPartita(match.kickoff ? match.kickoff.slice(0, 10) : undefined, match.id),
@@ -52,6 +58,27 @@ export function PagelleInHome({ match }: { match: Match }) {
         style={({ pressed }) => [gutter, pressed && { opacity: 0.8 }]}
       >
         <View style={styles.scatola}>
+          {/*
+            * Il migliore della partita, in cima e staccato dal resto.
+            *
+            * Non e la prima riga della classifica con un'etichetta sopra: e
+            * la cosa che si va a cercare, e in una lista di tre nomi si
+            * perderebbe. Compare solo col minimo di voti che il database
+            * pretende, perche altrimenti lo decide chi vota per primo.
+            */}
+          {migliore ? (
+            <View style={styles.migliore}>
+              <Ionicons name="trophy" size={18} color="#E8C547" />
+              <View style={{ flex: 1 }}>
+                <Text style={styles.miglioreNome} numberOfLines={1}>
+                  {nomeCorto(migliore.giocatore, formazione)}
+                </Text>
+                <Text style={styles.miglioreSotto}>migliore in campo</Text>
+              </View>
+              <Text style={styles.miglioreVoto}>{migliore.media.toFixed(1)}</Text>
+            </View>
+          ) : null}
+
           {classifica.map((x, i) => (
             <View key={x.p.id} style={[styles.riga, i > 0 && styles.rigaSopra]}>
               <Text style={styles.posto}>{i + 1}</Text>
@@ -71,7 +98,21 @@ export function PagelleInHome({ match }: { match: Match }) {
   );
 }
 
+/** Dal database arriva l'id del giocatore: in pagella si legge il nome. */
+function nomeCorto(id: string, formazione: { slots: Array<{ player: { id: string; shortName?: string; name?: string } | null }> }): string {
+  const p = formazione.slots.map((s) => s.player).find((x) => x?.id === id);
+  return p?.shortName ?? p?.name ?? id;
+}
+
 const styles = StyleSheet.create({
+  migliore: {
+    flexDirection: 'row', alignItems: 'center', gap: space.md,
+    paddingVertical: 12,
+    borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: 'rgba(255,255,255,0.10)',
+  },
+  miglioreNome: { ...type.subheadBold, color: colors.text },
+  miglioreSotto: { ...type.caption, color: colors.textDim, marginTop: 1 },
+  miglioreVoto: { ...type.title3, color: '#E8C547' },
   scatola: {
     backgroundColor: colors.surface, borderRadius: radius.lg,
     borderWidth: StyleSheet.hairlineWidth, borderColor: 'rgba(255,255,255,0.08)',

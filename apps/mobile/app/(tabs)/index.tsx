@@ -27,6 +27,7 @@ import { eOggi } from '../../lib/live-core';
 import { salaAperta } from '../../lib/sala';
 import { PallinoLive } from '../../components/PallinoLive';
 import { PagelleInHome } from '../../components/PagelleInHome';
+import { MvpDelMese } from '../../components/MvpDelMese';
 import {
   FOGGIA, foggiaRow, lastMatch, matchInCorso, meta, news, nextMatch, recentForm,
   standingsWindow, topScorers, upcomingMatches,
@@ -188,6 +189,10 @@ export default function Home() {
       {(vivo?.finita && adessoFinito) || last
         ? <PagelleInHome match={(vivo?.finita && adessoFinito) || last!} />
         : null}
+
+      {/* dopo le pagelle della singola gara: prima com'e andata ieri, poi come
+          sta andando il mese */}
+      <MvpDelMese />
 
       {last ? (
         <>
