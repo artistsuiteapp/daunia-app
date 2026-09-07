@@ -39,6 +39,10 @@ jobs:
           API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
           # "rapidapi" per passare dal gateway RapidAPI, vuoto per quello diretto
           API_FOOTBALL_VIA: ${{ secrets.API_FOOTBALL_VIA }}
+          # live-score-api: i marcatori delle partite giocate. Senza queste due
+          # l'ingest gira lo stesso, e lo dice fra gli avvisi.
+          LSA_KEY: ${{ secrets.LSA_KEY }}
+          LSA_SECRET: ${{ secrets.LSA_SECRET }}
         run: node services/ingest/run.mjs
 
       - name: Committa se cambiato
