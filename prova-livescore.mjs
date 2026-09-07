@@ -6,12 +6,39 @@
  *
  *   LSA_KEY=... LSA_SECRET=... node prova-livescore.mjs
  */
-const KEY = process.env.LSA_KEY;
-const SECRET = process.env.LSA_SECRET;
+import { readFileSync } from 'node:fs';
+
+/**
+ * Le credenziali, lette da .env.livescore o dall'ambiente.
+ *
+ * Il file resta sul computer di chi lancia lo script: `.gitignore` ignora
+ * tutto quello che comincia per `.env`, e qui dentro le credenziali non
+ * vengono mai stampate -- nemmeno in un messaggio d'errore.
+ */
+function credenziali() {
+  const dalFile = {};
+  try {
+    for (const riga of readFileSync(new URL('.env.livescore', import.meta.url), 'utf8').split('\n')) {
+      const pulita = riga.trim();
+      if (!pulita || pulita.startsWith('#')) continue;
+      const i = pulita.indexOf('=');
+      if (i > 0) dalFile[pulita.slice(0, i).trim()] = pulita.slice(i + 1).trim();
+    }
+  } catch {
+    // nessun file: si prova con l'ambiente
+  }
+  return {
+    KEY: process.env.LSA_KEY || dalFile.LSA_KEY,
+    SECRET: process.env.LSA_SECRET || dalFile.LSA_SECRET,
+  };
+}
+
+const { KEY, SECRET } = credenziali();
 
 if (!KEY || !SECRET) {
-  console.error('Servono LSA_KEY e LSA_SECRET. Esempio:');
-  console.error('  LSA_KEY=la-tua-key LSA_SECRET=il-tuo-secret node prova-livescore.mjs');
+  console.error('\nManca ' + (!KEY ? 'la key' : 'il secret') + '.');
+  console.error('Aprilo e compilalo:  .env.livescore  (accanto a questo script)');
+  console.error('Il secret sta qui:   https://live-score-api.com/users/profile\n');
   process.exit(1);
 }
 
