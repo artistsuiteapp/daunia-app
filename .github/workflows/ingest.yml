@@ -6,7 +6,19 @@ on:
     # GitHub fattura al minuto arrotondando per eccesso, quindi ogni 15 minuti
     # farebbe 2880 minuti al mese contro i 2000 gratis di un repo privato.
     # A 30 minuti restano 1440, e Wikipedia comunque non si aggiorna piu spesso.
+    # il ritmo di fondo: ogni mezz'ora, tutto l'anno
     - cron: '*/30 * * * *'
+    # Nelle ore delle partite si va ogni dieci minuti.
+    #
+    # Le formazioni ufficiali escono fra i sessanta e i quarantacinque minuti
+    # prima del fischio -- il regolamento FIGC impone la distinta all'arbitro
+    # a T-45 -- e con la mezz'ora si rischiava di prenderle a T-15. Dieci
+    # minuti danno tre tentativi dentro quella finestra.
+    #
+    # Solo nelle fasce in cui la Serie C gioca davvero: sabato e domenica dal
+    # primo pomeriggio a notte, e le infrasettimanali di martedi e mercoledi.
+    - cron: '*/10 12-22 * * 6,0'
+    - cron: '*/10 16-22 * * 2,3'
   workflow_dispatch:
   push:
     paths:
