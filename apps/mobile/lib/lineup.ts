@@ -1,6 +1,7 @@
 import type { Player } from '@satanelli/core';
 import { squad, lineups, formazioniUfficiali, type LineupPlayer, type MatchLineup } from './data';
 import { DEPARTED, spotOf, type Spot } from './squad-overrides';
+import { inOrdine, postiDelModulo } from './modulo-core';
 
 /**
  * Formazione: quella vera se la partita e stata giocata, altrimenti la probabile.
@@ -251,29 +252,24 @@ function daLegaPro(matchId: string): Formazione | null {
     return { player: p ?? null, ruolo: g.ruolo ?? '', numero: g.numero ?? 0 };
   });
 
-  const per = (r: RegExp) => trovato.filter((x) => r.test(x.ruolo));
-  const portiere = per(/portiere/i)[0] ?? trovato[0];
-  const difensori = per(/difensore/i);
-  const centrocampisti = per(/centrocamp/i);
-  const attaccanti = per(/attacc/i);
+  /*
+   * Comanda il modulo, non il ruolo dichiarato.
+   *
+   * Per Foggia-Cerignola la Lega elencava sei "Difensore", tre
+   * "Centrocampista" e un "Attaccante", ma il modulo era 4-2-3-1:
+   * raggruppando per ruolo uscivano sei uomini in difesa. Il ruolo serve solo
+   * a mettere in fila chi sta davanti e chi dietro; quanti per riga lo dice il
+   * modulo. I conti stanno in modulo-core, sotto test.
+   */
+  const portiere = trovato.find((x) => /portiere/i.test(x.ruolo)) ?? trovato[0];
+  const movimento = inOrdine(trovato.filter((x) => x !== portiere));
+  const posti = postiDelModulo(nostra.modulo, trovato.length);
 
-  /** le x di una riga, distribuite in modo simmetrico attorno al centro */
-  const larghezze = (n: number): number[] => {
-    if (n <= 0) return [];
-    if (n === 1) return [50];
-    const bordo = n >= 5 ? 8 : n === 4 ? 14 : 24;
-    const passo = (100 - bordo * 2) / (n - 1);
-    return Array.from({ length: n }, (_, i) => Math.round(bordo + passo * i));
-  };
-  const riga = (gruppo: typeof trovato, y: number): Slot[] =>
-    larghezze(gruppo.length).map((x, i) => ({ player: gruppo[i]?.player ?? null, x, y }));
-
-  const slots: Slot[] = [
-    { player: portiere?.player ?? null, x: 50, y: 2 },
-    ...riga(difensori, 26),
-    ...riga(centrocampisti, 56),
-    ...riga(attaccanti, 86),
-  ];
+  const slots: Slot[] = posti.map((posto, i) => ({
+    player: (i === 0 ? portiere : movimento[i - 1])?.player ?? null,
+    x: posto.x,
+    y: posto.y,
+  }));
 
   return {
     slots,
