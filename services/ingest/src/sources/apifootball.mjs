@@ -1,4 +1,6 @@
-/**
+
+
+import { scadenza } from '../util.mjs';/**
  * API-Football, piano gratuito. Formazioni vere, eventi e punteggio dal vivo
  * della stagione in corso.
  *
@@ -106,7 +108,7 @@ async function chiedi(percorso, chiave, conteggio, via = process.env.API_FOOTBAL
 
   conteggio.n += 1;
   const p = porta(via);
-  const r = await fetch(`${p.base}/${percorso}`, { headers: p.intestazioni(chiave) });
+  const r = await fetch(`${p.base}/${percorso}`, { headers: p.intestazioni(chiave), signal: scadenza() });
   if (!r.ok) return { dati: [], problema: `HTTP ${r.status}` };
   const j = await r.json();
   const errori = j.errors && !Array.isArray(j.errors) ? Object.values(j.errors) : [];

@@ -7,6 +7,28 @@ export const UA = 'SatanelliApp/0.1 (prototipo app tifosi; contatto: dev@localho
 const CACHE_DIR = new URL('../.cache/', import.meta.url).pathname;
 const CACHE_TTL_MS = 15 * 60 * 1000;
 
+/**
+ * Quanto si aspetta una fonte prima di mollarla.
+ *
+ * QUESTO NUMERO E COSTATO 1.908 MINUTI DI GITHUB ACTIONS.
+ *
+ * La fetch di Node non ha una scadenza sua: se un server accetta la connessione
+ * e poi smette di rispondere, la richiesta resta appesa per sempre. Il 7 e l'8
+ * settembre 2026 e successo davvero, con tre tentativi per ogni fonte, e i giri
+ * sono rimasti in piedi fino al tetto di sei ore di GitHub. Due giorni hanno
+ * mangiato la quota di un mese intero: 947 e 961 minuti, contro gli 11 al
+ * giorno di quando funzionava.
+ *
+ * Venti secondi bastano a chiunque. Una fonte piu lenta di cosi e una fonte
+ * rotta, e il posto dove deve finire e fra gli avvisi dell'ingest.
+ */
+export const ATTESA_MAX = 20_000;
+
+/** La scadenza da passare a ogni fetch. Nessuna richiesta esce senza. */
+export function scadenza(ms = ATTESA_MAX) {
+  return AbortSignal.timeout(ms);
+}
+
 /** Fetch JSON con cache su disco, retry e backoff. Le fonti pubbliche vanno trattate con garbo. */
 export async function getJson(url, { ttl = CACHE_TTL_MS, retries = 3 } = {}) {
   const key = createHash('sha1').update(url).digest('hex').slice(0, 16);
@@ -18,7 +40,7 @@ export async function getJson(url, { ttl = CACHE_TTL_MS, retries = 3 } = {}) {
   let lastErr;
   for (let i = 0; i < retries; i++) {
     try {
-      const res = await fetch(url, { headers: { 'User-Agent': UA, Accept: 'application/json' } });
+      const res = await fetch(url, { headers: { 'User-Agent': UA, Accept: 'application/json' }, signal: scadenza() });
       if (!res.ok) throw new Error(`HTTP ${res.status} su ${url}`);
       const body = await res.json();
       await mkdir(CACHE_DIR, { recursive: true });
@@ -48,7 +70,7 @@ export async function getTesto(url, { ttl = CACHE_TTL_MS, retries = 3 } = {}) {
   let lastErr;
   for (let i = 0; i < retries; i++) {
     try {
-      const res = await fetch(url, { headers: { 'User-Agent': UA, Accept: 'application/rss+xml, application/xml, text/xml, */*' } });
+      const res = await fetch(url, { headers: { 'User-Agent': UA, Accept: 'application/rss+xml, application/xml, text/xml, */*' }, signal: scadenza() });
       if (!res.ok) throw new Error(`HTTP ${res.status} su ${url}`);
       const body = await res.text();
       await mkdir(CACHE_DIR, { recursive: true });
@@ -64,7 +86,7 @@ export async function getTesto(url, { ttl = CACHE_TTL_MS, retries = 3 } = {}) {
 
 /** Come getJson ma restituisce anche gli header, serve per X-WP-Total. */
 export async function getJsonWithHeaders(url) {
-  const res = await fetch(url, { headers: { 'User-Agent': UA, Accept: 'application/json' } });
+  const res = await fetch(url, { headers: { 'User-Agent': UA, Accept: 'application/json' }, signal: scadenza() });
   if (!res.ok) throw new Error(`HTTP ${res.status} su ${url}`);
   return { body: await res.json(), headers: res.headers };
 }
