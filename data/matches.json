@@ -382,9 +382,9 @@
     "subs": [
       {
         "minute": 46,
-        "esce": "M. Perlingieri",
-        "entra": "M. Sellaf",
-        "side": "away"
+        "esce": "A. Gallo",
+        "entra": "M. Coulibaly",
+        "side": "home"
       },
       {
         "minute": 46,
@@ -394,9 +394,9 @@
       },
       {
         "minute": 46,
-        "esce": "A. Gallo",
-        "entra": "M. Coulibaly",
-        "side": "home"
+        "esce": "M. Perlingieri",
+        "entra": "M. Sellaf",
+        "side": "away"
       },
       {
         "minute": 60,
@@ -406,14 +406,14 @@
       },
       {
         "minute": 66,
-        "esce": "A. Romano",
-        "entra": "A. Kurti",
+        "esce": "G. Vitale",
+        "entra": "K. Miranda",
         "side": "away"
       },
       {
         "minute": 66,
-        "esce": "G. Vitale",
-        "entra": "K. Miranda",
+        "esce": "A. Romano",
+        "entra": "A. Kurti",
         "side": "away"
       },
       {
