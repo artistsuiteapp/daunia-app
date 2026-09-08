@@ -102,7 +102,15 @@ jobs:
       # Gira solo quando qualcosa e cambiato davvero: la maggior parte dei
       # giri non tocca niente e non ha senso ricostruire il sito.
       - name: Ricostruisci e pubblica
-        if: steps.commit.outputs.cambiato == 'si'
+        # Si pubblica quando cambiano i dati OPPURE quando il commit e opera di
+        # una persona.
+        #
+        # Prima c'era solo la prima condizione, e il difetto era invisibile: una
+        # modifica al codice del sito raggiungeva la produzione solo se, per
+        # combinazione, in quello stesso giro cambiava anche un dato. Una
+        # riscrittura in vercel.json poteva restare fuori per ore senza che
+        # nessuno capisse perche il sito era indietro.
+        if: steps.commit.outputs.cambiato == 'si' || github.event_name == 'push' || github.event_name == 'workflow_dispatch'
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           # `.vercel/` e gitignorato, quindi qui il CLI non sa a quale progetto
