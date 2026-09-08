@@ -54,6 +54,10 @@
     {
       "source": "/trasferta/:id",
       "destination": "/trasferta/[id]"
+    },
+    {
+      "source": "/stampa/:testata",
+      "destination": "/stampa/[testata]"
     }
   ]
 }
