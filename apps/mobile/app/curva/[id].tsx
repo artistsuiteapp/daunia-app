@@ -14,7 +14,8 @@ import { relative, shortDate } from '../../lib/format';
 import { useOspite } from '../../lib/ospite';
 import { SoloConAccount } from '../../components/SoloConAccount';
 import { useKeyboardInset } from '../../lib/viewport';
-import { TOPIC_ICON, addReply, discussionById, like, removeDiscussion, useDiscussions, eMio, modificaRisposta, cancellaRisposta } from '../../lib/community';
+import { TOPIC_ICON, addReply, discussionById, like, removeDiscussion, ricarica, useDiscussions, eMio, modificaRisposta, cancellaRisposta } from '../../lib/community';
+import { AzioniContenuto } from '../../components/AzioniContenuto';
 
 /**
  * Una discussione: il testo di apertura, poi le risposte in ordine di arrivo e
@@ -138,7 +139,9 @@ export default function DiscussionPage() {
           <Text style={[styles.actionText, liked && styles.actionTextOn]}>{d.likes}</Text>
         </Pressable>
 
-        {!d.sample ? (
+        {/* il cestino solo sulle proprie: prima compariva su tutte, e il
+            database lo rifiutava senza spiegare niente a chi lo premeva */}
+        {!d.sample && eMio(d.autoreId) ? (
           <Pressable
             onPress={async () => { await removeDiscussion(d.id); router.back(); }}
             style={({ pressed }) => [styles.action, pressed && { opacity: 0.8 }]}
@@ -146,6 +149,16 @@ export default function DiscussionPage() {
             <Ionicons name="trash-outline" size={15} color={colors.textDim} />
             <Text style={styles.actionText}>Elimina</Text>
           </Pressable>
+        ) : null}
+
+        {!d.sample && !eMio(d.autoreId) ? (
+          <AzioniContenuto
+            tipo="discussione"
+            id={d.id}
+            autore={d.autoreId ?? null}
+            autoreNome={d.author}
+            onFatto={() => { void ricarica(); router.back(); }}
+          />
         ) : null}
       </View>
 
@@ -207,7 +220,7 @@ export default function DiscussionPage() {
                 )}
               </View>
 
-              {/* i comandi compaiono solo su quello che hai scritto tu */}
+              {/* sul proprio: correggi e cestino. Sull'altrui: segnala e blocca. */}
               {mia && !inModifica ? (
                 <View style={styles.comandi}>
                   <Pressable
@@ -219,6 +232,16 @@ export default function DiscussionPage() {
                   <Pressable hitSlop={8} onPress={() => elimina(rep.id)}>
                     <Ionicons name="trash-outline" size={15} color={colors.textFaint} />
                   </Pressable>
+                </View>
+              ) : !mia && !rep.sample ? (
+                <View style={styles.comandi}>
+                  <AzioniContenuto
+                    tipo="risposta"
+                    id={rep.id}
+                    autore={rep.autoreId ?? null}
+                    autoreNome={rep.author}
+                    onFatto={ricarica}
+                  />
                 </View>
               ) : null}
             </View>

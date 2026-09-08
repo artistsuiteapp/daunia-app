@@ -235,6 +235,16 @@ export default function ProfiloSchermata() {
           <ListRow onPress={() => router.push('/notifiche' as never)} chevron>
             <Text style={styles.voce}>Notifiche</Text>
           </ListRow>
+          {/* si deve poter tornare indietro da un blocco: un blocco che non si
+              toglie non e una tutela, e una trappola — e Apple lo chiede */}
+          <ListRow onPress={() => router.push('/segnalazioni' as never)} chevron>
+            <Ionicons name="flag-outline" size={19} color={colors.textDim} />
+            <Text style={styles.voce}>Segnalazioni</Text>
+          </ListRow>
+          <ListRow onPress={() => router.push('/bloccati' as never)} chevron>
+            <Ionicons name="ban-outline" size={19} color={colors.textDim} />
+            <Text style={styles.voce}>Persone bloccate</Text>
+          </ListRow>
           <ListRow onPress={() => router.push('/privacy' as never)} chevron>
             <Ionicons name="shield-checkmark-outline" size={19} color={colors.textDim} />
             <Text style={styles.voce}>Informativa privacy</Text>
