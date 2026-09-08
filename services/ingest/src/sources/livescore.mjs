@@ -1,4 +1,6 @@
-/**
+
+
+import { scadenza } from '../util.mjs';/**
  * live-score-api: i marcatori, i cartellini e i cambi.
  *
  * Wikipedia i marcatori li ha, ma arriva con ore o giorni di ritardo, e per le
@@ -34,7 +36,7 @@ async function chiedi(percorso, params, conteggio) {
 
   conteggio.n += 1;
   const q = new URLSearchParams({ key, secret, ...params });
-  const r = await fetch(`${BASE}/${percorso}.json?${q}`);
+  const r = await fetch(`${BASE}/${percorso}.json?${q}`, { signal: scadenza() });
   if (!r.ok) return { dati: null, problema: `HTTP ${r.status}` };
   const j = await r.json().catch(() => null);
   if (!j?.success) return { dati: null, problema: j?.error ?? 'risposta illeggibile' };

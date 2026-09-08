@@ -1,6 +1,5 @@
 import { useEffect, useMemo } from 'react';
 import { router } from 'expo-router';
-import { Image } from 'expo-image';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -14,11 +13,8 @@ import { QuickNav } from '../../components/QuickNav';
 import { EventCard } from '../../components/EventCard';
 import { Crest } from '../../components/Crest';
 import { brand } from '../../theme/brand';
-import { colors, radius, space, type } from '../../theme/tokens';
+import { colors, space, type } from '../../theme/tokens';
 import { relative } from '../../lib/format';
-import { coverOf } from '../../lib/editorial';
-import { ArticleCover } from '../../components/ArticleCover';
-import { photo } from '../../lib/media';
 import { useSafeInsets } from '../../lib/viewport';
 import { useBenvenuto } from '../../lib/ospite';
 import { useProfilo } from '../../lib/auth';
@@ -34,7 +30,7 @@ import { statoMigliore, statoMese } from '../../lib/premi-core';
 import { fineVera } from '../../lib/live';
 import { squad } from '../../lib/data';
 import {
-  FOGGIA, foggiaRow, lastMatch, matchInCorso, meta, news, nextMatch, recentForm,
+  FOGGIA, foggiaRow, lastMatch, matchInCorso, meta, nextMatch, recentForm,
   standingsWindow, topScorers, upcomingMatches,
 } from '../../lib/data';
 
@@ -181,11 +177,6 @@ export default function Home() {
   const scorer = topScorers()[0];
   const upcoming = upcomingMatches().slice(0, 8);
 
-  const feed = news.slice(0, 6);
-  const leadIndex = Math.max(0, feed.findIndex((n) => n.image));
-  const lead = feed[leadIndex];
-  const rest = feed.filter((_, i) => i !== leadIndex).slice(0, 4);
-
   return (
     <Screen edgeToEdge>
       {/* aggiunta alla schermata Home l'app parte sotto la barra di stato:
@@ -326,15 +317,6 @@ function diffLabel(d: number) {
 }
 
 const styles = StyleSheet.create({
-  richiamo: { marginBottom: space.sm },
-  richiamoDentro: {
-    flexDirection: 'row', alignItems: 'center', gap: space.md,
-    padding: space.lg, borderRadius: radius.lg,
-    backgroundColor: colors.surface,
-    borderWidth: StyleSheet.hairlineWidth, borderColor: 'rgba(255,255,255,0.10)',
-  },
-  richiamoTitolo: { ...type.subheadBold, color: colors.text },
-  richiamoSotto: { ...type.footnote, color: colors.textDim, marginTop: 2 },
   greeting: { paddingBottom: space.md, backgroundColor: colors.bg },
   action: { ...type.subhead, color: colors.accentBright },
   stack: { gap: space.sm, marginTop: space.sm },
@@ -351,16 +333,4 @@ const styles = StyleSheet.create({
   ownName: { ...type.subheadBold, color: colors.text },
   pts: { ...type.headline, color: colors.text, width: 28, textAlign: 'right' },
   own: { color: colors.accentBright },
-
-  lead: { backgroundColor: colors.surface, borderRadius: radius.lg, overflow: 'hidden' },
-  leadImg: { width: '100%', height: 180, backgroundColor: colors.surfaceHi },
-  leadBody: { padding: space.lg, gap: 4 },
-  leadKicker: { ...type.footnoteBold, color: colors.accentBright },
-  leadTitle: { ...type.title3, color: colors.text },
-  leadMeta: { ...type.footnote, color: colors.textFaint, marginTop: 2 },
-
-  thumb: { width: 64, height: 40, overflow: 'hidden', borderRadius: radius.sm, backgroundColor: colors.surfaceHi },
-  thumbEmpty: {},
-  newsTitle: { ...type.subhead, color: colors.text },
-  newsMeta: { ...type.caption, color: colors.textFaint },
 });

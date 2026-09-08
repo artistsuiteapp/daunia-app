@@ -2,12 +2,22 @@ name: Aggiorna dati
 
 on:
   schedule:
-    # Ogni 30 minuti. Non e una scelta di gusto: un'esecuzione dura 24 secondi ma
-    # GitHub fattura al minuto arrotondando per eccesso, quindi ogni 15 minuti
-    # farebbe 2880 minuti al mese contro i 2000 gratis di un repo privato.
-    # A 30 minuti restano 1440, e Wikipedia comunque non si aggiorna piu spesso.
-    # il ritmo di fondo: ogni mezz'ora, tutto l'anno
-    - cron: '*/30 * * * *'
+    # Il ritmo di fondo: ogni sei ore.
+    #
+    # Era ogni mezz'ora, ed e li che sono finiti i 2.000 minuti del mese.
+    # Il conto che non tornava: GitHub non fattura la durata, fattura ogni
+    # lavoro arrotondato al minuto intero. Un giro da 24 secondi costa un minuto
+    # pieno, quindi la spesa la fa il NUMERO di esecuzioni, non quanto durano.
+    # Ogni mezz'ora sono 1.440 minuti al mese per questo cron da solo, prima
+    # ancora dei due delle partite e prima di qualunque altro repo dell'account,
+    # che pesca dallo stesso monte ore.
+    #
+    # Sei ore bastano perche qui dentro non c'e niente di urgente: calendario,
+    # classifica e rosa vengono da Wikipedia, la rassegna stampa ha gia un freno
+    # suo a dodici ore. Punteggio dal vivo, minuto e formazioni non passano da
+    # qui: li aggiorna la funzione guardiano su Supabase, che gira ogni minuto
+    # e non tocca il monte ore di GitHub.
+    - cron: '0 */6 * * *'
     # Nelle ore delle partite si va ogni dieci minuti.
     #
     # Le formazioni ufficiali escono fra i sessanta e i quarantacinque minuti
@@ -32,6 +42,11 @@ concurrency:
 jobs:
   ingest:
     runs-on: ubuntu-latest
+    # Il tetto che mancava. Senza, vale il predefinito di GitHub: SEI ORE.
+    # Un giro sano dura 25 secondi; se ne dura piu di dieci minuti e appeso, e
+    # va ammazzato subito. Il 7 e l'8 settembre 2026, senza questa riga, tre
+    # giri appesi al giorno hanno bruciato la quota di un mese intero.
+    timeout-minutes: 10
     permissions:
       contents: write
     steps:

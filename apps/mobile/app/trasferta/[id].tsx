@@ -14,8 +14,9 @@ import { matchById } from '../../lib/data';
 import { useOspite } from '../../lib/ospite';
 import {
   useTrasferte, divietoDi, perCitta, chiVa, contattoDi, ioSono,
-  ciVado, nonCiVado, SPIEGAZIONI, MEZZI, type Mezzo,
+  ciVado, nonCiVado, carica as ricaricaTrasferte, SPIEGAZIONI, MEZZI, type Mezzo,
 } from '../../lib/trasferte';
+import { AzioniContenuto } from '../../components/AzioniContenuto';
 import { CANALI, collegamento, etichetta, valido, type Canale } from '../../lib/contatti-core.ts';
 
 /**
@@ -265,6 +266,17 @@ export default function Trasferta() {
                         <Text style={styles.scriviTesto}>{etichetta(c!.canale, c!.riferimento)}</Text>
                       </View>
                     </Premi>
+                  ) : null}
+
+                  {/* la propria riga si corregge dal modulo qui sopra, che si
+                      riempie da solo; sulle altrui restano segnala e blocca */}
+                  {p.utente !== io ? (
+                    <AzioniContenuto
+                      tipo="trasferta"
+                      id={`${match.id}:${p.utente}`}
+                      autore={p.utente}
+                      onFatto={() => { void ricaricaTrasferte([match.id]); }}
+                    />
                   ) : null}
                 </View>
               );

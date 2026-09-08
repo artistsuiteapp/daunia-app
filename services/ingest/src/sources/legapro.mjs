@@ -1,4 +1,6 @@
-/**
+
+
+import { scadenza } from '../util.mjs';/**
  * Le formazioni ufficiali, dal sito della Lega.
  *
  * seriec.com e il sito ufficiale della Serie C, e il suo robots.txt consente
@@ -43,7 +45,7 @@ const senzaTag = (s) => String(s ?? '')
  * quattro megabyte: si scarica una volta e si tengono gli id, che non cambiano.
  */
 export async function fetchIdPartite() {
-  const r = await fetch(`${BASE}/calendario`, { headers: { 'User-Agent': UA } });
+  const r = await fetch(`${BASE}/calendario`, { headers: { 'User-Agent': UA }, signal: scadenza() });
   if (!r.ok) return { partite: [], warnings: [`Lega Pro calendario: HTTP ${r.status}`] };
   const html = await r.text();
 

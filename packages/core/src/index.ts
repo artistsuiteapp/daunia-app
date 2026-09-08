@@ -142,6 +142,41 @@ export interface NewsItem {
   source: SourceId;
 }
 
+/**
+ * Una testata che ha dato il permesso di comparire in app.
+ *
+ * `logoSuChiaro` dice che il logo ha inchiostro scuro e va posato su una piastra
+ * chiara: su fondo nero sparirebbe. Non e un dettaglio grafico, e il marchio di
+ * qualcun altro e va reso leggibile come l'hanno disegnato.
+ */
+export interface Testata {
+  id: string;
+  nome: string;
+  motto?: string;
+  sito: string;
+  logo: string | null;
+  logoSuChiaro: boolean;
+}
+
+/**
+ * Un articolo della rassegna stampa.
+ *
+ * Non c'e il corpo, e non e una dimenticanza: si mostrano titolo e sommario, e
+ * chi vuole leggere esce dall'app e va sul sito della testata.
+ */
+export interface ArticoloStampa {
+  id: string;
+  testata: string;
+  titolo: string;
+  sommario: string;
+  url: string;
+  data: Iso;
+  autore: string | null;
+  categoria: string | null;
+  /** L'og:image della loro pagina, collegata non copiata. null se non ce l'ha. */
+  immagine: string | null;
+}
+
 /** Settore dello stadio, usato dal modello 3D e dalla scheda biglietti. */
 export interface StadiumSector {
   id: string;

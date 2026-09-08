@@ -8,6 +8,7 @@ import { Avatar } from '../components/Avatar';
 import { Crest } from '../components/Crest';
 import { PallinoLive } from '../components/PallinoLive';
 import { SoloConAccount } from '../components/SoloConAccount';
+import { AzioniContenuto } from '../components/AzioniContenuto';
 import { Premi } from '../components/anima';
 import { colors, radius, space, type } from '../theme/tokens';
 import { nextMatch } from '../lib/data';
@@ -120,7 +121,14 @@ export default function Live() {
                 <Premi onPress={() => cancella(match.id, m.id)} scala={1}>
                   <Ionicons name="trash-outline" size={15} color={colors.textFaint} />
                 </Premi>
-              ) : null}
+              ) : (
+                <AzioniContenuto
+                  tipo="messaggio"
+                  id={m.id}
+                  autore={m.utente}
+                  autoreNome={m.autore}
+                />
+              )}
             </View>
           ))
         )}
