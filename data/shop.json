@@ -52,8 +52,8 @@
         "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-07-scaled.jpg",
         "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-09-scaled.jpg"
       ],
-      "category": "Maglie Gara",
-      "categorySlug": "maglie-gara",
+      "category": "kit",
+      "categorySlug": "kit",
       "url": "https://calciofoggia1920.store/prodotto/maglia-gara-third/",
       "inStock": true,
       "description": "",
@@ -73,8 +73,8 @@
         "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-03-scaled.jpg",
         "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-04-scaled.jpg"
       ],
-      "category": "Maglie Gara",
-      "categorySlug": "maglie-gara",
+      "category": "kit",
+      "categorySlug": "kit",
       "url": "https://calciofoggia1920.store/prodotto/maglia-gara-away/",
       "inStock": true,
       "description": "",
@@ -163,8 +163,8 @@
       "images": [
         "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-10-1-scaled.jpg"
       ],
-      "category": "Pantaloncini",
-      "categorySlug": "pantaloncini",
+      "category": "kit",
+      "categorySlug": "kit",
       "url": "https://calciofoggia1920.store/prodotto/pantaloncino-da-gara-third/",
       "inStock": true,
       "description": "",
@@ -181,8 +181,8 @@
       "images": [
         "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-05-scaled.jpg"
       ],
-      "category": "Pantaloncini",
-      "categorySlug": "pantaloncini",
+      "category": "kit",
+      "categorySlug": "kit",
       "url": "https://calciofoggia1920.store/prodotto/pantaloncino-gara-away/",
       "inStock": true,
       "description": "",
@@ -244,6 +244,11 @@
     }
   ],
   "categories": [
+    {
+      "slug": "kit",
+      "name": "kit",
+      "count": 4
+    },
     {
       "slug": "gadget",
       "name": "Gadget",
