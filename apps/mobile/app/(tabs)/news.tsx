@@ -1,71 +1,58 @@
+/**
+ * Notizie: solo la stampa.
+ *
+ * I pezzi scritti da noi sono usciti da questa schermata. Il motivo non e di
+ * gusto: una redazione di una persona sola non tiene il passo, e una sezione
+ * ferma a settimana scorsa fa piu danno di una sezione che non c'e. Le testate
+ * che seguono il Foggia scrivono ogni giorno, ed e il loro mestiere.
+ *
+ * Restano nel progetto `lib/editorial.ts` e la scheda `/post/[slug]`: i vecchi
+ * pezzi si aprono ancora se qualcuno ha il collegamento, semplicemente non
+ * hanno piu una porta da cui entrare.
+ */
 import { router } from 'expo-router';
-import { Image } from 'expo-image';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { View } from 'react-native';
 
-import { Screen, LargeTitle, ListGroup, ListRow, GroupLabel, useGutter } from '../../components/ui';
-import { colors, radius, space, type } from '../../theme/tokens';
-import { relative } from '../../lib/format';
-import { coverOf } from '../../lib/editorial';
-import { ArticleCover } from '../../components/ArticleCover';
-import {FOGGIA, news } from '../../lib/data';
-import { photo } from '../../lib/media';
+import { Screen, LargeTitle, Empty, GroupNote, useGutter } from '../../components/ui';
+import { space } from '../../theme/tokens';
+import { FOGGIA } from '../../lib/data';
+import { BannerTestata } from '../../components/BannerTestata';
+import { riepilogo, testateConArticoli } from '../../lib/stampa';
 
 export default function News() {
   const gutter = useGutter();
-  const leadIndex = Math.max(0, news.findIndex((n) => n.image));
-  const lead = news[leadIndex];
-  const rest = news.filter((_, i) => i !== leadIndex);
+  const testate = testateConArticoli();
 
   return (
     <Screen>
-      <LargeTitle crest={FOGGIA?.crest ?? null} title="Notizie" subtitle="Scritte dalla nostra redazione" />
+      <LargeTitle
+        crest={FOGGIA?.crest ?? null}
+        title="Notizie"
+        subtitle="Le testate che seguono il Foggia"
+      />
 
-      {lead ? (
-        <View style={gutter}>
-          <Pressable
-            onPress={() => router.push(`/post/${lead.slug}` as never)}
-            style={({ pressed }) => [styles.lead, pressed && { opacity: 0.85 }]}
-          >
-            {coverOf(lead.slug) ? <ArticleCover cover={coverOf(lead.slug)!} height={190} /> : null}
-            <View style={styles.leadBody}>
-              <Text style={styles.kicker}>{lead.kind === 'club' ? 'Ufficiale' : 'Redazione'}</Text>
-              <Text style={styles.leadTitle} numberOfLines={3}>{lead.title}</Text>
-              <Text style={styles.excerpt} numberOfLines={2}>{lead.excerpt}</Text>
-              <Text style={styles.meta}>{relative(lead.date)}</Text>
-            </View>
-          </Pressable>
+      {testate.length === 0 ? (
+        <Empty text="Nessuna testata al momento." />
+      ) : (
+        <View style={[gutter, { gap: space.md }]}>
+          {testate.map((t) => {
+            const { quanti, ultimo } = riepilogo(t.id);
+            return (
+              <BannerTestata
+                key={t.id}
+                testata={t}
+                quanti={quanti}
+                ultimo={ultimo}
+                onPress={() => router.push(`/stampa/${t.id}` as never)}
+              />
+            );
+          })}
         </View>
-      ) : null}
+      )}
 
-      <GroupLabel>Archivio</GroupLabel>
-      <View style={gutter}>
-        <ListGroup>
-          {rest.map((n) => (
-            <ListRow key={n.id} onPress={() => router.push(`/post/${n.slug}` as never)} chevron height={68}>
-              {coverOf(n.slug) ? (
-                <View style={styles.thumb}><ArticleCover cover={coverOf(n.slug)!} height={44} compact /></View>
-              ) : null}
-              <View style={{ flex: 1, gap: 2 }}>
-                <Text style={styles.rowTitle} numberOfLines={2}>{n.title}</Text>
-                <Text style={styles.meta}>{relative(n.date)}</Text>
-              </View>
-            </ListRow>
-          ))}
-        </ListGroup>
-      </View>
+      <GroupNote>
+        Titolo e sommario. L&apos;articolo si legge sulla pagina di chi l&apos;ha scritto.
+      </GroupNote>
     </Screen>
   );
 }
-
-const styles = StyleSheet.create({
-  lead: { backgroundColor: colors.surface, borderRadius: radius.lg, overflow: 'hidden' },
-  leadImg: { width: '100%', height: 200, backgroundColor: colors.surfaceHi },
-  leadBody: { padding: space.lg, gap: 5 },
-  kicker: { ...type.footnoteBold, color: colors.accentBright },
-  leadTitle: { ...type.title2, color: colors.text },
-  excerpt: { ...type.subhead, color: colors.textDim },
-  meta: { ...type.caption, color: colors.textFaint },
-
-  thumb: { width: 64, height: 44, overflow: 'hidden', borderRadius: radius.sm, backgroundColor: colors.surfaceHi },
-  rowTitle: { ...type.subhead, color: colors.text },
-});

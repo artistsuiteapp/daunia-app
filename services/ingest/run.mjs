@@ -20,6 +20,7 @@ import { fetchIdPartite, fetchProssima, fetchRisultati } from './src/sources/the
 import { arricchisciPartite } from './src/sources/livescore.mjs';
 import { fetchFormazioni } from './src/sources/legapro.mjs';
 import { fetchDivieti } from './src/sources/divieti.mjs';
+import { fetchStampa } from './src/sources/stampa.mjs';
 import { buildStadium } from './src/stadium.mjs';
 import { normalize, validate } from './src/normalize.mjs';
 
@@ -154,6 +155,23 @@ async function main() {
   }));
 
   /*
+   * Rassegna stampa: le testate che hanno dato il permesso.
+   *
+   * Titolo, link e sommario. Il corpo non entra nemmeno quando il feed lo
+   * porta: chi legge finisce sulla loro pagina, ed e la condizione a cui hanno
+   * detto di si.
+   *
+   * Si guarda due volte al giorno, e il freno sta nel dato: il giro precedente
+   * porta l'ora, e finche e giovane non parte una richiesta. Il cron di questo
+   * workflow batte ogni mezz'ora per le partite, e la cache su disco in CI e
+   * spenta, quindi non poteva stare ne li ne li.
+   */
+  const stampa = await step('rassegna stampa (testate convenzionate)', async () => fetchStampa({
+    precedente: await letto('stampa.json'),
+  }));
+  if (stampa.saltato) log('  stampa: ancora fresca, nessuna richiesta');
+
+  /*
    * La rosa di Wikipedia tiene dentro chi e andato via. Quella di API-Football
    * e la lista buona per la partita, e si aggiorna da sola. Si incrociano sul
    * numero di maglia: chi non ha un numero in entrambe resta, perche togliere
@@ -187,7 +205,12 @@ async function main() {
   bundle.prossima = prossima.prossima;
   bundle.formazioniUfficiali = formazioniTutte;
   bundle.divietiProposti = divieti.proposte;
-  bundle.meta.warnings.push(...live.warnings, ...storico.warnings, ...rosaApi.warnings, ...prossima.warnings, ...divieti.warnings, ...esiti.warnings, ...marcatori.warnings, ...formazioni.warnings);
+  bundle.stampa = {
+    testate: stampa.testate,
+    articoli: stampa.articoli,
+    aggiornatoIl: stampa.aggiornatoIl ?? null,
+  };
+  bundle.meta.warnings.push(...live.warnings, ...storico.warnings, ...rosaApi.warnings, ...prossima.warnings, ...divieti.warnings, ...esiti.warnings, ...marcatori.warnings, ...formazioni.warnings, ...stampa.warnings);
 
   const errors = validate(bundle);
   summary(bundle, nextHome, Date.now() - t0);
@@ -219,6 +242,7 @@ async function main() {
     'legapro-ids.json': formazioni.cache,
     'formazioni-ufficiali.json': formazioniTutte,
     'divieti-proposti.json': bundle.divietiProposti,
+    'stampa.json': bundle.stampa,
     'lineups.json': bundle.lineups,
     'bundle.json': bundle,
   };
@@ -396,6 +420,7 @@ classifica   ${b.standings.length} righe  | Foggia ${foggia ? `${foggia.position
 rosa         ${b.squad.length} giocatori  (con foto: ${b.squad.filter((p) => p.photo).length})
 staff        ${b.staff.map((s) => `${s.job}: ${s.name}`).join(', ') || '-'}
 news         ${b.news.length}  (ultima: ${b.news[0]?.date?.slice(0, 10) || '-'})
+stampa       ${b.stampa?.articoli.length ?? 0} articoli da ${b.stampa?.testate.length ?? 0} testate  (ultimo: ${b.stampa?.articoli[0]?.data?.slice(0, 10) || '-'})
 stadio       ${b.stadium.name}, capienza ${b.stadium.capacity}, ${b.stadium.sectors.length} settori
 negozio      ${b.shop.products.length} prodotti in ${b.shop.categories.length} categorie
 biglietti    ${b.tickets.length} settori in vendita

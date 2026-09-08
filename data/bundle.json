@@ -4894,5 +4894,344 @@
       }
     }
   },
-  "divietiProposti": []
+  "divietiProposti": [],
+  "stampa": {
+    "testate": [
+      {
+        "id": "calciofoggia",
+        "nome": "CalcioFoggia.it",
+        "motto": "Tutto il calcio della Capitanata",
+        "sito": "https://www.calciofoggia.it",
+        "logo": "https://www.calciofoggia.it/wp-content/uploads/2025/02/logo-black400.png",
+        "logoSuChiaro": false
+      },
+      {
+        "id": "foggiacalciomania",
+        "nome": "Foggiacalciomania",
+        "motto": "Il portale dei satanelli",
+        "sito": "https://foggiacalciomania.com",
+        "logo": "https://foggiacalciomania.com/wp-content/uploads/2014/09/logo1.png",
+        "logoSuChiaro": false
+      },
+      {
+        "id": "ilfoggia",
+        "nome": "ilFoggia.com",
+        "motto": "Quotidiano online sul Foggia Calcio",
+        "sito": "https://www.ilfoggia.com",
+        "logo": "https://www.ilfoggia.com/wp-content/uploads/2020/11/ilfoggia.banner-nuovo.jpg",
+        "logoSuChiaro": false
+      }
+    ],
+    "articoli": [
+      {
+        "id": "calciofoggia-c10372f9aa",
+        "testata": "calciofoggia",
+        "titolo": "Il punto sulla terza giornata",
+        "sommario": "Comanda la Basilicata, Potenza e Picerno , insieme al Sorrento, volano a con tre vittorie di fila e sono a punteggio pieno. Il Potenza liquida il Monopoli e il Picerno cala il…",
+        "url": "https://www.calciofoggia.it/il-punto-sulla-terza-giornata/",
+        "data": "2026-09-08T07:32:39.000Z",
+        "autore": "Mario Schena",
+        "categoria": "SERIE C",
+        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Serie-C-Girone-C.jpg"
+      },
+      {
+        "id": "ilfoggia-9f741afccf",
+        "testata": "ilfoggia",
+        "titolo": "Cosmano Sport Soccer Trani – Risultato parziale",
+        "sommario": "Nonostante la buona prova della seconda squadra di Foggia ,si dovra’ riprendere la gara partendo da uno svantaggio di due",
+        "url": "https://www.ilfoggia.com/cosmano-sport-soccer-trani-risultato-parziale/",
+        "data": "2026-09-07T23:55:47.000Z",
+        "autore": "Foggia Calcio Movie",
+        "categoria": "Gallery",
+        "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/09/IMG_1496-scaled.jpg"
+      },
+      {
+        "id": "calciofoggia-a97fdc292b",
+        "testata": "calciofoggia",
+        "titolo": "Risultati, marcatori e classifica 3ª giornata",
+        "sommario": "In vetta alla classifica continua la marcia del Picerno, protagonista di un netto 4-1 contro l’Inter U23. Il Picerno resta così a punteggio pieno con 9 punti, insieme a Potenza e…",
+        "url": "https://www.calciofoggia.it/risultati-marcatori-e-classifica-3a-giornata/",
+        "data": "2026-09-07T21:09:45.000Z",
+        "autore": "Fabio Bertazzoli",
+        "categoria": "SERIE C",
+        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/02/serie_c_pallone_2025_2026.webp"
+      },
+      {
+        "id": "ilfoggia-7fb6b557bb",
+        "testata": "ilfoggia",
+        "titolo": "IL CERIGNOLA ROVINA LA FESTA AL FOGGIA.",
+        "sommario": "UN PRIMO TEMPO DA DIMENTICARE. NON BASTA LA RIPRESA AL FOGGIA PER RIMEDIARE. AL FOGGIA OCCORRE TEMPO",
+        "url": "https://www.ilfoggia.com/il-cerignola-rovina-la-festa-al-foggia/",
+        "data": "2026-09-07T09:33:05.000Z",
+        "autore": "Luciano Gallucci",
+        "categoria": "News",
+        "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/09/IMG_2411-scaled.jpg"
+      },
+      {
+        "id": "ilfoggia-66365fc3d9",
+        "testata": "ilfoggia",
+        "titolo": "Foggia Cerignola – 𝗣𝗛𝗢𝗧𝗢 𝗚𝗔𝗟𝗟𝗘𝗥𝗬 📸Potito Chiummarulo",
+        "sommario": "",
+        "url": "https://www.ilfoggia.com/foggia-cerignola-%f0%9d%97%a3%f0%9d%97%9b%f0%9d%97%a2%f0%9d%97%a7%f0%9d%97%a2-%f0%9d%97%9a%f0%9d%97%94%f0%9d%97%9f%f0%9d%97%9f%f0%9d%97%98%f0%9d%97%a5%f0%9d%97%ac-%f0%9f%93%b8potito-chiummar/",
+        "data": "2026-09-07T09:08:20.000Z",
+        "autore": "Foggia Calcio Movie",
+        "categoria": "Gallery",
+        "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/09/IMG_2479-scaled.jpg"
+      },
+      {
+        "id": "foggiacalciomania-d3be279d55",
+        "testata": "foggiacalciomania",
+        "titolo": "Lo Zac su Foggia-Audace Cerignola. Il racconto della partita",
+        "sommario": "Vuoi leggere gratuitamente il giornale che racconta le partite del Foggia? Clicca qui sfogliare gratuitamente il giornale Lo ZAC Lo Zac 6 settembre 2026 L'articolo Lo Zac su…",
+        "url": "https://foggiacalciomania.com/news-foggia-calcio/lo-zac-su-foggia-audace-cerignola-il-racconto-della-partita/",
+        "data": "2026-09-06T22:42:25.000Z",
+        "autore": "Roberto Parisi",
+        "categoria": "News Calcio Foggia 1920",
+        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/page_1.png"
+      },
+      {
+        "id": "foggiacalciomania-4dad5eae09",
+        "testata": "foggiacalciomania",
+        "titolo": "Todisco: “Mi dispiace per i tifosi. Analizzeremo gli errori con il mister”",
+        "sommario": "In sala stampa interviene Todisco, che oggi ha indossato la fascia del capitano. “Mi dispiace che non abbiamo dato la soddisfazione dei nostri tifosi che sono in tantissimi questa…",
+        "url": "https://foggiacalciomania.com/news-foggia-calcio/todisco-mi-dispiace-per-i-tifosi-analizzeremo-gli-errori-con-il-mister/",
+        "data": "2026-09-06T22:07:33.000Z",
+        "autore": "Roberto Parisi",
+        "categoria": "News Calcio Foggia 1920",
+        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Todisco-2.jpeg"
+      },
+      {
+        "id": "foggiacalciomania-564cfb7554",
+        "testata": "foggiacalciomania",
+        "titolo": "Auteri: “Paghiamo due errori. Potevamo fare meglio, siamo stati anche sfortunati”",
+        "sommario": "“Qualche prestazione individuale è stato al di sotto delle aspettative. Il Cerignola non ci ha creato problemi, abbiamo capito subito come avevano impostato la partita. Sono stati…",
+        "url": "https://foggiacalciomania.com/news-foggia-calcio/intervista/auteri-paghiamo-due-errori-potevamo-fare-meglio-siamo-stati-anche-sfortunati/",
+        "data": "2026-09-06T21:49:49.000Z",
+        "autore": "Roberto Parisi",
+        "categoria": "Intervista",
+        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Auteri-329.jpeg"
+      },
+      {
+        "id": "calciofoggia-13c3ab38c2",
+        "testata": "calciofoggia",
+        "titolo": "Todisco: “Dispiace per il risultato, ma abbiamo fatto una buona prestazione. Gol subito a freddo ha condizionato”",
+        "sommario": "Gianmarco Todisco, terzino destro del Foggia, ha commentato a caldo la sconfitta per 0-2 contro l’Audace Cerignola. «Ovviamente dispiace per il risultato, nonostante abbiamo fatto…",
+        "url": "https://www.calciofoggia.it/todisco-dispiace-per-il-risultato-ma-abbiamo-fatto-una-buona-prestazione-gol-subito-a-freddo-ha-condizionato/",
+        "data": "2026-09-06T21:35:00.000Z",
+        "autore": "Armando Borrelli",
+        "categoria": "FOGGIA CALCIO",
+        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/08/Todisco-in-azione-contro-lAltamura-Foto-Antonello-Forcelli.png"
+      },
+      {
+        "id": "calciofoggia-de42b7723a",
+        "testata": "calciofoggia",
+        "titolo": "Auteri: “Abbiamo commesso due errori gravi e li abbiamo pagati. Siamo all’anno zero, calma e perseveranza”",
+        "sommario": "Gaetano Auteri ha analizzato a caldo la sconfitta per 0-2 contro l’Audace Cerignola, primo ko casalingo della stagione davanti al pubblico di ritorno allo Zaccheria. Il tecnico ha…",
+        "url": "https://www.calciofoggia.it/auteri-abbiamo-commesso-due-errori-gravi-e-li-abbiamo-pagati-siamo-allanno-zero-calma-e-perseveranza/",
+        "data": "2026-09-06T21:31:48.000Z",
+        "autore": "Armando Borrelli",
+        "categoria": "FOGGIA CALCIO",
+        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Mister-Auteri-contro-il-Cerignola-Foto-Antonello-Forcelli.png"
+      },
+      {
+        "id": "foggiacalciomania-0caf213306",
+        "testata": "foggiacalciomania",
+        "titolo": "Le Pagelle di Foggia-Audace Cerignola. Quante occasioni sbagliate!",
+        "sommario": "Saro: Su i gol presi nel primo tempo non ha colpe, deve rimproverare il resto della squadra per aver permesso di arrivare troppo facilmente al tiro. Evita di far capitolare…",
+        "url": "https://foggiacalciomania.com/news-foggia-calcio/pagelle/le-pagelle-di-foggia-audace-cerignola-quante-occasioni-sbagliate/",
+        "data": "2026-09-06T21:26:36.000Z",
+        "autore": "Roberto Parisi",
+        "categoria": "Pagelle",
+        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/WhatsApp-Image-2026-09-06-at-21.57.58.jpeg"
+      },
+      {
+        "id": "calciofoggia-b3fde3f651",
+        "testata": "calciofoggia",
+        "titolo": "Catalano: “Vittoria chiara e meritata. Il Foggia è una squadra importante, farà un campionato importante”",
+        "sommario": "Raimondo Catalano, allenatore dell’Audace Cerignola, ha analizzato a caldo il successo per 2-0 allo Zaccheria. «È stata ovviamente una partita importante, fatta in un campo…",
+        "url": "https://www.calciofoggia.it/catalano-vittoria-chiara-e-meritata-il-foggia-e-una-squadra-importante-fara-un-campionato-importante/",
+        "data": "2026-09-06T21:26:35.000Z",
+        "autore": "Armando Borrelli",
+        "categoria": "FOGGIA CALCIO",
+        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Mister-Catalano-Foto-Antonello-Forcelli.png"
+      },
+      {
+        "id": "calciofoggia-5cda8af7ce",
+        "testata": "calciofoggia",
+        "titolo": "Boccadamo: “Vittoria super meritata. Avevamo preparato la gara per tenere palla e spegnere l’atmosfera”",
+        "sommario": "Antonio Boccadamo, autore del gol dell’1-0 dell’Audace Cerignola, ha commentato a caldo il successo per 2-0 allo Zaccheria. «A parte il gol in sé, era importante giocare una…",
+        "url": "https://www.calciofoggia.it/boccadamo-vittoria-super-meritata-avevamo-preparato-la-gara-per-tenere-palla-e-spegnere-latmosfera/",
+        "data": "2026-09-06T21:25:30.000Z",
+        "autore": "Armando Borrelli",
+        "categoria": "FOGGIA CALCIO",
+        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/I-giocatori-del-Cerignola-esultano-dopo-un-gol-Foto-Antonello-Forcelli.png"
+      },
+      {
+        "id": "foggiacalciomania-6cb4d9737a",
+        "testata": "foggiacalciomania",
+        "titolo": "Top & Flop di Foggia-Cerignola",
+        "sommario": "Il derby di Capitatana è ancora gialloblù. Il Foggia perde la prima partita del campionato davanti ad uno Zaccheria pieno e gremito. Il Cerignola vince giocando una grande partita…",
+        "url": "https://foggiacalciomania.com/news-foggia-calcio/top-flop/top-flop-di-foggia-cerignola-2/",
+        "data": "2026-09-06T21:13:09.000Z",
+        "autore": "Redazione FCM 24 ore",
+        "categoria": "Top & Flop",
+        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Foggia-Audace-Cerignola-2026-2.jpeg"
+      },
+      {
+        "id": "foggiacalciomania-89930e54cb",
+        "testata": "foggiacalciomania",
+        "titolo": "Foggia prevedibile e lento, troppo facile per il Cerignola che vince ancora allo Zaccheria (0-2)",
+        "sommario": "Quante occasioni in una partita che il Cerignola è riuscito a vincerla tatticamente nel primo tempo approfittando dei vuoti che il Foggia lascia quando è in fase di impostazione…",
+        "url": "https://foggiacalciomania.com/news-foggia-calcio/la-cronaca/foggia-prevedibile-e-lento-troppo-facile-per-il-cerignola-che-vince-ancora-allo-zaccheria-0-2/",
+        "data": "2026-09-06T21:01:26.000Z",
+        "autore": "Roberto Parisi",
+        "categoria": "La Cronaca",
+        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/WhatsApp-Image-2026-09-06-at-22.50.03.jpeg"
+      },
+      {
+        "id": "calciofoggia-49711f468d",
+        "testata": "calciofoggia",
+        "titolo": "Foggia-Cerignola 0-2 (risultato finale)",
+        "sommario": "Secondo tempo 90’+8 – Il Cerignola espugna nuovamente lo Zaccheria: Foggia battuto 2-0 con le reti di Boccadamo al 2′ e Perlingieri al 21′. 90’+8 – Punizione Foggia dal vertice…",
+        "url": "https://www.calciofoggia.it/foggia-cerignola-campionato-2026-2027/",
+        "data": "2026-09-06T18:00:00.000Z",
+        "autore": "Armando Borrelli",
+        "categoria": "FOGGIA CALCIO",
+        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Foggia-Cerignola.png"
+      },
+      {
+        "id": "foggiacalciomania-9bc5285b9b",
+        "testata": "foggiacalciomania",
+        "titolo": "Diretta: Foggia-Cerignola 0 – 2 Per il Foggia ancora sconfitte contro il Cerignola",
+        "sommario": "Il Foggia contro la bestia nera Cerignola rimedia la settima sconfitta contro gli ofantini. Nulla da fare, una traversa di Luciani nega il gol ai rossoneri. | Foggia-Audace…",
+        "url": "https://foggiacalciomania.com/news-foggia-calcio/diretta-foggia-audace-cerignola-0-0-ore-2100/",
+        "data": "2026-09-06T16:49:49.000Z",
+        "autore": "Redazione FCM 24 ore",
+        "categoria": "News Calcio Foggia 1920",
+        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2023/03/rete-foggia.jpg"
+      },
+      {
+        "id": "calciofoggia-452a5362bc",
+        "testata": "calciofoggia",
+        "titolo": "Foggia-Audace Cerignola. E’ il derby day in uno Zaccheria sold out",
+        "sommario": "E’ il derby-day tra Foggia e Audace Cerignola. Ancora poche ore al fischio d’inizio previsto per le ore 21 ed il quadro che si preannuncia è quello di uno Zaccheria che va verso…",
+        "url": "https://www.calciofoggia.it/foggia-audace-cerignola-e-il-derby-day-in-uno-zaccheria-sold-out/",
+        "data": "2026-09-06T11:24:39.000Z",
+        "autore": "Tiziano Errichiello",
+        "categoria": "FOGGIA CALCIO",
+        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/WhatsApp-Image-2026-09-06-at-13.21.58.jpeg"
+      },
+      {
+        "id": "foggiacalciomania-ffb65f7797",
+        "testata": "foggiacalciomania",
+        "titolo": "Foggia-Audace Cerignola: le ultimissime",
+        "sommario": "Il Foggia domani sera in campo allo Zaccheria ritroverà i suoi tifosi, previsti undicimila spettatori contro l’Audace Cerignola. Tutti disponibili, il solo Del Sole fermo ai box…",
+        "url": "https://foggiacalciomania.com/news-foggia-calcio/ultimissime/foggia-audace-cerignola-le-ultimissime-4/",
+        "data": "2026-09-05T15:54:07.000Z",
+        "autore": "Redazione FCM 24 ore",
+        "categoria": "Ultimissime",
+        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/08/Foggia-2026-7.jpeg"
+      },
+      {
+        "id": "calciofoggia-b30f2a6de4",
+        "testata": "calciofoggia",
+        "titolo": "Auteri: “Dobbiamo crescere partita dopo partita. Il campo è l’unico giudice, teniamo i piedi per terra”",
+        "sommario": "Gaetano Auteri ha parlato in conferenza stampa alla vigilia di Foggia-Audace Cerignola, primo impegno casalingo con il pubblico di ritorno allo Zaccheria dopo le giornate di…",
+        "url": "https://www.calciofoggia.it/auteri-dobbiamo-crescere-partita-dopo-partita-il-campo-e-lunico-giudice-teniamo-i-piedi-per-terra/",
+        "data": "2026-09-05T15:11:05.000Z",
+        "autore": "Armando Borrelli",
+        "categoria": "FOGGIA CALCIO",
+        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/08/Mister-Auteri-contro-lAltamura-Foto-Antonello-Forcelli.png"
+      },
+      {
+        "id": "foggiacalciomania-e475111164",
+        "testata": "foggiacalciomania",
+        "titolo": "Auteri: “La squadra sente la passione dei tifosi. Pronti a dare il massimo con il Cerignola”",
+        "sommario": "Alla vigilia del derby contro il Cerignola, mister Gaetano Auteri ha fatto il punto sul lavoro svolto durante la settimana, soffermandosi sui nuovi arrivati e sull’inserimento dei…",
+        "url": "https://foggiacalciomania.com/news-foggia-calcio/sala-stampa/auteri-la-squadra-sente-la-passione-dei-tifosi-pronti-a-dare-il-massimo-con-il-cerignola/",
+        "data": "2026-09-05T15:01:57.000Z",
+        "autore": "Roberto Parisi",
+        "categoria": "Sala stampa",
+        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/IMG-20260905-WA0024.jpg"
+      },
+      {
+        "id": "calciofoggia-a5d0ba936e",
+        "testata": "calciofoggia",
+        "titolo": "L’avversario il Cerignola",
+        "sommario": "L’Audace Cerignola nasce nel 1912 come “Gruppo Sportivo Cerignola”, il club ha partecipato tra il 1934 e il 1937 a tre campionati di serie C. Fino al 2022 l’Audace Cerignola ha…",
+        "url": "https://www.calciofoggia.it/lavversario-il-cerignola-2/",
+        "data": "2026-09-05T09:41:52.000Z",
+        "autore": "Mario Schena",
+        "categoria": "FOGGIA CALCIO",
+        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Cerignola-foto-lega-pro.jpeg"
+      },
+      {
+        "id": "ilfoggia-b648eda3ee",
+        "testata": "ilfoggia",
+        "titolo": "Ancora un risultato positivo per la Cosmano",
+        "sommario": "Dopo la bella prova di Manduria dove i ragazzi di mister Mascia hanno portato a casa un brillante pari con",
+        "url": "https://www.ilfoggia.com/ancora-un-risultato-positivo-per-la-cosmano/",
+        "data": "2026-09-04T23:32:01.000Z",
+        "autore": "Foggia Calcio Movie",
+        "categoria": "Gallery",
+        "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/09/IMG_0354-scaled.jpg"
+      },
+      {
+        "id": "foggiacalciomania-9378c54de5",
+        "testata": "foggiacalciomania",
+        "titolo": "Oltre 5300 abbonati e tanta voglia di tifare Foggia. La travolgente passione rossonera…",
+        "sommario": "Domenica sera l’Audace Cerignola cercherà di rovinare la festa al Foggia caricato a mille dopo l’ennesima prova dei tifosi che hanno invaso il piazzale del parcheggio della Città…",
+        "url": "https://foggiacalciomania.com/news-foggia-calcio/oltre-5300-abbonati-e-tanta-voglia-di-tifare-foggia-la-travolgente-passione-rossonera/",
+        "data": "2026-09-04T20:49:41.000Z",
+        "autore": "Roberto Parisi",
+        "categoria": "News Calcio Foggia 1920",
+        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/WhatsApp-Image-2026-09-04-at-22.41.08.jpeg"
+      },
+      {
+        "id": "ilfoggia-76e6c0876a",
+        "testata": "ilfoggia",
+        "titolo": "ATTENZIONE, ORA C’E’ ANCHE IL FOGGIA! L’OPINIONE DI TANTI “ADDETTI AI LAVORI”",
+        "sommario": "TANTI GLI ELOGI DOPO GLI ULTIMI ARRIVI. SARA' IL FOGGIA LA SORPRESA DEL CAMPIONATO?",
+        "url": "https://www.ilfoggia.com/attenzione-ora-ce-anche-il-foggia-lopinione-di-tanti-addetti-ai-lavori/",
+        "data": "2026-09-02T07:57:28.000Z",
+        "autore": "Luciano Gallucci",
+        "categoria": "Blog",
+        "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0594-scaled.jpg"
+      },
+      {
+        "id": "ilfoggia-e6b9bc305c",
+        "testata": "ilfoggia",
+        "titolo": "Foggia Salernitana – 𝗣𝗛𝗢𝗧𝗢 𝗚𝗔𝗟𝗟𝗘𝗥𝗬 📸Potito Chiummarulo",
+        "sommario": "",
+        "url": "https://www.ilfoggia.com/foggia-salernitana-%f0%9d%97%a3%f0%9d%97%9b%f0%9d%97%a2%f0%9d%97%a7%f0%9d%97%a2-%f0%9d%97%9a%f0%9d%97%94%f0%9d%97%9f%f0%9d%97%9f%f0%9d%97%98%f0%9d%97%a5%f0%9d%97%ac-%f0%9f%93%b8potito-chiumm/",
+        "data": "2026-08-29T21:18:06.000Z",
+        "autore": "Foggia Calcio Movie",
+        "categoria": "Gallery",
+        "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0804-scaled.jpg"
+      },
+      {
+        "id": "ilfoggia-2384863344",
+        "testata": "ilfoggia",
+        "titolo": "IL FOGGIA DI AUTERI A CROTONE DIMOSTRA VOGLIA, FORZA E TANTA UMILTA’.",
+        "sommario": "CROTONE-FOGGIA 0-1. BUONA LA PRIMA E SE POI ARRIVASSERO I GIUSTI RINFORZI CHISSA'...",
+        "url": "https://www.ilfoggia.com/il-foggia-di-auteri-a-crotone-dimostra-voglia-forza-e-tanta-umilta/",
+        "data": "2026-08-25T08:22:54.000Z",
+        "autore": "Luciano Gallucci",
+        "categoria": "News",
+        "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/WhatsApp-Image-2026-08-24-at-23.02.24.jpeg"
+      },
+      {
+        "id": "ilfoggia-ce1f521c90",
+        "testata": "ilfoggia",
+        "titolo": "Promette bene il Foggia nonostante la sconfitta con l’Altamura",
+        "sommario": "",
+        "url": "https://www.ilfoggia.com/promette-bene-il-foggia-nonostante-la-sconfitta-con-laltamura/",
+        "data": "2026-08-17T09:18:34.000Z",
+        "autore": "Foggia Calcio Movie",
+        "categoria": "Gallery",
+        "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0088-scaled.jpg"
+      }
+    ],
+    "aggiornatoIl": "2026-09-08T10:39:29.785Z"
+  }
 }
