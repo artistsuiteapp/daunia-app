@@ -42,11 +42,15 @@ concurrency:
 jobs:
   ingest:
     runs-on: ubuntu-latest
-    # Il tetto che mancava. Senza, vale il predefinito di GitHub: SEI ORE.
-    # Un giro sano dura 25 secondi; se ne dura piu di dieci minuti e appeso, e
-    # va ammazzato subito. Il 7 e l'8 settembre 2026, senza questa riga, tre
-    # giri appesi al giorno hanno bruciato la quota di un mese intero.
-    timeout-minutes: 10
+    # Il tetto che mancava. Senza, vale il predefinito di GitHub: SEI ORE, ed e
+    # cosi che il 7 e l'8 settembre 2026 tre giri appesi al giorno hanno
+    # bruciato la quota di un mese intero.
+    #
+    # Venti e non dieci perche l'ultimo passo aspetta che Vercel finisca di
+    # costruire, e un export Expo sono diversi minuti: un tetto piu stretto
+    # ammazzerebbe deploy legittimi. Il freno fine sta sul passo dei dati, che
+    # e dove il blocco e successo davvero.
+    timeout-minutes: 20
     permissions:
       contents: write
     steps:
@@ -58,6 +62,10 @@ jobs:
 
       # nessun npm install: l'ingest non ha dipendenze
       - name: Scarica e normalizza
+        # Qui e dove si e inceppato. Un giro sano dura 25 secondi: cinque minuti
+        # sono venti volte tanto, e se li supera e appeso a una fonte muta.
+        # Il tetto del job resta la rete larga, questo e quella stretta.
+        timeout-minutes: 5
         env:
           NO_CACHE: '1'
           # Piano gratuito, cento chiamate al giorno. L'ingest le spende solo
