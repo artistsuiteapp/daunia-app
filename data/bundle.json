@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-08T02:20:40.023Z",
+    "generatedAt": "2026-09-08T07:21:01.345Z",
     "season": "2026-2027",
     "competition": "Serie C",
     "sources": {
@@ -551,9 +551,9 @@
       "subs": [
         {
           "minute": 46,
-          "esce": "M. Perlingieri",
-          "entra": "M. Sellaf",
-          "side": "away"
+          "esce": "A. Gallo",
+          "entra": "M. Coulibaly",
+          "side": "home"
         },
         {
           "minute": 46,
@@ -563,9 +563,9 @@
         },
         {
           "minute": 46,
-          "esce": "A. Gallo",
-          "entra": "M. Coulibaly",
-          "side": "home"
+          "esce": "M. Perlingieri",
+          "entra": "M. Sellaf",
+          "side": "away"
         },
         {
           "minute": 60,
@@ -575,14 +575,14 @@
         },
         {
           "minute": 66,
-          "esce": "A. Romano",
-          "entra": "A. Kurti",
+          "esce": "G. Vitale",
+          "entra": "K. Miranda",
           "side": "away"
         },
         {
           "minute": 66,
-          "esce": "G. Vitale",
-          "entra": "K. Miranda",
+          "esce": "A. Romano",
+          "entra": "A. Kurti",
           "side": "away"
         },
         {
