@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-08T19:25:20.236Z",
+    "generatedAt": "2026-09-08T21:58:43.572Z",
     "season": "2026-2027",
     "competition": "Serie C",
     "sources": {
@@ -16,16 +16,11 @@
     "attribution": "Dati stagione in corso da Wikipedia (CC BY-SA 4.0). News, stemmi e foto da calciofoggia1920.net. Prodotti dal negozio ufficiale calciofoggia1920.store.",
     "warnings": [
       "Anno corretto su Wikipedia per Foggia-Altamura: 2025-08-16 -> 2026-08-16.",
-      "Nessuno stemma per \"Savoia\": il sito del club non ha mai incontrato questa squadra.",
       "Nessuno stemma per \"Inter U23\": il sito del club non ha mai incontrato questa squadra.",
       "Nessuno stemma per \"Barletta\": il sito del club non ha mai incontrato questa squadra.",
-      "Nessuno stemma per \"Scafatese\": il sito del club non ha mai incontrato questa squadra.",
       "Solo 3 giocatori su 26 hanno la foto: la rosa sul sito del club e ferma alla stagione precedente.",
       "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
-      "Trasferta a Monopoli fra meno di una settimana e nessuna notizia sul divieto: controlla a mano, potrebbe essersi rotto il riconoscimento.",
-      "live-score-api eventi 2026-08-24: risposta illeggibile",
-      "live-score-api eventi 2026-08-29: risposta illeggibile",
-      "live-score-api eventi 2026-09-06: risposta illeggibile"
+      "Trasferta a Monopoli fra meno di una settimana e nessuna notizia sul divieto: controlla a mano, potrebbe essersi rotto il riconoscimento."
     ]
   },
   "teams": [
@@ -136,16 +131,16 @@
     },
     {
       "id": "savoia",
-      "name": "Savoia",
+      "name": "SAVOIA 1908",
       "shortName": "Savoia",
-      "crest": null,
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2026/09/Coat_of_arms_of_the_Duchy_of_Savoy_XV-XVI_century.svg",
       "isFoggia": false
     },
     {
       "id": "scafatese",
-      "name": "Scafatese",
+      "name": "SCAFATESE FC",
       "shortName": "Scafatese",
-      "crest": null,
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2026/09/logo-scafatese-calcio.svg",
       "isFoggia": false
     },
     {
@@ -259,6 +254,94 @@
       "foggiaResult": "W",
       "reportUrl": "https://www.transfermarkt.it/spielbericht/index/spielbericht/4979169",
       "source": "wikipedia",
+      "cards": [
+        {
+          "minute": 6,
+          "player": "G. Panico",
+          "side": "away",
+          "rosso": false
+        },
+        {
+          "minute": 49,
+          "player": "A. Gallo",
+          "side": "away",
+          "rosso": false
+        },
+        {
+          "minute": 77,
+          "player": "N. Armini",
+          "side": "home",
+          "rosso": false
+        },
+        {
+          "minute": 90,
+          "player": "F. Crapisto",
+          "side": "home",
+          "rosso": false
+        }
+      ],
+      "subs": [
+        {
+          "minute": 46,
+          "esce": "D. Di Pasquale",
+          "entra": "C. Parisy",
+          "side": "away"
+        },
+        {
+          "minute": 56,
+          "esce": "E. Oviszach",
+          "entra": "M. Bigonzoni",
+          "side": "away"
+        },
+        {
+          "minute": 56,
+          "esce": "F. Petito",
+          "entra": "I. Toure",
+          "side": "away"
+        },
+        {
+          "minute": 60,
+          "esce": "A. Spadoni",
+          "entra": "P. Rodriguez",
+          "side": "home"
+        },
+        {
+          "minute": 62,
+          "esce": "G. Panico",
+          "entra": "Y. Merdji",
+          "side": "away"
+        },
+        {
+          "minute": 73,
+          "esce": "Z. Ruggiero",
+          "entra": "M. Tordini",
+          "side": "home"
+        },
+        {
+          "minute": 73,
+          "esce": "G. J. Tanco",
+          "entra": "W. Feola",
+          "side": "home"
+        },
+        {
+          "minute": 83,
+          "esce": "I. Torres",
+          "entra": "B. Stauciuc",
+          "side": "home"
+        },
+        {
+          "minute": 83,
+          "esce": "F. Groppelli",
+          "entra": "W. Guerra",
+          "side": "home"
+        },
+        {
+          "minute": 88,
+          "esce": "A. Smeraldi",
+          "entra": "T. Azarovs",
+          "side": "away"
+        }
+      ],
       "home": {
         "id": "crotone",
         "name": "F.C. CROTONE",
@@ -310,6 +393,82 @@
       "foggiaResult": "D",
       "reportUrl": "https://www.transfermarkt.it/spielbericht/index/spielbericht/4979183",
       "source": "wikipedia",
+      "cards": [
+        {
+          "minute": 43,
+          "player": "M. Gyabuaa",
+          "side": "away",
+          "rosso": false
+        },
+        {
+          "minute": 45,
+          "player": "M. Tascone",
+          "side": "away",
+          "rosso": false
+        }
+      ],
+      "subs": [
+        {
+          "minute": 41,
+          "esce": "G. Saro",
+          "entra": "D. Marfella",
+          "side": "home"
+        },
+        {
+          "minute": 46,
+          "esce": "I. Achik",
+          "entra": "E. D'Ursi",
+          "side": "away"
+        },
+        {
+          "minute": 46,
+          "esce": "F. Lescano",
+          "entra": "A. La Gumina",
+          "side": "away"
+        },
+        {
+          "minute": 58,
+          "esce": "G. Panico",
+          "entra": "Y. Merdji",
+          "side": "home"
+        },
+        {
+          "minute": 58,
+          "esce": "F. Berra",
+          "entra": "M. Seck",
+          "side": "home"
+        },
+        {
+          "minute": 75,
+          "esce": "M. Gyabuaa",
+          "entra": "R. Di Vico",
+          "side": "away"
+        },
+        {
+          "minute": 81,
+          "esce": "M. Vitale",
+          "entra": "M. Djibril",
+          "side": "away"
+        },
+        {
+          "minute": 86,
+          "esce": "S. Pieraccini",
+          "entra": "R. Zoia",
+          "side": "away"
+        },
+        {
+          "minute": 89,
+          "esce": "A. Gallo",
+          "entra": "M. Bigonzoni",
+          "side": "home"
+        },
+        {
+          "minute": 89,
+          "esce": "F. Petito",
+          "entra": "V. Ngana",
+          "side": "home"
+        }
+      ],
       "home": {
         "id": "foggia",
         "name": "CALCIO FOGGIA 1920",
@@ -361,6 +520,94 @@
       "foggiaResult": "L",
       "reportUrl": "https://www.transfermarkt.it/spielbericht/index/spielbericht/4979188",
       "source": "wikipedia",
+      "cards": [
+        {
+          "minute": 26,
+          "player": "M. Perlingieri",
+          "side": "away",
+          "rosso": false
+        },
+        {
+          "minute": 28,
+          "player": "A. Romano",
+          "side": "away",
+          "rosso": false
+        },
+        {
+          "minute": 90,
+          "player": "F. Petito",
+          "side": "home",
+          "rosso": false
+        },
+        {
+          "minute": 90,
+          "player": "M. Cocorocchio",
+          "side": "away",
+          "rosso": false
+        }
+      ],
+      "subs": [
+        {
+          "minute": 46,
+          "esce": "A. Gallo",
+          "entra": "M. Coulibaly",
+          "side": "home"
+        },
+        {
+          "minute": 46,
+          "esce": "I. Toure",
+          "entra": "M. Ravasio",
+          "side": "home"
+        },
+        {
+          "minute": 46,
+          "esce": "M. Perlingieri",
+          "entra": "M. Sellaf",
+          "side": "away"
+        },
+        {
+          "minute": 60,
+          "esce": "G. Panico",
+          "entra": "F. Zuccon",
+          "side": "home"
+        },
+        {
+          "minute": 66,
+          "esce": "G. Vitale",
+          "entra": "K. Miranda",
+          "side": "away"
+        },
+        {
+          "minute": 66,
+          "esce": "A. Romano",
+          "entra": "A. Kurti",
+          "side": "away"
+        },
+        {
+          "minute": 78,
+          "esce": "C. Cretella",
+          "entra": "L. D'Orazio",
+          "side": "away"
+        },
+        {
+          "minute": 79,
+          "esce": "A. Smeraldi",
+          "entra": "M. Bigonzoni",
+          "side": "home"
+        },
+        {
+          "minute": 79,
+          "esce": "H. Haoudi",
+          "entra": "Y. Merdji",
+          "side": "home"
+        },
+        {
+          "minute": 84,
+          "esce": "D. Gambale",
+          "entra": "C. Padula",
+          "side": "away"
+        }
+      ],
       "home": {
         "id": "foggia",
         "name": "CALCIO FOGGIA 1920",
@@ -431,9 +678,9 @@
       },
       "away": {
         "id": "savoia",
-        "name": "Savoia",
+        "name": "SAVOIA 1908",
         "shortName": "Savoia",
-        "crest": null
+        "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2026/09/Coat_of_arms_of_the_Duchy_of_Savoy_XV-XVI_century.svg"
       },
       "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
     },
@@ -704,9 +951,9 @@
       "source": "wikipedia",
       "home": {
         "id": "scafatese",
-        "name": "Scafatese",
+        "name": "SCAFATESE FC",
         "shortName": "Scafatese",
-        "crest": null
+        "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2026/09/logo-scafatese-calcio.svg"
       },
       "away": {
         "id": "foggia",
@@ -983,9 +1230,9 @@
       "source": "wikipedia",
       "home": {
         "id": "savoia",
-        "name": "Savoia",
+        "name": "SAVOIA 1908",
         "shortName": "Savoia",
-        "crest": null
+        "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2026/09/Coat_of_arms_of_the_Duchy_of_Savoy_XV-XVI_century.svg"
       },
       "away": {
         "id": "foggia",
@@ -1299,9 +1546,9 @@
       },
       "away": {
         "id": "scafatese",
-        "name": "Scafatese",
+        "name": "SCAFATESE FC",
         "shortName": "Scafatese",
-        "crest": null
+        "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2026/09/logo-scafatese-calcio.svg"
       },
       "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
     },
@@ -1670,7 +1917,7 @@
       "position": 13,
       "teamId": "savoia",
       "teamName": "Savoia",
-      "crest": null,
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2026/09/Coat_of_arms_of_the_Duchy_of_Savoy_XV-XVI_century.svg",
       "played": 3,
       "won": 1,
       "drawn": 0,
@@ -1738,7 +1985,7 @@
       "position": 17,
       "teamId": "scafatese",
       "teamName": "Scafatese",
-      "crest": null,
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2026/09/logo-scafatese-calcio.svg",
       "played": 3,
       "won": 0,
       "drawn": 2,
