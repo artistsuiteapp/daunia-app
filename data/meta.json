@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-09T15:59:44.765Z",
+  "generatedAt": "2026-09-09T19:11:03.129Z",
   "season": "2026-2027",
   "competition": "Serie C",
   "sources": {
@@ -18,7 +18,6 @@
     "Nessuno stemma per \"Inter U23\": il sito del club non ha mai incontrato questa squadra.",
     "Solo 2 giocatori su 23 hanno la foto: la rosa sul sito del club e ferma alla stagione precedente.",
     "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
-    "Divieti, FoggiaToday: HTTP 403 su https://www.foggiatoday.it/rss",
     "Trasferta a Monopoli fra meno di una settimana e nessuna notizia sul divieto: controlla a mano, potrebbe essersi rotto il riconoscimento."
   ]
 }
