@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-08T21:58:43.572Z",
+    "generatedAt": "2026-09-09T00:05:17.199Z",
     "season": "2026-2027",
     "competition": "Serie C",
     "sources": {
@@ -17,9 +17,9 @@
     "warnings": [
       "Anno corretto su Wikipedia per Foggia-Altamura: 2025-08-16 -> 2026-08-16.",
       "Nessuno stemma per \"Inter U23\": il sito del club non ha mai incontrato questa squadra.",
-      "Nessuno stemma per \"Barletta\": il sito del club non ha mai incontrato questa squadra.",
       "Solo 3 giocatori su 26 hanno la foto: la rosa sul sito del club e ferma alla stagione precedente.",
       "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
+      "Divieti, FoggiaToday: HTTP 403 su https://www.foggiatoday.it/rss",
       "Trasferta a Monopoli fra meno di una settimana e nessuna notizia sul divieto: controlla a mano, potrebbe essersi rotto il riconoscimento."
     ]
   },
@@ -40,9 +40,9 @@
     },
     {
       "id": "barletta",
-      "name": "Barletta",
+      "name": "SS BARLETTA",
       "shortName": "Barletta",
-      "crest": null,
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2026/09/ssbarletta-443x500.png",
       "isFoggia": false
     },
     {
@@ -895,9 +895,9 @@
       },
       "away": {
         "id": "barletta",
-        "name": "Barletta",
+        "name": "SS BARLETTA",
         "shortName": "Barletta",
-        "crest": null
+        "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2026/09/ssbarletta-443x500.png"
       },
       "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
     },
@@ -1478,9 +1478,9 @@
       "source": "wikipedia",
       "home": {
         "id": "barletta",
-        "name": "Barletta",
+        "name": "SS BARLETTA",
         "shortName": "Barletta",
-        "crest": null
+        "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2026/09/ssbarletta-443x500.png"
       },
       "away": {
         "id": "foggia",
@@ -1798,7 +1798,7 @@
       "position": 6,
       "teamId": "barletta",
       "teamName": "Barletta",
-      "crest": null,
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2026/09/ssbarletta-443x500.png",
       "played": 3,
       "won": 1,
       "drawn": 2,
@@ -4927,6 +4927,72 @@
     ],
     "articoli": [
       {
+        "id": "calciofoggia-7bfc536d72",
+        "testata": "calciofoggia",
+        "titolo": "Abdoulaye Diop di Treviglio dirige Monopoli-Foggia",
+        "sommario": "Sarà il Sig. Abdoulaye Diop della sezione di Treviglio a dirigere l'incontro Monopoli-Foggia, in programma sabato 12 settembre alle ore 18:00, allo Stadio Vito Simone Veneziani di…",
+        "url": "https://www.calciofoggia.it/abdoulaye-diop-di-treviglio-dirige-monopoli-foggia/",
+        "data": "2026-09-08T19:04:56.000Z",
+        "autore": "Fabio Bertazzoli",
+        "categoria": "FOGGIA CALCIO",
+        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Diop.png"
+      },
+      {
+        "id": "foggiacalciomania-229139e428",
+        "testata": "foggiacalciomania",
+        "titolo": "Giudice sportivo: ammenda al Calcio Foggia",
+        "sommario": "Il Giudice Sportivo, Dott. Stefano Palazzi, assistito da Irene Papi e dal Rappresentante dell’A.I.A. Sig. Silvano Torrini, nelle sedute del 7 e 8 settembre 2026 ha adottato le…",
+        "url": "https://foggiacalciomania.com/news-foggia-calcio/giudice-sportivo/giudice-sportivo-ammenda-al-calcio-foggia-5/",
+        "data": "2026-09-08T18:12:03.000Z",
+        "autore": "Redazione FCM 24 ore",
+        "categoria": "Giudice sportivo",
+        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2018/06/giudice-sportivo.jpg"
+      },
+      {
+        "id": "foggiacalciomania-a387f036d7",
+        "testata": "foggiacalciomania",
+        "titolo": "Serie C Girone C: risultati e marcatori terza giornata",
+        "sommario": "Rossoneri sconfitti in casa dal Cerignola, pari del Crotone in casa contro il Barletta. Sorrento vittorioso a Giugliano, Picerno strapazza l’Inter 23. Questi i risultati della…",
+        "url": "https://foggiacalciomania.com/news-foggia-calcio/138812/",
+        "data": "2026-09-08T17:53:12.000Z",
+        "autore": "Redazione FCM 24 ore",
+        "categoria": "News Calcio Foggia 1920",
+        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2025/08/palla334567.jpg"
+      },
+      {
+        "id": "foggiacalciomania-86c6dffae3",
+        "testata": "foggiacalciomania",
+        "titolo": "Monopoli-Foggia dirige Diop",
+        "sommario": "Sono state pubblicate le designazioni arbitrali per la quarta giornata del campionato di Serie C. Ecco nel dettaglio le scelte relative al girone C: Altamura – Bari: Arbitro…",
+        "url": "https://foggiacalciomania.com/news-foggia-calcio/designazioni/monopoli-foggia-dirige-diop/",
+        "data": "2026-09-08T15:46:13.000Z",
+        "autore": "Redazione FCM 24 ore",
+        "categoria": "Designazioni",
+        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2016/08/arbitro04.jpg"
+      },
+      {
+        "id": "calciofoggia-77d683e421",
+        "testata": "calciofoggia",
+        "titolo": "Giudice Sportivo: le decisioni relative alla terza giornata",
+        "sommario": "Diramato il comunicato del giudice sportivo relativo le gare della terza giornata di campionato. Clicca qui per leggere il comunicato completo © 2026, CALCIOFOGGIA.IT. Tutti i…",
+        "url": "https://www.calciofoggia.it/giudice-sportivo-le-decisioni-relative-alla-terza-giornata-2/",
+        "data": "2026-09-08T15:37:04.000Z",
+        "autore": "Mario",
+        "categoria": "CALCIO",
+        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2020/09/Zgiudice-sportivo.png"
+      },
+      {
+        "id": "foggiacalciomania-affb48585c",
+        "testata": "foggiacalciomania",
+        "titolo": "Ora Auteri ha tutti gli uomini per mettere in campo il modulo giusto per questo Foggia",
+        "sommario": "Entusiasmo facile quando vinci la prima gara, pareggi schiacciando un avversario come la Salernitata e ti trovi nel derby undicimila spettatori per spingere il Foggia alla…",
+        "url": "https://foggiacalciomania.com/news-foggia-calcio/ora-auteri-ha-tutti-gli-uomini-per-mettere-in-campo-il-modulo-giusto-per-questo-foggia/",
+        "data": "2026-09-08T10:43:45.000Z",
+        "autore": "Roberto Parisi",
+        "categoria": "News Calcio Foggia 1920",
+        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/08/Auteri-32-2.jpeg"
+      },
+      {
         "id": "calciofoggia-c10372f9aa",
         "testata": "calciofoggia",
         "titolo": "Il punto sulla terza giornata",
@@ -5103,17 +5169,6 @@
         "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Foggia-Cerignola.png"
       },
       {
-        "id": "foggiacalciomania-9bc5285b9b",
-        "testata": "foggiacalciomania",
-        "titolo": "Diretta: Foggia-Cerignola 0 – 2 Per il Foggia ancora sconfitte contro il Cerignola",
-        "sommario": "Il Foggia contro la bestia nera Cerignola rimedia la settima sconfitta contro gli ofantini. Nulla da fare, una traversa di Luciani nega il gol ai rossoneri. | Foggia-Audace…",
-        "url": "https://foggiacalciomania.com/news-foggia-calcio/diretta-foggia-audace-cerignola-0-0-ore-2100/",
-        "data": "2026-09-06T16:49:49.000Z",
-        "autore": "Redazione FCM 24 ore",
-        "categoria": "News Calcio Foggia 1920",
-        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2023/03/rete-foggia.jpg"
-      },
-      {
         "id": "calciofoggia-452a5362bc",
         "testata": "calciofoggia",
         "titolo": "Foggia-Audace Cerignola. E’ il derby day in uno Zaccheria sold out",
@@ -5125,50 +5180,6 @@
         "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/WhatsApp-Image-2026-09-06-at-13.21.58.jpeg"
       },
       {
-        "id": "foggiacalciomania-ffb65f7797",
-        "testata": "foggiacalciomania",
-        "titolo": "Foggia-Audace Cerignola: le ultimissime",
-        "sommario": "Il Foggia domani sera in campo allo Zaccheria ritroverà i suoi tifosi, previsti undicimila spettatori contro l’Audace Cerignola. Tutti disponibili, il solo Del Sole fermo ai box…",
-        "url": "https://foggiacalciomania.com/news-foggia-calcio/ultimissime/foggia-audace-cerignola-le-ultimissime-4/",
-        "data": "2026-09-05T15:54:07.000Z",
-        "autore": "Redazione FCM 24 ore",
-        "categoria": "Ultimissime",
-        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/08/Foggia-2026-7.jpeg"
-      },
-      {
-        "id": "calciofoggia-b30f2a6de4",
-        "testata": "calciofoggia",
-        "titolo": "Auteri: “Dobbiamo crescere partita dopo partita. Il campo è l’unico giudice, teniamo i piedi per terra”",
-        "sommario": "Gaetano Auteri ha parlato in conferenza stampa alla vigilia di Foggia-Audace Cerignola, primo impegno casalingo con il pubblico di ritorno allo Zaccheria dopo le giornate di…",
-        "url": "https://www.calciofoggia.it/auteri-dobbiamo-crescere-partita-dopo-partita-il-campo-e-lunico-giudice-teniamo-i-piedi-per-terra/",
-        "data": "2026-09-05T15:11:05.000Z",
-        "autore": "Armando Borrelli",
-        "categoria": "FOGGIA CALCIO",
-        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/08/Mister-Auteri-contro-lAltamura-Foto-Antonello-Forcelli.png"
-      },
-      {
-        "id": "foggiacalciomania-e475111164",
-        "testata": "foggiacalciomania",
-        "titolo": "Auteri: “La squadra sente la passione dei tifosi. Pronti a dare il massimo con il Cerignola”",
-        "sommario": "Alla vigilia del derby contro il Cerignola, mister Gaetano Auteri ha fatto il punto sul lavoro svolto durante la settimana, soffermandosi sui nuovi arrivati e sull’inserimento dei…",
-        "url": "https://foggiacalciomania.com/news-foggia-calcio/sala-stampa/auteri-la-squadra-sente-la-passione-dei-tifosi-pronti-a-dare-il-massimo-con-il-cerignola/",
-        "data": "2026-09-05T15:01:57.000Z",
-        "autore": "Roberto Parisi",
-        "categoria": "Sala stampa",
-        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/IMG-20260905-WA0024.jpg"
-      },
-      {
-        "id": "calciofoggia-a5d0ba936e",
-        "testata": "calciofoggia",
-        "titolo": "L’avversario il Cerignola",
-        "sommario": "L’Audace Cerignola nasce nel 1912 come “Gruppo Sportivo Cerignola”, il club ha partecipato tra il 1934 e il 1937 a tre campionati di serie C. Fino al 2022 l’Audace Cerignola ha…",
-        "url": "https://www.calciofoggia.it/lavversario-il-cerignola-2/",
-        "data": "2026-09-05T09:41:52.000Z",
-        "autore": "Mario Schena",
-        "categoria": "FOGGIA CALCIO",
-        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Cerignola-foto-lega-pro.jpeg"
-      },
-      {
         "id": "ilfoggia-b648eda3ee",
         "testata": "ilfoggia",
         "titolo": "Ancora un risultato positivo per la Cosmano",
@@ -5178,17 +5189,6 @@
         "autore": "Foggia Calcio Movie",
         "categoria": "Gallery",
         "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/09/IMG_0354-scaled.jpg"
-      },
-      {
-        "id": "foggiacalciomania-9378c54de5",
-        "testata": "foggiacalciomania",
-        "titolo": "Oltre 5300 abbonati e tanta voglia di tifare Foggia. La travolgente passione rossonera…",
-        "sommario": "Domenica sera l’Audace Cerignola cercherà di rovinare la festa al Foggia caricato a mille dopo l’ennesima prova dei tifosi che hanno invaso il piazzale del parcheggio della Città…",
-        "url": "https://foggiacalciomania.com/news-foggia-calcio/oltre-5300-abbonati-e-tanta-voglia-di-tifare-foggia-la-travolgente-passione-rossonera/",
-        "data": "2026-09-04T20:49:41.000Z",
-        "autore": "Roberto Parisi",
-        "categoria": "News Calcio Foggia 1920",
-        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/WhatsApp-Image-2026-09-04-at-22.41.08.jpeg"
       },
       {
         "id": "ilfoggia-76e6c0876a",
@@ -5235,6 +5235,6 @@
         "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0088-scaled.jpg"
       }
     ],
-    "aggiornatoIl": "2026-09-08T10:39:29.785Z"
+    "aggiornatoIl": "2026-09-09T00:04:57.497Z"
   }
 }

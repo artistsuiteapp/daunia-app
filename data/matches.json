@@ -728,9 +728,9 @@
     },
     "away": {
       "id": "barletta",
-      "name": "Barletta",
+      "name": "SS BARLETTA",
       "shortName": "Barletta",
-      "crest": null
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2026/09/ssbarletta-443x500.png"
     },
     "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
   },
@@ -1311,9 +1311,9 @@
     "source": "wikipedia",
     "home": {
       "id": "barletta",
-      "name": "Barletta",
+      "name": "SS BARLETTA",
       "shortName": "Barletta",
-      "crest": null
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2026/09/ssbarletta-443x500.png"
     },
     "away": {
       "id": "foggia",
