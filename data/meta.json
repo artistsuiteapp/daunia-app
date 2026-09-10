@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-10T10:13:50.134Z",
+  "generatedAt": "2026-09-10T10:42:45.080Z",
   "season": "2026-2027",
   "competition": "Serie C",
   "sources": {
@@ -20,6 +20,7 @@
     "Il negozio non ha restituito prodotti: la sezione shop resta vuota.",
     "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
     "Trasferta a Monopoli fra meno di una settimana e nessuna notizia sul divieto: controlla a mano, potrebbe essersi rotto il riconoscimento.",
-    "Stampa, CalcioFoggia.it: HTTP 415 su https://www.calciofoggia.it/feed/"
+    "live-score-api eventi 2026-09-06: risposta illeggibile",
+    "live-score-api eventi 2026-08-16: risposta illeggibile"
   ]
 }
