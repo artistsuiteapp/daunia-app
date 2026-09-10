@@ -189,6 +189,24 @@
       "source": "shop"
     },
     {
+      "id": "shop-15615",
+      "name": "TELO PALESTRA CALCIO FOGGIA",
+      "price": 15,
+      "regularPrice": 15,
+      "onSale": false,
+      "currency": "EUR",
+      "image": "https://calciofoggia1920.store/wp-content/uploads/2026/09/IMG-20260910-WA0042.jpeg",
+      "images": [
+        "https://calciofoggia1920.store/wp-content/uploads/2026/09/IMG-20260910-WA0042.jpeg"
+      ],
+      "category": "Gadget",
+      "categorySlug": "gadget",
+      "url": "https://calciofoggia1920.store/prodotto/telo-palestra-calcio-foggia/",
+      "inStock": true,
+      "description": "",
+      "source": "shop"
+    },
+    {
       "id": "shop-15613",
       "name": "BORRACCIA CALCIO FOGGIA",
       "price": 15,
@@ -337,7 +355,7 @@
     {
       "slug": "gadget",
       "name": "Gadget",
-      "count": 8
+      "count": 9
     },
     {
       "slug": "kit",

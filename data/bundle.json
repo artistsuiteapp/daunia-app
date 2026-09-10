@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-10T15:53:46.012Z",
+    "generatedAt": "2026-09-10T20:28:06.600Z",
     "season": "2026-2027",
     "competition": "Serie C",
     "sources": {
@@ -19,15 +19,7 @@
       "Nessuno stemma per \"Inter U23\": il sito del club non ha mai incontrato questa squadra.",
       "Solo 2 giocatori su 23 hanno la foto: la rosa sul sito del club e ferma alla stagione precedente.",
       "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
-      "Trasferta a Monopoli fra meno di una settimana e nessuna notizia sul divieto: controlla a mano, potrebbe essersi rotto il riconoscimento.",
-      "live-score-api 2026-08-24: An unexpected error occured please try again",
-      "live-score-api 2026-08-24: An unexpected error occured please try again",
-      "live-score-api 2026-08-29: An unexpected error occured please try again",
-      "live-score-api 2026-08-29: An unexpected error occured please try again",
-      "live-score-api 2026-09-06: An unexpected error occured please try again",
-      "live-score-api 2026-09-06: An unexpected error occured please try again",
-      "live-score-api 2026-08-16: An unexpected error occured please try again",
-      "live-score-api 2026-08-16: An unexpected error occured please try again"
+      "Trasferta a Monopoli fra meno di una settimana e nessuna notizia sul divieto: controlla a mano, potrebbe essersi rotto il riconoscimento."
     ]
   },
   "teams": [
@@ -261,6 +253,94 @@
       "foggiaResult": "W",
       "reportUrl": "https://www.transfermarkt.it/spielbericht/index/spielbericht/4979169",
       "source": "wikipedia",
+      "cards": [
+        {
+          "minute": 6,
+          "player": "G. Panico",
+          "side": "away",
+          "rosso": false
+        },
+        {
+          "minute": 49,
+          "player": "A. Gallo",
+          "side": "away",
+          "rosso": false
+        },
+        {
+          "minute": 77,
+          "player": "N. Armini",
+          "side": "home",
+          "rosso": false
+        },
+        {
+          "minute": 90,
+          "player": "F. Crapisto",
+          "side": "home",
+          "rosso": false
+        }
+      ],
+      "subs": [
+        {
+          "minute": 46,
+          "esce": "D. Di Pasquale",
+          "entra": "C. Parisy",
+          "side": "away"
+        },
+        {
+          "minute": 56,
+          "esce": "E. Oviszach",
+          "entra": "M. Bigonzoni",
+          "side": "away"
+        },
+        {
+          "minute": 56,
+          "esce": "F. Petito",
+          "entra": "I. Toure",
+          "side": "away"
+        },
+        {
+          "minute": 60,
+          "esce": "A. Spadoni",
+          "entra": "P. Rodriguez",
+          "side": "home"
+        },
+        {
+          "minute": 62,
+          "esce": "G. Panico",
+          "entra": "Y. Merdji",
+          "side": "away"
+        },
+        {
+          "minute": 73,
+          "esce": "Z. Ruggiero",
+          "entra": "M. Tordini",
+          "side": "home"
+        },
+        {
+          "minute": 73,
+          "esce": "G. J. Tanco",
+          "entra": "W. Feola",
+          "side": "home"
+        },
+        {
+          "minute": 83,
+          "esce": "I. Torres",
+          "entra": "B. Stauciuc",
+          "side": "home"
+        },
+        {
+          "minute": 83,
+          "esce": "F. Groppelli",
+          "entra": "W. Guerra",
+          "side": "home"
+        },
+        {
+          "minute": 88,
+          "esce": "A. Smeraldi",
+          "entra": "T. Azarovs",
+          "side": "away"
+        }
+      ],
       "home": {
         "id": "crotone",
         "name": "F.C. CROTONE",
@@ -312,6 +392,82 @@
       "foggiaResult": "D",
       "reportUrl": "https://www.transfermarkt.it/spielbericht/index/spielbericht/4979183",
       "source": "wikipedia",
+      "cards": [
+        {
+          "minute": 43,
+          "player": "M. Gyabuaa",
+          "side": "away",
+          "rosso": false
+        },
+        {
+          "minute": 45,
+          "player": "M. Tascone",
+          "side": "away",
+          "rosso": false
+        }
+      ],
+      "subs": [
+        {
+          "minute": 41,
+          "esce": "G. Saro",
+          "entra": "D. Marfella",
+          "side": "home"
+        },
+        {
+          "minute": 46,
+          "esce": "I. Achik",
+          "entra": "E. D'Ursi",
+          "side": "away"
+        },
+        {
+          "minute": 46,
+          "esce": "F. Lescano",
+          "entra": "A. La Gumina",
+          "side": "away"
+        },
+        {
+          "minute": 58,
+          "esce": "G. Panico",
+          "entra": "Y. Merdji",
+          "side": "home"
+        },
+        {
+          "minute": 58,
+          "esce": "F. Berra",
+          "entra": "M. Seck",
+          "side": "home"
+        },
+        {
+          "minute": 75,
+          "esce": "M. Gyabuaa",
+          "entra": "R. Di Vico",
+          "side": "away"
+        },
+        {
+          "minute": 81,
+          "esce": "M. Vitale",
+          "entra": "M. Djibril",
+          "side": "away"
+        },
+        {
+          "minute": 86,
+          "esce": "S. Pieraccini",
+          "entra": "R. Zoia",
+          "side": "away"
+        },
+        {
+          "minute": 89,
+          "esce": "A. Gallo",
+          "entra": "M. Bigonzoni",
+          "side": "home"
+        },
+        {
+          "minute": 89,
+          "esce": "F. Petito",
+          "entra": "V. Ngana",
+          "side": "home"
+        }
+      ],
       "home": {
         "id": "foggia",
         "name": "CALCIO FOGGIA 1920",
@@ -363,6 +519,94 @@
       "foggiaResult": "L",
       "reportUrl": "https://www.transfermarkt.it/spielbericht/index/spielbericht/4979188",
       "source": "wikipedia",
+      "cards": [
+        {
+          "minute": 26,
+          "player": "M. Perlingieri",
+          "side": "away",
+          "rosso": false
+        },
+        {
+          "minute": 28,
+          "player": "A. Romano",
+          "side": "away",
+          "rosso": false
+        },
+        {
+          "minute": 90,
+          "player": "F. Petito",
+          "side": "home",
+          "rosso": false
+        },
+        {
+          "minute": 90,
+          "player": "M. Cocorocchio",
+          "side": "away",
+          "rosso": false
+        }
+      ],
+      "subs": [
+        {
+          "minute": 46,
+          "esce": "A. Gallo",
+          "entra": "M. Coulibaly",
+          "side": "home"
+        },
+        {
+          "minute": 46,
+          "esce": "I. Toure",
+          "entra": "M. Ravasio",
+          "side": "home"
+        },
+        {
+          "minute": 46,
+          "esce": "M. Perlingieri",
+          "entra": "M. Sellaf",
+          "side": "away"
+        },
+        {
+          "minute": 60,
+          "esce": "G. Panico",
+          "entra": "F. Zuccon",
+          "side": "home"
+        },
+        {
+          "minute": 66,
+          "esce": "G. Vitale",
+          "entra": "K. Miranda",
+          "side": "away"
+        },
+        {
+          "minute": 66,
+          "esce": "A. Romano",
+          "entra": "A. Kurti",
+          "side": "away"
+        },
+        {
+          "minute": 78,
+          "esce": "C. Cretella",
+          "entra": "L. D'Orazio",
+          "side": "away"
+        },
+        {
+          "minute": 79,
+          "esce": "A. Smeraldi",
+          "entra": "M. Bigonzoni",
+          "side": "home"
+        },
+        {
+          "minute": 79,
+          "esce": "H. Haoudi",
+          "entra": "Y. Merdji",
+          "side": "home"
+        },
+        {
+          "minute": 84,
+          "esce": "D. Gambale",
+          "entra": "C. Padula",
+          "side": "away"
+        }
+      ],
       "home": {
         "id": "foggia",
         "name": "CALCIO FOGGIA 1920",
@@ -2099,6 +2343,18 @@
   ],
   "news": [
     {
+      "id": "club-18589",
+      "date": "2026-09-10T18:09:27.000Z",
+      "title": "FOGGIA-SAVOIA: INFO TAGLIANDI",
+      "excerpt": "Il Calcio Foggia 1920 comunica che sono disponibili i tagliandi per assistere alla gara Foggia-Savoia, valida per la quarta giornata del campionato Serie C SKy Wifi – Girone C stagione sportiva 2026/2027, in programma martedì 15 settembre 2026 allo stadio comunale Pino Zaccheria con fischio d’inizio alle ore 21:00. Prezzi INTERO RIDOTTO TRIBUNA CENTRALISSIMA…",
+      "url": "https://www.calciofoggia1920.net/foggia-savoia-info-tagliandi/",
+      "image": "https://www.calciofoggia1920.net/wp-content/uploads/2026/09/fg-sav-768x432.jpeg",
+      "kind": "club",
+      "slug": "foggia-savoia-info-tagliandi",
+      "body": "Il Calcio Foggia 1920 comunica che sono disponibili i tagliandi per assistere alla gara Foggia-Savoia, valida per la quarta giornata del campionato Serie C SKy Wifi – Girone C stagione sportiva 2026/2027, in programma martedì 15 settembre 2026 allo stadio comunale Pino Zaccheria con fischio d’inizio alle ore 21:00. Prezzi INTERO RIDOTTO TRIBUNA CENTRALISSIMA € 50,00 € 35,00 TRIBUNA OVEST CENT. SUPERIORE € 40,00 € 30,00 TRIBUNA OVEST LAT. SUPERIORE € 34,00 € 25,00 TRIBUNA OVEST INF. CENTRALE € 28,00 € 21,00 TRIBUNA OVEST INF. LATERALE € 28,00 € 21,00 TRIBUNA EST € 22,00 € 17,00 CURVA SUD – CURVA NORD SOLD OUT Al prezzo indicato bisogna aggiungere i diritti di prevendita. Si ricorda, inoltre che, su indicazione dell’Osservatorio Nazionale sulle Manifestazioni Sportive, è previsto un maggior controllo nelle attività di prefiltraggio e filtraggio, con particolare riferimento alla corrispondenza delle generalità indicate sul biglietto dell’utilizzatore. Pertanto si raccomanda vivamente di recarsi allo stadio muniti di documento di riconoscimento in corso di validità. L’apertura dei cancelli per accedere all’impianto è fissata alle ore 19:30, si prega il gentile pubblico di recarsi agli ingressi con largo anticipo e di occupare il posto indicato sul tagliando acquistato utilizzando l’opportuno varco del proprio settore. N.B. Tutti coloro i quali acquisteranno il tagliando online, dovranno stampare il biglietto e presentarlo cartaceo. I biglietti sullo smartphone non saranno accettati. Modalità, date ed orari di vendita Online e punti vendita: dalle ore 17:00 di giovedì 10 settembre 2026 alle ore 21:00 di martedì 15 settembre 2026 attraverso il sito www.vivaticket.it o presso i seguenti punti vendita: Bar Tabacchi Il Migliore, Viale Aldo Moro, 135 – Apricena Tabaccheria del Corso, Piazza Plebiscito, 62 – Candela Tabaccheria Roosevelt di Marinaro Antonio, Viale Roosevelt, 18 – Cerignola Tabaccheria del Corso, Corso Garibaldi, 2/4 – Cerignola Tabaccheria Dell’Angolo, Via Falcone, 66 – Cerignola Bar Cocò, Via Dell’Immacolata, 32 – Foggia Bar Doc, Viale Kennedy snc c/o Mercato Rionale Coperto – Foggia Bar Tabacchi Gocce di Caffè, Via Guido D’Orso, 31 – Foggia Punto Snai, Corso Giannone, 180 – Foggia Punto Snai, Via Grassi, 27 – Foggia Golden Cafè, Via Fratelli Biondi, 33/35 – Foggia Gran Caffè Cocozza, Corso Roma, 22 – Foggia Gruppo Italiana Servizi Postali, Viale degli Artigiani, 44/Q – Foggia Hailunder, Via Nannarone, 44-44/A – Foggia Izi Play, Piazza Puglia snc – Foggia Senza Confini Travel, Corso Pietro Giannone, 43 – Foggia Service.com, Viale Ofanto, 357/358/361 – Foggia Planetwin 365, Piazza Gaetano Pitta, 91 – Lucera Rbc Network, Viale Raffaello snc – Lucera Bar Impero, Piazza Guglielmo Marconi, 16 – Manfredonia City Poste, Via Cavallotti, 21 – Monte Sant’Angelo Centro Poste e Spedizioni, Corso Umberto I, 47 – Orta Nova Tabaccheria Giacomiello, Corso Aldo Moro, 20 – Orta Nova Doppio Click, Via Lucera, 67 – Pietramontecorvino Elisontravel, Corso Regina Margherita, 9 – San Giovanni Rotondo Tabaccheria Edicola Fulgaro, Via Roma, 83/85 – San Nicandro Garganico Bar Tabacchi Bernardo delle Vergini, Via XX settembre, 3/7/9 – San Severo Bar Tabacchi Caffetteria del Corso, Viale 2 giugno, 250 – San Severo Tabaccheria Magaldi dal 1959, Corso Vittorio Emanuele III, 7 – Stornarella Tabaccheria Angelicchio, Via Gioco delle Palle, 3 – Vico del Gargano Snai Caffè, Corso Lorenzo Fazzini, 17/19 – Vieste Botteghino stadio Pino Zaccheria: Lunedì 14 settembre mattina 10 – 13 / pomeriggio 16:00 – 19:00 Martedì 15 settembre mattina 10 – 14 Area Comunicazione Calcio Foggia 1920",
+      "source": "sportspress"
+    },
+    {
       "id": "editorial-auteri-primo-mese",
       "date": "2026-09-03T00:00:00.000Z",
       "title": "Il primo mese di Auteri, letto dai numeri",
@@ -2577,18 +2833,6 @@
       "slug": "foggia-trapani-info-tagliandi-2",
       "body": "Il Calcio Foggia 1920 comunica la messa in vendita dei tagliandi per assistere alla gara Foggia-Trapani, trentaquattresima giornata del campionato Serie C SKy Wifi – Girone C stagione sportiva 2025/2026, in programma domenica 29 marzo 2026 allo stadio comunale Pino Zaccheria con fischio d’inizio alle ore 14:30. Prezzi INTERO RIDOTTO TRIBUNA CENTRALISSIMA € 45,00 € 35,00 TRIBUNA OVEST CENT. SUPERIORE € 35,00 € 25,00 TRIBUNA OVEST LAT. SUPERIORE € 25,00 € 20,00 TRIBUNA OVEST INF. CENTRALE € 20,00 € 15,00 TRIBUNA OVEST INF. LATERALE € 20,00 € 15,00 TRIBUNA EST € 15,00 € 11,00 CURVA SUD – CURVA NORD € 10,00 € 7,00 Al prezzo indicato bisogna aggiungere i diritti di prevendita. Si ricorda, inoltre che, su indicazione dell’Osservatorio Nazionale sulle Manifestazioni Sportive, è previsto un maggior controllo nelle attività di prefiltraggio e filtraggio, con particolare riferimento alla corrispondenza delle generalità indicate sul biglietto dell’utilizzatore. Pertanto si raccomanda vivamente di recarsi allo stadio muniti di documento di riconoscimento in corso di validità. L’apertura dei cancelli per accedere all’impianto è fissata alle ore 13:00, si prega il gentile pubblico di recarsi agli ingressi con largo anticipo e di occupare il posto indicato sul tagliando acquistato utilizzando l’opportuno varco del proprio settore. Modalità, date ed orari di vendita Botteghino stadio Pino Zaccheria: Venerdì 16:00 – 19:00 Sabato 10:00 – 13:00 / 16:00 – 19:00 Domenica 09:30 – 11:30 Online e punti vendita: dalle ore 17:00 di giovedì 26 marzo 2026 alle ore 14:30 di domenica 29 marzo 2026 attraverso il sito www.vivaticket.it o presso i seguenti punti vendita: Bar Tabacchi Il Migliore, Viale Aldo Moro, 135 – Apricena Tabaccheria del Corso, Piazza Plebiscito, 62 – Candela Tabaccheria Roosevelt di Marinaro Antonio, Viale Roosevelt, 18 – Cerignola Tabaccheria del Corso, Corso Garibaldi, 2/4 – Cerignola Tabaccheria Dell’Angolo, Via Falcone, 66 – Cerignola Bar Cocò, Via Dell’Immacolata, 32 – Foggia Bar Doc, Viale Kennedy snc c/o Mercato Rionale Coperto – Foggia Bar Tabacchi Gocce di Caffè, Via Guido D’Orso, 31 – Foggia Punto Snai, Corso Giannone, 180 – Foggia Punto Snai, Via Grassi, 27 – Foggia Golden Cafè, Via Fratelli Biondi, 33/35 – Foggia Gran Caffè Cocozza, Corso Roma, 22 – Foggia Gruppo Italiana Servizi Postali, Viale degli Artigiani, 44/Q – Foggia Hailunder, Via Nannarone, 44-44/A – Foggia Izi Play, Piazza Puglia snc – Foggia Senza Confini Travel, Corso Pietro Giannone, 43 – Foggia Service.com, Viale Ofanto, 357/358/361 – Foggia Planetwin 365, Piazza Gaetano Pitta, 91 – Lucera Rbc Network, Viale Raffaello snc – Lucera Bar Impero, Piazza Guglielmo Marconi, 16 – Manfredonia City Poste, Via Cavallotti, 21 – Monte Sant’Angelo Centro Poste e Spedizioni, Corso Umberto I, 47 – Orta Nova Tabaccheria Giacomiello, Corso Aldo Moro, 20 – Orta Nova Doppio Click, Via Lucera, 67 – Pietramontecorvino Elisontravel, Corso Regina Margherita, 9 – San Giovanni Rotondo Tabaccheria Edicola Fulgaro, Via Roma, 83/85 – San Nicandro Garganico Bar Tabacchi Bernardo delle Vergini, Via XX settembre, 3/7/9 – San Severo Bar Tabacchi Caffetteria del Corso, Viale 2 giugno, 250 – San Severo Tabaccheria Magaldi dal 1959, Corso Vittorio Emanuele III, 7 – Stornarella Tabaccheria Angelicchio, Via Gioco delle Palle, 3 – Vico del Gargano Snai Caffè, Corso Lorenzo Fazzini, 17/19 – Vieste Area Comunicazione Calcio Foggia",
       "source": "sportspress"
-    },
-    {
-      "id": "club-18166",
-      "date": "2026-03-07T21:00:27.000Z",
-      "title": "STAMPA SI DIVENTA MAIN SPONSOR",
-      "excerpt": "Si rafforza la collaborazione tra il Calcio Foggia 1920 e Stampasi.it, realtà leader nella stampa online di gadget, abbigliamento, abbigliamento sportivo e da lavoro, che ha deciso di supportare il club rossonero diventando Main Sponsor per la stagione in corso. StampaSi offre soluzioni dedicate alla promozione del brand e al merchandising attraverso articoli personalizzabili. Il…",
-      "url": "https://www.calciofoggia1920.net/stampa-si-diventa-main-sponsor/",
-      "image": "https://www.calciofoggia1920.net/wp-content/uploads/2026/03/stampasi-main-1-768x432.jpg",
-      "kind": "club",
-      "slug": "stampa-si-diventa-main-sponsor",
-      "body": "Si rafforza la collaborazione tra il Calcio Foggia 1920 e Stampasi.it, realtà leader nella stampa online di gadget, abbigliamento, abbigliamento sportivo e da lavoro, che ha deciso di supportare il club rossonero diventando Main Sponsor per la stagione in corso. StampaSi offre soluzioni dedicate alla promozione del brand e al merchandising attraverso articoli personalizzabili. Il suo è un cammino costellato di successi con una serie di prestigiosi riconoscimenti ricevuti. Tra questi l’inserimento nelle classifiche delle “Stelle E-Commerce” del Corriere della Sera, dei “Leader della Crescita” del Sole 24 Ore e della FT1000: Europe’s Fastest Growing Companies del Financial Times. Il logo Stampasi.it accompagnerà i Satanelli sulle divise ufficiali da gara, trovando spazio sulla manica. Il Calcio Foggia 1920 ringrazia Stampasi.it per la fiducia rinnovata e per aver scelto di compiere un ulteriore passo al fianco dei colori rossoneri.",
-      "source": "sportspress"
     }
   ],
   "stadium": {
@@ -2890,6 +3134,24 @@
         "source": "shop"
       },
       {
+        "id": "shop-15615",
+        "name": "TELO PALESTRA CALCIO FOGGIA",
+        "price": 15,
+        "regularPrice": 15,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/09/IMG-20260910-WA0042.jpeg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/09/IMG-20260910-WA0042.jpeg"
+        ],
+        "category": "Gadget",
+        "categorySlug": "gadget",
+        "url": "https://calciofoggia1920.store/prodotto/telo-palestra-calcio-foggia/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
         "id": "shop-15613",
         "name": "BORRACCIA CALCIO FOGGIA",
         "price": 15,
@@ -3038,7 +3300,7 @@
       {
         "slug": "gadget",
         "name": "Gadget",
-        "count": 8
+        "count": 9
       },
       {
         "slug": "kit",

@@ -87,6 +87,94 @@
     "foggiaResult": "W",
     "reportUrl": "https://www.transfermarkt.it/spielbericht/index/spielbericht/4979169",
     "source": "wikipedia",
+    "cards": [
+      {
+        "minute": 6,
+        "player": "G. Panico",
+        "side": "away",
+        "rosso": false
+      },
+      {
+        "minute": 49,
+        "player": "A. Gallo",
+        "side": "away",
+        "rosso": false
+      },
+      {
+        "minute": 77,
+        "player": "N. Armini",
+        "side": "home",
+        "rosso": false
+      },
+      {
+        "minute": 90,
+        "player": "F. Crapisto",
+        "side": "home",
+        "rosso": false
+      }
+    ],
+    "subs": [
+      {
+        "minute": 46,
+        "esce": "D. Di Pasquale",
+        "entra": "C. Parisy",
+        "side": "away"
+      },
+      {
+        "minute": 56,
+        "esce": "E. Oviszach",
+        "entra": "M. Bigonzoni",
+        "side": "away"
+      },
+      {
+        "minute": 56,
+        "esce": "F. Petito",
+        "entra": "I. Toure",
+        "side": "away"
+      },
+      {
+        "minute": 60,
+        "esce": "A. Spadoni",
+        "entra": "P. Rodriguez",
+        "side": "home"
+      },
+      {
+        "minute": 62,
+        "esce": "G. Panico",
+        "entra": "Y. Merdji",
+        "side": "away"
+      },
+      {
+        "minute": 73,
+        "esce": "Z. Ruggiero",
+        "entra": "M. Tordini",
+        "side": "home"
+      },
+      {
+        "minute": 73,
+        "esce": "G. J. Tanco",
+        "entra": "W. Feola",
+        "side": "home"
+      },
+      {
+        "minute": 83,
+        "esce": "I. Torres",
+        "entra": "B. Stauciuc",
+        "side": "home"
+      },
+      {
+        "minute": 83,
+        "esce": "F. Groppelli",
+        "entra": "W. Guerra",
+        "side": "home"
+      },
+      {
+        "minute": 88,
+        "esce": "A. Smeraldi",
+        "entra": "T. Azarovs",
+        "side": "away"
+      }
+    ],
     "home": {
       "id": "crotone",
       "name": "F.C. CROTONE",
@@ -138,6 +226,82 @@
     "foggiaResult": "D",
     "reportUrl": "https://www.transfermarkt.it/spielbericht/index/spielbericht/4979183",
     "source": "wikipedia",
+    "cards": [
+      {
+        "minute": 43,
+        "player": "M. Gyabuaa",
+        "side": "away",
+        "rosso": false
+      },
+      {
+        "minute": 45,
+        "player": "M. Tascone",
+        "side": "away",
+        "rosso": false
+      }
+    ],
+    "subs": [
+      {
+        "minute": 41,
+        "esce": "G. Saro",
+        "entra": "D. Marfella",
+        "side": "home"
+      },
+      {
+        "minute": 46,
+        "esce": "I. Achik",
+        "entra": "E. D'Ursi",
+        "side": "away"
+      },
+      {
+        "minute": 46,
+        "esce": "F. Lescano",
+        "entra": "A. La Gumina",
+        "side": "away"
+      },
+      {
+        "minute": 58,
+        "esce": "G. Panico",
+        "entra": "Y. Merdji",
+        "side": "home"
+      },
+      {
+        "minute": 58,
+        "esce": "F. Berra",
+        "entra": "M. Seck",
+        "side": "home"
+      },
+      {
+        "minute": 75,
+        "esce": "M. Gyabuaa",
+        "entra": "R. Di Vico",
+        "side": "away"
+      },
+      {
+        "minute": 81,
+        "esce": "M. Vitale",
+        "entra": "M. Djibril",
+        "side": "away"
+      },
+      {
+        "minute": 86,
+        "esce": "S. Pieraccini",
+        "entra": "R. Zoia",
+        "side": "away"
+      },
+      {
+        "minute": 89,
+        "esce": "A. Gallo",
+        "entra": "M. Bigonzoni",
+        "side": "home"
+      },
+      {
+        "minute": 89,
+        "esce": "F. Petito",
+        "entra": "V. Ngana",
+        "side": "home"
+      }
+    ],
     "home": {
       "id": "foggia",
       "name": "CALCIO FOGGIA 1920",
@@ -189,6 +353,94 @@
     "foggiaResult": "L",
     "reportUrl": "https://www.transfermarkt.it/spielbericht/index/spielbericht/4979188",
     "source": "wikipedia",
+    "cards": [
+      {
+        "minute": 26,
+        "player": "M. Perlingieri",
+        "side": "away",
+        "rosso": false
+      },
+      {
+        "minute": 28,
+        "player": "A. Romano",
+        "side": "away",
+        "rosso": false
+      },
+      {
+        "minute": 90,
+        "player": "F. Petito",
+        "side": "home",
+        "rosso": false
+      },
+      {
+        "minute": 90,
+        "player": "M. Cocorocchio",
+        "side": "away",
+        "rosso": false
+      }
+    ],
+    "subs": [
+      {
+        "minute": 46,
+        "esce": "A. Gallo",
+        "entra": "M. Coulibaly",
+        "side": "home"
+      },
+      {
+        "minute": 46,
+        "esce": "I. Toure",
+        "entra": "M. Ravasio",
+        "side": "home"
+      },
+      {
+        "minute": 46,
+        "esce": "M. Perlingieri",
+        "entra": "M. Sellaf",
+        "side": "away"
+      },
+      {
+        "minute": 60,
+        "esce": "G. Panico",
+        "entra": "F. Zuccon",
+        "side": "home"
+      },
+      {
+        "minute": 66,
+        "esce": "G. Vitale",
+        "entra": "K. Miranda",
+        "side": "away"
+      },
+      {
+        "minute": 66,
+        "esce": "A. Romano",
+        "entra": "A. Kurti",
+        "side": "away"
+      },
+      {
+        "minute": 78,
+        "esce": "C. Cretella",
+        "entra": "L. D'Orazio",
+        "side": "away"
+      },
+      {
+        "minute": 79,
+        "esce": "A. Smeraldi",
+        "entra": "M. Bigonzoni",
+        "side": "home"
+      },
+      {
+        "minute": 79,
+        "esce": "H. Haoudi",
+        "entra": "Y. Merdji",
+        "side": "home"
+      },
+      {
+        "minute": 84,
+        "esce": "D. Gambale",
+        "entra": "C. Padula",
+        "side": "away"
+      }
+    ],
     "home": {
       "id": "foggia",
       "name": "CALCIO FOGGIA 1920",
