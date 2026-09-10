@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-10T03:17:46.805Z",
+  "generatedAt": "2026-09-10T10:13:50.134Z",
   "season": "2026-2027",
   "competition": "Serie C",
   "sources": {
@@ -19,6 +19,7 @@
     "Solo 2 giocatori su 23 hanno la foto: la rosa sul sito del club e ferma alla stagione precedente.",
     "Il negozio non ha restituito prodotti: la sezione shop resta vuota.",
     "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
-    "Trasferta a Monopoli fra meno di una settimana e nessuna notizia sul divieto: controlla a mano, potrebbe essersi rotto il riconoscimento."
+    "Trasferta a Monopoli fra meno di una settimana e nessuna notizia sul divieto: controlla a mano, potrebbe essersi rotto il riconoscimento.",
+    "Stampa, CalcioFoggia.it: HTTP 415 su https://www.calciofoggia.it/feed/"
   ]
 }
