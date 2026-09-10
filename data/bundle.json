@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-10T10:42:45.080Z",
+    "generatedAt": "2026-09-10T15:53:46.012Z",
     "season": "2026-2027",
     "competition": "Serie C",
     "sources": {
@@ -18,11 +18,16 @@
       "Anno corretto su Wikipedia per Foggia-Altamura: 2025-08-16 -> 2026-08-16.",
       "Nessuno stemma per \"Inter U23\": il sito del club non ha mai incontrato questa squadra.",
       "Solo 2 giocatori su 23 hanno la foto: la rosa sul sito del club e ferma alla stagione precedente.",
-      "Il negozio non ha restituito prodotti: la sezione shop resta vuota.",
       "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
       "Trasferta a Monopoli fra meno di una settimana e nessuna notizia sul divieto: controlla a mano, potrebbe essersi rotto il riconoscimento.",
-      "live-score-api eventi 2026-09-06: risposta illeggibile",
-      "live-score-api eventi 2026-08-16: risposta illeggibile"
+      "live-score-api 2026-08-24: An unexpected error occured please try again",
+      "live-score-api 2026-08-24: An unexpected error occured please try again",
+      "live-score-api 2026-08-29: An unexpected error occured please try again",
+      "live-score-api 2026-08-29: An unexpected error occured please try again",
+      "live-score-api 2026-09-06: An unexpected error occured please try again",
+      "live-score-api 2026-09-06: An unexpected error occured please try again",
+      "live-score-api 2026-08-16: An unexpected error occured please try again",
+      "live-score-api 2026-08-16: An unexpected error occured please try again"
     ]
   },
   "teams": [
@@ -256,94 +261,6 @@
       "foggiaResult": "W",
       "reportUrl": "https://www.transfermarkt.it/spielbericht/index/spielbericht/4979169",
       "source": "wikipedia",
-      "cards": [
-        {
-          "minute": 6,
-          "player": "G. Panico",
-          "side": "away",
-          "rosso": false
-        },
-        {
-          "minute": 49,
-          "player": "A. Gallo",
-          "side": "away",
-          "rosso": false
-        },
-        {
-          "minute": 77,
-          "player": "N. Armini",
-          "side": "home",
-          "rosso": false
-        },
-        {
-          "minute": 90,
-          "player": "F. Crapisto",
-          "side": "home",
-          "rosso": false
-        }
-      ],
-      "subs": [
-        {
-          "minute": 46,
-          "esce": "D. Di Pasquale",
-          "entra": "C. Parisy",
-          "side": "away"
-        },
-        {
-          "minute": 56,
-          "esce": "E. Oviszach",
-          "entra": "M. Bigonzoni",
-          "side": "away"
-        },
-        {
-          "minute": 56,
-          "esce": "F. Petito",
-          "entra": "I. Toure",
-          "side": "away"
-        },
-        {
-          "minute": 60,
-          "esce": "A. Spadoni",
-          "entra": "P. Rodriguez",
-          "side": "home"
-        },
-        {
-          "minute": 62,
-          "esce": "G. Panico",
-          "entra": "Y. Merdji",
-          "side": "away"
-        },
-        {
-          "minute": 73,
-          "esce": "Z. Ruggiero",
-          "entra": "M. Tordini",
-          "side": "home"
-        },
-        {
-          "minute": 73,
-          "esce": "G. J. Tanco",
-          "entra": "W. Feola",
-          "side": "home"
-        },
-        {
-          "minute": 83,
-          "esce": "I. Torres",
-          "entra": "B. Stauciuc",
-          "side": "home"
-        },
-        {
-          "minute": 83,
-          "esce": "F. Groppelli",
-          "entra": "W. Guerra",
-          "side": "home"
-        },
-        {
-          "minute": 88,
-          "esce": "A. Smeraldi",
-          "entra": "T. Azarovs",
-          "side": "away"
-        }
-      ],
       "home": {
         "id": "crotone",
         "name": "F.C. CROTONE",
@@ -395,82 +312,6 @@
       "foggiaResult": "D",
       "reportUrl": "https://www.transfermarkt.it/spielbericht/index/spielbericht/4979183",
       "source": "wikipedia",
-      "cards": [
-        {
-          "minute": 43,
-          "player": "M. Gyabuaa",
-          "side": "away",
-          "rosso": false
-        },
-        {
-          "minute": 45,
-          "player": "M. Tascone",
-          "side": "away",
-          "rosso": false
-        }
-      ],
-      "subs": [
-        {
-          "minute": 41,
-          "esce": "G. Saro",
-          "entra": "D. Marfella",
-          "side": "home"
-        },
-        {
-          "minute": 46,
-          "esce": "I. Achik",
-          "entra": "E. D'Ursi",
-          "side": "away"
-        },
-        {
-          "minute": 46,
-          "esce": "F. Lescano",
-          "entra": "A. La Gumina",
-          "side": "away"
-        },
-        {
-          "minute": 58,
-          "esce": "G. Panico",
-          "entra": "Y. Merdji",
-          "side": "home"
-        },
-        {
-          "minute": 58,
-          "esce": "F. Berra",
-          "entra": "M. Seck",
-          "side": "home"
-        },
-        {
-          "minute": 75,
-          "esce": "M. Gyabuaa",
-          "entra": "R. Di Vico",
-          "side": "away"
-        },
-        {
-          "minute": 81,
-          "esce": "M. Vitale",
-          "entra": "M. Djibril",
-          "side": "away"
-        },
-        {
-          "minute": 86,
-          "esce": "S. Pieraccini",
-          "entra": "R. Zoia",
-          "side": "away"
-        },
-        {
-          "minute": 89,
-          "esce": "A. Gallo",
-          "entra": "M. Bigonzoni",
-          "side": "home"
-        },
-        {
-          "minute": 89,
-          "esce": "F. Petito",
-          "entra": "V. Ngana",
-          "side": "home"
-        }
-      ],
       "home": {
         "id": "foggia",
         "name": "CALCIO FOGGIA 1920",
@@ -2859,8 +2700,382 @@
     ]
   },
   "shop": {
-    "products": [],
-    "categories": []
+    "products": [
+      {
+        "id": "shop-15560",
+        "name": "TUTA RAPPRESENTANZA RED",
+        "price": 110,
+        "regularPrice": 110,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_5-scaled.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_5-scaled.jpg",
+          "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_17-scaled.jpg"
+        ],
+        "category": "Tute",
+        "categorySlug": "tute",
+        "url": "https://calciofoggia1920.store/prodotto/tuta-rappresentanza-red/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15551",
+        "name": "TUTA RAPPRESENTANZA BLACK",
+        "price": 110,
+        "regularPrice": 110,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_4-scaled.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_4-scaled.jpg",
+          "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_17-scaled.jpg"
+        ],
+        "category": "Tute",
+        "categorySlug": "tute",
+        "url": "https://calciofoggia1920.store/prodotto/tuta-rappresentanza-black/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15519",
+        "name": "MAGLIA GARA THIRD",
+        "price": 85,
+        "regularPrice": 85,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-06-scaled.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-06-scaled.jpg",
+          "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-08-scaled.jpg",
+          "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-07-scaled.jpg",
+          "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-09-scaled.jpg"
+        ],
+        "category": "kit",
+        "categorySlug": "kit",
+        "url": "https://calciofoggia1920.store/prodotto/maglia-gara-third/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15505",
+        "name": "MAGLIA GARA AWAY",
+        "price": 85,
+        "regularPrice": 85,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-01-scaled.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-01-scaled.jpg",
+          "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-02-scaled.jpg",
+          "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-03-scaled.jpg",
+          "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-04-scaled.jpg"
+        ],
+        "category": "kit",
+        "categorySlug": "kit",
+        "url": "https://calciofoggia1920.store/prodotto/maglia-gara-away/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15549",
+        "name": "ZAINO",
+        "price": 55,
+        "regularPrice": 55,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_19-3-scaled.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_19-3-scaled.jpg"
+        ],
+        "category": "Gadget",
+        "categorySlug": "gadget",
+        "url": "https://calciofoggia1920.store/prodotto/zaino/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15582",
+        "name": "POLO DI RAPPRESENTANZA BLACK",
+        "price": 50,
+        "regularPrice": 50,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/IMG-20260831-WA0021.jpeg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/08/IMG-20260831-WA0021.jpeg"
+        ],
+        "category": "Polo",
+        "categorySlug": "polo",
+        "url": "https://calciofoggia1920.store/prodotto/polo-di-rappresentanza-black/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15541",
+        "name": "POLO DI RAPPRESENTANZA",
+        "price": 50,
+        "regularPrice": 50,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_8-1-scaled.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_8-1-scaled.jpg"
+        ],
+        "category": "Allenamento",
+        "categorySlug": "allenamento",
+        "url": "https://calciofoggia1920.store/prodotto/polo-di-rappresentanza/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15532",
+        "name": "MAGLIA ALLENAMENTO",
+        "price": 30,
+        "regularPrice": 30,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_10-scaled.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_10-scaled.jpg"
+        ],
+        "category": "Allenamento",
+        "categorySlug": "allenamento",
+        "url": "https://calciofoggia1920.store/prodotto/maglia-allenamento/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15526",
+        "name": "PANTALONCINO DA GARA THIRD",
+        "price": 25,
+        "regularPrice": 25,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-10-1-scaled.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-10-1-scaled.jpg"
+        ],
+        "category": "kit",
+        "categorySlug": "kit",
+        "url": "https://calciofoggia1920.store/prodotto/pantaloncino-da-gara-third/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15513",
+        "name": "PANTALONCINO GARA AWAY",
+        "price": 25,
+        "regularPrice": 25,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-05-scaled.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-05-scaled.jpg"
+        ],
+        "category": "kit",
+        "categorySlug": "kit",
+        "url": "https://calciofoggia1920.store/prodotto/pantaloncino-gara-away/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15613",
+        "name": "BORRACCIA CALCIO FOGGIA",
+        "price": 15,
+        "regularPrice": 15,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/09/ProdottiStampaSi-01-scaled.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/09/ProdottiStampaSi-01-scaled.jpg"
+        ],
+        "category": "Gadget",
+        "categorySlug": "gadget",
+        "url": "https://calciofoggia1920.store/prodotto/borraccia-calcio-foggia/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15503",
+        "name": "CALZA HOME",
+        "price": 12,
+        "regularPrice": 12,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_30-scaled.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_30-scaled.jpg"
+        ],
+        "category": "Calze",
+        "categorySlug": "calze",
+        "url": "https://calciofoggia1920.store/prodotto/calza-home/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15598",
+        "name": "PORTACHIAVI CALCIO FOGGIA 1920",
+        "price": 5,
+        "regularPrice": 5,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/09/portachiaviFG.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/09/portachiaviFG.jpg"
+        ],
+        "category": "Gadget",
+        "categorySlug": "gadget",
+        "url": "https://calciofoggia1920.store/prodotto/portachiavi-calcio-foggia-1920/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15595",
+        "name": "BRACCIALETTO CALCIO FOGGIA 1920",
+        "price": 3,
+        "regularPrice": 3,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/09/mockup_braccialetti-silicone-foggia_1080x1080.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/09/mockup_braccialetti-silicone-foggia_1080x1080.jpg"
+        ],
+        "category": "Gadget",
+        "categorySlug": "gadget",
+        "url": "https://calciofoggia1920.store/prodotto/braccialetto-calcio-foggia-1920/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15622",
+        "name": "ACCENDINO ANTIVENTO CALCIO FOGGIA",
+        "price": 2.5,
+        "regularPrice": 2.5,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/09/ProdottiStampaSi-04-scaled.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/09/ProdottiStampaSi-04-scaled.jpg"
+        ],
+        "category": "Gadget",
+        "categorySlug": "gadget",
+        "url": "https://calciofoggia1920.store/prodotto/accendino-antivento-calcio-foggia/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15627",
+        "name": "PENNA CALCIO FOGGIA",
+        "price": 2,
+        "regularPrice": 2,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/09/ProdottiStampaSi-06-scaled.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/09/ProdottiStampaSi-06-scaled.jpg"
+        ],
+        "category": "Gadget",
+        "categorySlug": "gadget",
+        "url": "https://calciofoggia1920.store/prodotto/penna-calcio-foggia/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15617",
+        "name": "ACCENDINO FLAMMY",
+        "price": 1.5,
+        "regularPrice": 1.5,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/09/ProdottiStampaSi-05-scaled.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/09/ProdottiStampaSi-05-scaled.jpg"
+        ],
+        "category": "Gadget",
+        "categorySlug": "gadget",
+        "url": "https://calciofoggia1920.store/prodotto/accendino-flammy/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15623",
+        "name": "MATITA CALCIO FOGGIA",
+        "price": 1,
+        "regularPrice": 1,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/09/ProdottiStampaSi-03-scaled.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/09/ProdottiStampaSi-03-scaled.jpg"
+        ],
+        "category": "Gadget",
+        "categorySlug": "gadget",
+        "url": "https://calciofoggia1920.store/prodotto/matita-calcio-foggia/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      }
+    ],
+    "categories": [
+      {
+        "slug": "gadget",
+        "name": "Gadget",
+        "count": 8
+      },
+      {
+        "slug": "kit",
+        "name": "kit",
+        "count": 4
+      },
+      {
+        "slug": "allenamento",
+        "name": "Allenamento",
+        "count": 2
+      },
+      {
+        "slug": "maglie-gara",
+        "name": "Maglie Gara",
+        "count": 2
+      },
+      {
+        "slug": "pantaloncini",
+        "name": "Pantaloncini",
+        "count": 2
+      },
+      {
+        "slug": "tute",
+        "name": "Tute",
+        "count": 2
+      },
+      {
+        "slug": "calze",
+        "name": "Calze",
+        "count": 1
+      },
+      {
+        "slug": "polo",
+        "name": "Polo",
+        "count": 1
+      }
+    ]
   },
   "tickets": [
     {
