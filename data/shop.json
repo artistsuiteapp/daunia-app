@@ -81,6 +81,63 @@
       "source": "shop"
     },
     {
+      "id": "shop-15684",
+      "name": "MAGLIA GARA AWAY BAMBINO/A",
+      "price": 70,
+      "regularPrice": 70,
+      "onSale": false,
+      "currency": "EUR",
+      "image": "https://calciofoggia1920.store/wp-content/uploads/2026/09/CF_Away26_JR-01-scaled.jpg",
+      "images": [
+        "https://calciofoggia1920.store/wp-content/uploads/2026/09/CF_Away26_JR-01-scaled.jpg",
+        "https://calciofoggia1920.store/wp-content/uploads/2026/09/CF_Away26_JR-02-scaled.jpg",
+        "https://calciofoggia1920.store/wp-content/uploads/2026/09/CF_Away26_JR-03-scaled.jpg",
+        "https://calciofoggia1920.store/wp-content/uploads/2026/09/CF_Away26_JR-04-scaled.jpg"
+      ],
+      "category": "Maglie Gara",
+      "categorySlug": "maglie-gara",
+      "url": "https://calciofoggia1920.store/prodotto/maglia-gara-away-bambino-a/",
+      "inStock": true,
+      "description": "",
+      "source": "shop"
+    },
+    {
+      "id": "shop-15682",
+      "name": "ZAINO BLU",
+      "price": 55,
+      "regularPrice": 55,
+      "onSale": false,
+      "currency": "EUR",
+      "image": "https://calciofoggia1920.store/wp-content/uploads/2026/09/CF_ZainoBlu-scaled.jpg",
+      "images": [
+        "https://calciofoggia1920.store/wp-content/uploads/2026/09/CF_ZainoBlu-scaled.jpg"
+      ],
+      "category": "Gadget",
+      "categorySlug": "gadget",
+      "url": "https://calciofoggia1920.store/prodotto/zaino-blu/",
+      "inStock": true,
+      "description": "",
+      "source": "shop"
+    },
+    {
+      "id": "shop-15679",
+      "name": "ZAINO RED",
+      "price": 55,
+      "regularPrice": 55,
+      "onSale": false,
+      "currency": "EUR",
+      "image": "https://calciofoggia1920.store/wp-content/uploads/2026/09/CF_ZainoRed-scaled.jpg",
+      "images": [
+        "https://calciofoggia1920.store/wp-content/uploads/2026/09/CF_ZainoRed-scaled.jpg"
+      ],
+      "category": "Gadget",
+      "categorySlug": "gadget",
+      "url": "https://calciofoggia1920.store/prodotto/zaino-red/",
+      "inStock": true,
+      "description": "",
+      "source": "shop"
+    },
+    {
       "id": "shop-15549",
       "name": "ZAINO",
       "price": 55,
@@ -130,6 +187,60 @@
       "category": "Allenamento",
       "categorySlug": "allenamento",
       "url": "https://calciofoggia1920.store/prodotto/polo-di-rappresentanza/",
+      "inStock": true,
+      "description": "",
+      "source": "shop"
+    },
+    {
+      "id": "shop-15659",
+      "name": "PANTALONE TUTA BAMBINO/A",
+      "price": 45,
+      "regularPrice": 45,
+      "onSale": false,
+      "currency": "EUR",
+      "image": "https://calciofoggia1920.store/wp-content/uploads/2026/09/CF_PantTutaBlack_JR-scaled.jpg",
+      "images": [
+        "https://calciofoggia1920.store/wp-content/uploads/2026/09/CF_PantTutaBlack_JR-scaled.jpg"
+      ],
+      "category": "Tute",
+      "categorySlug": "tute",
+      "url": "https://calciofoggia1920.store/prodotto/pantalone-tuta-bambino-a/",
+      "inStock": true,
+      "description": "",
+      "source": "shop"
+    },
+    {
+      "id": "shop-15658",
+      "name": "GIACCA TUTA ROSSA BAMBINO/A",
+      "price": 45,
+      "regularPrice": 45,
+      "onSale": false,
+      "currency": "EUR",
+      "image": "https://calciofoggia1920.store/wp-content/uploads/2026/09/CF_GiaccaTutaRed_JR-scaled.jpg",
+      "images": [
+        "https://calciofoggia1920.store/wp-content/uploads/2026/09/CF_GiaccaTutaRed_JR-scaled.jpg"
+      ],
+      "category": "Tute",
+      "categorySlug": "tute",
+      "url": "https://calciofoggia1920.store/prodotto/giacca-tuta-rossa-bambino-a/",
+      "inStock": true,
+      "description": "",
+      "source": "shop"
+    },
+    {
+      "id": "shop-15657",
+      "name": "GIACCA TUTA NERA BAMBINO/A",
+      "price": 45,
+      "regularPrice": 45,
+      "onSale": false,
+      "currency": "EUR",
+      "image": "https://calciofoggia1920.store/wp-content/uploads/2026/09/CF_GiaccaTutaBlack_JR-scaled.jpg",
+      "images": [
+        "https://calciofoggia1920.store/wp-content/uploads/2026/09/CF_GiaccaTutaBlack_JR-scaled.jpg"
+      ],
+      "category": "Tute",
+      "categorySlug": "tute",
+      "url": "https://calciofoggia1920.store/prodotto/giacca-tuta-nera-bambino-a/",
       "inStock": true,
       "description": "",
       "source": "shop"
@@ -220,6 +331,42 @@
       "category": null,
       "categorySlug": null,
       "url": "https://calciofoggia1920.store/prodotto/calza-corta/",
+      "inStock": true,
+      "description": "",
+      "source": "shop"
+    },
+    {
+      "id": "shop-15703",
+      "name": "PANTALONCINO GARA AWAY BAMBINO/A",
+      "price": 15,
+      "regularPrice": 15,
+      "onSale": false,
+      "currency": "EUR",
+      "image": "https://calciofoggia1920.store/wp-content/uploads/2026/09/CF_PantBlack26_JR-scaled.jpg",
+      "images": [
+        "https://calciofoggia1920.store/wp-content/uploads/2026/09/CF_PantBlack26_JR-scaled.jpg"
+      ],
+      "category": "Pantaloncini",
+      "categorySlug": "pantaloncini",
+      "url": "https://calciofoggia1920.store/prodotto/pantaloncino-gara-away-bambino-a-copia/",
+      "inStock": true,
+      "description": "",
+      "source": "shop"
+    },
+    {
+      "id": "shop-15695",
+      "name": "PANTALONCINO GARA AWAY BAMBINO/A",
+      "price": 15,
+      "regularPrice": 15,
+      "onSale": false,
+      "currency": "EUR",
+      "image": "https://calciofoggia1920.store/wp-content/uploads/2026/09/CF_PantWhite26_JR-1-scaled.jpg",
+      "images": [
+        "https://calciofoggia1920.store/wp-content/uploads/2026/09/CF_PantWhite26_JR-1-scaled.jpg"
+      ],
+      "category": "Pantaloncini",
+      "categorySlug": "pantaloncini",
+      "url": "https://calciofoggia1920.store/prodotto/pantaloncino-gara-away-bambino-a/",
       "inStock": true,
       "description": "",
       "source": "shop"
@@ -391,7 +538,17 @@
     {
       "slug": "gadget",
       "name": "Gadget",
-      "count": 9
+      "count": 11
+    },
+    {
+      "slug": "pantaloncini",
+      "name": "Pantaloncini",
+      "count": 5
+    },
+    {
+      "slug": "tute",
+      "name": "Tute",
+      "count": 5
     },
     {
       "slug": "kit",
@@ -399,23 +556,13 @@
       "count": 4
     },
     {
-      "slug": "pantaloncini",
-      "name": "Pantaloncini",
+      "slug": "maglie-gara",
+      "name": "Maglie Gara",
       "count": 3
     },
     {
       "slug": "allenamento",
       "name": "Allenamento",
-      "count": 2
-    },
-    {
-      "slug": "maglie-gara",
-      "name": "Maglie Gara",
-      "count": 2
-    },
-    {
-      "slug": "tute",
-      "name": "Tute",
       "count": 2
     },
     {
