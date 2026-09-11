@@ -36,6 +36,8 @@ const FOGGIA_AF = 521;
 
 const MINUTO = 60_000;
 const PRIMA = 90 * MINUTO;
+/** Quanto prima del fischio si ricorda il pronostico a chi non l'ha messo. */
+const PROMEMORIA_PRONOSTICO = 60 * MINUTO;
 const DOPO = 3 * 60 * MINUTO;
 /*
  * Il budget di API-Football, contato.
@@ -91,7 +93,8 @@ const BUDGET_AF = 45;
 const FINITE = ['FT', 'AET', 'PEN'];
 const IN_GIOCO = ['1H', 'HT', '2H', 'ET', 'BT', 'P'];
 
-type Tipo = 'formazioni' | 'inizio' | 'gol' | 'espulsione' | 'intervallo' | 'fine';
+type Tipo = 'formazioni' | 'inizio' | 'gol' | 'espulsione' | 'intervallo' | 'fine'
+  | 'pronostico' | 'esito';
 type Avviso = {
   tipo: Tipo; titolo: string; testo: string; tag: string; rotta: string;
   /** riscrive una notifica gia mandata senza farla suonare di nuovo */
@@ -188,12 +191,27 @@ async function trovaProssima() {
   return riga;
 }
 
-/** Manda un avviso a tutti quelli che lo vogliono ricevere. */
-async function diffondi(a: Avviso) {
-  const { data } = await db
+/**
+ * Manda un avviso.
+ *
+ * Con `soloA` va alle iscrizioni di quelle persone e basta. Serve ai due
+ * avvisi che riguardano quello che uno ha fatto: il promemoria del pronostico
+ * non deve arrivare a chi l'ha gia messo, e il risultato non deve arrivare a
+ * chi non aveva giocato. Un avviso che non riguarda chi lo riceve e il modo
+ * piu rapido di far togliere il permesso alle notifiche.
+ *
+ * Un elenco vuoto non manda niente: non e un errore, e il caso normale di una
+ * partita in cui non ha pronosticato nessuno.
+ */
+async function diffondi(a: Avviso, soloA?: string[]) {
+  if (soloA && soloA.length === 0) return { consegnati: 0, falliti: 0, rimossi: 0 };
+
+  let q = db
     .from('push_iscrizioni')
     .select('endpoint, p256dh, auth, preferenze')
     .eq(`preferenze->>${a.tipo}`, 'true');
+  if (soloA) q = q.in('utente', soloA);
+  const { data } = await q;
 
   const iscritti = (data ?? []) as Array<Iscrizione & { preferenze: Record<string, boolean> }>;
   const morti: string[] = [];
@@ -221,6 +239,26 @@ async function diffondi(a: Avviso) {
 
   if (morti.length) await db.from('push_iscrizioni').delete().in('endpoint', morti);
   return { consegnati, falliti, rimossi: morti.length };
+}
+
+/** Chi ha un account, vuole il promemoria, e per questa partita non ha ancora giocato. */
+async function chiNonHaPronosticato(partita: string): Promise<string[]> {
+  const [iscritti, gia] = await Promise.all([
+    db.from('push_iscrizioni').select('utente')
+      .not('utente', 'is', null)
+      .eq('preferenze->>pronostico', 'true'),
+    db.from('pronostici').select('utente').eq('partita', partita),
+  ]);
+
+  const hannoGiocato = new Set(((gia.data ?? []) as Array<{ utente: string }>).map((r) => r.utente));
+  const tutti = new Set(((iscritti.data ?? []) as Array<{ utente: string }>).map((r) => r.utente));
+  return [...tutti].filter((u) => !hannoGiocato.has(u));
+}
+
+/** Chi aveva pronosticato questa partita. */
+async function chiHaPronosticato(partita: string): Promise<string[]> {
+  const { data } = await db.from('pronostici').select('utente').eq('partita', partita);
+  return [...new Set(((data ?? []) as Array<{ utente: string }>).map((r) => r.utente))];
 }
 
 Deno.serve(async (req) => {
@@ -291,8 +329,31 @@ Deno.serve(async (req) => {
   }
 
   const avvisi: Avviso[] = [];
+  /** Avvisi che vanno solo ad alcuni: [avviso, elenco di utenti]. */
+  const mirati: Array<[Avviso, string[]]> = [];
   const patch: Record<string, unknown> = { aggiornato_il: new Date().toISOString() };
   const detti = new Set<string>((riga.eventi_detti ?? []) as string[]);
+
+  // ------------------------------------------------- il promemoria pronostico
+  //
+  // Un'ora prima e il momento in cui uno e ancora in tempo e non e ancora in
+  // mezzo ad altro. Prima e troppo presto per ricordarsene, dopo e tardi.
+  const promemoriaDaMandare = !riga.promemoria_mandato
+    && adesso >= t - PROMEMORIA_PRONOSTICO && adesso < t;
+
+  if (promemoriaDaMandare) {
+    patch.promemoria_mandato = true;
+    const daAvvisare = await chiNonHaPronosticato(riga.partita);
+    if (daAvvisare.length) {
+      mirati.push([{
+        tipo: 'pronostico',
+        titolo: 'Manca un\'ora',
+        testo: 'Il pronostico si chiude al fischio d\'inizio.',
+        tag: `pronostico-${riga.partita}`,
+        rotta: '/match-center',
+      }, daAvvisare]);
+    }
+  }
 
   // ---------------------------------------------------------- le formazioni
   const primaDelFischio = adesso < t;
@@ -649,10 +710,32 @@ Deno.serve(async (req) => {
     });
   }
 
+  // ---------------------------------------------------- l'esito del pronostico
+  //
+  // Dopo che il punteggio e stato scritto: il trigger su finita_il chiude la
+  // partita e assegna i punti, quindi quando l'avviso parte i punti ci sono
+  // gia e chi apre li trova. Un solo testo per tutti, non uno personalizzato:
+  // dire "hai preso cento punti" vorrebbe dire mandare una notifica diversa a
+  // ognuno, e la differenza per chi legge e nessuna.
+  if (finita && !riga.esito_mandato) {
+    patch.esito_mandato = true;
+    const chiHaGiocato = await chiHaPronosticato(riga.partita);
+    if (chiHaGiocato.length) {
+      mirati.push([{
+        tipo: 'esito',
+        titolo: 'Com\'e andato il tuo pronostico',
+        testo: `${casa ?? 0}-${ospiti ?? 0}. Guarda quanti punti hai preso.`,
+        tag: `esito-${riga.partita}`,
+        rotta: '/classifica',
+      }, chiHaGiocato]);
+    }
+  }
+
   await db.from('stato_partita').update(patch).eq('partita', riga.partita);
 
   const esiti = [];
   for (const a of avvisi) esiti.push({ tipo: a.tipo, ...(await diffondi(a)) });
+  for (const [a, chi] of mirati) esiti.push({ tipo: a.tipo, ...(await diffondi(a, chi)) });
 
   return Response.json({ partita: etichetta, stato, casa, ospiti, avvisi: esiti });
 });
