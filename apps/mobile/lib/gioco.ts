@@ -5,38 +5,13 @@ import { useSessione, utenteCorrente } from './auth';
 import type { Fase } from './match-center-core.ts';
 
 /**
- * Quiz e sondaggi.
+ * I sondaggi del Match Center.
  *
- * LA RISPOSTA GIUSTA QUI DENTRO NON C'E
- *
- * L'app legge le domande da una vista che la colonna della risposta non ce
- * l'ha, e la scopre solo rispondendo. Non e pignoleria: la chiave anonima sta
- * dentro l'app, quindi chiunque puo interrogare l'API per conto suo. Una
- * risposta che il client conosce e una risposta pubblica, anche se
- * l'interfaccia non la mostra.
- *
- * Anche i punti passano di li: qui non si assegna niente.
+ * Qui non si assegna niente: i punti li da una funzione nel database, che
+ * controlla anche che il sondaggio sia aperto. Con la chiave anonima dentro
+ * l'app, un punto che si puo scrivere dal client e un punto che non vale
+ * niente.
  */
-
-export type Domanda = {
-  id: string;
-  partita: string | null;
-  fase: string;
-  testo: string;
-  opzioni: string[];
-  aperta: boolean;
-  /** null finche non si e risposto */
-  miaScelta: number | null;
-  miaGiusta: boolean | null;
-};
-
-export type Esito = {
-  esatta: boolean;
-  corretta: number;
-  spiegazione: string | null;
-  punti: number;
-  giaRisposto: boolean;
-};
 
 export type Sondaggio = {
   id: string;
@@ -52,72 +27,6 @@ export type Sondaggio = {
 
 const aperto = (apre: string | null, chiude: string | null, adesso = Date.now()) =>
   (!apre || Date.parse(apre) <= adesso) && (!chiude || Date.parse(chiude) > adesso);
-
-/* -------------------------------------------------------------------- quiz */
-
-export async function caricaQuiz(partita: string | null, fase?: Fase | 'giornaliero'): Promise<Domanda[]> {
-  if (!supabase) return [];
-
-  let q = supabase
-    .from('quiz_pubblici')
-    .select('id, partita, fase, testo, opzioni, aperta, ordine')
-    .order('ordine', { ascending: true });
-  q = partita === null ? q.is('partita', null) : q.eq('partita', partita);
-  if (fase) q = q.eq('fase', fase);
-
-  const { data } = await q;
-  const domande = ((data ?? []) as Array<Record<string, unknown>>).map((d) => ({
-    id: String(d.id),
-    partita: (d.partita as string | null) ?? null,
-    fase: String(d.fase),
-    testo: String(d.testo),
-    opzioni: (d.opzioni as string[]) ?? [],
-    aperta: Boolean(d.aperta),
-    miaScelta: null as number | null,
-    miaGiusta: null as boolean | null,
-  }));
-
-  const u = utenteCorrente();
-  if (!u || domande.length === 0) return domande;
-
-  const { data: mie } = await supabase
-    .from('quiz_risposte')
-    .select('domanda, scelta, giusta')
-    .in('domanda', domande.map((d) => d.id));
-
-  const per = new Map<string, { scelta: number; giusta: boolean }>();
-  for (const r of ((mie ?? []) as Array<Record<string, unknown>>)) {
-    per.set(String(r.domanda), { scelta: Number(r.scelta), giusta: Boolean(r.giusta) });
-  }
-
-  return domande.map((d) => {
-    const mia = per.get(d.id);
-    return mia ? { ...d, miaScelta: mia.scelta, miaGiusta: mia.giusta } : d;
-  });
-}
-
-export async function rispondi(domanda: string, scelta: number): Promise<Esito | { errore: string }> {
-  if (!supabase) return { errore: 'Serve un account per rispondere.' };
-  const { data, error } = await supabase.rpc('rispondi_quiz', { la_domanda: domanda, la_scelta: scelta });
-  if (error) return { errore: leggibile(error.message) };
-  const r = (data as Array<Record<string, unknown>> | null)?.[0];
-  if (!r) return { errore: 'Non è arrivata risposta. Riprova.' };
-  return {
-    esatta: Boolean(r.esatta),
-    corretta: Number(r.corretta),
-    spiegazione: (r.spiegazione as string | null) ?? null,
-    punti: Number(r.punti),
-    giaRisposto: Boolean(r.gia_risposto),
-  };
-}
-
-/** Quante ne ha prese in questa partita: serve al riepilogo di fine gara. */
-export async function quizFatti(partita: string | null): Promise<{ risposte: number; giuste: number }> {
-  if (!supabase || !utenteCorrente()) return { risposte: 0, giuste: 0 };
-  const { data } = await supabase.rpc('quiz_fatti', { la_partita: partita });
-  const r = (data as Array<Record<string, unknown>> | null)?.[0];
-  return { risposte: Number(r?.risposte ?? 0), giuste: Number(r?.giuste ?? 0) };
-}
 
 /* --------------------------------------------------------------- sondaggi */
 
@@ -186,21 +95,6 @@ function leggibile(messaggio: string): string {
 }
 
 /* -------------------------------------------------------------------- hook */
-
-export function useQuiz(partita: string | null, fase?: Fase | 'giornaliero') {
-  const { utente } = useSessione();
-  const [domande, setDomande] = useState<Domanda[]>([]);
-  const [caricato, setCaricato] = useState(false);
-
-  const ricarica = useCallback(async () => {
-    setDomande(await caricaQuiz(partita, fase));
-    setCaricato(true);
-  }, [partita, fase]);
-
-  useEffect(() => { setCaricato(false); void ricarica(); }, [ricarica, utente?.id]);
-
-  return { domande, caricato, ricarica };
-}
 
 export function useSondaggi(partita: string | null, fase?: Fase | 'sempre') {
   const { utente } = useSessione();

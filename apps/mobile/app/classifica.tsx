@@ -113,8 +113,8 @@ export default function Classifica() {
       ) : null}
 
       <GroupNote>
-        Pronostico 10 punti, esito indovinato 50, risultato esatto 100. Quiz 20, sondaggio 5,
-        migliore in campo 5. I punti li conta il database: qui si leggono e basta.
+        Pronostico 10 punti, esito indovinato 50, risultato esatto 100. Sondaggio 5,
+        migliore in campo 5, pagelle 5. I punti li conta il database: qui si leggono e basta.
       </GroupNote>
     </Screen>
   );

@@ -8,11 +8,10 @@ import { Button, Card, GroupLabel, GroupNote, ListGroup, ListRow, useGutter } fr
 import { Pronostico } from './Pronostico';
 import { Pagelle } from './Pagelle';
 import { VotaMvp } from './VotaMvp';
-import { BloccoQuiz } from './Quiz';
 import { BloccoSondaggi } from './Sondaggio';
 import { SoloConAccount } from './SoloConAccount';
 import { useSessione } from '../lib/auth';
-import { useQuiz, useSondaggi, quizFatti } from '../lib/gioco';
+import { useSondaggi } from '../lib/gioco';
 import { puntiDellaPartita, segnalaCondivisione } from '../lib/punti';
 import { statoMigliore } from '../lib/premi-core';
 import { fineVera } from '../lib/live';
@@ -30,11 +29,12 @@ import type { Match } from '@satanelli/core';
  * stessa cosa, e chi apre l'app vuole trovare davanti quello che serve adesso,
  * non un elenco di sezioni fra cui scegliere.
  *
- * Le domande e i sondaggi seguono la stessa fase: nel database ognuno ha
- * scritto a quale momento appartiene, e qui si chiedono solo quelli.
+ * I sondaggi seguono la stessa fase: nel database ognuno ha scritto a quale
+ * momento appartiene, e qui si chiedono solo quelli.
  *
- * Se per una partita non c'e ancora niente, non si inventa: si dice che non
- * c'e. Un quiz finto e peggio di nessun quiz.
+ * Se per una partita non c'e ancora niente, non si inventa e non si mostra
+ * niente: una sezione vuota con scritto "presto" e peggio di una sezione che
+ * non c'e.
  */
 export function MatchCenter({
   match, fase, lineup,
@@ -47,17 +47,16 @@ export function MatchCenter({
   const { utente } = useSessione();
   const ospite = !utente;
 
-  const { domande, ricarica: ricaricaQuiz } = useQuiz(match.id, fase);
-  const { sondaggi, ricarica: ricaricaSondaggi } = useSondaggi(match.id, fase);
+  const { sondaggi } = useSondaggi(match.id, fase);
 
   const [puntiQui, setPuntiQui] = useState(0);
-  const [quiz, setQuiz] = useState({ risposte: 0, giuste: 0 });
+  const [quante, setQuante] = useState(0);
   const [condiviso, setCondiviso] = useState<string | null>(null);
 
   const aggiornaRiepilogo = useCallback(async () => {
-    const [p, q] = await Promise.all([puntiDellaPartita(match.id), quizFatti(match.id)]);
+    const p = await puntiDellaPartita(match.id);
     setPuntiQui(p.totale);
-    setQuiz(q);
+    setQuante(p.per.length);
   }, [match.id]);
 
   useEffect(() => { void aggiornaRiepilogo(); }, [aggiornaRiepilogo, utente?.id]);
@@ -126,13 +125,6 @@ export function MatchCenter({
         </>
       ) : null}
 
-      <BloccoQuiz
-        domande={domande}
-        ospite={ospite}
-        titolo={TITOLO_QUIZ[fase]}
-        vuoto={VUOTO_QUIZ[fase]}
-        onRisposto={dopoUnaGiocata}
-      />
 
       <BloccoSondaggi
         sondaggi={sondaggi}
@@ -162,9 +154,9 @@ export function MatchCenter({
               <Text style={styles.puntiEtichetta}>{puntiQui === 1 ? 'punto' : 'punti'}</Text>
             </View>
             <Text style={styles.dettaglio}>
-              {quiz.risposte > 0
-                ? `Quiz: ${quiz.giuste} su ${quiz.risposte}.`
-                : 'Nessun quiz ancora.'}
+              {quante === 0
+                ? 'Qui non hai ancora fatto niente.'
+                : `Da ${quante} ${quante === 1 ? 'cosa fatta' : 'cose fatte'} in questa partita.`}
             </Text>
           </Card>
           <View style={{ marginTop: space.sm }}>
@@ -185,20 +177,6 @@ export function MatchCenter({
     </>
   );
 }
-
-const TITOLO_QUIZ: Record<Fase, string> = {
-  prima: 'Quiz prepartita',
-  live: 'Quiz al volo',
-  intervallo: 'Quiz dell’intervallo',
-  post: 'Quiz del dopopartita',
-};
-
-const VUOTO_QUIZ: Record<Fase, string> = {
-  prima: 'Per questa partita non c’è ancora un quiz prepartita.',
-  live: 'Nessuna domanda al volo per adesso.',
-  intervallo: 'Nessun quiz per questo intervallo.',
-  post: 'Il quiz del dopopartita non c’è per questa gara.',
-};
 
 const TITOLO_SONDAGGI: Record<Fase, string> = {
   prima: 'Dicci la tua',

@@ -21,7 +21,7 @@
 
 /* ------------------------------------------------------------- le tariffe */
 
--- In tabella e non nel codice: cambiare quanto vale un quiz non deve
+-- In tabella e non nel codice: cambiare quanto vale un sondaggio non deve
 -- richiedere una migrazione. I punti gia assegnati non si toccano, restano
 -- quelli del giorno in cui sono stati dati.
 create table if not exists punti_tariffe (
@@ -40,7 +40,6 @@ insert into punti_tariffe (azione, punti, nome) values
   ('pronostico',  10,  'Pronostico fatto'),
   ('esito',       50,  'Esito indovinato'),
   ('risultato',  100,  'Risultato esatto'),
-  ('quiz',        20,  'Risposta giusta al quiz'),
   ('mvp',          5,  'Voto al migliore in campo'),
   ('pagelle',      5,  'Pagelle date'),
   ('sondaggio',    5,  'Sondaggio votato'),
@@ -53,7 +52,7 @@ create table if not exists punti_movimenti (
   id        bigserial primary key,
   utente    uuid not null references profiles on delete cascade,
   azione    text not null references punti_tariffe (azione),
-  -- a cosa si riferisce: la partita, la domanda del quiz, il giorno della
+  -- a cosa si riferisce: la partita, il sondaggio, il giorno della
   -- condivisione. Insieme all'azione e la chiave che impedisce il doppio.
   chiave    text not null,
   punti     int not null check (punti >= 0),
@@ -421,7 +420,6 @@ insert into badge (codice, nome, descrizione, icona) values
   ('dieci-pronostici', 'Dieci volte',      'Dieci pronostici messi: non era una volta sola.', 'repeat'),
   ('risultato-esatto', 'Occhio clinico',   'Un risultato esatto, virgola compresa.', 'eye'),
   ('tre-esatti',       'Chiaroveggente',   'Tre risultati esatti. Comincia a essere sospetto.', 'sparkles'),
-  ('quiz-dieci',       'Memoria di ferro', 'Dieci risposte giuste al quiz.', 'school'),
   ('mvp-cinque',       'Giudice',          'Cinque volte hai scelto il migliore in campo.', 'star'),
   ('mille-punti',      'Mille',            'Mille punti. Non si arriva per caso.', 'trophy')
 on conflict (codice) do nothing;
@@ -456,7 +454,6 @@ as $$
 declare
   pronostici_fatti int;
   esatti int;
-  quiz_giusti int;
   mvp_dati int;
   totale int;
   nuovi int := 0;
@@ -468,10 +465,9 @@ begin
   select
     count(*) filter (where azione = 'pronostico'),
     count(*) filter (where azione = 'risultato'),
-    count(*) filter (where azione = 'quiz'),
     count(*) filter (where azione = 'mvp'),
     coalesce(sum(punti), 0)
-  into pronostici_fatti, esatti, quiz_giusti, mvp_dati, totale
+  into pronostici_fatti, esatti, mvp_dati, totale
   from punti_movimenti where utente = chi;
 
   da_dare := array[]::text[];
@@ -479,7 +475,6 @@ begin
   if pronostici_fatti >= 10 then da_dare := da_dare || 'dieci-pronostici'::text; end if;
   if esatti >= 1            then da_dare := da_dare || 'risultato-esatto'::text; end if;
   if esatti >= 3            then da_dare := da_dare || 'tre-esatti'::text; end if;
-  if quiz_giusti >= 10      then da_dare := da_dare || 'quiz-dieci'::text; end if;
   if mvp_dati >= 5          then da_dare := da_dare || 'mvp-cinque'::text; end if;
   if totale >= 1000         then da_dare := da_dare || 'mille-punti'::text; end if;
 

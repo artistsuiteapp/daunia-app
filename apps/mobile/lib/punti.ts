@@ -110,9 +110,9 @@ export async function caricaMovimenti(quanti = 30): Promise<Movimento[]> {
 /**
  * Quanti punti si sono presi in una partita, e per cosa.
  *
- * La chiave dei movimenti e l'identificativo della partita, tranne per il quiz
- * dove e la domanda: quelli si contano a parte, con una join che qui non si
- * puo fare. Per il riepilogo di fine gara bastano i primi.
+ * La chiave dei movimenti e l'identificativo della partita, tranne per i
+ * sondaggi dove e il sondaggio: quelli non entrano in questo conto. Per il
+ * riepilogo di fine gara bastano gli altri.
  */
 export async function puntiDellaPartita(partita: string): Promise<{ totale: number; per: Movimento[] }> {
   const u = utenteCorrente();
