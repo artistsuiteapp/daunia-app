@@ -84,3 +84,29 @@ export const PAROLACCE: readonly string[] = [
   'troioncella', 'troioncelle', 'troione', 'trombare', 'trombata', 'trombatona',
   'vaccamadonna', 'vaffanculo', 'zinne', 'zoccola',
 ];
+
+/**
+ * Aggiunte nostre, tenute separate dall'elenco copiato.
+ *
+ * L'elenco qui sopra viene da napolux/paroleitaliane e non lo tocchiamo: se un
+ * giorno lo si riallinea alla fonte, basta sostituirlo senza perdere queste.
+ *
+ * Qui dentro ci sono le parole che mancavano e la famiglia foggiana e
+ * napoletana di "ki te mu ort". Quelle le prende anche una regola in
+ * filtro-core.ts, perche si scrivono in venti modi e nessun elenco li copre
+ * tutti: queste sono le forme piu comuni, scritte per intero cosi si vedono.
+ */
+export const PAROLACCE_NOSTRE: readonly string[] = [
+  'bastarda', 'cornuta', 'cornuti', 'cornuto', 'curnut', 'curnuta', 'curnuto',
+  'fetent', 'fetente', 'fetenti', 'mignottona', 'mignottone',
+  'ntamam', 'ntamamm', 'ntammamm',
+  'puttanaccio', 'ricchiona', 'ricchione',
+  'strunz', 'strunza', 'strunzo',
+  'zoccolaccia', 'zoccole', 'zoccolona', 'zoccolone',
+
+  // la famiglia "ki te mu ort", scritta come capita
+  'chitemmuort', 'chitemort', 'chitemu', 'chitemuort', 'chitemurt',
+  'ketemuort', 'kitemmuort', 'kitemort', 'kitemu', 'kitemuort',
+  'kitemuorte', 'kitemuorto', 'kitemuortt', 'kitemurt',
+  'kitestramu', 'kitestramuort', 'kitestramurt',
+];

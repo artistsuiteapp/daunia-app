@@ -58,13 +58,28 @@ export default function ProfiloSchermata() {
         <BackBar label="Indietro" />
         <View style={[styles.vuoto, gutter]}>
           <Ionicons name="person-circle-outline" size={56} color={colors.textFaint} />
-          <Text style={styles.titolo}>Nessun account</Text>
+          <Text style={styles.titolo}>Non hai ancora un account</Text>
+          {/*
+            * Si dice cosa si sblocca, non cosa manca.
+            *
+            * Prima c'era scritto che l'account fa seguire i messaggi "fra
+            * telefono e computer": chi legge dal computer si chiede di quale
+            * telefono si parli, e comunque non e quello il motivo per cui uno
+            * si iscrive. I voti che "entrano nelle medie" erano un dettaglio
+            * di come funziona il conteggio, non un motivo per nessuno.
+            */}
           <Text style={styles.testo}>
-            Con un account quello che scrivi ti segue fra telefono e computer, e i tuoi voti
-            entrano nelle medie di tutti.
+            Serve per scrivere nella Curva e nella chat della partita, votare le pagelle e
+            giocare i pronostici. Per leggere non serve.
           </Text>
           <Pressable onPress={() => router.push('/accedi' as never)} style={styles.cta}>
-            <Text style={styles.ctaTesto}>Entra o iscriviti</Text>
+            <Text style={styles.ctaTesto}>Entra</Text>
+          </Pressable>
+          <Pressable
+            onPress={() => router.push('/accedi?modo=registrazione' as never)}
+            style={styles.ctaSecondo}
+          >
+            <Text style={styles.ctaSecondoTesto}>Crea un account</Text>
           </Pressable>
         </View>
       </Screen>
@@ -325,6 +340,11 @@ const styles = StyleSheet.create({
 
   cta: { borderRadius: radius.xl, paddingVertical: 15, alignItems: 'center', backgroundColor: colors.accent, marginTop: space.sm },
   ctaTesto: { ...type.headline, color: colors.onAccent },
+  ctaSecondo: {
+    borderRadius: radius.xl, paddingVertical: 14, alignItems: 'center',
+    borderWidth: StyleSheet.hairlineWidth, borderColor: colors.borderStrong,
+  },
+  ctaSecondoTesto: { ...type.subheadBold, color: colors.text },
 
   voce: { ...type.body, color: colors.text, flex: 1 },
 });

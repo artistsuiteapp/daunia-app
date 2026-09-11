@@ -8,7 +8,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Screen, Empty, useGutter } from '../../components/ui';
 import { BackBar } from '../../components/BackBar';
 import { Avatar } from '../../components/Avatar';
-import { controlla, spiegazione } from '../../lib/filtro-core.ts';
+import { maschera, AVVISO_COPERTO } from '../../lib/filtro-core.ts';
 import { colors, radius, space, type } from '../../theme/tokens';
 import { relative, shortDate } from '../../lib/format';
 import { useOspite } from '../../lib/ospite';
@@ -77,19 +77,19 @@ export default function DiscussionPage() {
     if (!testo) return;
 
     /*
-     * Il filtro parla prima del database.
+     * Le parolacce si coprono, il messaggio parte.
      *
-     * Il controllo vero sta in Postgres e non si aggira, ma se lasciassimo
-     * decidere solo lui l'utente vedrebbe il testo tornare nel campo senza
-     * una parola di spiegazione, e riscriverebbe la stessa cosa.
+     * La regola vera sta in Postgres e copre le stesse parole; qui si fa
+     * prima, cosi chi scrive vede subito com'e venuto invece di scoprirlo
+     * dopo l'invio.
      */
-    const esito = controlla(testo);
-    if (!esito.pulito) { setAvviso(spiegazione(esito)); return; }
+    const { cambiato } = maschera(testo);
 
     setDraft('');
     setAvviso(null);
     try {
       await addReply(d.id, 'Tu', testo);
+      if (cambiato) setAvviso(AVVISO_COPERTO);
     } catch (e) {
       // se il salvataggio fallisce il testo torna nel campo, invece di sparire
       setDraft(testo);
@@ -99,12 +99,10 @@ export default function DiscussionPage() {
     }
   };
 
-  /** Mentre si scrive: l'avviso compare appena la frase e completa. */
+  /** Mentre si scrive: l'avviso di prima sparisce appena si tocca il campo. */
   const scrivendo = (t: string) => {
     setDraft(t);
-    if (!avviso) return;
-    // sparisce da solo appena il testo torna pulito, senza dover reinviare
-    if (controlla(t.trim()).pulito) setAvviso(null);
+    if (avviso) setAvviso(null);
   };
 
   return (

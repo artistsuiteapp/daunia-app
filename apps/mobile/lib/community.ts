@@ -2,7 +2,7 @@ import { useEffect, useSyncExternalStore } from 'react';
 import type { Ionicons } from '@expo/vector-icons';
 
 import { supabase, backendAttivo } from './supabase';
-import { controlla, spiegazione } from './filtro-core.ts';
+import { maschera } from './filtro-core.ts';
 import { utenteCorrente } from './auth';
 
 /**
@@ -213,17 +213,18 @@ export function discussionById(id: string): Discussion | null {
 const today = () => new Date().toISOString().slice(0, 10);
 
 /**
- * Ferma qui quello che il database fermerebbe comunque.
+ * Copre le parolacce invece di respingere il messaggio.
  *
- * Il cancello vero e il trigger in Postgres: un controllo nell'app si aggira
- * chiamando l'API con la chiave anonima. Questo serve a un'altra cosa, a dire
- * subito perche, invece di far premere invia e rispondere con un errore.
+ * Il cancello vero e il trigger in Postgres, che copre le stesse parole con la
+ * stessa regola: quello qui serve a far vedere subito com'e venuto il testo,
+ * senza aspettare il giro sul server. Passarci due volte non cambia niente,
+ * perche una parola gia coperta non e piu una parolaccia.
  *
- * Vale anche per la modalita senza account, dove il database non c'e proprio.
+ * Vale anche per la modalita senza account, dove il database non c'e proprio e
+ * questa e l'unica regola che gira.
  */
-function fermaSeOffensivo(...pezzi: Array<string | undefined>) {
-  const esito = controlla(pezzi.filter(Boolean).join(' '));
-  if (!esito.pulito) throw new Error(spiegazione(esito) ?? 'Messaggio non pubblicabile.');
+function copri(testo: string): string {
+  return maschera(testo).testo;
 }
 
 /**
@@ -244,20 +245,21 @@ function tradotto(messaggio: string): string {
 }
 
 export async function addDiscussion(input: { author: string; title: string; body: string; topic: Topic }) {
-  fermaSeOffensivo(input.title, input.body);
+  const titolo = copri(input.title.trim());
+  const testo = copri(input.body.trim());
   const u = utenteCorrente();
   if (supabase && u) {
     const { data, error } = await supabase.from('discussioni').insert({
       autore: u.id,
-      titolo: input.title.trim(),
-      testo: input.body.trim(),
+      titolo,
+      testo,
       argomento: input.topic,
     }).select('id').single();
     if (error) throw new Error(tradotto(error.message));
     await ricarica();
     return { id: (data as { id: string }).id } as Discussion;
   }
-  return aggiungiInLocale(input);
+  return aggiungiInLocale({ ...input, title: titolo, body: testo });
 }
 
 function aggiungiInLocale(input: { author: string; title: string; body: string; topic: Topic }) {
@@ -278,9 +280,8 @@ function aggiungiInLocale(input: { author: string; title: string; body: string; 
 }
 
 export async function addReply(on: string, author: string, body: string) {
-  const text = body.trim();
+  const text = copri(body.trim());
   if (!text) return;
-  fermaSeOffensivo(text);
   const u = utenteCorrente();
   if (supabase && u) {
     const { error } = await supabase.from('risposte').insert({
@@ -340,9 +341,8 @@ export function eMio(autoreId: string | null | undefined): boolean {
  * correggere dopo.
  */
 export async function modificaRisposta(id: string, testo: string) {
-  const t = testo.trim();
+  const t = copri(testo.trim());
   if (t.length < 2) throw new Error('Il messaggio è troppo corto.');
-  fermaSeOffensivo(t);
 
   const u = utenteCorrente();
   if (supabase && u) {
@@ -375,11 +375,12 @@ export async function cancellaRisposta(id: string) {
 
 /** Corregge una discussione: titolo e testo insieme, come si e scritta. */
 export async function modificaDiscussione(id: string, titolo: string, testo: string) {
-  fermaSeOffensivo(titolo, testo);
+  const t = copri(titolo.trim());
+  const c = copri(testo.trim());
   const u = utenteCorrente();
   if (supabase && u) {
     const { error } = await supabase.from('discussioni')
-      .update({ titolo: titolo.trim(), testo: testo.trim(), modificata_il: new Date().toISOString() })
+      .update({ titolo: t, testo: c, modificata_il: new Date().toISOString() })
       .eq('id', id);
     if (error) throw new Error(tradotto(error.message));
     await ricarica();
@@ -387,7 +388,7 @@ export async function modificaDiscussione(id: string, titolo: string, testo: str
   }
   mine = {
     ...mine,
-    discussions: mine.discussions.map((d) => (d.id === id ? { ...d, title: titolo.trim(), body: testo.trim() } : d)),
+    discussions: mine.discussions.map((d) => (d.id === id ? { ...d, title: t, body: c } : d)),
   };
   commit();
 }
