@@ -189,6 +189,42 @@
       "source": "shop"
     },
     {
+      "id": "shop-15494",
+      "name": "PANTALONCINO GARA HOME",
+      "price": 25,
+      "regularPrice": 25,
+      "onSale": false,
+      "currency": "EUR",
+      "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/IMG-20260911-WA0019.jpg",
+      "images": [
+        "https://calciofoggia1920.store/wp-content/uploads/2026/08/IMG-20260911-WA0019.jpg"
+      ],
+      "category": "Pantaloncini",
+      "categorySlug": "pantaloncini",
+      "url": "https://calciofoggia1920.store/prodotto/pantaloncino-gara-home/",
+      "inStock": true,
+      "description": "",
+      "source": "shop"
+    },
+    {
+      "id": "shop-15539",
+      "name": "CALZA CORTA",
+      "price": 16,
+      "regularPrice": 16,
+      "onSale": false,
+      "currency": "EUR",
+      "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_32-scaled.jpg",
+      "images": [
+        "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_32-scaled.jpg"
+      ],
+      "category": null,
+      "categorySlug": null,
+      "url": "https://calciofoggia1920.store/prodotto/calza-corta/",
+      "inStock": true,
+      "description": "",
+      "source": "shop"
+    },
+    {
       "id": "shop-15615",
       "name": "TELO PALESTRA CALCIO FOGGIA",
       "price": 15,
@@ -363,6 +399,11 @@
       "count": 4
     },
     {
+      "slug": "pantaloncini",
+      "name": "Pantaloncini",
+      "count": 3
+    },
+    {
       "slug": "allenamento",
       "name": "Allenamento",
       "count": 2
@@ -370,11 +411,6 @@
     {
       "slug": "maglie-gara",
       "name": "Maglie Gara",
-      "count": 2
-    },
-    {
-      "slug": "pantaloncini",
-      "name": "Pantaloncini",
       "count": 2
     },
     {
