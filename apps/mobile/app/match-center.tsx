@@ -1,14 +1,20 @@
 import { useMemo } from 'react';
 import { router } from 'expo-router';
-import { StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
-import { Screen, Badge, Empty, GroupNote, ListGroup, ListRow, useGutter } from '../components/ui';
+import {
+  Screen, Badge, Card, Empty, GroupLabel, GroupNote, ListGroup, ListRow, useGutter,
+} from '../components/ui';
 import { BackBar } from '../components/BackBar';
 import { Crest } from '../components/Crest';
 import { Countdown } from '../components/Countdown';
 import { MatchCenter } from '../components/MatchCenter';
 import { colors, space, type } from '../theme/tokens';
-import { matches, nextMatch, lastMatch } from '../lib/data';
+import { matches, nextMatch, lastMatch, playedMatches } from '../lib/data';
+import { useArchivioPagelle } from '../lib/archivio';
+import { useMieiPronostici } from '../lib/pronostici';
+import { useSessione } from '../lib/auth';
 import { lineupPerPartita } from '../lib/lineup';
 import { useLive, liveDi } from '../lib/live';
 import { etichettaFase } from '../lib/live-core';
@@ -102,6 +108,8 @@ export default function MatchCenterSchermata() {
 
       <MatchCenter match={match} fase={fase} lineup={lineup} />
 
+      <Porte />
+
       <View style={[gutter, { marginTop: space.xl }]}>
         <ListGroup>
           <ListRow chevron onPress={() => router.push(`/match/${match.id}` as never)}>
@@ -125,6 +133,80 @@ export default function MatchCenterSchermata() {
   );
 }
 
+/**
+ * Le quattro porte del Match Center.
+ *
+ * OGNUNA PORTA IL SUO NUMERO
+ *
+ * Un riquadro con dentro solo un titolo non dice se vale la pena aprirlo. Con
+ * accanto il numero che conta -- quante partite sono state votate, quanti
+ * pronostici hai preso, in che posizione sei -- si decide senza entrare. Dove
+ * il numero non c'e' ancora si scrive cosa ci sara', non uno zero.
+ */
+function Porte() {
+  const gutter = useGutter();
+  const { utente } = useSessione();
+  const giocate = playedMatches();
+  const { per } = useArchivioPagelle(giocate.map((m) => m.id));
+  const { chiusi, presi, striscia } = useMieiPronostici();
+
+  const votate = giocate.filter((m) => per[m.id]).length;
+
+  const voci = [
+    {
+      icona: 'star' as const,
+      titolo: 'Pagelle',
+      sotto: votate
+        ? `${votate} ${votate === 1 ? 'partita votata' : 'partite votate'} su ${giocate.length}`
+        : 'I voti della Curva, partita per partita',
+      href: '/match-center/pagelle',
+    },
+    {
+      icona: 'trophy' as const,
+      titolo: 'Premi',
+      sotto: 'Il migliore della partita e quello del mese',
+      href: '/match-center/premi',
+    },
+    {
+      icona: 'flash' as const,
+      titolo: 'Pronostici',
+      sotto: !utente
+        ? 'Indovina il risultato e prendi punti'
+        : chiusi
+          ? `${presi} presi su ${chiusi}${striscia >= 2 ? ` · ${striscia} di fila` : ''}`
+          : 'Non ne hai ancora giocato uno',
+      href: '/match-center/pronostici',
+    },
+    {
+      icona: 'podium' as const,
+      titolo: 'Classifica',
+      sotto: 'Settimana, mese e stagione',
+      href: '/classifica',
+    },
+  ];
+
+  return (
+    <>
+      <GroupLabel>Tutto il resto</GroupLabel>
+      <View style={[styles.porte, gutter]}>
+        {voci.map((v) => (
+          <Pressable
+            key={v.titolo}
+            onPress={() => router.push(v.href as never)}
+            style={({ pressed }) => [{ flexBasis: '48%', flexGrow: 1 }, pressed && { opacity: 0.7 }]}
+          >
+            <Card style={styles.porta}>
+              <Ionicons name={v.icona} size={20} color={colors.accentBright} />
+              <Text style={styles.portaTitolo}>{v.titolo}</Text>
+              <Text style={styles.portaSotto} numberOfLines={2}>{v.sotto}</Text>
+            </Card>
+          </Pressable>
+        ))}
+      </View>
+    </>
+  );
+}
+
 const ETICHETTA = {
   prima: 'In arrivo',
   live: 'LIVE',
@@ -142,4 +224,9 @@ const styles = StyleSheet.create({
   vs: { ...type.headline, color: colors.textFaint },
   quando: { ...type.footnote, color: colors.textDim },
   riga: { ...type.subhead, color: colors.text, flex: 1 },
+
+  porte: { flexDirection: 'row', flexWrap: 'wrap', gap: space.sm },
+  porta: { padding: space.md, gap: 4, minHeight: 104 },
+  portaTitolo: { ...type.subheadBold, color: colors.text },
+  portaSotto: { ...type.caption, color: colors.textDim, lineHeight: 16 },
 });
