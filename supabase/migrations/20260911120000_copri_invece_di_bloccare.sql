@@ -156,6 +156,31 @@ as $$
 $$;
 
 /*
+ * Rimette insieme il testo: le parole segnate diventano asterischi, tutto il
+ * resto -- spazi, punteggiatura, parole innocenti -- resta dov'era.
+ *
+ * Si cammina con un cursore che avanza SOLO sulle parole coperte: quello che
+ * sta in mezzo viene copiato di peso, senza guardarlo.
+ */
+create or replace function ricomponi_coperte(t text, parole text[], inizi int[], coperta boolean[])
+returns text
+language plpgsql
+immutable
+as $$
+declare
+  i int;
+  cursore int := 1;
+  fuori text := '';
+begin
+  for i in 1 .. coalesce(array_length(parole, 1), 0) loop
+    if not coperta[i] then continue; end if;
+    fuori := fuori || substr(t, cursore, inizi[i] - cursore) || oscura_parola(parole[i]);
+    cursore := inizi[i] + length(parole[i]);
+  end loop;
+  return fuori || substr(t, cursore);
+end $$;
+
+/*
  * Copre quello che non deve comparire e lascia il resto com'era.
  *
  * Le parole si cercano sul testo ORIGINALE, non su quello normalizzato: la
@@ -181,16 +206,16 @@ declare
   qualifiche text[] := qualifiche_offensive();
   parole text[] := '{}';
   norme text[] := '{}';
+  inizi int[] := '{}';
   coperta boolean[] := '{}';
-  trovata text;
+  vietate text[];
+  quante int;
   i int;
   n text;
   q text;
-  quante int;
   cursore int := 1;
   posizione int;
   fuori text := '';
-  vietate text[];
 begin
   if t is null or t = '' then return t; end if;
 
@@ -201,7 +226,22 @@ begin
   if parole is null then return t; end if;
   quante := array_length(parole, 1);
 
+  /*
+   * Dove sta ogni parola nel testo vero, segnato una volta sola.
+   *
+   * Cercarla di nuovo al momento di ricomporre non funziona: il cursore
+   * avanza solo sulle parole coperte, e una parola che si ripete verrebbe
+   * ritrovata all'occorrenza sbagliata.
+   */
   for i in 1 .. quante loop
+    posizione := position(parole[i] in substr(t, cursore));
+    if posizione = 0 then
+      -- non puo capitare: le parole vengono da questo stesso testo
+      inizi := inizi || cursore;
+    else
+      inizi := inizi || (posizione + cursore - 1);
+      cursore := posizione + cursore - 1 + length(parole[i]);
+    end if;
     norme := norme || replace(normalizza_testo(parole[i]), ' ', '');
     coperta := coperta || false;
   end loop;
@@ -236,35 +276,14 @@ begin
     end loop;
   end loop;
 
-  -- ricomposizione: si cammina sul testo vero, parola per parola, nell'ordine
-  for i in 1 .. quante loop
-    posizione := position(parole[i] in substr(t, cursore));
-    -- non dovrebbe mai capitare: le parole vengono da questo stesso testo.
-    -- Se capita si lascia la parola com'e, invece di tagliare a caso.
-    if posizione = 0 then continue; end if;
-    posizione := posizione + cursore - 1;
-    if not coperta[i] then
-      cursore := posizione + length(parole[i]);
-      continue;
-    end if;
-    fuori := fuori || substr(t, cursore, posizione - cursore) || oscura_parola(parole[i]);
-    cursore := posizione + length(parole[i]);
-  end loop;
-  fuori := fuori || substr(t, cursore);
+  fuori := ricomponi_coperte(t, parole, inizi, coperta);
 
   -- 3. scritta spezzata lettera per lettera: non c'e una parola da coprire
-  trovata := contiene_bestemmia(fuori);
-  if trovata is not null or contiene_dialetto_spezzato(fuori) then
-    fuori := '';
-    cursore := 1;
+  if contiene_bestemmia(fuori) is not null or contiene_dialetto_spezzato(fuori) then
     for i in 1 .. quante loop
-      posizione := position(parole[i] in substr(t, cursore));
-      if posizione = 0 then continue; end if;
-      posizione := posizione + cursore - 1;
-      fuori := fuori || substr(t, cursore, posizione - cursore) || oscura_parola(parole[i]);
-      cursore := posizione + length(parole[i]);
+      coperta[i] := true;
     end loop;
-    fuori := fuori || substr(t, cursore);
+    fuori := ricomponi_coperte(t, parole, inizi, coperta);
   end if;
 
   return fuori;
