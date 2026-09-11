@@ -1,0 +1,76 @@
+name: Grafica della settimana
+
+# Lunedi mattina, quando la settimana e chiusa e c'e qualcosa da festeggiare.
+#
+# UNA VOLTA A SETTIMANA E NON DI PIU
+#
+# GitHub non fattura la durata, fattura ogni esecuzione arrotondata al minuto:
+# la spesa la fa il NUMERO di giri. Questo ne fa quattro al mese e dura meno di
+# un minuto, perche non installa l'app intera ma solo la libreria che disegna.
+on:
+  schedule:
+    - cron: '0 7 * * 1'
+  workflow_dispatch:
+    inputs:
+      corrente:
+        description: 'Settimana in corso invece di quella appena chiusa'
+        type: boolean
+        default: false
+      iniziali:
+        description: 'Nomi come "Anna C." invece che per intero'
+        type: boolean
+        default: false
+
+concurrency:
+  group: grafica-settimana
+  cancel-in-progress: true
+
+jobs:
+  grafica:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Solo quello che serve a disegnare. `npm ci` tirerebbe dentro Expo e
+      # tutto il resto per una libreria sola.
+      - name: Installa il disegnatore
+        run: npm install --no-save --no-audit --no-fund @resvg/resvg-js
+
+      - name: Disegna
+        env:
+          # La chiave anonima basta: la classifica e le strisce sono pubbliche
+          # come nell'app, e questa chiave non puo scrivere punti.
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          node services/grafiche/settimana.mjs \
+            ${{ inputs.corrente && '--corrente' || '' }} \
+            ${{ inputs.iniziali && '--iniziali' || '' }}
+
+      - name: Committa se c e qualcosa
+        run: |
+          if [ -z "$(git status --porcelain data/grafiche/)" ]; then
+            echo "niente da pubblicare questa settimana"
+            exit 0
+          fi
+          git config user.name  "satanelli-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add data/grafiche/
+          git commit -m "grafiche: settimana $(date -u +'%G-W%V')"
+          git push
+
+      # Anche come allegato del giro, cosi si scarica senza passare dal
+      # repository: la si pubblica dal telefono, che e da dove si pubblica.
+      - uses: actions/upload-artifact@v4
+        with:
+          name: grafica-settimana
+          path: data/grafiche/*
+          if-no-files-found: ignore
+          retention-days: 30
