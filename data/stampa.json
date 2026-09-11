@@ -27,6 +27,39 @@
   ],
   "articoli": [
     {
+      "id": "calciofoggia-6097ba0894",
+      "testata": "calciofoggia",
+      "titolo": "L’avversario il Monopoli",
+      "sommario": "Il Monopoli Calcio si è costituito nel 2010 mediante il cambio di denominazione del Liberty Molfetta dopo la mancata iscrizione ai campionati professionistici. Il Monopoli ha…",
+      "url": "https://www.calciofoggia.it/lavversario-il-monopoli-3/",
+      "data": "2026-09-11T14:34:25.000Z",
+      "autore": "Mario Schena",
+      "categoria": "FOGGIA CALCIO",
+      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/08/790591116_2597719804000634_6972100694971202793_n.jpg"
+    },
+    {
+      "id": "calciofoggia-6fcee109d8",
+      "testata": "calciofoggia",
+      "titolo": "Auteri: “Questo gruppo ha il valore per stare tra le prime sei-sette. Dobbiamo solo lavorare tutti insieme”",
+      "sommario": "Gaetano Auteri ha presentato la sfida di Monopoli in conferenza stampa, analizzando la settimana successiva alla sconfitta nel derby e guardando al prossimo impegno. Il tecnico ha…",
+      "url": "https://www.calciofoggia.it/auteri-questo-gruppo-ha-il-valore-per-stare-tra-le-prime-sei-sette-dobbiamo-solo-lavorare-tutti-insieme/",
+      "data": "2026-09-11T11:13:51.000Z",
+      "autore": "Armando Borrelli",
+      "categoria": "FOGGIA CALCIO",
+      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/5c8eb7bc-d074-49b3-948b-95467f75fa52.jpeg"
+    },
+    {
+      "id": "foggiacalciomania-492790d36e",
+      "testata": "foggiacalciomania",
+      "titolo": "Auteri: “Gruppo forte, possiamo puntare in alto”",
+      "sommario": "Conferenza stampa di mister Auteri in vista della gara del Foggia domani al San Nicola di Bari contro il Monopoli. L’allenatore rossonero si è soffermato sullo stato fisico e…",
+      "url": "https://foggiacalciomania.com/news-foggia-calcio/sala-stampa/auteri-gruppo-forte-possiamo-puntare-in-alto/",
+      "data": "2026-09-11T10:46:08.000Z",
+      "autore": "Roberto Parisi",
+      "categoria": "Sala stampa",
+      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/20260911_123209-scaled.jpg"
+    },
+    {
       "id": "calciofoggia-5b7aa29929",
       "testata": "calciofoggia",
       "titolo": "Foggia, è già tempo del riscatto. I dubbi di Auteri per la sfida al Monopoli",
@@ -247,39 +280,6 @@
       "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/08/Todisco-in-azione-contro-lAltamura-Foto-Antonello-Forcelli.png"
     },
     {
-      "id": "calciofoggia-de42b7723a",
-      "testata": "calciofoggia",
-      "titolo": "Auteri: “Abbiamo commesso due errori gravi e li abbiamo pagati. Siamo all’anno zero, calma e perseveranza”",
-      "sommario": "Gaetano Auteri ha analizzato a caldo la sconfitta per 0-2 contro l’Audace Cerignola, primo ko casalingo della stagione davanti al pubblico di ritorno allo Zaccheria. Il tecnico ha…",
-      "url": "https://www.calciofoggia.it/auteri-abbiamo-commesso-due-errori-gravi-e-li-abbiamo-pagati-siamo-allanno-zero-calma-e-perseveranza/",
-      "data": "2026-09-06T21:31:48.000Z",
-      "autore": "Armando Borrelli",
-      "categoria": "FOGGIA CALCIO",
-      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Mister-Auteri-contro-il-Cerignola-Foto-Antonello-Forcelli.png"
-    },
-    {
-      "id": "foggiacalciomania-0caf213306",
-      "testata": "foggiacalciomania",
-      "titolo": "Le Pagelle di Foggia-Audace Cerignola. Quante occasioni sbagliate!",
-      "sommario": "Saro: Su i gol presi nel primo tempo non ha colpe, deve rimproverare il resto della squadra per aver permesso di arrivare troppo facilmente al tiro. Evita di far capitolare…",
-      "url": "https://foggiacalciomania.com/news-foggia-calcio/pagelle/le-pagelle-di-foggia-audace-cerignola-quante-occasioni-sbagliate/",
-      "data": "2026-09-06T21:26:36.000Z",
-      "autore": "Roberto Parisi",
-      "categoria": "Pagelle",
-      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/WhatsApp-Image-2026-09-06-at-21.57.58.jpeg"
-    },
-    {
-      "id": "calciofoggia-b3fde3f651",
-      "testata": "calciofoggia",
-      "titolo": "Catalano: “Vittoria chiara e meritata. Il Foggia è una squadra importante, farà un campionato importante”",
-      "sommario": "Raimondo Catalano, allenatore dell’Audace Cerignola, ha analizzato a caldo il successo per 2-0 allo Zaccheria. «È stata ovviamente una partita importante, fatta in un campo…",
-      "url": "https://www.calciofoggia.it/catalano-vittoria-chiara-e-meritata-il-foggia-e-una-squadra-importante-fara-un-campionato-importante/",
-      "data": "2026-09-06T21:26:35.000Z",
-      "autore": "Armando Borrelli",
-      "categoria": "FOGGIA CALCIO",
-      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Mister-Catalano-Foto-Antonello-Forcelli.png"
-    },
-    {
       "id": "ilfoggia-b648eda3ee",
       "testata": "ilfoggia",
       "titolo": "Ancora un risultato positivo per la Cosmano",
@@ -335,5 +335,5 @@
       "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0088-scaled.jpg"
     }
   ],
-  "aggiornatoIl": "2026-09-11T03:13:28.809Z"
+  "aggiornatoIl": "2026-09-11T15:56:27.951Z"
 }
