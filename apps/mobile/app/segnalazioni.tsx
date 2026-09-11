@@ -22,6 +22,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Screen, LargeTitle, Empty, GroupLabel, GroupNote, ListGroup, ListRow, useGutter } from '../components/ui';
 import { BackBar } from '../components/BackBar';
 import { Premi } from '../components/anima';
+import { NomeUtente } from '../components/NomeUtente';
 import { colors, radius, space, type } from '../theme/tokens';
 import { relative } from '../lib/format';
 import {
@@ -156,7 +157,10 @@ function Voce({ voce, onFatto }: { voce: VoceCoda; onFatto: () => void }) {
 
       {testo ? (
         <>
-          <Text style={styles.schedaAutore}>{testo.nome} · {relative(testo.quando)}</Text>
+          <View style={styles.schedaTesta}>
+            <NomeUtente id={testo.autore} nome={testo.nome} stile={styles.schedaAutore} />
+            <Text style={styles.schedaAutore}>· {relative(testo.quando)}</Text>
+          </View>
           <Text style={styles.schedaTesto} numberOfLines={8}>{testo.testo}</Text>
         </>
       ) : (
@@ -194,6 +198,7 @@ const styles = StyleSheet.create({
     marginBottom: space.md,
   },
   schedaCapo: { ...type.footnoteBold, color: colors.accentBright },
+  schedaTesta: { flexDirection: 'row', alignItems: 'center', gap: 4, flexWrap: 'wrap' },
   schedaAutore: { ...type.caption, color: colors.textFaint },
   schedaTesto: { ...type.body, color: colors.text },
 

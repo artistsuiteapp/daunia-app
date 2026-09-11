@@ -218,6 +218,23 @@ export async function nascondi(
  * alla data. Apple chiede di poter cacciare chi abusa, non solo di nascondere
  * il singolo messaggio.
  */
+/**
+ * Cancella per davvero. Solo admin: lo decide il database.
+ *
+ * Nascondere si disfa, cancellare no, ed e per questo che sta dietro una
+ * conferma e non accanto al pollice. Serve per quello che non deve restare da
+ * nessuna parte, nemmeno nella coda di chi modera.
+ */
+export async function elimina(
+  tipo: 'discussione' | 'risposta' | 'messaggio',
+  id: string,
+): Promise<boolean> {
+  if (!supabase) return false;
+  const tabella = tipo === 'messaggio' ? 'messaggi_live' : tipo === 'risposta' ? 'risposte' : 'discussioni';
+  const { error } = await supabase.from(tabella).delete().eq('id', id);
+  return !error;
+}
+
 export async function sospendi(chi: string, giorni: number): Promise<boolean> {
   if (!supabase) return false;
   const fino = new Date(Date.now() + giorni * 24 * 60 * 60 * 1000).toISOString();

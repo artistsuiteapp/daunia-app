@@ -10,6 +10,7 @@ import { BackBar } from '../components/BackBar';
 import { Avatar } from '../components/Avatar';
 import { RitagliaAvatar } from '../components/RitagliaAvatar';
 import { MioProfiloGioco } from '../components/MioProfiloGioco';
+import { puoModerare, useRuolo } from '../lib/moderazione';
 import { colors, radius, space, type } from '../theme/tokens';
 import { stadium } from '../lib/data';
 import {
@@ -29,6 +30,7 @@ export default function ProfiloSchermata() {
   // sulle app native, e oggi l'app si usa dal browser
   const [daRitagliare, setDaRitagliare] = useState<string | null>(null);
   const gutter = useGutter();
+  const ruolo = useRuolo();
   const { utente, caricato } = useSessione();
   const [profilo, setProfilo] = useState<Profilo | null>(null);
   const [nome, setNome] = useState('');
@@ -247,6 +249,21 @@ export default function ProfiloSchermata() {
       </View>
 
       <MioProfiloGioco />
+
+      {puoModerare(ruolo) ? (
+        <View style={[gutter, { marginTop: space.xl }]}>
+          <ListGroup>
+            <ListRow onPress={() => router.push('/admin' as never)} chevron>
+              <Ionicons
+                name={ruolo === 'admin' ? 'shield' : 'shield-half'}
+                size={19}
+                color={ruolo === 'admin' ? '#FF3B3B' : '#0A84FF'}
+              />
+              <Text style={styles.voce}>Pannello</Text>
+            </ListRow>
+          </ListGroup>
+        </View>
+      ) : null}
 
       <View style={[gutter, { marginTop: space.xl }]}>
         <ListGroup>
