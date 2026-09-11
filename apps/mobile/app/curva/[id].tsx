@@ -8,6 +8,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Screen, Empty, useGutter } from '../../components/ui';
 import { BackBar } from '../../components/BackBar';
 import { Avatar } from '../../components/Avatar';
+import { NomeUtente } from '../../components/NomeUtente';
 import { maschera, AVVISO_COPERTO } from '../../lib/filtro-core.ts';
 import { colors, radius, space, type } from '../../theme/tokens';
 import { relative, shortDate } from '../../lib/format';
@@ -112,7 +113,7 @@ export default function DiscussionPage() {
       <View style={[styles.head, gutter]}>
         <Avatar uri={null} name={d.author} size={40} />
         <View style={{ flex: 1 }}>
-          <Text style={styles.author}>{d.author}</Text>
+          <NomeUtente id={d.autoreId} nome={d.author} stile={styles.author} />
           <Text style={styles.meta}>{shortDate(d.date)}</Text>
         </View>
         <View style={styles.topicTag}>
@@ -189,10 +190,12 @@ export default function DiscussionPage() {
             <View key={rep.id} style={[styles.reply, !rep.sample && styles.replyMine]}>
               <Avatar uri={null} name={rep.author} size={28} />
               <View style={{ flex: 1, gap: 2 }}>
-                <Text style={styles.replyAuthor}>
-                  {rep.author} <Text style={styles.replyDate}>· {relative(rep.date)}</Text>
-                  {rep.modificata ? <Text style={styles.replyDate}> · modificato</Text> : null}
-                </Text>
+                <View style={styles.replyHead}>
+                  <NomeUtente id={rep.autoreId} nome={rep.author} stile={styles.replyAuthor} />
+                  <Text style={styles.replyDate}>
+                    · {relative(rep.date)}{rep.modificata ? ' · modificato' : ''}
+                  </Text>
+                </View>
 
                 {inModifica ? (
                   <View style={{ gap: 6 }}>
@@ -355,6 +358,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(204,17,17,0.10)', borderRadius: radius.lg,
     padding: space.sm, marginLeft: -space.sm, marginRight: -space.sm,
   },
+  replyHead: { flexDirection: 'row', alignItems: 'center', gap: 4, flexWrap: 'wrap' },
   replyAuthor: { ...type.footnoteBold, color: colors.text },
   replyDate: { ...type.caption, color: colors.textFaint },
   comandi: { flexDirection: 'row', gap: space.md, paddingTop: 2 },

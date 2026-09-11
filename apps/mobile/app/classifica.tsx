@@ -4,7 +4,9 @@ import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { Screen, Card, Empty, GroupLabel, GroupNote, ListGroup, ListRow, Segmented, useGutter } from '../components/ui';
 import { BackBar } from '../components/BackBar';
 import { Avatar } from '../components/Avatar';
+import { NomeUtente } from '../components/NomeUtente';
 import { SoloConAccount } from '../components/SoloConAccount';
+import { Apparsa } from '../components/anima';
 import { colors, radius, space, type } from '../theme/tokens';
 import { useSessione } from '../lib/auth';
 import { useClassifica, useMieiPunti, NOME_PERIODO, type Periodo } from '../lib/punti';
@@ -79,7 +81,7 @@ export default function Classifica() {
       ) : righe.length === 0 ? (
         <Empty text="Ancora nessun punto in questo periodo. Il primo che gioca è primo." />
       ) : (
-        <View style={gutter}>
+        <Apparsa chiave={periodo} style={gutter}>
           <ListGroup>
             {righe.map((r) => (
               <ListRow
@@ -88,13 +90,16 @@ export default function Classifica() {
               >
                 <Text style={[styles.posizione, r.posizione <= 3 && styles.podio]}>{r.posizione}</Text>
                 <Avatar uri={r.avatar} name={r.nome} size={28} />
-                <Text style={[styles.nome, r.utente === utente?.id && styles.nomeMio]} numberOfLines={1}>
-                  {r.nome}{r.utente === utente?.id ? ' · tu' : ''}
-                </Text>
+                <NomeUtente
+                  id={r.utente}
+                  nome={r.nome}
+                  stile={[styles.nome, r.utente === utente?.id && styles.nomeMio]}
+                  suffisso={r.utente === utente?.id ? '· tu' : undefined}
+                />
               </ListRow>
             ))}
           </ListGroup>
-        </View>
+        </Apparsa>
       )}
 
       {mia && !fraIPrimi ? (
@@ -115,6 +120,7 @@ export default function Classifica() {
       <GroupNote>
         Pronostico 10 punti, esito indovinato 50, risultato esatto 100.
         Sondaggio 5, migliore in campo 5, pagelle 5.
+        {'\n'}Il colore del nome dice il livello.
       </GroupNote>
     </Screen>
   );

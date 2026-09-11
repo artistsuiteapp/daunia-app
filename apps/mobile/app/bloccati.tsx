@@ -15,6 +15,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Screen, LargeTitle, Empty, ListGroup, ListRow, GroupNote, useGutter } from '../components/ui';
 import { BackBar } from '../components/BackBar';
 import { Avatar } from '../components/Avatar';
+import { NomeUtente } from '../components/NomeUtente';
 import { Premi } from '../components/anima';
 import { colors, radius, space, type } from '../theme/tokens';
 import { supabase } from '../lib/supabase';
@@ -51,7 +52,9 @@ export default function Bloccati() {
             {gente.map((p) => (
               <ListRow key={p.id}>
                 <Avatar uri={null} name={p.nome} size={32} />
-                <Text style={styles.nome}>{p.nome}</Text>
+                <View style={{ flex: 1 }}>
+                  <NomeUtente id={p.id} nome={p.nome} stile={styles.nome} apribile={false} />
+                </View>
                 <Premi onPress={() => { void sblocca(p.id); }} style={styles.sblocca}>
                   <Text style={styles.sbloccaTesto}>Sblocca</Text>
                 </Premi>
@@ -70,7 +73,7 @@ export default function Bloccati() {
 }
 
 const styles = StyleSheet.create({
-  nome: { ...type.body, color: colors.text, flex: 1 },
+  nome: { ...type.body, color: colors.text },
   sblocca: {
     backgroundColor: colors.surfaceHi,
     borderRadius: radius.pill,

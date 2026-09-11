@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Screen, useGutter, Empty } from '../components/ui';
 import { BackBar } from '../components/BackBar';
 import { Avatar } from '../components/Avatar';
+import { NomeUtente } from '../components/NomeUtente';
 import { Crest } from '../components/Crest';
 import { PallinoLive } from '../components/PallinoLive';
 import { SoloConAccount } from '../components/SoloConAccount';
@@ -124,7 +125,7 @@ export default function Live() {
             <View key={m.id} style={[styles.messaggio, m.utente === io && styles.mio]}>
               <Avatar uri={m.avatar} name={m.autore} size={28} />
               <View style={{ flex: 1 }}>
-                <Text style={styles.autore}>{m.autore}</Text>
+                <NomeUtente id={m.utente} nome={m.autore} stile={styles.autore} />
                 <Text style={styles.testoMessaggio}>{m.testo}</Text>
               </View>
               {m.utente === io ? (
