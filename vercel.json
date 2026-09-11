@@ -58,6 +58,10 @@
     {
       "source": "/stampa/:testata",
       "destination": "/stampa/[testata]"
+    },
+    {
+      "source": "/utente/:id",
+      "destination": "/utente/[id]"
     }
   ]
 }
