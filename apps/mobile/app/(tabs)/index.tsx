@@ -18,6 +18,7 @@ import { relative } from '../../lib/format';
 import { useSafeInsets } from '../../lib/viewport';
 import { useBenvenuto } from '../../lib/ospite';
 import { useProfilo } from '../../lib/auth';
+import { usePartite } from '../../lib/partita-corrente';
 import { useLive } from '../../lib/live';
 import { eOggi } from '../../lib/live-core';
 import { salaAperta } from '../../lib/sala';
@@ -172,9 +173,10 @@ export default function Home() {
     });
     return a;
   }, [chatViva, oggi, pagelle, next, adessoFinito, vivoPremio, miglioreOra]);
-  const last = lastMatch();
+  // l'ultima giocata compresa quella appena finita: vedi lib/partita-corrente.ts
+  const { partite, ultima: last } = usePartite();
   const row = foggiaRow();
-  const scorer = topScorers()[0];
+  const scorer = topScorers(partite)[0];
   const upcoming = upcomingMatches().slice(0, 8);
 
   return (
@@ -196,7 +198,7 @@ export default function Home() {
         crest={FOGGIA?.crest ?? null}
         competition={meta.competition}
         season={meta.season}
-        form={recentForm()}
+        form={recentForm(5, partite)}
         position={row?.position ?? null}
         points={row?.points ?? null}
       />

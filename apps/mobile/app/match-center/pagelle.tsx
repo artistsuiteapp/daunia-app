@@ -4,7 +4,7 @@ import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { Screen, Empty, GroupLabel, GroupNote, ListGroup, ListRow, useGutter } from '../../components/ui';
 import { BackBar } from '../../components/BackBar';
 import { colors, radius, space, type } from '../../theme/tokens';
-import { playedMatches } from '../../lib/data';
+import { usePartite } from '../../lib/partita-corrente';
 import { shortDate } from '../../lib/format';
 import { useArchivioPagelle } from '../../lib/archivio';
 
@@ -23,7 +23,10 @@ import { useArchivioPagelle } from '../../lib/archivio';
  */
 export default function ArchivioPagelle() {
   const gutter = useGutter();
-  const partite = playedMatches();
+  // comprese quelle appena finite: vedi lib/partita-corrente.ts
+  const { partite: tutte } = usePartite();
+  const partite = tutte.filter((m) => m.status === 'finished')
+    .sort((a, b) => String(b.kickoff ?? '').localeCompare(String(a.kickoff ?? '')));
   const { per, caricato } = useArchivioPagelle(partite.map((m) => m.id));
 
   const conVoti = partite.filter((m) => per[m.id]);

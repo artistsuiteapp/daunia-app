@@ -211,8 +211,19 @@ export function standingsWindow(size = 5): StandingRow[] {
 }
 
 /** Ultimi risultati del Foggia, dal piu vecchio al piu recente: serve alla striscia W/N/P. */
-export function recentForm(limit = 5): Array<'W' | 'D' | 'L'> {
-  return leagueMatches()
+/*
+ * `elenco` esiste per il dal vivo.
+ *
+ * Questi conti partono dall'archivio, che si aggiorna quando il sito viene
+ * ricostruito. Nella finestra fra il triplice fischio e la ripubblicazione la
+ * partita appena finita non c'e' ancora, e le schermate direbbero cose diverse
+ * fra loro. Chi ha l'elenco aggiornato -- lib/partita-corrente.ts -- lo passa.
+ */
+export function recentForm(limit = 5, elenco?: Match[]): Array<'W' | 'D' | 'L'> {
+  return (elenco
+    ? elenco.filter((m) => m.status === 'finished' && m.competition === LEAGUE)
+      .sort((a, b) => ts(b) - ts(a))
+    : leagueMatches())
     .slice(0, limit)
     .map((m) => m.foggiaResult)
     .filter((r): r is 'W' | 'D' | 'L' => r !== null)
@@ -236,9 +247,9 @@ export function squadByRole(): Array<{ role: string; label: string; players: Pla
 }
 
 /** Marcatori del Foggia nella stagione, ricavati dalle partite giocate. */
-export function topScorers(): Array<{ name: string; goals: number }> {
+export function topScorers(elenco?: Match[]): Array<{ name: string; goals: number }> {
   const tally = new Map<string, number>();
-  for (const m of playedMatches()) {
+  for (const m of (elenco ? elenco.filter((x) => x.status === 'finished') : playedMatches())) {
     const mySide = m.foggiaHome ? 'home' : 'away';
     for (const g of m.goals) {
       if (g.side !== mySide || g.ownGoal) continue;
@@ -252,12 +263,12 @@ export function topScorers(): Array<{ name: string; goals: number }> {
 
 
 /** Le giornate gia giocate, per il grafico dell'andamento. */
-export function playedTrend() {
-  return stats.trend.filter((t) => t.result !== null);
+export function playedTrend(s: TeamStats = stats) {
+  return s.trend.filter((t) => t.result !== null);
 }
 
 /** Somma casa e trasferta di tutte le competizioni: il totale stagionale. */
-export function seasonRecord() {
+export function seasonRecord(s: TeamStats = stats) {
   const zero = { won: 0, drawn: 0, lost: 0, goalsFor: 0, goalsAgainst: 0 };
   const add = (a: typeof zero, b: typeof zero) => ({
     won: a.won + b.won, drawn: a.drawn + b.drawn, lost: a.lost + b.lost,
@@ -266,7 +277,7 @@ export function seasonRecord() {
   // solo campionato: la coppa ha il suo conto, piu sotto
   let home = { ...zero };
   let away = { ...zero };
-  for (const c of stats.competitions.filter((c) => c.competition === LEAGUE)) {
+  for (const c of s.competitions.filter((c) => c.competition === LEAGUE)) {
     home = add(home, c.home);
     away = add(away, c.away);
   }

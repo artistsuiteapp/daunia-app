@@ -9,7 +9,8 @@ import { Avatar } from '../../components/Avatar';
 import { PlayerHero } from '../../components/PlayerHero';
 import { colors, radius, space, type } from '../../theme/tokens';
 import { shortDate } from '../../lib/format';
-import { playedMatches, playerById, squad } from '../../lib/data';
+import { playerById, squad } from '../../lib/data';
+import { usePartite } from '../../lib/partita-corrente';
 import { anagraficaDi, carrieraDi, minutiAPartita, FONTE } from '../../lib/carriere';
 
 /** Transfermarkt scrive il piede in inglese. */
@@ -23,12 +24,14 @@ export default function PlayerDetail() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const gutter = useGutter();
   const player = playerById(String(id));
+  const { partite } = usePartite();
 
   if (!player) return <Screen testaFissa><Empty text="Giocatore non trovato." /></Screen>;
 
   // i gol si ricavano dalle partite: su Wikipedia i marcatori sono per cognome
   const surname = player.name.split(' ').slice(-1)[0]!.toLowerCase();
-  const scored = playedMatches().filter((m) => {
+  const giocate = partite.filter((m) => m.status === 'finished');
+  const scored = giocate.filter((m) => {
     const mySide = m.foggiaHome ? 'home' : 'away';
     return m.goals.some((g) => g.side === mySide && g.scorer.toLowerCase().includes(surname));
   });

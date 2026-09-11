@@ -4,7 +4,8 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Screen, LargeTitle, ListGroup, GroupLabel, Segmented, Empty, useGutter } from '../../components/ui';
 import { MatchListRow } from '../../components/MatchCard';
 import { space } from '../../theme/tokens';
-import {FOGGIA, matches, meta, playedMatches, upcomingMatches } from '../../lib/data';
+import { FOGGIA, meta } from '../../lib/data';
+import { usePartite } from '../../lib/partita-corrente';
 
 type Tab = 'prossime' | 'giocate' | 'tutte';
 
@@ -12,11 +13,23 @@ export default function Matches() {
   const [tab, setTab] = useState<Tab>('prossime');
   const gutter = useGutter();
 
+  /*
+   * L'elenco arriva gia aggiornato con quello che dice il campo: la partita
+   * appena finita compare fra le giocate, col suo risultato, senza aspettare
+   * che il sito venga ricostruito. Vedi lib/partita-corrente.ts.
+   */
+  const { partite } = usePartite();
+
   const list = useMemo(() => {
-    if (tab === 'prossime') return upcomingMatches();
-    if (tab === 'giocate') return playedMatches();
-    return [...matches].sort((a, b) => (a.matchday ?? 99) - (b.matchday ?? 99));
-  }, [tab]);
+    const quando = (m: (typeof partite)[number]) => Date.parse(m.kickoff ?? '') || 0;
+    if (tab === 'prossime') {
+      return partite.filter((m) => m.status !== 'finished').sort((a, b) => quando(a) - quando(b));
+    }
+    if (tab === 'giocate') {
+      return partite.filter((m) => m.status === 'finished').sort((a, b) => quando(b) - quando(a));
+    }
+    return [...partite].sort((a, b) => (a.matchday ?? 99) - (b.matchday ?? 99));
+  }, [tab, partite]);
 
   // il calendario si legge meglio spezzato per mese che come lista unica di 39 righe
   const groups = useMemo(() => {

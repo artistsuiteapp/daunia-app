@@ -8,19 +8,40 @@ import { CompareBar, GoalWindows, PositionChart, Ring } from '../components/char
 import { FormStrip } from '../components/FormStrip';
 import { colors, space, type } from '../theme/tokens';
 import { thousands } from '../lib/format';
-import { FOGGIA, foggiaRow, meta, playedTrend, recentForm, seasonRecord, standings, stats } from '../lib/data';
+import { FOGGIA, foggiaRow, meta, playedTrend, recentForm, seasonRecord, standings } from '../lib/data';
+import { usePartite, useStatistiche } from '../lib/partita-corrente';
 
 export default function Stats() {
   const gutter = useGutter();
-  const rec = seasonRecord();
+  /*
+   * I numeri comprendono la partita appena finita, anche se l'archivio non l'ha
+   * ancora vista: fra il triplice fischio e la ripubblicazione del sito passano
+   * dei minuti, e in quei minuti la home mostrava il risultato giusto e questa
+   * schermata no.
+   */
+  const { stats, nuova } = useStatistiche();
+  const { partite } = usePartite();
+  const rec = seasonRecord(stats);
   const d = stats.derived;
   const row = foggiaRow();
-  const played = playedTrend();
+  const played = playedTrend(stats);
 
   return (
     <Screen testaFissa>
       <BackBar />
       <LargeTitle crest={FOGGIA?.crest ?? null} title="Statistiche" subtitle={`${meta.competition} e coppa · ${meta.season.replace('-', '/')}`} />
+
+      {/*
+        * Si dice quando i numeri comprendono una partita che l'archivio non ha
+        * ancora: numeri che cambiano senza spiegazione fanno dubitare anche di
+        * quelli giusti.
+        */}
+      {nuova ? (
+        <GroupNote>
+          Compresa {nuova.home.shortName}–{nuova.away.shortName}, finita da poco:
+          la posizione in classifica arriva più tardi.
+        </GroupNote>
+      ) : null}
 
       <View style={gutter}>
         <Card style={styles.hero}>
@@ -30,7 +51,7 @@ export default function Stats() {
             <BigStat label="Punti" value={row?.points ?? '-'} sub={row ? `${row.position}° posto` : undefined} />
             <View style={{ gap: 5 }}>
               <Text style={styles.miniLabel}>ANDAMENTO</Text>
-              <FormStrip form={recentForm()} size={18} />
+              <FormStrip form={recentForm(5, partite)} size={18} />
             </View>
           </View>
         </Card>

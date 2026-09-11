@@ -7,7 +7,8 @@ import { BackBar } from '../../components/BackBar';
 import { Avatar } from '../../components/Avatar';
 import { MvpDelMese } from '../../components/MvpDelMese';
 import { colors, radius, space, type } from '../../theme/tokens';
-import { lastMatch, squad } from '../../lib/data';
+import { squad } from '../../lib/data';
+import { useUltimaPartita } from '../../lib/partita-corrente';
 import { shortDate } from '../../lib/format';
 import { caricaMvpPartita, classificaMvp, useFanplay } from '../../lib/fanplay';
 import { statoMigliore } from '../../lib/premi-core';
@@ -27,7 +28,7 @@ export default function Premi() {
   const gutter = useGutter();
   useFanplay();
 
-  const ultima = lastMatch();
+  const ultima = useUltimaPartita();
   const stato = statoMigliore(fineVera() ?? ultima?.kickoff ?? null, undefined);
 
   useEffect(() => {

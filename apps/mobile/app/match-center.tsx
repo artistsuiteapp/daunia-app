@@ -11,7 +11,8 @@ import { Crest } from '../components/Crest';
 import { Countdown } from '../components/Countdown';
 import { MatchCenter } from '../components/MatchCenter';
 import { colors, space, type } from '../theme/tokens';
-import { matches, nextMatch, lastMatch, playedMatches } from '../lib/data';
+import { nextMatch, playedMatches } from '../lib/data';
+import { usePartite } from '../lib/partita-corrente';
 import { useArchivioPagelle } from '../lib/archivio';
 import { useMieiPronostici } from '../lib/pronostici';
 import { useSessione } from '../lib/auth';
@@ -40,21 +41,15 @@ export default function MatchCenterSchermata() {
   const gutter = useGutter();
   const live = useLive();
 
-  const inCorso = useMemo(
-    () => matches.find((m) => liveDi(m, live) !== null) ?? null,
-    [live],
-  );
-  const prossima = nextMatch();
   /*
-   * `lastMatch()` e non un calcolo fatto qui.
+   * Quale partita, e con che punteggio.
    *
-   * C'era `playedMatches().slice(-1)[0]`, e playedMatches ordina dalla piu
-   * recente: slice(-1) prendeva quindi la piu VECCHIA. In pagina compariva
-   * "l'ultima giocata: Foggia-Team Altamura", che era del 16 agosto, mentre
-   * l'ultima vera era di tre settimane dopo. Nessuna schermata si ricalcola
-   * l'ultima partita per conto suo: la dice data.ts.
+   * `usePartite` mette insieme il calendario dell'archivio e quello che dice il
+   * campo: la partita in corso e quella appena finita arrivano gia aggiornate,
+   * senza che questa schermata debba sapere da dove viene ogni pezzo.
    */
-  const ultima = lastMatch();
+  const { inCorso, ultima } = usePartite();
+  const prossima = nextMatch();
   const match = inCorso ?? prossima ?? ultima;
 
   const vivo = liveDi(match, live);
