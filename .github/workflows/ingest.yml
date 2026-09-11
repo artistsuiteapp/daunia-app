@@ -138,8 +138,24 @@ jobs:
             exit 1
           fi
           echo "pubblicato: $URL"
-          # deploy --prod assegna i domini di produzione del progetto.
-          # alias set falliva con "User not found" dopo il deploy.
+
+          # NIENTE `vercel alias set` QUI.
+          #
+          # C'era, e falliva ogni volta con "Error: User not found", facendo
+          # risultare rosso un giro in cui il deploy era andato benissimo. Fra
+          # il 9 e il 10 settembre 2026 ha mandato quattro o cinque email di
+          # errore al giorno per un problema che non esisteva.
+          #
+          # Non serve: `deploy --prod` assegna gia i domini di produzione del
+          # progetto, daunia.vercel.app compreso. Il commento di prima diceva
+          # il contrario, ed era sbagliato. Verificato il 10 settembre: una
+          # riscrittura pubblicata mentre l'alias falliva era comunque servita
+          # dal dominio di produzione.
+          #
+          # `alias set` e un'operazione a livello di account, non di progetto:
+          # gli id qui sopra non bastano a autorizzarla, da cui "User not found".
+
+          # invece di fidarsi, si guarda: il dominio vero deve rispondere
           for tentativo in 1 2 3; do
             CODICE=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 https://daunia.vercel.app/) || CODICE=000
             [ "$CODICE" = "200" ] && break
