@@ -511,9 +511,9 @@
     },
     "away": {
       "id": "savoia",
-      "name": "Savoia",
+      "name": "SAVOIA 1908",
       "shortName": "Savoia",
-      "crest": null
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2026/09/Coat_of_arms_of_the_Duchy_of_Savoy_XV-XVI_century.svg"
     },
     "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
   },
@@ -728,9 +728,9 @@
     },
     "away": {
       "id": "barletta",
-      "name": "Barletta",
+      "name": "SS BARLETTA",
       "shortName": "Barletta",
-      "crest": null
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2026/09/ssbarletta-443x500.png"
     },
     "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
   },
@@ -784,9 +784,9 @@
     "source": "wikipedia",
     "home": {
       "id": "scafatese",
-      "name": "Scafatese",
+      "name": "SCAFATESE FC",
       "shortName": "Scafatese",
-      "crest": null
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2026/09/logo-scafatese-calcio.svg"
     },
     "away": {
       "id": "foggia",
@@ -1063,9 +1063,9 @@
     "source": "wikipedia",
     "home": {
       "id": "savoia",
-      "name": "Savoia",
+      "name": "SAVOIA 1908",
       "shortName": "Savoia",
-      "crest": null
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2026/09/Coat_of_arms_of_the_Duchy_of_Savoy_XV-XVI_century.svg"
     },
     "away": {
       "id": "foggia",
@@ -1311,9 +1311,9 @@
     "source": "wikipedia",
     "home": {
       "id": "barletta",
-      "name": "Barletta",
+      "name": "SS BARLETTA",
       "shortName": "Barletta",
-      "crest": null
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2026/09/ssbarletta-443x500.png"
     },
     "away": {
       "id": "foggia",
@@ -1379,9 +1379,9 @@
     },
     "away": {
       "id": "scafatese",
-      "name": "Scafatese",
+      "name": "SCAFATESE FC",
       "shortName": "Scafatese",
-      "crest": null
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2026/09/logo-scafatese-calcio.svg"
     },
     "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
   },

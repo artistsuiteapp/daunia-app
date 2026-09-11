@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-08T19:21:38.010Z",
+  "generatedAt": "2026-09-11T10:41:24.590Z",
   "season": "2026-2027",
   "competition": "Serie C",
   "sources": {
@@ -15,12 +15,8 @@
   "attribution": "Dati stagione in corso da Wikipedia (CC BY-SA 4.0). News, stemmi e foto da calciofoggia1920.net. Prodotti dal negozio ufficiale calciofoggia1920.store.",
   "warnings": [
     "Anno corretto su Wikipedia per Foggia-Altamura: 2025-08-16 -> 2026-08-16.",
-    "Nessuno stemma per \"Savoia\": il sito del club non ha mai incontrato questa squadra.",
     "Nessuno stemma per \"Inter U23\": il sito del club non ha mai incontrato questa squadra.",
-    "Nessuno stemma per \"Barletta\": il sito del club non ha mai incontrato questa squadra.",
-    "Nessuno stemma per \"Scafatese\": il sito del club non ha mai incontrato questa squadra.",
-    "Solo 3 giocatori su 26 hanno la foto: la rosa sul sito del club e ferma alla stagione precedente.",
-    "Il negozio non ha restituito prodotti: la sezione shop resta vuota.",
+    "Solo 2 giocatori su 23 hanno la foto: la rosa sul sito del club e ferma alla stagione precedente.",
     "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
     "Trasferta a Monopoli fra meno di una settimana e nessuna notizia sul divieto: controlla a mano, potrebbe essersi rotto il riconoscimento."
   ]

@@ -168,30 +168,6 @@
     "source": "wikipedia"
   },
   {
-    "id": "wp-gerardo-agnelli",
-    "name": "Gerardo Agnelli",
-    "shortName": "Agnelli",
-    "number": null,
-    "role": "C",
-    "roleLabel": "Centrocampista",
-    "nationality": "ITA",
-    "photo": "https://www.calciofoggia1920.net/wp-content/uploads/2025/09/e92cc09a-2746-48be-b75a-c1ae8e20e531-converted-768x1152.png",
-    "onLoan": false,
-    "source": "wikipedia"
-  },
-  {
-    "id": "wp-federico-zuccon",
-    "name": "Federico Zuccon",
-    "shortName": "Zuccon",
-    "number": null,
-    "role": "C",
-    "roleLabel": "Centrocampista",
-    "nationality": "ITA",
-    "photo": null,
-    "onLoan": false,
-    "source": "wikipedia"
-  },
-  {
     "id": "wp-enrico-oviszach",
     "name": "Enrico Oviszach",
     "shortName": "Oviszach",
@@ -291,18 +267,6 @@
     "id": "wp-ferdinando-del-sole",
     "name": "Ferdinando Del Sole",
     "shortName": "Del Sole",
-    "number": null,
-    "role": "A",
-    "roleLabel": "Attaccante",
-    "nationality": "ITA",
-    "photo": null,
-    "onLoan": false,
-    "source": "wikipedia"
-  },
-  {
-    "id": "wp-mario-ravasio",
-    "name": "Mario Ravasio",
-    "shortName": "Ravasio",
     "number": null,
     "role": "A",
     "roleLabel": "Attaccante",

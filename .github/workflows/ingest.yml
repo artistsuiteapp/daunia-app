@@ -125,7 +125,11 @@ jobs:
           fi
           # niente build qui: Vercel lo rifa comunque lato suo, e farlo due
           # volte costava tre minuti e un `npm ci` per niente
-          npx --yes vercel@latest deploy --prod --yes --token "$VERCEL_TOKEN" > /tmp/deploy.txt 2>&1 || true
+          if ! npx --yes vercel@latest deploy --prod --yes --token "$VERCEL_TOKEN" > /tmp/deploy.txt 2>&1; then
+            echo "::error::deploy Vercel non riuscito"
+            tail -30 /tmp/deploy.txt
+            exit 1
+          fi
           URL=$(grep -oE 'https://[a-z0-9-]+\.vercel\.app' /tmp/deploy.txt | tail -1)
           if [ -z "$URL" ]; then
             echo "::error::deploy non riuscito"
@@ -134,6 +138,15 @@ jobs:
             exit 1
           fi
           echo "pubblicato: $URL"
-          # l'alias non si sposta da solo: senza questo daunia.vercel.app
-          # continua a puntare al deploy precedente
-          npx --yes vercel@latest alias set "$URL" daunia.vercel.app --token "$VERCEL_TOKEN"
+          # deploy --prod assegna i domini di produzione del progetto.
+          # alias set falliva con "User not found" dopo il deploy.
+          for tentativo in 1 2 3; do
+            CODICE=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 https://daunia.vercel.app/) || CODICE=000
+            [ "$CODICE" = "200" ] && break
+            sleep 10
+          done
+          if [ "$CODICE" != "200" ]; then
+            echo "::error::pubblicato, ma daunia.vercel.app risponde $CODICE"
+            exit 1
+          fi
+          echo "daunia.vercel.app: $CODICE"
