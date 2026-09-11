@@ -9,6 +9,7 @@ import {
 } from '../lib/fanplay';
 import { playedMatches } from '../lib/data';
 import { useOspite } from '../lib/ospite';
+import { backendAttivo } from '../lib/supabase';
 import { SoloConAccount } from './SoloConAccount';
 
 const RANGE = [0, 1, 2, 3, 4];
@@ -58,21 +59,34 @@ export function Pronostico({ match }: { match: Match }) {
         )}
       </View>
 
-      <View style={styles.tableHead}>
-        <Text style={styles.tableTitle}>CLASSIFICA DELLA STAGIONE</Text>
-        <View style={styles.sampleTag}><Text style={styles.sampleText}>esempio</Text></View>
-      </View>
-
-      <View style={styles.table}>
-        {table.map((row, i) => (
-          <View key={row.name} style={[styles.tableRow, !row.sample && styles.tableRowMine]}>
-            <Text style={[styles.pos, !row.sample && styles.mineText]}>{i + 1}</Text>
-            <Text style={[styles.player, !row.sample && styles.mineText]} numberOfLines={1}>{row.name}</Text>
-            <Text style={styles.exact}>{row.exact} esatti</Text>
-            <Text style={[styles.points, !row.sample && styles.mineText]}>{row.points}</Text>
+      {/*
+        * La classifica locale resta solo dove non ce n'e una vera.
+        *
+        * Serviva a far capire a cosa portava il pronostico quando gli account
+        * non c'erano: una riga sola, la propria, marcata "esempio". Adesso la
+        * classifica vera esiste e sta in /classifica, con dentro le persone.
+        * Tenerle tutte e due vorrebbe dire mostrare due classifiche diverse
+        * nella stessa schermata, e una delle due finta.
+        */}
+      {!backendAttivo ? (
+        <>
+          <View style={styles.tableHead}>
+            <Text style={styles.tableTitle}>CLASSIFICA DELLA STAGIONE</Text>
+            <View style={styles.sampleTag}><Text style={styles.sampleText}>esempio</Text></View>
           </View>
-        ))}
-      </View>
+
+          <View style={styles.table}>
+            {table.map((row, i) => (
+              <View key={row.name} style={[styles.tableRow, !row.sample && styles.tableRowMine]}>
+                <Text style={[styles.pos, !row.sample && styles.mineText]}>{i + 1}</Text>
+                <Text style={[styles.player, !row.sample && styles.mineText]} numberOfLines={1}>{row.name}</Text>
+                <Text style={styles.exact}>{row.exact} esatti</Text>
+                <Text style={[styles.points, !row.sample && styles.mineText]}>{row.points}</Text>
+              </View>
+            ))}
+          </View>
+        </>
+      ) : null}
 
       <Text style={styles.note}>
         Nessuna quota e nessun premio: si gioca solo per la classifica.

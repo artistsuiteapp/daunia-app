@@ -8,6 +8,8 @@ import { useLayout } from '../theme/responsive';
 type Item = { icon: keyof typeof Ionicons.glyphMap; label: string; href: string; pulsa?: boolean };
 
 const ITEMS: Item[] = [
+  { icon: 'game-controller', label: 'Match Center', href: '/match-center' },
+  { icon: 'podium', label: 'Classifica tifosi', href: '/classifica' },
   { icon: 'ticket', label: 'Biglietti', href: '/tickets' },
   { icon: 'shirt', label: 'Rosa', href: '/squad' },
   { icon: 'trophy', label: 'Pronostici', href: '/pronostici' },

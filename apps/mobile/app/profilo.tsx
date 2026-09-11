@@ -9,6 +9,7 @@ import { Screen, useGutter, ListGroup, ListRow } from '../components/ui';
 import { BackBar } from '../components/BackBar';
 import { Avatar } from '../components/Avatar';
 import { RitagliaAvatar } from '../components/RitagliaAvatar';
+import { MioProfiloGioco } from '../components/MioProfiloGioco';
 import { colors, radius, space, type } from '../theme/tokens';
 import { stadium } from '../lib/data';
 import {
@@ -245,8 +246,13 @@ export default function ProfiloSchermata() {
         </Pressable>
       </View>
 
+      <MioProfiloGioco />
+
       <View style={[gutter, { marginTop: space.xl }]}>
         <ListGroup>
+          <ListRow onPress={() => router.push('/classifica' as never)} chevron>
+            <Text style={styles.voce}>La classifica</Text>
+          </ListRow>
           <ListRow onPress={() => router.push('/notifiche' as never)} chevron>
             <Text style={styles.voce}>Notifiche</Text>
           </ListRow>
