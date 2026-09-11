@@ -8,7 +8,7 @@ import { Crest } from '../components/Crest';
 import { Countdown } from '../components/Countdown';
 import { MatchCenter } from '../components/MatchCenter';
 import { colors, space, type } from '../theme/tokens';
-import { matches, nextMatch, playedMatches } from '../lib/data';
+import { matches, nextMatch, lastMatch } from '../lib/data';
 import { lineupPerPartita } from '../lib/lineup';
 import { useLive, liveDi } from '../lib/live';
 import { etichettaFase } from '../lib/live-core';
@@ -39,7 +39,16 @@ export default function MatchCenterSchermata() {
     [live],
   );
   const prossima = nextMatch();
-  const ultima = playedMatches().slice(-1)[0] ?? null;
+  /*
+   * `lastMatch()` e non un calcolo fatto qui.
+   *
+   * C'era `playedMatches().slice(-1)[0]`, e playedMatches ordina dalla piu
+   * recente: slice(-1) prendeva quindi la piu VECCHIA. In pagina compariva
+   * "l'ultima giocata: Foggia-Team Altamura", che era del 16 agosto, mentre
+   * l'ultima vera era di tre settimane dopo. Nessuna schermata si ricalcola
+   * l'ultima partita per conto suo: la dice data.ts.
+   */
+  const ultima = lastMatch();
   const match = inCorso ?? prossima ?? ultima;
 
   const vivo = liveDi(match, live);

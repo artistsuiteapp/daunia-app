@@ -9,10 +9,19 @@ const squad = JSON.parse(readFileSync(new URL('../../../data/squad.json', import
 const indice = indicizza(archivio);
 
 test('la rosa attuale si aggancia all archivio', () => {
-  // se questo numero scende, un nome e cambiato e va sistemato in
-  // carriere-core.ts, non nella schermata
-  const agganciati = squad.filter((p) => indice.carrieraDi(p.name) || indice.anagraficaDi(p.name));
-  assert.ok(agganciati.length >= 24, `agganciati solo ${agganciati.length} su ${squad.length}`);
+  /*
+   * Si guarda quanti ne restano fuori, non quanti ne entrano.
+   *
+   * Prima c'era un numero fisso (24) e la rosa e' passata da 26 a 23 giocatori
+   * con un aggiornamento dei dati: il test e' diventato rosso senza che niente
+   * fosse rotto, dicendo "agganciati solo 23 su 23".
+   *
+   * Due fuori si tollerano: l'archivio di Transfermarkt si rilegge a mano, e un
+   * acquisto appena arrivato non c'e' ancora dentro. Tre vuol dire che i nomi
+   * hanno smesso di combaciare, e si sistema in carriere-core.ts.
+   */
+  const fuori = squad.filter((p) => !indice.carrieraDi(p.name) && !indice.anagraficaDi(p.name));
+  assert.ok(fuori.length <= 2, `non agganciati: ${fuori.map((p) => p.name).join(', ')}`);
 });
 
 test('i numeri stanno in piedi da soli', () => {

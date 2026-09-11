@@ -9,13 +9,10 @@ type Item = { icon: keyof typeof Ionicons.glyphMap; label: string; href: string;
 
 const ITEMS: Item[] = [
   { icon: 'game-controller', label: 'Match Center', href: '/match-center' },
-  { icon: 'podium', label: 'Classifica tifosi', href: '/classifica' },
-  { icon: 'ticket', label: 'Biglietti', href: '/tickets' },
   { icon: 'shirt', label: 'Rosa', href: '/squad' },
-  { icon: 'trophy', label: 'Pronostici', href: '/pronostici' },
+  { icon: 'ticket', label: 'Biglietti', href: '/tickets' },
+  { icon: 'podium', label: 'Classifiche', href: '/classifica' },
   { icon: 'stats-chart', label: 'Statistiche', href: '/stats' },
-  { icon: 'list', label: 'Classifica', href: '/standings' },
-  { icon: 'location', label: 'Stadio', href: '/stadium' },
 ];
 
 /**
@@ -38,7 +35,7 @@ export function QuickNav({ pagelle }: { pagelle?: string | null } = {}) {
   const { gutter } = useLayout();
   const voci: Item[] = pagelle
     ? [{ icon: 'star', label: 'Pagelle', href: pagelle, pulsa: true },
-       ...ITEMS.filter((x) => x.label !== 'Biglietti')]
+       ...ITEMS.filter((x) => x.label !== 'Match Center')]
     : ITEMS;
   return (
     <ScrollView

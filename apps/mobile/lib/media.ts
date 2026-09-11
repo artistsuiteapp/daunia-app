@@ -30,3 +30,34 @@ export function crest(uri: string | null | undefined): string | null {
 export function photo(uri: string | null | undefined): string | null {
   return REMOTE.photos ? uri ?? null : null;
 }
+
+/*
+ * LE IMMAGINI NOSTRE NON SONO FOTO DI TERZI
+ *
+ * Il difetto che questa parte ripara: l'immagine che una persona carica nel
+ * proprio profilo finisce sul NOSTRO archivio, ma passava dallo stesso
+ * `photo()` delle foto dei giocatori. Con `photos: false` veniva scartata come
+ * se fosse di qualcun altro, e in home, in classifica e in chat restava
+ * l'iniziale del nome. Nel profilo si vedeva, perche li l'immagine non passa
+ * di qui: una stessa persona vedeva la propria foto in un posto e non
+ * nell'altro, e sembrava che il caricamento non avesse funzionato.
+ *
+ * Il permesso di chi ha caricato la propria faccia ce l'abbiamo: e sua e l'ha
+ * messa lei. Il motivo per cui `photos` resta spento -- le opere fotografiche
+ * di chi le ha scattate -- qui non c'entra.
+ */
+const ARCHIVIO_NOSTRO = '/storage/v1/object/public/avatar/';
+
+/** Vero se l'immagine sta sul nostro archivio, non su un server altrui. */
+export function nostra(uri: string | null | undefined): boolean {
+  return typeof uri === 'string' && uri.includes(ARCHIVIO_NOSTRO);
+}
+
+/**
+ * Il ritratto di una persona: l'avatar caricato da lei passa sempre, la foto
+ * presa da un sito altrui segue la regola di `photo()`.
+ */
+export function ritratto(uri: string | null | undefined): string | null {
+  if (!uri) return null;
+  return nostra(uri) ? uri : photo(uri);
+}

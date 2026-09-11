@@ -64,12 +64,13 @@ export function mancaAl(kickoff: string | null | undefined, adesso = Date.now())
  *
  * Sono ripetuti qui perche servono anche a chi non ha fatto l'accesso e a chi
  * e senza rete, e perche una chiamata in piu per quattro righe che non cambiano
- * mai non ha senso. Un test confronta questa lista con quella nella migrazione:
- * se le due si allontanano se ne accorge il test, non un tifoso che si vede
- * cambiare livello aprendo una schermata diversa.
+ * mai non ha senso. Un test (supabase/test/livelli-sql.test.mjs) applica le
+ * migrazioni su Postgres vero e confronta la tabella con questa lista: se le
+ * due si allontanano se ne accorge il test, non un tifoso che si vede cambiare
+ * livello passando da una schermata all'altra.
  */
 export const LIVELLI = [
-  { soglia: 0, nome: 'Curva Sud', colore: '#9aa0a6' },
+  { soglia: 0, nome: 'Occasionale', colore: '#9aa0a6' },
   { soglia: 250, nome: 'Rossonero', colore: '#ee1111' },
   { soglia: 1000, nome: 'Ultras', colore: '#ffb300' },
   { soglia: 3000, nome: 'Leggenda', colore: '#8e7cff' },

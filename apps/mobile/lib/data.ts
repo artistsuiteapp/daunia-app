@@ -40,8 +40,20 @@ export const staff = base.staff as StaffMember[];
 export const news: NewsItem[] = [...editorial]
   .sort((a, b) => String(b.date).localeCompare(String(a.date)));
 
-/** Comunicati del club, tenuti da parte: non si pubblicano, si consultano. */
-export const clubReleases = (base.news as NewsItem[]).filter((n) => n.kind === 'club');
+/**
+ * Comunicati del club: si rimanda, non si ricopia.
+ *
+ * Erano usciti del tutto perche venivano riprodotti per intero, e un testo
+ * altrui copiato dentro l'app e un problema a prescindere da quanto sia utile.
+ * Tornano nella stessa forma in cui gia si trattano le testate: titolo, due
+ * righe di assaggio e il tocco che porta sulla pagina di chi l'ha scritto.
+ *
+ * E' anche l'unica parte delle notizie che si aggiorna da sola: la scrive
+ * l'ingest a ogni giro, mentre i pezzi della redazione stanno nel codice.
+ */
+export const clubReleases = (base.news as NewsItem[])
+  .filter((n) => n.kind === 'club')
+  .sort((a, b) => String(b.date).localeCompare(String(a.date)));
 export const stadium = base.stadium as Stadium;
 export const tickets = base.tickets as TicketOffer[];
 export const stats = base.stats as TeamStats;

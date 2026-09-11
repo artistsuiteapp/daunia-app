@@ -66,8 +66,7 @@ export function MioProfiloGioco() {
       ) : null}
 
       <GroupNote>
-        I punti arrivano da pronostici, sondaggi e voti. Li conta il database, uno per uno:
-        la stessa azione non paga due volte.
+        I punti arrivano da pronostici, sondaggi e voti. La stessa azione non paga due volte.
       </GroupNote>
     </>
   );

@@ -47,8 +47,20 @@ const ORE = 60 * 60 * 1000;
 /** Quanti articoli si tengono per testata. Oltre, e archivio che nessuno apre. */
 const PER_TESTATA = 10;
 
-/** Ogni quanto si torna a guardare i feed. Due volte al giorno. */
-export const SOGLIA = 12 * 60 * 60 * 1000;
+/*
+ * Ogni quanto si torna a guardare i feed.
+ *
+ * Era dodici ore, cioe due volte al giorno, e si vedeva: le testate pubblicano
+ * la mattina e nel pomeriggio, e chi apriva l'app trovava la rassegna di ieri
+ * sera. Nel registro dell'ingest la riga era sempre la stessa -- "stampa:
+ * ancora fresca, nessuna richiesta" -- e da fuori sembrava che le notizie non
+ * si aggiornassero piu.
+ *
+ * Tre ore vuol dire che ogni giro del cron (che passa ogni sei) rinfresca
+ * davvero, e nelle ore delle partite, quando l'ingest gira ogni dieci minuti,
+ * il freno regge lo stesso: tre richieste al giorno per testata, non una raffica.
+ */
+export const SOGLIA = 3 * 60 * 60 * 1000;
 
 /**
  * Quante immagini si cercano in un giro solo.

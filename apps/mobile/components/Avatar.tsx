@@ -2,17 +2,21 @@ import { Image } from 'expo-image';
 import { StyleSheet, Text, View } from 'react-native';
 import { colors, type } from '../theme/tokens';
 import { avatarTone, initials } from '../lib/format';
-import { photo } from '../lib/media';
+import { ritratto } from '../lib/media';
 
 type Props = { uri: string | null; name: string; number?: number | null; size?: number };
 
 /**
- * Ritratto del giocatore. La fototeca del club e ferma alla stagione scorsa,
- * quindi quasi tutta la rosa attuale non ha immagine: il segnaposto mostra le
- * iniziali su una tinta della gamma del club invece di un buco grigio.
+ * La faccia di qualcuno: un giocatore o una persona iscritta.
+ *
+ * Chi non ha immagine prende le iniziali su una tinta ricavata dal nome, invece
+ * di un buco grigio. Vale per quasi tutta la rosa, che di foto nostre non ne ha.
+ *
+ * L'avatar caricato da chi usa l'app passa sempre: sta sul nostro archivio e ce
+ * l'ha messo lei. Le foto prese da siti altrui no -- vedi lib/media.ts.
  */
 export function Avatar({ uri, name, number, size = 64 }: Props) {
-  const src = photo(uri);
+  const src = ritratto(uri);
   if (src) {
     return (
       <Image

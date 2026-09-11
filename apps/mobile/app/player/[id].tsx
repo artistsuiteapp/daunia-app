@@ -94,8 +94,7 @@ export default function PlayerDetail() {
 
           <GroupNote>
             {perPartita ? `In media ${perPartita} minuti a partita. ` : ''}
-            Presenze, gol e minuti da {FONTE.nome}, letti a mano l’{FONTE.presoIlLeggibile}: non si
-            aggiornano da soli. {FONTE.copre}.
+            Qualche numero può essere impreciso, e non si aggiorna spesso: potrebbe essere vecchio.
           </GroupNote>
         </>
       ) : null}
@@ -150,12 +149,6 @@ export default function PlayerDetail() {
             </ListGroup>
           </View>
         </>
-      ) : null}
-
-      {!player.photo ? (
-        <GroupNote>
-          Foto non disponibile: la fototeca sul sito del club è ferma alla stagione precedente.
-        </GroupNote>
       ) : null}
 
       <GroupLabel>{`Altri ${(player.role && PLURALE[player.role]) || 'giocatori'}`}</GroupLabel>

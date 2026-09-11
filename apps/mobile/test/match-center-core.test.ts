@@ -1,6 +1,5 @@
 import { strict as assert } from 'node:assert';
 import { test } from 'node:test';
-import { readFileSync } from 'node:fs';
 
 import {
   faseDi, pronosticoAperto, mancaAl, livelloDi, alProssimoLivello, LIVELLI,
@@ -55,8 +54,8 @@ test('mancaAl conta in avanti e all indietro', () => {
 });
 
 test('i livelli salgono e non scendono', () => {
-  assert.equal(livelloDi(0).nome, 'Curva Sud');
-  assert.equal(livelloDi(249).nome, 'Curva Sud');
+  assert.equal(livelloDi(0).nome, 'Occasionale');
+  assert.equal(livelloDi(249).nome, 'Occasionale');
   assert.equal(livelloDi(250).nome, 'Rossonero');
   assert.equal(livelloDi(2999).nome, 'Ultras');
   assert.equal(livelloDi(100000).nome, 'Leggenda');
@@ -66,21 +65,4 @@ test('alProssimoLivello tace solo in cima', () => {
   assert.equal(alProssimoLivello(0)?.mancano, 250);
   assert.equal(alProssimoLivello(900)?.livello.nome, 'Ultras');
   assert.equal(alProssimoLivello(5000), null);
-});
-
-test('i livelli qui e quelli nel database dicono la stessa cosa', () => {
-  /*
-   * Il controllo che impedisce la deriva.
-   *
-   * I livelli stanno in due posti -- qui e nella tabella `livelli` -- e ci
-   * stanno per un motivo: servono anche senza rete. Due copie pero si
-   * allontanano da sole, e chi ci rimette e uno che si vede cambiare livello
-   * passando da una schermata all'altra.
-   */
-  const sql = readFileSync(new URL('../../../supabase/migrations/20260911140000_punti_e_classifiche.sql', import.meta.url), 'utf8');
-  const blocco = sql.slice(sql.indexOf('insert into livelli'), sql.indexOf('on conflict (soglia)'));
-  const nelDatabase = [...blocco.matchAll(/\(\s*(\d+),\s*'([^']+)',\s*'([^']+)'\s*\)/g)]
-    .map((m) => ({ soglia: Number(m[1]), nome: m[2], colore: m[3] }));
-
-  assert.deepEqual(nelDatabase, LIVELLI.map((l) => ({ soglia: l.soglia, nome: l.nome, colore: l.colore })));
 });
