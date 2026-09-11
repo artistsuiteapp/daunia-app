@@ -28,8 +28,8 @@ export function SoloConAccount({ cosa, compatto = false }: { cosa: string; compa
 
 const styles = StyleSheet.create({
   wrap: {
-    flexDirection: 'row', alignItems: 'center', gap: space.sm,
-    backgroundColor: colors.accentSoft, borderRadius: radius.lg, padding: space.md,
+    flexDirection: 'row', alignItems: 'center', gap: space.md,
+    backgroundColor: colors.accentSoft, borderRadius: radius.lg, padding: space.lg,
     borderWidth: StyleSheet.hairlineWidth, borderColor: 'rgba(238,17,17,0.35)',
   },
   compatto: { padding: space.sm },

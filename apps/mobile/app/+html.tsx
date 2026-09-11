@@ -34,7 +34,7 @@ export default function Root({ children }: { children: ReactNode }) {
 
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-title" content="Il Tifo" />
+        <meta name="apple-mobile-web-app-title" content="Tifo Daunia" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
         <meta
@@ -76,7 +76,38 @@ const CSS = `
   :root { --app-height: 100dvh; }
 }
 html, body { height: 100%; background-color: #08080A; }
-body { overscroll-behavior: none; -webkit-tap-highlight-color: transparent; }
+body {
+  overscroll-behavior: none;
+  -webkit-tap-highlight-color: transparent;
+  /*
+   * Toglie il ritardo di trecento millisecondi fra il tocco e la risposta.
+   *
+   * I browser aspettavano per capire se stesse arrivando un secondo tocco —
+   * cioe un doppio tocco per ingrandire. In un'app dove si tocca di continuo
+   * quel ritardo si sente su ogni singolo tasto: e la sensazione di "prima non
+   * ha preso, poi e partito". Qui l'ingrandimento a doppio tocco non serve, e
+   * il viewport lo esclude gia.
+   */
+  touch-action: manipulation;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+/*
+ * Chi ha chiesto meno movimento nelle impostazioni del sistema lo ottiene anche
+ * qui. Le animazioni scritte in JavaScript le spegne theme/motion.ts; questa
+ * regola prende quelle che il browser fa per conto suo.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
 #root {
   height: var(--app-height);
   display: flex;

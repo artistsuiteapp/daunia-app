@@ -81,9 +81,9 @@ const styles = StyleSheet.create({
   livelloTesto: { ...type.captionBold, letterSpacing: 0.3 },
   sotto: { ...type.footnote, color: colors.textDim },
 
-  badge: { gap: space.sm, paddingVertical: space.sm },
+  badge: { gap: space.md, paddingVertical: space.md },
   gettone: {
-    width: 96, gap: 6, alignItems: 'center', padding: space.md,
+    width: 100, gap: 7, alignItems: 'center', padding: space.md,
     backgroundColor: colors.surface, borderRadius: radius.lg,
     borderWidth: StyleSheet.hairlineWidth, borderColor: colors.border,
   },

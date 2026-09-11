@@ -3,6 +3,8 @@ import { router } from 'expo-router';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
+import { Premi } from '../components/anima';
+
 import {
   Screen, Badge, Card, Empty, GroupLabel, GroupNote, ListGroup, ListRow, useGutter,
 } from '../components/ui';
@@ -185,17 +187,18 @@ function Porte() {
       <GroupLabel>Tutto il resto</GroupLabel>
       <View style={[styles.porte, gutter]}>
         {voci.map((v) => (
-          <Pressable
+          <Premi
             key={v.titolo}
             onPress={() => router.push(v.href as never)}
-            style={({ pressed }) => [{ flexBasis: '48%', flexGrow: 1 }, pressed && { opacity: 0.7 }]}
+            etichetta={v.titolo}
+            style={{ flexBasis: '48%', flexGrow: 1 }}
           >
             <Card style={styles.porta}>
               <Ionicons name={v.icona} size={20} color={colors.accentBright} />
               <Text style={styles.portaTitolo}>{v.titolo}</Text>
               <Text style={styles.portaSotto} numberOfLines={2}>{v.sotto}</Text>
             </Card>
-          </Pressable>
+          </Premi>
         ))}
       </View>
     </>
@@ -220,8 +223,8 @@ const styles = StyleSheet.create({
   quando: { ...type.footnote, color: colors.textDim },
   riga: { ...type.subhead, color: colors.text, flex: 1 },
 
-  porte: { flexDirection: 'row', flexWrap: 'wrap', gap: space.sm },
-  porta: { padding: space.md, gap: 4, minHeight: 104 },
+  porte: { flexDirection: 'row', flexWrap: 'wrap', gap: space.md },
+  porta: { padding: space.lg, gap: 5, minHeight: 112 },
   portaTitolo: { ...type.subheadBold, color: colors.text },
   portaSotto: { ...type.caption, color: colors.textDim, lineHeight: 16 },
 });

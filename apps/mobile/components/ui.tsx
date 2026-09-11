@@ -1,10 +1,13 @@
-import { Fragment, ReactNode, RefObject, useMemo } from 'react';
+import { Fragment, ReactNode, RefObject, useEffect, useMemo, useRef, useState } from 'react';
 import {
-  PanResponder, Platform, Pressable, ScrollView, StyleSheet, Text, View, ViewStyle,
+  Animated, LayoutChangeEvent, PanResponder, Platform, Pressable, ScrollView,
+  StyleSheet, Text, View, ViewStyle,
 } from 'react-native';
 import { indietro } from './BackBar';
 import { Ionicons } from '@expo/vector-icons';
 import { colors, radius, ROW_HEIGHT, space, type } from '../theme/tokens';
+import { curva, durata, quanto } from '../theme/motion';
+import { Premi } from './anima';
 import { useLayout } from '../theme/responsive';
 import { TAB_BAR_SPACE } from './FloatingTabBar';
 import { BrandMark } from './BrandMark';
@@ -70,6 +73,13 @@ export function Screen({
       contentContainerStyle={[pad, centrato && { flexGrow: 1 }]}
       showsVerticalScrollIndicator={false}
       contentInsetAdjustmentBehavior="never"
+      /*
+       * Con la tastiera aperta, il primo tocco su un tasto serviva solo a
+       * chiudere la tastiera e il tasto non partiva: bisognava premere due
+       * volte. E una delle cose che facevano sembrare l'app inceppata.
+       */
+      keyboardShouldPersistTaps="handled"
+      keyboardDismissMode="on-drag"
     >
       {/*
         * Centrare con `justifyContent` sembra la strada ovvia e invece taglia:
@@ -173,16 +183,59 @@ export function GroupNote({ children }: { children: ReactNode }) {
 
 /* ------------------------------------------------------------------ controlli */
 
-/** Controllo segmentato, con la pastiglia che scorre sotto la voce attiva. */
+/**
+ * Controllo segmentato, con la pastiglia che scorre davvero sotto la voce attiva.
+ *
+ * Prima la pastiglia non scorreva: il fondo rosso saltava da una voce all'altra
+ * in un fotogramma. Sembra una sciocchezza e invece e la differenza fra "ho
+ * premuto e si e mosso" e "ho premuto ed e cambiato qualcosa, forse". Il
+ * movimento dura meno di due decimi e dice da dove a dove.
+ */
 export function Segmented<T extends string>({ items, value, onChange }: {
   items: Array<{ key: T; label: string }>; value: T; onChange: (k: T) => void;
 }) {
+  const [larghezza, setLarghezza] = useState(0);
+  const indice = Math.max(0, items.findIndex((i) => i.key === value));
+  const x = useRef(new Animated.Value(indice)).current;
+
+  useEffect(() => {
+    Animated.timing(x, {
+      toValue: indice, duration: quanto(durata.corta), easing: curva.entra, useNativeDriver: true,
+    }).start();
+  }, [indice, x]);
+
+  const fetta = items.length ? larghezza / items.length : 0;
+  const misura = (e: LayoutChangeEvent) => setLarghezza(e.nativeEvent.layout.width);
+
   return (
-    <View style={styles.segmented}>
+    <View style={styles.segmented} onLayout={misura}>
+      {fetta > 0 ? (
+        <Animated.View
+          pointerEvents="none"
+          style={[
+            styles.segmentoAttivo,
+            {
+              width: fetta,
+              transform: [{
+                translateX: x.interpolate({
+                  inputRange: items.map((_, i) => i),
+                  outputRange: items.map((_, i) => i * fetta),
+                }),
+              }],
+            },
+          ]}
+        />
+      ) : null}
       {items.map((it) => {
         const on = it.key === value;
         return (
-          <Pressable key={it.key} onPress={() => onChange(it.key)} style={[styles.segment, on && styles.segmentOn]}>
+          <Pressable
+            key={it.key}
+            onPress={() => onChange(it.key)}
+            accessibilityRole="button"
+            accessibilityState={{ selected: on }}
+            style={styles.segment}
+          >
             <Text style={[styles.segmentText, on && styles.segmentTextOn]} numberOfLines={1}>{it.label}</Text>
           </Pressable>
         );
@@ -207,10 +260,10 @@ export function FilterChips<T extends string>({ items, value, onChange }: {
       {items.map((it) => {
         const on = it.key === value;
         return (
-          <Pressable key={it.key} onPress={() => onChange(it.key)} style={[styles.chip, on && styles.chipOn]}>
+          <Premi key={it.key} onPress={() => onChange(it.key)} style={[styles.chip, on && styles.chipOn]}>
             <Text style={[styles.chipText, on && styles.chipTextOn]}>{it.label}</Text>
             {it.badge != null ? <Text style={[styles.chipBadge, on && styles.chipBadgeOn]}>{it.badge}</Text> : null}
-          </Pressable>
+          </Premi>
         );
       })}
     </ScrollView>
@@ -223,13 +276,15 @@ export function Button({ label, onPress, icon, tone = 'accent' }: {
 }) {
   const accent = tone === 'accent';
   return (
-    <Pressable
+    <Premi
       onPress={onPress}
-      style={({ pressed }) => [styles.button, accent ? styles.buttonAccent : styles.buttonPlain, pressed && { opacity: 0.75 }]}
+      etichetta={label}
+      scala={0.985}
+      style={[styles.button, accent ? styles.buttonAccent : styles.buttonPlain]}
     >
       {icon ? <Ionicons name={icon} size={17} color={accent ? colors.onAccent : colors.accentBright} /> : null}
       <Text style={[styles.buttonText, !accent && { color: colors.accentBright }]}>{label}</Text>
-    </Pressable>
+    </Premi>
   );
 }
 
@@ -275,37 +330,43 @@ export function Divider() {
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.bg },
 
-  largeTitleWrap: { flexDirection: 'row', alignItems: 'flex-end', gap: space.md, paddingTop: space.lg, paddingBottom: space.sm },
+  largeTitleWrap: { flexDirection: 'row', alignItems: 'flex-end', gap: space.md, paddingTop: space.xl, paddingBottom: space.md },
   largeTitle: { ...type.largeTitle, color: colors.text },
-  largeSub: { ...type.subhead, color: colors.textDim, marginTop: 2 },
+  largeSub: { ...type.subhead, color: colors.textDim, marginTop: 4 },
   titleCrest: { width: 44, height: 44 },
 
   groupLabelRow: {
     flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between',
-    marginTop: space.xl, marginBottom: space.sm,
+    marginTop: space.xl, marginBottom: space.md,
   },
   groupLabel: { ...type.groupLabel, color: colors.textDim },
-  groupNote: { ...type.footnote, color: colors.textFaint, marginTop: space.sm, lineHeight: 17 },
+  groupNote: { ...type.footnote, color: colors.textFaint, marginTop: space.md, lineHeight: 19 },
 
   group: { backgroundColor: colors.surface, borderRadius: radius.lg, overflow: 'hidden' },
   separator: { height: StyleSheet.hairlineWidth, backgroundColor: colors.separator, marginLeft: space.lg },
   row: {
     flexDirection: 'row', alignItems: 'center', gap: space.md,
-    minHeight: ROW_HEIGHT, paddingHorizontal: space.lg, paddingVertical: 11,
+    minHeight: ROW_HEIGHT, paddingHorizontal: space.lg, paddingVertical: 14,
   },
   rowPressed: { backgroundColor: colors.surfaceHi },
   rowMain: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: space.md },
 
-  segmented: { flexDirection: 'row', backgroundColor: colors.surfaceHi, borderRadius: 9, padding: 2 },
-  segment: { flex: 1, paddingVertical: 7, borderRadius: 7, alignItems: 'center' },
-  segmentOn: { backgroundColor: colors.accent },
+  segmented: {
+    flexDirection: 'row', backgroundColor: colors.surfaceHi,
+    borderRadius: 10, padding: 3, position: 'relative',
+  },
+  segment: { flex: 1, paddingVertical: 9, borderRadius: 8, alignItems: 'center', zIndex: 1 },
+  segmentoAttivo: {
+    position: 'absolute', top: 3, bottom: 3, left: 3,
+    borderRadius: 8, backgroundColor: colors.accent,
+  },
   segmentText: { ...type.footnoteBold, color: colors.textDim },
   segmentTextOn: { color: colors.onAccent },
 
-  chipRow: { gap: space.sm, paddingVertical: space.xs },
+  chipRow: { gap: 10, paddingVertical: space.sm },
   chip: {
     flexDirection: 'row', alignItems: 'center', gap: 6,
-    paddingHorizontal: space.lg, paddingVertical: 8, borderRadius: radius.pill,
+    paddingHorizontal: space.lg, paddingVertical: 10, borderRadius: radius.pill,
     backgroundColor: colors.surface,
   },
   chipOn: { backgroundColor: colors.accent },
@@ -316,7 +377,7 @@ const styles = StyleSheet.create({
 
   button: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: space.sm,
-    borderRadius: radius.lg, paddingVertical: 15,
+    borderRadius: radius.lg, paddingVertical: 16,
   },
   buttonAccent: { backgroundColor: colors.accent },
   buttonPlain: { backgroundColor: colors.surface },
@@ -331,6 +392,6 @@ const styles = StyleSheet.create({
   bigValue: { ...type.number, color: colors.text },
   bigSub: { ...type.footnote, color: colors.textFaint },
 
-  empty: { padding: space.xl, alignItems: 'center' },
-  emptyText: { ...type.subhead, color: colors.textFaint, textAlign: 'center' },
+  empty: { paddingVertical: space.xxl, paddingHorizontal: space.xl, alignItems: 'center' },
+  emptyText: { ...type.subhead, color: colors.textFaint, textAlign: 'center', lineHeight: 22 },
 });
