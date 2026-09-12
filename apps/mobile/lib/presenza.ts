@@ -4,7 +4,6 @@ import type { RealtimeChannel } from '@supabase/supabase-js';
 
 import { supabase } from './supabase';
 import { useSessione, utenteCorrente } from './auth';
-import type { Ruolo } from './moderazione';
 
 /**
  * Chi c'e adesso.
@@ -33,7 +32,6 @@ export type Presente = {
   utente: string;
   nome: string;
   avatar: string | null;
-  ruolo: Ruolo;
   /** da quando e collegato, in millisecondi */
   da: number;
 };
@@ -69,8 +67,23 @@ async function attacca() {
   if (canale || !supabase) return;
   const io = utenteCorrente();
 
+  /*
+   * `private: true` non e un dettaglio.
+   *
+   * Su un canale aperto bastava la chiave pubblica dell'app -- che sta dentro
+   * la pagina, per come e fatto il sistema -- per mettersi in ascolto senza
+   * account e ricevere in diretta nome e identificativo di chiunque stesse
+   * usando l'app, con l'ora di entrata e di uscita. E chi ascolta non deve
+   * annunciarsi, quindi resta invisibile anche a chi modera.
+   *
+   * Privato vuol dire che a decidere chi entra e Postgres, con le regole
+   * scritte in 20260912160000_presenza_e_sospensioni.sql: serve un account.
+   */
   canale = supabase.channel(CANALE, {
-    config: { presence: { key: io?.id ?? `ospite-${Math.random().toString(36).slice(2)}` } },
+    config: {
+      private: true,
+      presence: { key: io?.id ?? `ospite-${Math.random().toString(36).slice(2)}` },
+    },
   });
 
   canale
@@ -81,12 +94,18 @@ async function attacca() {
       if (stato !== 'SUBSCRIBED' || !io) return;
       // solo chi ha un account si annuncia: un ospite guarda e basta
       const { data } = await supabase!
-        .from('profiles').select('nome, avatar, ruolo').eq('id', io.id).maybeSingle();
+        .from('profiles').select('nome, avatar').eq('id', io.id).maybeSingle();
+      /*
+       * Il ruolo non viaggia piu qui dentro.
+       *
+       * Non serve -- l'elenco lo disegna NomeUtente, che il ruolo se lo va a
+       * prendere per conto suo -- ed era il campo piu comodo per chi volesse
+       * aspettare il momento in cui non c'e nessun moderatore collegato.
+       */
       await canale?.track({
         utente: io.id,
         nome: (data?.nome as string) ?? 'Tifoso',
         avatar: (data?.avatar as string | null) ?? null,
-        ruolo: ((data?.ruolo as Ruolo) ?? 'utente'),
         da: Date.now(),
       });
     });

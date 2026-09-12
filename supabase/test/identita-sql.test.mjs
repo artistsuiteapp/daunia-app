@@ -30,7 +30,9 @@ const BEPPE = '22222222-2222-2222-2222-222222222222';  // moderatore
 const CARLA = '33333333-3333-3333-3333-333333333333';  // utente
 const DORA = '44444444-4444-4444-4444-444444444444';   // altra admin
 
-const chiSono = async (id) => db.exec(`set prova.utente = '${id ?? ''}';`);
+const chiSono = async (id) => db.exec(
+  `set prova.utente = '${id ?? ''}'; set prova.ruolo = '${id ? 'authenticated' : 'anon'}';`,
+);
 
 before(async () => {
   db = await PGlite.create();
@@ -43,6 +45,9 @@ before(async () => {
     create schema if not exists auth;
     create or replace function auth.uid() returns uuid language sql stable as $$
       select nullif(current_setting('prova.utente', true), '')::uuid;
+    $$;
+    create or replace function auth.role() returns text language sql stable as $$
+      select coalesce(nullif(current_setting('prova.ruolo', true), ''), 'anon');
     $$;
 
     create table profiles (
@@ -87,6 +92,31 @@ before(async () => {
       select coalesce((select ruolo in ('moderatore','admin') from profiles where id = auth.uid()), false);
     $$;
 
+    -- Il trigger vero che sta in produzione (20260908140000). Mancava, e per
+    -- questo il test diceva che un moderatore poteva sospendere mentre nella
+    -- app vera il database glielo rifiutava.
+    create or replace function proteggi_ruolo() returns trigger
+    language plpgsql security definer set search_path = public as $pr$
+    begin
+      if new.ruolo is distinct from old.ruolo or new.sospeso_fino is distinct from old.sospeso_fino then
+        if auth.role() = 'authenticated' and not e_admin() then
+          raise exception 'il ruolo e la sospensione li assegna un amministratore';
+        end if;
+      end if;
+      return new;
+    end; $pr$;
+    drop trigger if exists ruolo_protetto on profiles;
+    create trigger ruolo_protetto before update on profiles
+      for each row execute function proteggi_ruolo();
+
+    -- Realtime non esiste in PGlite: bastano il guscio e la funzione del topic
+    -- perche le politiche della migrazione si possano creare.
+    create schema if not exists realtime;
+    create table if not exists realtime.messages (id bigserial primary key, topic text);
+    alter table realtime.messages enable row level security;
+    create or replace function realtime.topic() returns text language sql stable as $t$
+      select nullif(current_setting('prova.topic', true), ''); $t$;
+
     insert into profiles (id, nome, ruolo) values
       ('${ANNA}', 'Anna', 'admin'),
       ('${BEPPE}', 'Beppe', 'moderatore'),
@@ -98,6 +128,7 @@ before(async () => {
     '20260911140000_punti_e_classifiche.sql',
     '20260911180000_livello_occasionale.sql',
     '20260912100000_identita_e_pannello.sql',
+    '20260912160000_presenza_e_sospensioni.sql',
   ]) {
     await db.exec(readFileSync(join(MIGRAZIONI, f), 'utf8'));
   }
@@ -223,4 +254,72 @@ test('chi non modera non legge il contenuto segnalato', async () => {
   await chiSono(CARLA);
   const r = await db.query(`select * from testo_segnalato('profilo', '${CARLA}')`);
   assert.equal(r.rows.length, 0);
+});
+
+/*
+ * Le tre prove che mancavano.
+ *
+ * Il trigger `ruolo_protetto` esiste per fermare chi prova a scriversi il ruolo
+ * o a togliersi una sospensione con una chiamata diretta. Fermava pero anche le
+ * funzioni del pannello, che i controlli li fanno gia e uno per uno: il tasto
+ * "sospendi" di un moderatore non ha mai funzionato in produzione.
+ */
+
+test('un moderatore adesso sospende davvero', async () => {
+  await chiSono(BEPPE);
+  await db.exec(`select sospendi_utente('${CARLA}', 2)`);
+  const r = await db.query(`select sospeso_fino > now() as ferma from profiles where id = '${CARLA}'`);
+  assert.equal(r.rows[0].ferma, true);
+});
+
+test('e riammette', async () => {
+  await chiSono(BEPPE);
+  await db.exec(`select revoca_sospensione('${CARLA}')`);
+  const r = await db.query(`select sospeso_fino from profiles where id = '${CARLA}'`);
+  assert.equal(r.rows[0].sospeso_fino, null);
+});
+
+test('ma non annulla il provvedimento di un admin su un moderatore', async () => {
+  await chiSono(ANNA);
+  await db.exec(`select sospendi_utente('${BEPPE}', 5)`);
+
+  // Beppe e sospeso e prova a togliersi la sospensione da solo
+  await chiSono(BEPPE);
+  assert.match(await bum(`select revoca_sospensione('${BEPPE}')`) ?? '', /admin/);
+  const r = await db.query(`select sospeso_fino > now() as ferma from profiles where id = '${BEPPE}'`);
+  assert.equal(r.rows[0].ferma, true);
+
+  await chiSono(ANNA);
+  await db.exec(`select revoca_sospensione('${BEPPE}')`);
+});
+
+test('il contrassegno non resta acceso dopo la chiamata', async () => {
+  await chiSono(BEPPE);
+  await db.exec(`select sospendi_utente('${CARLA}', 1)`);
+  // subito dopo, una scrittura diretta deve tornare a essere rifiutata
+  const errore = await bum(`update profiles set sospeso_fino = null where id = '${CARLA}'`);
+  assert.match(errore ?? '', /amministratore/);
+  await chiSono(ANNA);
+  await db.exec(`select revoca_sospensione('${CARLA}')`);
+});
+
+test('la presenza la legge solo chi ha un account', async () => {
+  const righe = await db.query(`
+    select polname, polcmd, pg_get_expr(polqual, polrelid) as leggi,
+           pg_get_expr(polwithcheck, polrelid) as scrivi
+    from pg_policy where polrelid = 'realtime.messages'::regclass
+    order by polname
+  `);
+  assert.equal(righe.rows.length, 2, 'servono la regola per leggere e quella per annunciarsi');
+  for (const r of righe.rows) {
+    assert.match(`${r.leggi ?? ''}${r.scrivi ?? ''}`, /presenza/);
+  }
+
+  // e valgono per chi ha fatto l'accesso, non per tutti
+  const a_chi = await db.query(`
+    select distinct r.rolname
+    from pg_policy p, unnest(p.polroles) as ro(oid) join pg_roles r on r.oid = ro.oid
+    where p.polrelid = 'realtime.messages'::regclass
+  `);
+  assert.deepEqual(a_chi.rows.map((x) => x.rolname).sort(), ['authenticated']);
 });
