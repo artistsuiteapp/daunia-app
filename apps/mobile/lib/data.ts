@@ -17,9 +17,11 @@
  * Chi scarica e lib/bundle-remoto.ts.
  */
 import type {
-  DataBundle, Match, NewsItem, Player, StandingRow,
-  Team, TeamStats, TicketOffer, Stadium, StaffMember,
+  ArticoloStampa, DataBundle, Match, NewsItem, Player, StandingRow,
+  Team, TeamStats, Testata, TicketOffer, Stadium, StaffMember,
 } from '@satanelli/core';
+
+export type Rassegna = { testate: Testata[]; articoli: ArticoloStampa[] };
 
 import bundled from '../../../data/bundle.json';
 import { editorial } from './editorial';
@@ -61,6 +63,19 @@ export const news: NewsItem[] = [...editorial]
 export let clubReleases = (base.news as NewsItem[])
   .filter((n) => n.kind === 'club')
   .sort((a, b) => String(b.date).localeCompare(String(a.date)));
+/**
+ * Rassegna stampa, tenuta qui e non in stampa.ts.
+ *
+ * Ci stava, e leggeva il JSON per conto suo con un import diretto. Sul web
+ * era identico, perche ogni pubblicazione riportava dentro il file fresco.
+ * Sul telefono no: quell'import prende la copia cotta al momento della
+ * compilazione e non cambia piu, quindi la rassegna sarebbe rimasta ferma al
+ * giorno dell'installazione mentre tutto il resto si aggiornava. Il difetto
+ * peggiore possibile, perche invisibile: le notizie ci sono, sono solo vecchie.
+ */
+export let stampa = ((base as unknown as { stampa?: Rassegna }).stampa
+  ?? { testate: [], articoli: [] });
+
 export let stadium = base.stadium as Stadium;
 export let tickets = base.tickets as TicketOffer[];
 export let stats = base.stats as TeamStats;
@@ -150,6 +165,7 @@ export function applicaBundle(nuovo: DataBundle): void {
   clubReleases = (base.news as NewsItem[])
     .filter((n) => n.kind === "club")
     .sort((a, b) => String(b.date).localeCompare(String(a.date)));
+  stampa = (base as unknown as { stampa?: Rassegna }).stampa ?? { testate: [], articoli: [] };
   stadium = base.stadium as Stadium;
   tickets = base.tickets as TicketOffer[];
   stats = base.stats as TeamStats;

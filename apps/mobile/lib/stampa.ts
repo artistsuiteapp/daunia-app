@@ -7,24 +7,36 @@
  */
 import type { ArticoloStampa, Testata } from '@satanelli/core';
 
-import bundled from '../../../data/bundle.json';
+import { stampa } from './data';
 
-const rassegna = (bundled as unknown as {
-  stampa?: { testate: Testata[]; articoli: ArticoloStampa[] };
-}).stampa ?? { testate: [], articoli: [] };
+/*
+ * I dati arrivano da data.ts e non piu da un import del JSON.
+ *
+ * Con l'import diretto la rassegna restava quella del giorno in cui l'app era
+ * stata compilata: le testate pubblicavano, il telefono no. Da data.ts invece
+ * segue il bundle scaricato a ogni apertura.
+ *
+ * Per lo stesso motivo qui non ci sono piu costanti calcolate una volta sola:
+ * sono funzioni, cosi rileggono i valori aggiornati invece di fissare quelli
+ * del primo avvio.
+ */
 
-export const testate: Testata[] = rassegna.testate ?? [];
+export function testate(): Testata[] {
+  return stampa.testate ?? [];
+}
 
 /** Tutti gli articoli, dal piu recente. */
-export const articoliStampa: ArticoloStampa[] = [...(rassegna.articoli ?? [])]
-  .sort((a, b) => String(b.data).localeCompare(String(a.data)));
+export function articoliStampa(): ArticoloStampa[] {
+  return [...(stampa.articoli ?? [])]
+    .sort((a, b) => String(b.data).localeCompare(String(a.data)));
+}
 
 export function testataPerId(id: string): Testata | null {
-  return testate.find((t) => t.id === id) ?? null;
+  return testate().find((t) => t.id === id) ?? null;
 }
 
 export function articoliDi(id: string): ArticoloStampa[] {
-  return articoliStampa.filter((a) => a.testata === id);
+  return articoliStampa().filter((a) => a.testata === id);
 }
 
 /**
@@ -40,5 +52,5 @@ export function riepilogo(id: string): { quanti: number; ultimo: string | null }
 
 /** Le testate che hanno almeno un articolo, cioe quelle da disegnare. */
 export function testateConArticoli(): Testata[] {
-  return testate.filter((t) => articoliDi(t.id).length > 0);
+  return testate().filter((t) => articoliDi(t.id).length > 0);
 }
