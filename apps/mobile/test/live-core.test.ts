@@ -1,7 +1,10 @@
 import { strict as assert } from 'node:assert';
 import { test } from 'node:test';
 
-import { finestraAperta, leggiEvento, orienta, minutoStimato, etichettaFase, minutoCorrente, chatAperta, eOggi } from '../lib/live-core.ts';
+import {
+  finestraAperta, leggiEvento, orienta, minutoStimato, etichettaFase, minutoCorrente,
+  chatAperta, eOggi, cronacaDi,
+} from '../lib/live-core.ts';
 
 const KICKOFF = '2026-09-06T19:00:00Z';
 const T = Date.parse(KICKOFF);
@@ -220,4 +223,46 @@ test('"oggi si gioca" guarda il giorno, non le ore che mancano', () => {
   // e il confronto e sul giorno locale di chi guarda lo schermo
   assert.equal(eOggi(KICK, Date.parse('2026-09-11T10:00:00Z')), false);
   assert.equal(eOggi(null, q(0)), false);
+});
+
+/*
+ * La cronaca dal vivo di una partita non deve comparire su un'altra.
+ *
+ * Difetto vero, visto il 12 settembre 2026: aprendo una partita futura si
+ * leggevano i cartellini di Monopoli-Foggia. La scheda di una partita non
+ * ancora giocata non ha eventi propri, quindi cadeva nel ramo del dal vivo e
+ * mostrava la lista globale del modulo, che e' di chiunque si stia giocando.
+ */
+test('senza partita seguita la cronaca dal vivo e vuota', () => {
+  const gol = [{ minuto: '36' }];
+  const cartellini = [{ minuto: 5 }, { minuto: 29 }];
+  const cambi = [{ minuto: 60 }];
+
+  const c = cronacaDi(null, gol, cartellini, cambi);
+  assert.deepEqual(c.gol, []);
+  assert.deepEqual(c.cartellini, []);
+  assert.deepEqual(c.cambi, []);
+});
+
+test('con la partita seguita la cronaca passa intera', () => {
+  const vivo = {
+    stato: '1H', fase: 'primo tempo', casa: 0, ospite: 1,
+    minuto: '36', finita: false, aggiornato: 0,
+  };
+  const gol = [{ minuto: '36' }];
+  const cartellini = [{ minuto: 5 }];
+  const cambi: Array<{ minuto: number }> = [];
+
+  const c = cronacaDi(vivo, gol, cartellini, cambi);
+  assert.equal(c.gol, gol);
+  assert.equal(c.cartellini, cartellini);
+  assert.equal(c.cambi, cambi);
+});
+
+test('le liste vuote sono sempre le stesse, o React ridisegna all infinito', () => {
+  const a = cronacaDi(null, [1], [2], [3]);
+  const b = cronacaDi(null, [4], [5], [6]);
+  assert.equal(a.gol, b.gol);
+  assert.equal(a.cartellini, b.cartellini);
+  assert.equal(a.cambi, b.cambi);
 });

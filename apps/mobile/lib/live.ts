@@ -27,7 +27,7 @@ import type { Match } from '@satanelli/core';
 
 import { prossima } from './data';
 import { supabase } from './supabase';
-import { finestraAperta, leggiEvento, orienta, type Live } from './live-core';
+import { cronacaDi, finestraAperta, leggiEvento, orienta, type Live } from './live-core';
 
 export type { Live } from './live-core';
 
@@ -338,4 +338,29 @@ export function liveDi(match: Match | null | undefined, live: Live | null): Live
     prossima ? { kickoff: prossima.kickoff, casa: prossima.home } : null,
     live,
   );
+}
+
+/**
+ * Tutto il dal vivo di una partita precisa, in una chiamata sola.
+ *
+ * Esiste per non ripetere la guardia in ogni schermata. `useGolVivo` e
+ * `useCronacaVivo` leggono lo stato globale del modulo e non sanno di quale
+ * partita si parla: chi le usa direttamente deve ricordarsi di confrontarla
+ * con quella seguita, e in `match/[id].tsx` non ce l'ho fatto -- la cronaca di
+ * oggi compariva su tutte le partite future.
+ *
+ * Con questo la dimenticanza non e piu possibile: senza `vivo` le liste
+ * tornano vuote.
+ */
+export function useCronacaDi(match: Match | null | undefined): {
+  vivo: Live | null;
+  gol: readonly GolVivo[];
+  cartellini: readonly CartellinoVivo[];
+  cambi: readonly CambioVivo[];
+} {
+  const vivo = liveDi(match, useLive());
+  const tuttiGol = useGolVivo();
+  const resto = useCronacaVivo();
+  const filtrata = cronacaDi(vivo, tuttiGol, resto.cartellini, resto.cambi);
+  return { vivo, ...filtrata };
 }

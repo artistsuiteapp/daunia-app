@@ -249,3 +249,37 @@ export function orienta(
   const invertita = Boolean(a) && Boolean(b) && !a.includes(b) && !b.includes(a);
   return invertita ? { ...live, casa: live.ospite, ospite: live.casa } : live;
 }
+
+/**
+ * La cronaca dal vivo appartiene a UNA partita sola: quella che il guardiano
+ * sta seguendo.
+ *
+ * Gol, cartellini e cambi stanno in una variabile globale del modulo, perche'
+ * ce n'e' sempre al massimo una in corso. La scheda di una partita futura pero'
+ * non ha ancora eventi propri, e leggendo quella globale mostrava la cronaca
+ * della partita di oggi: aprendo Foggia-Savoia si leggevano i cartellini di
+ * Monopoli-Foggia.
+ *
+ * `vivo` e' gia' il verdetto giusto -- lo produce `orienta()`, che pretende la
+ * stessa data e la stessa squadra di casa della partita seguita. Qui si usa per
+ * spegnere tutto il resto: senza di lui non esiste nessuna cronaca dal vivo.
+ *
+ * Le liste vuote sono sempre le stesse per identita: React confronta i
+ * risultati cosi', e restituirne di nuove a ogni giro farebbe ridisegnare la
+ * schermata all infinito.
+ */
+const NIENTE_GOL: readonly never[] = [];
+const NIENTE_CARTELLINI: readonly never[] = [];
+const NIENTE_CAMBI: readonly never[] = [];
+
+export function cronacaDi<G, C, S>(
+  vivo: Live | null,
+  gol: readonly G[],
+  cartellini: readonly C[],
+  cambi: readonly S[],
+): { gol: readonly G[]; cartellini: readonly C[]; cambi: readonly S[] } {
+  if (!vivo) {
+    return { gol: NIENTE_GOL, cartellini: NIENTE_CARTELLINI, cambi: NIENTE_CAMBI };
+  }
+  return { gol, cartellini, cambi };
+}

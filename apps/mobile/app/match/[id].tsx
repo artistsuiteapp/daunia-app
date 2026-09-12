@@ -18,7 +18,7 @@ import { longDate, shortDate, thousands } from '../../lib/format';
 import { matchById, matches } from '../../lib/data';
 import { faseDi } from '../../lib/match-center-core';
 import { useDatiPartita } from '../../lib/fanplay';
-import { useLive, liveDi, useGolVivo, useCronacaVivo } from '../../lib/live';
+import { useCronacaDi } from '../../lib/live';
 import { etichettaFase } from '../../lib/live-core';
 
 type Tab = 'formazione' | 'gioco' | 'eventi' | 'dati';
@@ -34,11 +34,9 @@ export default function MatchDetail() {
     TAB_VALIDE.includes(tab as Tab) ? (tab as Tab) : 'eventi',
   );
   const match = matchById(String(id));
-  const vivo = liveDi(match, useLive());
-  // la cronologia che il guardiano registra mentre si gioca: minuto e punteggio,
-  // senza il nome di chi ha segnato
-  const golVivo = useGolVivo();
-  const cronacaVivo = useCronacaVivo();
+  // la cronologia che il guardiano registra mentre si gioca. Passa per la
+  // partita di questa scheda: se non e' quella seguita, le liste sono vuote
+  const { vivo, gol: golVivo, cartellini, cambi } = useCronacaDi(match);
 
   /**
    * La cronaca: gol, cartellini e cambi in un elenco solo, in ordine di minuto.
@@ -223,7 +221,7 @@ export default function MatchDetail() {
               ))}
             </View>
           </>
-        ) : (golVivo.length || cronacaVivo.cartellini.length || cronacaVivo.cambi.length) ? (
+        ) : (golVivo.length || cartellini.length || cambi.length) ? (
           <>
             <GroupLabel>Cronaca</GroupLabel>
             <View style={gutter}>
@@ -241,7 +239,7 @@ export default function MatchDetail() {
                   testo: g.chi ?? `${g.casa ?? 0}–${g.ospiti ?? 0}`,
                   icona: 'football' as const,
                 })),
-                ...cronacaVivo.cartellini.map((c, i) => ({
+                ...cartellini.map((c, i) => ({
                   chiave: `c-${c.minuto}-${i}`,
                   ordine: c.minuto ?? 0,
                   nostro: c.nostro,
@@ -249,7 +247,7 @@ export default function MatchDetail() {
                   testo: c.chi ?? (c.rosso ? 'espulso' : 'ammonito'),
                   icona: c.rosso ? ('close-circle' as const) : ('square' as const),
                 })),
-                ...cronacaVivo.cambi.map((c, i) => ({
+                ...cambi.map((c, i) => ({
                   chiave: `s-${c.minuto}-${i}`,
                   ordine: c.minuto ?? 0,
                   nostro: c.nostro,
