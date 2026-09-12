@@ -12,6 +12,7 @@ import { useLive, liveDi } from '../lib/live';
 import { etichettaFase } from '../lib/live-core';
 import { salaAperta } from '../lib/sala';
 import { PredictionCallout } from './PredictionCallout';
+import { CampoSpostato } from './CampoSpostato';
 
 type Tone = 'accent' | 'dark';
 
@@ -90,6 +91,8 @@ export function EventCard({ match, tone = 'dark', compatta = false }: {
 
       {/* il richiamo al pronostico sta sulla partita di riferimento, prima dei
           bottoni: e la prima cosa da fare quando apri l'app prima della gara */}
+      {!compatta ? <CampoSpostato match={match} /> : null}
+
       {accent && !played && !live && !compatta ? <PredictionCallout matchId={match.id} onAccent /> : null}
 
       {accent && !compatta ? (
