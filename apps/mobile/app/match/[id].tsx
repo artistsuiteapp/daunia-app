@@ -18,7 +18,7 @@ import { longDate, shortDate, thousands } from '../../lib/format';
 import { matchById, matches } from '../../lib/data';
 import { faseDi } from '../../lib/match-center-core';
 import { useDatiPartita } from '../../lib/fanplay';
-import { useLive, liveDi, useGolVivo } from '../../lib/live';
+import { useLive, liveDi, useGolVivo, useCronacaVivo } from '../../lib/live';
 import { etichettaFase } from '../../lib/live-core';
 
 type Tab = 'formazione' | 'gioco' | 'eventi' | 'dati';
@@ -38,6 +38,7 @@ export default function MatchDetail() {
   // la cronologia che il guardiano registra mentre si gioca: minuto e punteggio,
   // senza il nome di chi ha segnato
   const golVivo = useGolVivo();
+  const cronacaVivo = useCronacaVivo();
 
   /**
    * La cronaca: gol, cartellini e cambi in un elenco solo, in ordine di minuto.
@@ -222,18 +223,47 @@ export default function MatchDetail() {
               ))}
             </View>
           </>
-        ) : golVivo.length ? (
+        ) : (golVivo.length || cronacaVivo.cartellini.length || cronacaVivo.cambi.length) ? (
           <>
             <GroupLabel>Cronaca</GroupLabel>
             <View style={gutter}>
-              {golVivo.map((g, i) => (
-                <RigaEvento
-                  key={`${g.minuto}-${i}`}
-                  inCasa={match.foggiaHome ? g.nostro : !g.nostro}
-                  minuto={g.minuto ? `${g.fonte === 'stimato' ? '~' : ''}${g.minuto}'` : '–'}
-                  testo={g.chi ?? `${g.casa ?? 0}–${g.ospiti ?? 0}`}
-                />
-              ))}
+              {/*
+                * Gol, cartellini e cambi in un elenco solo, in ordine di minuto.
+                * Prima c'erano solo i gol: durante la partita si sapeva che si
+                * stava perdendo ma non che eravate in dieci.
+                */}
+              {[
+                ...golVivo.map((g, i) => ({
+                  chiave: `g-${g.minuto}-${i}`,
+                  ordine: Number(g.minuto) || 0,
+                  nostro: g.nostro,
+                  minuto: g.minuto ? `${g.fonte === 'stimato' ? '~' : ''}${g.minuto}'` : '–',
+                  testo: g.chi ?? `${g.casa ?? 0}–${g.ospiti ?? 0}`,
+                })),
+                ...cronacaVivo.cartellini.map((c, i) => ({
+                  chiave: `c-${c.minuto}-${i}`,
+                  ordine: c.minuto ?? 0,
+                  nostro: c.nostro,
+                  minuto: c.minuto ? `${c.minuto}'` : '–',
+                  testo: `${c.rosso ? '🟥' : '🟨'} ${c.chi ?? 'espulso'}`,
+                })),
+                ...cronacaVivo.cambi.map((c, i) => ({
+                  chiave: `s-${c.minuto}-${i}`,
+                  ordine: c.minuto ?? 0,
+                  nostro: c.nostro,
+                  minuto: c.minuto ? `${c.minuto}'` : '–',
+                  testo: c.entra ? `↔ ${c.entra} per ${c.esce ?? '—'}` : `↔ esce ${c.esce ?? '—'}`,
+                })),
+              ]
+                .sort((a, b) => a.ordine - b.ordine)
+                .map((e) => (
+                  <RigaEvento
+                    key={e.chiave}
+                    inCasa={match.foggiaHome ? e.nostro : !e.nostro}
+                    minuto={e.minuto}
+                    testo={e.testo}
+                  />
+                ))}
             </View>
             {golVivo.some((g) => !g.chi) ? (
               <GroupNote>

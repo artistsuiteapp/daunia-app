@@ -18,6 +18,7 @@ import { trovaId, formazioniDi } from './legapro.ts';
 import { trovaPartita, eventiDi, CASA as LSA_CASA, OSPITI as LSA_OSPITI } from './livescore.ts';
 import {
   contaGol, concorda, titoloGol, golVero, golDalTabellone, minutoStimato, cronologia,
+  cartelliniECambi,
   type EventoAF, type Punteggio,
 } from './punteggio.ts';
 
@@ -531,8 +532,19 @@ Deno.serve(async (req) => {
    * partita. E se API-Football per questa gara non ha eventi, `af_a_vuoto` si
    * arrende dopo tre tentativi e il budget in `quota_af` chiude comunque.
    */
-  const nomiMancanti = (riga.casa ?? 0) + (riga.ospiti ?? 0)
-    > (riga.casa_af ?? 0) + (riga.ospiti_af ?? 0);
+  /*
+   * Manca un nome anche quando il gol c'e' ma il marcatore e' vuoto.
+   *
+   * live-score-api pubblica il gol subito e il nome qualche minuto dopo: in
+   * Monopoli-Foggia il gol del 36' e' arrivato senza marcatore, e con il solo
+   * confronto dei punteggi il guardiano si riteneva a posto e tornava a
+   * rileggere ogni otto minuti. Il nome restava fuori per tutto quel tempo,
+   * proprio nei minuti in cui la gente guarda.
+   */
+  const golSenzaNome = ((riga.gol ?? []) as Array<{ chi?: string | null }>)
+    .some((g) => !g.chi);
+  const nomiMancanti = golSenzaNome
+    || (riga.casa ?? 0) + (riga.ospiti ?? 0) > (riga.casa_af ?? 0) + (riga.ospiti_af ?? 0);
   const pausa = nomiMancanti ? MINUTO : PAUSA_EVENTI;
 
   // Se la fonte ha gia risposto a vuoto tre volte per questa partita, non si
@@ -592,6 +604,20 @@ Deno.serve(async (req) => {
       // gol, ma si sa chi e quando. La scheda partita legge questa colonna.
       const conNomi = cronologia(lista, nostroId, inCasa);
       if (conNomi.length) patch.gol = conNomi;
+
+      /*
+       * Cartellini e cambi, che prima si buttavano via.
+       *
+       * Arrivano nella stessa risposta dei gol -- non costano una chiamata in
+       * piu -- e finora finivano nel nulla perche non c'era dove metterli.
+       * Nell'app comparivano il giorno dopo, con l'aggiornamento dati.
+       *
+       * Si riscrive tutta la lista invece di aggiungere: la fonte manda sempre
+       * tutto, e rimpiazzare non puo lasciare orfani ne duplicati.
+       */
+      const { cartellini, cambi } = cartelliniECambi(lista, nostroId);
+      patch.cartellini = cartellini;
+      patch.cambi = cambi;
     }
 
     const inutile = rifiutata || (IN_GIOCO.includes(stato) && !lista.length);
