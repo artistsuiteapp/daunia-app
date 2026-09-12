@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-12T03:19:03.689Z",
+    "generatedAt": "2026-09-12T10:10:35.855Z",
     "season": "2026-2027",
     "competition": "Serie C",
     "sources": {
@@ -20,6 +20,7 @@
       "Solo 2 giocatori su 23 hanno la foto: la rosa sul sito del club e ferma alla stagione precedente.",
       "Il negozio non ha restituito prodotti: la sezione shop resta vuota.",
       "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
+      "Divieti, FoggiaToday: HTTP 403 su https://www.foggiatoday.it/rss",
       "Trasferta a Monopoli fra meno di una settimana e nessuna notizia sul divieto: controlla a mano, potrebbe essersi rotto il riconoscimento."
     ]
   },
@@ -4607,6 +4608,28 @@
     ],
     "articoli": [
       {
+        "id": "foggiacalciomania-36468322fe",
+        "testata": "foggiacalciomania",
+        "titolo": "Monopoli-Foggia: le ultimissime",
+        "sommario": "Il Foggia oggi alle 18.00 in campo contro il Monopoli allo stadio San Nicola di Bari. Auteri dovrà fare a meno di 4 elementi: Queste le probabili formazioni: MONOPOLI (3-5-2)…",
+        "url": "https://foggiacalciomania.com/news-foggia-calcio/ultimissime/monopoli-foggia-le-ultimissime-6/",
+        "data": "2026-09-12T06:06:18.000Z",
+        "autore": "Redazione FCM 24 ore",
+        "categoria": "Ultimissime",
+        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/WhatsApp-Image-2026-09-06-at-21.57.58.jpeg"
+      },
+      {
+        "id": "foggiacalciomania-1904c896f0",
+        "testata": "foggiacalciomania",
+        "titolo": "Monopoli-Foggia: i convocati rossoneri",
+        "sommario": "Sono 21 i convocati di Mister Auteri per il match con il Monopoli, in programma domani sera al San Nicola di Bari. Portieri: Marfella, Saro, Testa Difensori: Todisco, Seck, Di…",
+        "url": "https://foggiacalciomania.com/news-foggia-calcio/monopoli-foggia-i-convocati-rossoneri-3/",
+        "data": "2026-09-11T18:30:08.000Z",
+        "autore": "Redazione FCM 24 ore",
+        "categoria": "News Calcio Foggia 1920",
+        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/08/Foggia-2026-7.jpeg"
+      },
+      {
         "id": "calciofoggia-6097ba0894",
         "testata": "calciofoggia",
         "titolo": "L’avversario il Monopoli",
@@ -4827,28 +4850,6 @@
         "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/page_1.png"
       },
       {
-        "id": "foggiacalciomania-4dad5eae09",
-        "testata": "foggiacalciomania",
-        "titolo": "Todisco: “Mi dispiace per i tifosi. Analizzeremo gli errori con il mister”",
-        "sommario": "In sala stampa interviene Todisco, che oggi ha indossato la fascia del capitano. “Mi dispiace che non abbiamo dato la soddisfazione dei nostri tifosi che sono in tantissimi questa…",
-        "url": "https://foggiacalciomania.com/news-foggia-calcio/todisco-mi-dispiace-per-i-tifosi-analizzeremo-gli-errori-con-il-mister/",
-        "data": "2026-09-06T22:07:33.000Z",
-        "autore": "Roberto Parisi",
-        "categoria": "News Calcio Foggia 1920",
-        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Todisco-2.jpeg"
-      },
-      {
-        "id": "foggiacalciomania-564cfb7554",
-        "testata": "foggiacalciomania",
-        "titolo": "Auteri: “Paghiamo due errori. Potevamo fare meglio, siamo stati anche sfortunati”",
-        "sommario": "“Qualche prestazione individuale è stato al di sotto delle aspettative. Il Cerignola non ci ha creato problemi, abbiamo capito subito come avevano impostato la partita. Sono stati…",
-        "url": "https://foggiacalciomania.com/news-foggia-calcio/intervista/auteri-paghiamo-due-errori-potevamo-fare-meglio-siamo-stati-anche-sfortunati/",
-        "data": "2026-09-06T21:49:49.000Z",
-        "autore": "Roberto Parisi",
-        "categoria": "Intervista",
-        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Auteri-329.jpeg"
-      },
-      {
         "id": "calciofoggia-13c3ab38c2",
         "testata": "calciofoggia",
         "titolo": "Todisco: “Dispiace per il risultato, ma abbiamo fatto una buona prestazione. Gol subito a freddo ha condizionato”",
@@ -4915,6 +4916,6 @@
         "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0088-scaled.jpg"
       }
     ],
-    "aggiornatoIl": "2026-09-11T15:56:27.951Z"
+    "aggiornatoIl": "2026-09-12T07:20:51.179Z"
   }
 }
