@@ -64,6 +64,20 @@ export interface Match {
   score: { home: number; away: number } | null;
   venue: string | null;
   city: string | null;
+  /**
+   * C'e solo quando la partita NON si gioca dove dice il calendario.
+   *
+   * In Serie C succede: lavori, capienza, un'ordinanza. Wikipedia porta il
+   * campo di casa della squadra, che e giusto in generale e sbagliato quel
+   * giorno. `venue` e `city` qui sopra sono gia corretti; questo serve a
+   * dirlo a chi il vecchio campo se lo ricorda, e a mostrare da dove viene
+   * la notizia.
+   */
+  campoSpostato?: {
+    eraPrevisto: string | null;
+    perche: string | null;
+    fonti: string[];
+  };
   attendance: number | null;
   referee: string | null;
   goals: Goal[];

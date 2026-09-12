@@ -22,6 +22,7 @@ import { fetchFormazioni } from './src/sources/legapro.mjs';
 import { fetchDivieti } from './src/sources/divieti.mjs';
 import { fetchStampa } from './src/sources/stampa.mjs';
 import { buildStadium } from './src/stadium.mjs';
+import { applicaCampiSpostati } from './src/campi-spostati.mjs';
 import { normalize, validate } from './src/normalize.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
@@ -47,6 +48,16 @@ async function main() {
     step('prodotti (negozio ufficiale)', () => shopSrc.fetchProducts().catch(() => [])),
     step('categorie negozio', () => shopSrc.fetchCategories().catch(() => [])),
   ]);
+
+  /*
+   * Le partite spostate di campo.
+   *
+   * Va fatto QUI, subito dopo Wikipedia e prima di chiunque altro: da questo
+   * punto in poi `wikiSeason.matches` finisce nel bundle, nella scheda partita
+   * e nella pagina dello stadio, e devono dire tutte la stessa cosa.
+   */
+  const avvisiCampi = applicaCampiSpostati(wikiSeason.matches, await leggiCampiSpostati());
+  for (const avviso of avvisiCampi) log(`  ! ${avviso}`);
 
   /*
    * Formazioni, eventi e punteggio dal vivo da API-Football.
@@ -210,7 +221,7 @@ async function main() {
     articoli: stampa.articoli,
     aggiornatoIl: stampa.aggiornatoIl ?? null,
   };
-  bundle.meta.warnings.push(...live.warnings, ...storico.warnings, ...rosaApi.warnings, ...prossima.warnings, ...divieti.warnings, ...esiti.warnings, ...marcatori.warnings, ...formazioni.warnings, ...stampa.warnings);
+  bundle.meta.warnings.push(...avvisiCampi, ...live.warnings, ...storico.warnings, ...rosaApi.warnings, ...prossima.warnings, ...divieti.warnings, ...esiti.warnings, ...marcatori.warnings, ...formazioni.warnings, ...stampa.warnings);
 
   const errors = validate(bundle);
   summary(bundle, nextHome, Date.now() - t0);
@@ -471,5 +482,21 @@ function applicaRisultati(partite, risultati) {
 
     m.status = 'finished';
     m.score = { home: r.golCasa, away: r.golOspiti };
+  }
+}
+
+/**
+ * Le righe scritte a mano in `campi-spostati.json`.
+ *
+ * File assente o JSON storto: si va avanti senza. Un elenco di eccezioni non
+ * deve poter fermare l'aggiornamento di tutto il resto.
+ */
+async function leggiCampiSpostati() {
+  try {
+    const testo = await readFile(path.join(ROOT, 'services/ingest/campi-spostati.json'), 'utf8');
+    const righe = JSON.parse(testo);
+    return Array.isArray(righe) ? righe : [];
+  } catch {
+    return [];
   }
 }
