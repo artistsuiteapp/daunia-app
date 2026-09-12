@@ -1,0 +1,73 @@
+name: Pubblica il sito
+
+# Quando cambia il CODICE su main, il sito va pubblicato subito.
+#
+# Prima non succedeva, ed e il difetto che ha mangiato tre giorni: "Aggiorna
+# dati" pubblica solo quando cambia un DATO, quindi una modifica al codice
+# restava ferma fino al primo giro dell'ingest in cui, per combinazione,
+# cambiava anche un dato. Nel frattempo quel giro ripubblicava main -- che il
+# codice nuovo non ce l'aveva -- e il lavoro spariva dal sito. Ogni volta.
+#
+# Qui non si scarica niente e non si costruisce niente: Vercel costruisce lato
+# suo. Un giro dura meno di un minuto.
+on:
+  push:
+    branches: [main]
+    # I dati li pubblica gia "Aggiorna dati" nel suo stesso giro: rifarlo qui
+    # significherebbe due pubblicazioni per ogni commit del bot.
+    paths-ignore:
+      - 'data/**'
+      - '**/*.md'
+  workflow_dispatch:
+
+concurrency:
+  group: pubblica
+  cancel-in-progress: true
+
+jobs:
+  pubblica:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Pubblica su Vercel
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: team_VGV6aA6Wxde9DLsK3m40Zfou
+          VERCEL_PROJECT_ID: prj_ArSo71wKaFTenDF67HCvPmGXOMkc
+        run: |
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "::error::VERCEL_TOKEN assente: il codice e su main ma il sito resta indietro"
+            exit 1
+          fi
+          if ! npx --yes vercel@latest deploy --prod --yes --token "$VERCEL_TOKEN" > /tmp/deploy.txt 2>&1; then
+            echo "::error::deploy Vercel non riuscito"
+            tail -30 /tmp/deploy.txt
+            exit 1
+          fi
+          tail -3 /tmp/deploy.txt
+
+          # non ci si fida dell'uscita del comando: si guarda il dominio vero
+          for tentativo in 1 2 3; do
+            CODICE=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 https://daunia.vercel.app/) || CODICE=000
+            [ "$CODICE" = "200" ] && break
+            sleep 10
+          done
+          if [ "$CODICE" != "200" ]; then
+            echo "::error::pubblicato, ma daunia.vercel.app risponde $CODICE"
+            exit 1
+          fi
+          echo "daunia.vercel.app: $CODICE"
+
+      # La prova che il codice nuovo e davvero quello servito. Senza questa
+      # riga il giro puo diventare verde con il sito indietro, che e
+      # esattamente il modo in cui il difetto e rimasto nascosto.
+      - name: Controlla che sia arrivato
+        run: |
+          ATTESO=$(echo "${{ github.sha }}" | cut -c1-7)
+          VISTO=$(curl -s --max-time 20 https://daunia.vercel.app/versione.json | grep -oE '"versione":"[a-f0-9]+' | cut -d'"' -f4)
+          echo "atteso $ATTESO, servito $VISTO"
+          if [ "$ATTESO" != "$VISTO" ]; then
+            echo "::warning::il sito serve $VISTO invece di $ATTESO (una pubblicazione piu recente puo averlo superato)"
+          fi
