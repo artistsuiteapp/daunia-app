@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-12T10:10:35.855Z",
+    "generatedAt": "2026-09-12T11:45:39.418Z",
     "season": "2026-2027",
     "competition": "Serie C",
     "sources": {
@@ -4608,6 +4608,17 @@
     ],
     "articoli": [
       {
+        "id": "calciofoggia-b096f4497c",
+        "testata": "calciofoggia",
+        "titolo": "Monopoli-Foggia, al San Nicola di Bari va in scena il derby del riscatto per entrambe le formazioni",
+        "sommario": "E’ il giorno del derby, è il giorno del riscatto. Il Foggia questa sera torna in campo al San Nicola di Bari per affrontare il Monopoli in una sfida che mette in palio molto più…",
+        "url": "https://www.calciofoggia.it/monopoli-foggia-al-san-nicola-di-bari-va-in-scena-il-derby-del-riscatto-per-entrambe-le-formazioni/",
+        "data": "2026-09-12T11:24:46.000Z",
+        "autore": "Tiziano Errichiello",
+        "categoria": "FOGGIA CALCIO",
+        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/stadio-san-nicola.jpg"
+      },
+      {
         "id": "foggiacalciomania-36468322fe",
         "testata": "foggiacalciomania",
         "titolo": "Monopoli-Foggia: le ultimissime",
@@ -4850,17 +4861,6 @@
         "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/page_1.png"
       },
       {
-        "id": "calciofoggia-13c3ab38c2",
-        "testata": "calciofoggia",
-        "titolo": "Todisco: “Dispiace per il risultato, ma abbiamo fatto una buona prestazione. Gol subito a freddo ha condizionato”",
-        "sommario": "Gianmarco Todisco, terzino destro del Foggia, ha commentato a caldo la sconfitta per 0-2 contro l’Audace Cerignola. «Ovviamente dispiace per il risultato, nonostante abbiamo fatto…",
-        "url": "https://www.calciofoggia.it/todisco-dispiace-per-il-risultato-ma-abbiamo-fatto-una-buona-prestazione-gol-subito-a-freddo-ha-condizionato/",
-        "data": "2026-09-06T21:35:00.000Z",
-        "autore": "Armando Borrelli",
-        "categoria": "FOGGIA CALCIO",
-        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/08/Todisco-in-azione-contro-lAltamura-Foto-Antonello-Forcelli.png"
-      },
-      {
         "id": "ilfoggia-b648eda3ee",
         "testata": "ilfoggia",
         "titolo": "Ancora un risultato positivo per la Cosmano",
@@ -4916,6 +4916,6 @@
         "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0088-scaled.jpg"
       }
     ],
-    "aggiornatoIl": "2026-09-12T07:20:51.179Z"
+    "aggiornatoIl": "2026-09-12T11:45:29.608Z"
   }
 }
