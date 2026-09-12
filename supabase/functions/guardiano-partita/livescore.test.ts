@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { travesti, travestiTutti, eLaNostra, CASA, OSPITI } from './livescore.ts';
+import { travesti, travestiTutti, eLaNostra, eventiDi, trovaPartita, CASA, OSPITI } from './livescore.ts';
 import { golVero, contaGol, cronologia } from './punteggio.ts';
 
 /*
@@ -83,4 +83,69 @@ test('riconosce la nostra partita comunque sia scritta', () => {
   assert.equal(eLaNostra({ home: { name: 'SS Monopoli 1966' }, away: { name: 'Calcio Foggia 1920' } }), true);
   assert.equal(eLaNostra({ home: { name: 'FOGGIA' }, away: { name: 'Savoia' } }), true);
   assert.equal(eLaNostra({ home: { name: 'Benevento' }, away: { name: 'Casertana' } }), false);
+});
+
+
+/*
+ * I nomi dei parametri, non solo quelli degli eventi.
+ *
+ * La loro pagina dice che gli eventi si chiedono con `id`. E' sbagliata:
+ * rispondono `success: false` e "Match with id `` does not eixst" -- il
+ * parametro non arriva proprio, e l'errore non dice quale sia il problema.
+ * Il nome giusto e' `match_id`, ed e' quello che l'ingest usa in produzione
+ * da giorni. Questi due test guardano l'indirizzo che parte davvero.
+ */
+function intercetta(risposta: unknown) {
+  const visti: string[] = [];
+  const vero = globalThis.fetch;
+  globalThis.fetch = ((u: string | URL) => {
+    visti.push(String(u));
+    return Promise.resolve(new Response(JSON.stringify(risposta), {
+      status: 200, headers: { 'content-type': 'application/json' },
+    }));
+  }) as typeof fetch;
+  return { visti, basta: () => { globalThis.fetch = vero; } };
+}
+
+test('gli eventi si chiedono con match_id, non con id', async () => {
+  const spia = intercetta({ success: true, data: { event: [] } });
+  try {
+    await eventiDi('730116', { key: 'k', secret: 's' });
+  } finally {
+    spia.basta();
+  }
+  const url = spia.visti[0] ?? '';
+  assert.match(url, /[?&]match_id=730116(&|$)/, `manca match_id: ${url}`);
+  assert.doesNotMatch(url, /[?&]id=730116(&|$)/, 'con `id` rispondono che la partita non esiste');
+});
+
+test('la partita si cerca per competizione, campionato prima e coppa poi', async () => {
+  const spia = intercetta({ success: true, data: { match: [] } });
+  try {
+    await trovaPartita({ key: 'k', secret: 's' });
+  } finally {
+    spia.basta();
+  }
+  assert.equal(spia.visti.length, 2, 'niente in campionato: si guarda anche in coppa');
+  assert.match(spia.visti[0], /matches\/live\.json\?.*competition_id=181/);
+  assert.match(spia.visti[1], /competition_id=180/);
+});
+
+test('trova la nostra partita nel feed e ne prende l id', async () => {
+  const spia = intercetta({
+    success: true,
+    data: { match: [
+      { id: 731197, home: { name: 'Cosenza Calcio' }, away: { name: 'Cavese' }, status: 'IN PLAY', scores: { score: '0 - 0' } },
+      { id: 731200, home: { name: 'Monopoli' }, away: { name: 'Foggia' }, status: 'IN PLAY', scores: { score: '0 - 1' } },
+    ] },
+  });
+  let trovata;
+  try {
+    trovata = await trovaPartita({ key: 'k', secret: 's' });
+  } finally {
+    spia.basta();
+  }
+  assert.equal(trovata?.id, '731200');
+  assert.equal(trovata?.punteggio, '0 - 1');
+  assert.equal(spia.visti.length, 1, 'trovata in campionato: la coppa non si chiede');
 });
