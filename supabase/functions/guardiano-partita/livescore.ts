@@ -134,7 +134,12 @@ async function chiedi(percorso: string, params: Record<string, string>, c: Chiav
 export async function trovaPartita(c: Chiavi): Promise<{ id: string; stato: string; punteggio: string | null } | null> {
   for (const competition_id of [SERIE_C_ITALIA, COPPA_ITALIA_C]) {
     const d = await chiedi('matches/live', { competition_id }, c);
-    const nostra = (d?.match ?? []).find(eLaNostra);
+    // `find(eLaNostra)` NO: `Array.find` passa anche l'indice, che finiva in
+    // `noi`. Al primo elemento diventava `pulisci(0)`, cioe' stringa vuota, e
+    // `includes('')` e' sempre vero: il guardiano avrebbe preso la prima
+    // partita di Serie C del feed e annunciato i gol di un'altra squadra
+    // come nostri.
+    const nostra = (d?.match ?? []).find((m: { home?: { name?: string }; away?: { name?: string } }) => eLaNostra(m));
     if (nostra) {
       return { id: String(nostra.id), stato: String(nostra.status ?? ''), punteggio: nostra.scores?.score ?? null };
     }
@@ -142,8 +147,21 @@ export async function trovaPartita(c: Chiavi): Promise<{ id: string; stato: stri
   return null;
 }
 
-/** Gli eventi della partita, gia' travestiti. */
-export async function eventiDi(id: string, c: Chiavi): Promise<EventoAF[]> {
-  const d = await chiedi('matches/events', { id }, c);
+/**
+ * Gli eventi della partita, gia' travestiti.
+ *
+ * IL PARAMETRO SI CHIAMA `match_id`, NON `id`.
+ *
+ * La loro pagina "getting match events data" dice `id`, ed e' sbagliata:
+ * chiamando con `id` rispondono `success: false` e
+ * "Match with id `` does not eixst" -- refuso loro compreso. Cioe' il
+ * parametro non arriva proprio, e l'errore non dice quale sia il problema.
+ *
+ * Preso da `services/ingest/src/sources/livescore.mjs`, che questa chiamata la
+ * fa da giorni in produzione. Quando il documento e il codice che gira non
+ * sono d'accordo, ha ragione il codice che gira.
+ */
+export async function eventiDi(matchId: string, c: Chiavi): Promise<EventoAF[]> {
+  const d = await chiedi('matches/events', { match_id: matchId }, c);
   return travestiTutti(d?.event);
 }
