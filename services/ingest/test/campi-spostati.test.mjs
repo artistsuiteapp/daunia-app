@@ -29,6 +29,23 @@ test('sposta la partita giusta e lascia stare le altre', () => {
   assert.equal(avvisi.length, 1);
 });
 
+test('funziona anche sulla partita appena uscita da Wikipedia', () => {
+  // Li' i nomi stanno in homeName/awayName, non in home/away: e' la forma su
+  // cui gli spostamenti girano davvero, perche' precedono normalize().
+  const partite = [{
+    kickoff: '2026-09-12T16:00:00.000Z',
+    homeName: 'Monopoli', awayName: 'Foggia',
+    venue: 'Stadio Vito Simone Veneziani', city: 'Monopoli',
+  }];
+  const avvisi = applicaCampiSpostati(partite, [{
+    quando: '2026-09-12', casa: 'Monopoli', ospite: 'Foggia',
+    campo: 'Stadio San Nicola', citta: 'Bari',
+  }]);
+  assert.equal(partite[0].venue, 'Stadio San Nicola');
+  assert.equal(partite[0].city, 'Bari');
+  assert.match(avvisi[0], /da "Stadio Vito Simone Veneziani" a "Stadio San Nicola"/);
+});
+
 test('la data e quella italiana, non UTC', () => {
   // Fischio alle 00:30 del 13 in Italia: per UTC e ancora il 12.
   const partite = [partita('2026-09-12T22:30:00.000Z', 'Monopoli', 'Foggia', 'Veneziani')];

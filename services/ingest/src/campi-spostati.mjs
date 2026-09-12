@@ -35,11 +35,22 @@ function chiave(nome) {
     .replace(/[^a-z0-9]+/g, '');
 }
 
-/** Il nome puo arrivare come stringa o come oggetto squadra. */
-function nomeDi(squadra) {
-  if (!squadra) return '';
-  if (typeof squadra === 'string') return squadra;
-  return squadra.shortName || squadra.name || '';
+/**
+ * Il nome della squadra, comunque sia scritto in quel punto della catena.
+ *
+ * Serve perche la partita cambia forma strada facendo: appena uscita da
+ * Wikipedia ha `homeName`/`awayName`, due stringhe; dopo `normalize()` ha
+ * `home`/`away`, due oggetti squadra. La prima versione leggeva solo la
+ * seconda forma, e siccome gli spostamenti si applicano PRIMA di normalize
+ * non trovava mai niente -- falliva in silenzio, con un avviso che diceva
+ * "la riga si puo togliere" mentre la riga era giusta.
+ */
+function nomeDi(partita, lato) {
+  const diretto = partita?.[lato];
+  if (typeof diretto === 'string') return diretto;
+  if (diretto && typeof diretto === 'object') return diretto.shortName || diretto.name || '';
+  const grezzo = partita?.[`${lato}Name`];
+  return typeof grezzo === 'string' ? grezzo : '';
 }
 
 /** Il giorno della partita in ora italiana, non UTC. */
@@ -73,8 +84,8 @@ export function applicaCampiSpostati(partite, righe) {
 
     const trovate = partite.filter((p) =>
       giornoItaliano(p.kickoff || p.date) === riga.quando
-      && (!casa || chiave(nomeDi(p.home)) === casa)
-      && (!ospite || chiave(nomeDi(p.away)) === ospite));
+      && (!casa || chiave(nomeDi(p, 'home')) === casa)
+      && (!ospite || chiave(nomeDi(p, 'away')) === ospite));
 
     if (!trovate.length) {
       avvisi.push(`Campo spostato ${riga.quando} ${riga.casa}-${riga.ospite}: nessuna partita corrisponde, la riga si puo togliere.`);
