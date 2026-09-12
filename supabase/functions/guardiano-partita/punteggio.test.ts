@@ -1,7 +1,7 @@
 import { strict as assert } from 'node:assert';
 import { test } from 'node:test';
 import {
-  contaGol, concorda, titoloGol, golVero, golDalTabellone, type EventoAF,
+  contaGol, concorda, titoloGol, golVero, golDalTabellone, oraItaliana, type EventoAF,
 } from './punteggio.ts';
 
 const FOGGIA = 521;
@@ -155,4 +155,26 @@ test('il rigore sbagliato non entra nella cronaca', async () => {
   const c = cronologia(e, FOGGIA, true);
   assert.equal(c.length, 1);
   assert.equal(c[0].chi, 'Caio');
+});
+
+/*
+ * L'orario nelle notifiche.
+ *
+ * Il promemoria del pronostico diceva "Manca un'ora" e poteva partire in
+ * qualsiasi punto della finestra: in Monopoli-Foggia e' arrivato con tre
+ * minuti da giocare dicendo ancora un'ora.
+ */
+test('l ora e quella italiana, non quella del server', () => {
+  // le Edge Function girano in UTC: senza fuso questo direbbe 19:00
+  assert.equal(oraItaliana('2026-09-15T19:00:00.000Z'), '21:00');
+});
+
+test('l ora legale finisce e il conto cambia da solo', () => {
+  // fine ottobre: da qui in poi Roma e UTC+1, non piu UTC+2
+  assert.equal(oraItaliana('2026-12-06T14:30:00.000Z'), '15:30');
+});
+
+test('una data illeggibile non stampa Invalid Date dentro una notifica', () => {
+  assert.equal(oraItaliana('domani'), '');
+  assert.equal(oraItaliana(''), '');
 });

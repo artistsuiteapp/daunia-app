@@ -255,3 +255,23 @@ export function cartelliniECambi(
   cambi.sort(perMinuto);
   return { cartellini, cambi };
 }
+
+/**
+ * L'orario come lo direbbe un tifoso: "21:00", ora italiana.
+ *
+ * Serve perche' i testi delle notifiche non devono dire *quanto manca*. Il
+ * promemoria del pronostico diceva "Manca un'ora" ma poteva partire in
+ * qualsiasi punto della finestra, e alla consegna si aggiunge altro ritardo:
+ * in Monopoli-Foggia e arrivato quando mancavano tre minuti e diceva ancora
+ * un'ora. Un orario assoluto resta vero anche se la notifica arriva tardi.
+ *
+ * Il fuso e' scritto qui e non lasciato al server: le Edge Function girano in
+ * UTC, e senza fuso il testo direbbe a tutti un orario sbagliato di due ore.
+ */
+export function oraItaliana(quando: string | number | Date): string {
+  const d = new Date(quando);
+  if (Number.isNaN(d.getTime())) return '';
+  return new Intl.DateTimeFormat('it-IT', {
+    timeZone: 'Europe/Rome', hour: '2-digit', minute: '2-digit',
+  }).format(d);
+}

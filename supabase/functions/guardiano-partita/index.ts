@@ -18,7 +18,7 @@ import { trovaId, formazioniDi } from './legapro.ts';
 import { trovaPartita, eventiDi, CASA as LSA_CASA, OSPITI as LSA_OSPITI } from './livescore.ts';
 import {
   contaGol, concorda, titoloGol, golVero, golDalTabellone, minutoStimato, cronologia,
-  cartelliniECambi,
+  cartelliniECambi, oraItaliana,
   type EventoAF, type Punteggio,
 } from './punteggio.ts';
 
@@ -381,12 +381,24 @@ Deno.serve(async (req) => {
 
   if (promemoriaDaMandare) {
     patch.promemoria_mandato = true;
+    const ora = oraItaliana(riga.kickoff);
     const daAvvisare = await chiNonHaPronosticato(riga.partita);
     if (daAvvisare.length) {
       mirati.push([{
         tipo: 'pronostico',
-        titolo: 'Manca un\'ora',
-        testo: 'Il pronostico si chiude al fischio d\'inizio.',
+        titolo: 'Il pronostico sta per chiudere',
+        /*
+         * L'orario, non quanto manca.
+         *
+         * Il promemoria puo' partire in qualsiasi punto dell'ora che precede il
+         * fischio, e alla consegna si somma altro ritardo. In Monopoli-Foggia e'
+         * arrivato con tre minuti da giocare dicendo ancora "manca un'ora": una
+         * notifica che si smentisce da sola toglie fiducia anche a quelle giuste.
+         * Un orario assoluto resta vero comunque vada la consegna.
+         */
+        testo: ora
+          ? `Si chiude alle ${ora}, al fischio d'inizio.`
+          : 'Si chiude al fischio d\'inizio.',
         tag: `pronostico-${riga.partita}`,
         rotta: '/match-center',
       }, daAvvisare]);
