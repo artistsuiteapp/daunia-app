@@ -239,20 +239,23 @@ export default function MatchDetail() {
                   nostro: g.nostro,
                   minuto: g.minuto ? `${g.fonte === 'stimato' ? '~' : ''}${g.minuto}'` : '–',
                   testo: g.chi ?? `${g.casa ?? 0}–${g.ospiti ?? 0}`,
+                  icona: 'football' as const,
                 })),
                 ...cronacaVivo.cartellini.map((c, i) => ({
                   chiave: `c-${c.minuto}-${i}`,
                   ordine: c.minuto ?? 0,
                   nostro: c.nostro,
                   minuto: c.minuto ? `${c.minuto}'` : '–',
-                  testo: `${c.rosso ? '🟥' : '🟨'} ${c.chi ?? 'espulso'}`,
+                  testo: c.chi ?? (c.rosso ? 'espulso' : 'ammonito'),
+                  icona: c.rosso ? ('close-circle' as const) : ('square' as const),
                 })),
                 ...cronacaVivo.cambi.map((c, i) => ({
                   chiave: `s-${c.minuto}-${i}`,
                   ordine: c.minuto ?? 0,
                   nostro: c.nostro,
                   minuto: c.minuto ? `${c.minuto}'` : '–',
-                  testo: c.entra ? `↔ ${c.entra} per ${c.esce ?? '—'}` : `↔ esce ${c.esce ?? '—'}`,
+                  testo: c.entra ? `${c.entra} per ${c.esce ?? '—'}` : `esce ${c.esce ?? '—'}`,
+                  icona: 'swap-horizontal' as const,
                 })),
               ]
                 .sort((a, b) => a.ordine - b.ordine)
@@ -262,6 +265,7 @@ export default function MatchDetail() {
                     inCasa={match.foggiaHome ? e.nostro : !e.nostro}
                     minuto={e.minuto}
                     testo={e.testo}
+                    icona={e.icona}
                   />
                 ))}
             </View>
@@ -362,7 +366,18 @@ function RigaEvento({ inCasa, minuto, testo, icona = 'football' }: {
       <Ionicons
         name={icona}
         size={13}
-        color={icona === 'close-circle' ? '#E5343E' : icona === 'square' ? '#E8C547' : colors.text}
+        /*
+         * Il colore dice il tipo prima che si legga il nome. Il cambio resta
+         * smorto di proposito: in un elenco dove passa un gol ogni mezz'ora e
+         * un cambio ogni cinque minuti, dargli lo stesso peso fa sembrare ogni
+         * riga un gol -- che e' esattamente come si leggeva prima.
+         */
+        color={
+          icona === 'close-circle' ? '#E5343E'
+            : icona === 'square' ? '#E8C547'
+              : icona === 'swap-horizontal' ? colors.textDim
+                : colors.text
+        }
       />
       <Text style={styles.eventName} numberOfLines={1}>{testo}</Text>
     </View>
