@@ -489,8 +489,23 @@ Deno.serve(async (req) => {
   const minutoVero = e.strProgress ? String(e.strProgress).trim() || null : null;
 
   patch.stato = stato;
-  patch.casa = casa;
-  patch.ospiti = ospiti;
+
+  /*
+   * UNA LETTURA VUOTA NON CANCELLA QUELLO CHE SAPEVAMO.
+   *
+   * E' la regola che mancava, ed e' il motore delle notifiche doppie.
+   * Osservato in Monopoli-Foggia: alle 18:52:16 la fonte ha risposto senza
+   * punteggio, e il guardiano ha scritto `null` sopra un 1-0 che aveva gia'.
+   * Sedici secondi dopo il valore e' tornato, e il confronto col "prima"
+   * (null) l'ha letto come un gol appena segnato. Ogni buco della fonte
+   * diventava un annuncio in piu'.
+   *
+   * Un `null` da una fonte dal vivo non vuol dire "zero a zero": vuol dire
+   * "adesso non lo so". Le due cose non si possono confondere in un'app che
+   * su quel numero manda una notifica a tutti.
+   */
+  if (casa !== null && casa !== undefined) patch.casa = casa;
+  if (ospiti !== null && ospiti !== undefined) patch.ospiti = ospiti;
   // a partita chiusa il minuto non vuol dire piu niente: lasciarlo scritto
   // faceva restare "90+8" sotto il punteggio per ore
   patch.minuto = FINITE.includes(stato) ? null : minutoVero;
@@ -507,7 +522,9 @@ Deno.serve(async (req) => {
     });
   }
 
-  const cambiato = casa !== riga.casa || ospiti !== riga.ospiti;
+  // Con un numero assente non e' cambiato niente: e' solo che non si sa.
+  const cambiato = casa !== null && ospiti !== null
+    && (casa !== riga.casa || ospiti !== riga.ospiti);
   const finita = FINITE.includes(stato);
 
   const inCasa = String(e.strHomeTeam ?? '').toLowerCase().includes('foggia');
@@ -805,6 +822,29 @@ Deno.serve(async (req) => {
         rotta: '/classifica',
       }, chiHaGiocato]);
     }
+  }
+
+  /*
+   * La memoria di cosa e' gia' stato annunciato non si restringe MAI.
+   *
+   * Se un giro la ricostruisce piu' corta -- una lettura andata storta, una
+   * riga riletta a meta' -- il giro dopo riannuncia gol, inizio e formazioni
+   * da capo, perche' non si ricorda piu' di averlo fatto. E' successo
+   * all'intervallo di Monopoli-Foggia: le firme erano tornate a una sola.
+   *
+   * Nel dubbio si tiene tutto: una firma di troppo fa perdere una notifica
+   * che nessuno aspettava, una in meno la manda due volte a tutti.
+   */
+  if (Array.isArray(patch.eventi_detti)) {
+    const prima = new Set((riga.eventi_detti ?? []) as string[]);
+    for (const f of patch.eventi_detti as string[]) prima.add(f);
+    patch.eventi_detti = [...prima];
+  }
+
+  // Stessa regola per la cronaca: si riscrive solo con qualcosa dentro.
+  if (Array.isArray(patch.gol) && patch.gol.length === 0
+      && ((riga.gol ?? []) as unknown[]).length > 0) {
+    delete patch.gol;
   }
 
   await db.from('stato_partita').update(patch).eq('partita', riga.partita);
