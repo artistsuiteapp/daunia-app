@@ -18,7 +18,7 @@ import { trovaId, formazioniDi } from './legapro.ts';
 import { trovaPartita, eventiDi, CASA as LSA_CASA, OSPITI as LSA_OSPITI } from './livescore.ts';
 import {
   contaGol, concorda, titoloGol, golVero, golDalTabellone, minutoStimato, cronologia,
-  cartelliniECambi, oraItaliana,
+  cartelliniECambi, oraItaliana, proteggi,
   type EventoAF, type Punteggio,
 } from './punteggio.ts';
 
@@ -871,29 +871,14 @@ Deno.serve(async (req) => {
   }
 
   /*
-   * La memoria di cosa e' gia' stato annunciato non si restringe MAI.
+   * Prima di scrivere: quello che si sa non si perde.
    *
-   * Se un giro la ricostruisce piu' corta -- una lettura andata storta, una
-   * riga riletta a meta' -- il giro dopo riannuncia gol, inizio e formazioni
-   * da capo, perche' non si ricorda piu' di averlo fatto. E' successo
-   * all'intervallo di Monopoli-Foggia: le firme erano tornate a una sola.
-   *
-   * Nel dubbio si tiene tutto: una firma di troppo fa perdere una notifica
-   * che nessuno aspettava, una in meno la manda due volte a tutti.
+   * La regola sta in proteggi(), dentro punteggio.ts, sotto test. Era qui in
+   * linea e copriva solo i gol -- cartellini e cambi potevano sparire dopo una
+   * lettura a vuoto, e per un rosso sarebbe tornata anche la notifica.
    */
-  if (Array.isArray(patch.eventi_detti)) {
-    const prima = new Set((riga.eventi_detti ?? []) as string[]);
-    for (const f of patch.eventi_detti as string[]) prima.add(f);
-    patch.eventi_detti = [...prima];
-  }
-
-  // Stessa regola per la cronaca: si riscrive solo con qualcosa dentro.
-  if (Array.isArray(patch.gol) && patch.gol.length === 0
-      && ((riga.gol ?? []) as unknown[]).length > 0) {
-    delete patch.gol;
-  }
-
-  await db.from('stato_partita').update(patch).eq('partita', riga.partita);
+  await db.from('stato_partita').update(proteggi(patch, riga as unknown as Record<string, unknown>))
+    .eq('partita', riga.partita);
 
   const esiti = [];
   for (const a of avvisi) esiti.push({ tipo: a.tipo, ...(await diffondi(a)) });

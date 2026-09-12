@@ -1,7 +1,7 @@
 import { strict as assert } from 'node:assert';
 import { test } from 'node:test';
 import {
-  contaGol, concorda, titoloGol, golVero, golDalTabellone, oraItaliana, type EventoAF,
+  contaGol, concorda, titoloGol, golVero, golDalTabellone, oraItaliana, proteggi, type EventoAF,
 } from './punteggio.ts';
 
 const FOGGIA = 521;
@@ -177,4 +177,74 @@ test('l ora legale finisce e il conto cambia da solo', () => {
 test('una data illeggibile non stampa Invalid Date dentro una notifica', () => {
   assert.equal(oraItaliana('domani'), '');
   assert.equal(oraItaliana(''), '');
+});
+
+/*
+ * proteggi(): quello che si sa non si perde.
+ *
+ * All'intervallo di Monopoli-Foggia eventi_detti e tornato a una firma sola e
+ * il guardiano ha riannunciato il gol. Sono le notifiche doppie.
+ */
+test('la memoria di cosa e stato annunciato non si restringe', () => {
+  const riga = { eventi_detti: ['gol-36-noi', 'inizio-1', 'formazioni-1'] };
+  const patch = { eventi_detti: ['gol-36-noi'] };
+
+  const out = proteggi(patch, riga) as { eventi_detti: string[] };
+  assert.deepEqual([...out.eventi_detti].sort(), ['formazioni-1', 'gol-36-noi', 'inizio-1']);
+});
+
+test('una firma nuova si aggiunge, non sostituisce', () => {
+  const riga = { eventi_detti: ['inizio-1'] };
+  const patch = { eventi_detti: ['intervallo-1'] };
+
+  const out = proteggi(patch, riga) as { eventi_detti: string[] };
+  assert.deepEqual([...out.eventi_detti].sort(), ['inizio-1', 'intervallo-1']);
+});
+
+test('una lettura a vuoto non cancella gol, cartellini o cambi', () => {
+  const riga = {
+    gol: [{ minuto: 36 }],
+    cartellini: [{ minuto: 5 }, { minuto: 29 }],
+    cambi: [{ minuto: 60 }],
+  };
+  const patch = { gol: [], cartellini: [], cambi: [], casa: 1 };
+
+  const out = proteggi(patch, riga);
+  assert.equal('gol' in out, false, 'i gol non si toccano');
+  assert.equal('cartellini' in out, false, 'i cartellini nemmeno');
+  assert.equal('cambi' in out, false, 'i cambi nemmeno');
+  assert.equal(out.casa, 1, 'il resto della patch passa');
+});
+
+test('una lista che cresce si scrive: gli eventi non si annullano', () => {
+  const riga = { cartellini: [{ minuto: 5 }] };
+  const patch = { cartellini: [{ minuto: 5 }, { minuto: 29 }] };
+
+  const out = proteggi(patch, riga) as { cartellini: unknown[] };
+  assert.equal(out.cartellini.length, 2);
+});
+
+test('la prima lista di una partita si scrive anche se prima era vuota', () => {
+  const riga = { gol: [] };
+  const patch = { gol: [{ minuto: 12 }] };
+
+  const out = proteggi(patch, riga) as { gol: unknown[] };
+  assert.equal(out.gol.length, 1);
+});
+
+test('una patch che non nomina una lista la lascia stare', () => {
+  const riga = { gol: [{ minuto: 36 }], cartellini: [{ minuto: 5 }] };
+  const patch = { casa: 1, ospiti: 0 };
+
+  const out = proteggi(patch, riga);
+  assert.deepEqual(out, { casa: 1, ospiti: 0 });
+});
+
+test('proteggi non modifica la patch che riceve', () => {
+  // il chiamante la usa ancora dopo: mutarla di nascosto sarebbe una trappola
+  const riga = { gol: [{ minuto: 36 }] };
+  const patch = { gol: [] as unknown[] };
+
+  proteggi(patch, riga);
+  assert.deepEqual(patch, { gol: [] });
 });

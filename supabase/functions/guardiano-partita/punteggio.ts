@@ -275,3 +275,56 @@ export function oraItaliana(quando: string | number | Date): string {
     timeZone: 'Europe/Rome', hour: '2-digit', minute: '2-digit',
   }).format(d);
 }
+
+/**
+ * Mette al sicuro la riga prima di riscriverla: quello che si sa non si perde.
+ *
+ * IL DANNO CHE EVITA
+ *
+ * Il guardiano ricostruisce lo stato a ogni giro. Se una lettura va storta --
+ * la fonte risponde vuota, un timeout, una risposta a meta -- il giro produce
+ * liste vuote che sembrano legittime, e sovrascriverebbero quelle piene.
+ *
+ * Non e' teoria. All'intervallo di Monopoli-Foggia `eventi_detti` e' tornato a
+ * una firma sola: il giro dopo il guardiano non si ricordava piu' di aver
+ * annunciato il gol e lo ha rimandato. Sono le notifiche doppie e triple.
+ *
+ * LA REGOLA
+ *
+ * La memoria di cio' che e' gia' stato annunciato non si restringe mai: si
+ * unisce. Nel dubbio si tiene tutto -- una firma di troppo fa perdere una
+ * notifica che nessuno aspettava, una in meno la manda due volte a tutti.
+ *
+ * Le liste della cronaca si riscrivono solo con qualcosa dentro. Vale per
+ * gol, cartellini e cambi insieme: proteggere solo i gol lasciava sparire due
+ * ammonizioni gia arrivate, e per un rosso avrebbe rimandato la notifica.
+ *
+ * Una lista che passa da piena a piena e' un aggiornamento vero e passa: gli
+ * eventi non si annullano, quindi non si arriva mai a saperne di meno.
+ */
+export const LISTE_CRONACA = ['gol', 'cartellini', 'cambi'] as const;
+
+export function proteggi(
+  patch: Record<string, unknown>,
+  riga: Record<string, unknown>,
+  liste: readonly string[] = LISTE_CRONACA,
+): Record<string, unknown> {
+  const fuori = { ...patch };
+
+  if (Array.isArray(fuori.eventi_detti)) {
+    const tutte = new Set((riga.eventi_detti ?? []) as string[]);
+    for (const f of fuori.eventi_detti as string[]) tutte.add(f);
+    fuori.eventi_detti = [...tutte];
+  }
+
+  for (const nome of liste) {
+    const nuova = fuori[nome];
+    const vecchia = riga[nome];
+    if (Array.isArray(nuova) && nuova.length === 0
+        && Array.isArray(vecchia) && vecchia.length > 0) {
+      delete fuori[nome];
+    }
+  }
+
+  return fuori;
+}
