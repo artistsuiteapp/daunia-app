@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-12T21:00:55.621Z",
+    "generatedAt": "2026-09-12T21:21:59.784Z",
     "season": "2026-2027",
     "competition": "Serie C",
     "sources": {
@@ -5191,10 +5191,109 @@
     ],
     "articoli": [
       {
+        "id": "calciofoggia-c66a0ef9f4",
+        "testata": "calciofoggia",
+        "titolo": "Gallo: “Ci è mancato qualcosa negli ultimi sedici metri. La squadra non manca mai la prestazione, è solo un momento”",
+        "sommario": "Andrea Gallo, centrocampista del Foggia, ha commentato a caldo la sconfitta di Monopoli, intervistato durante “Direttissima”, in onda su FoggiaTv. «Sicuramente ci è mancato…",
+        "url": "https://www.calciofoggia.it/gallo-ci-e-mancato-qualcosa-negli-ultimi-sedici-metri-la-squadra-non-manca-mai-la-prestazione-e-solo-un-momento/",
+        "data": "2026-09-12T18:56:40.000Z",
+        "autore": "Armando Borrelli",
+        "categoria": "FOGGIA CALCIO",
+        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Gallo.jpg"
+      },
+      {
+        "id": "calciofoggia-9705583e2a",
+        "testata": "calciofoggia",
+        "titolo": "Auteri: “Abbiamo giocato una buona partita, ma non siamo stati risoluti. Peccato, teniamoci la prestazione”",
+        "sommario": "Gaetano Auteri ha analizzato a caldo la sconfitta di Monopoli, riconoscendo il dispiacere ma valorizzando il rendimento complessivo della squadra, nell’intervista durante…",
+        "url": "https://www.calciofoggia.it/auteri-abbiamo-giocato-una-buona-partita-ma-non-siamo-stati-risoluti-peccato-teniamoci-la-prestazione/",
+        "data": "2026-09-12T18:50:06.000Z",
+        "autore": "Armando Borrelli",
+        "categoria": "FOGGIA CALCIO",
+        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Auteri-al-San-Nicola-di-Bari-contro-il-Monopoli-Foto-Antonellis-Calcio-Foggia-1920.jpeg"
+      },
+      {
+        "id": "foggiacalciomania-f20b8f090a",
+        "testata": "foggiacalciomania",
+        "titolo": "Gallo: “Arriveranno anche i risultati”",
+        "sommario": "A parlare per la squadra è Andrea Gallo. “Ci è mancato qualcosa negli ultimi sedici metri, così come la settimana scorsa. La squadra ha dato tutto, gli episodi in questo…",
+        "url": "https://foggiacalciomania.com/news-foggia-calcio/sala-stampa/gallo-arriveranno-anche-i-risultati/",
+        "data": "2026-09-12T18:47:07.000Z",
+        "autore": "Roberto Parisi",
+        "categoria": "Sala stampa",
+        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Gallo.jpeg"
+      },
+      {
+        "id": "calciofoggia-5b4a27f719",
+        "testata": "calciofoggia",
+        "titolo": "Colombo: “Partita di equilibrio, abbiamo capitalizzato l’unica occasione. Foggia ha strutturato una squadra importante”",
+        "sommario": "Alberto Colombo, allenatore del Monopoli, ha commentato a caldo la vittoria contro il Foggia al San Nicola, nell’intervista durante “Direttissima”, in onda su FoggiaTv. «Ormai le…",
+        "url": "https://www.calciofoggia.it/colombo-partita-di-equilibrio-abbiamo-capitalizzato-lunica-occasione-foggia-ha-strutturato-una-squadra-importante/",
+        "data": "2026-09-12T18:44:56.000Z",
+        "autore": "Armando Borrelli",
+        "categoria": "FOGGIA CALCIO",
+        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2024/09/Mister-Colombo-foto-Antonello-Forcelli.jpeg"
+      },
+      {
+        "id": "foggiacalciomania-d6e6cc40c8",
+        "testata": "foggiacalciomania",
+        "titolo": "Auteri: “Tanto gioco, ma concretizziamo poco”",
+        "sommario": "A fine gara Auteri commenta una partita sicuramente non facile. “Abbiamo creato tanto senza concretizzare, concedendo poco. Buona partita ma poi abbiamo perso. In area di rigore…",
+        "url": "https://foggiacalciomania.com/news-foggia-calcio/sala-stampa/auteri-tanto-gioco-ma-concretizziamo-poco/",
+        "data": "2026-09-12T18:23:18.000Z",
+        "autore": "Roberto Parisi",
+        "categoria": "Sala stampa",
+        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Auteri-43.jpeg"
+      },
+      {
+        "id": "foggiacalciomania-90baad6cd2",
+        "testata": "foggiacalciomania",
+        "titolo": "Serie C Girone C: risultati e marcatori della 4a giornata",
+        "sommario": "Foggia sconfitto a Monopoli, dal San Nicola di Bari i rossoneri escono sconfitti, vince ancora il Cerignola che in casa strapazza il Giugliano. Il Potenza esce sconfitto da…",
+        "url": "https://foggiacalciomania.com/news-foggia-calcio/serie-c-girone-c-risultati-e-marcatori-della-4a-giornata-2/",
+        "data": "2026-09-12T18:22:12.000Z",
+        "autore": "Redazione FCM 24 ore",
+        "categoria": "News Calcio Foggia 1920",
+        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2025/08/palla334567.jpg"
+      },
+      {
+        "id": "calciofoggia-08568fb1af",
+        "testata": "calciofoggia",
+        "titolo": "Risultati, marcatori e classifica 4ª giornata",
+        "sommario": "In vetta continua la marcia del Sorrento, unica squadra ancora a punteggio pieno con 12 punti. Alle spalle della capolista, con 9 punti, c'è un gruppo formato da Audace Cerignola…",
+        "url": "https://www.calciofoggia.it/risultati-marcatori-e-classifica-4a-giornata/",
+        "data": "2026-09-12T18:15:24.000Z",
+        "autore": "Fabio Bertazzoli",
+        "categoria": "SERIE C",
+        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2025/06/Pallone-Lega-Pro-Decathlon.jpg"
+      },
+      {
+        "id": "foggiacalciomania-953aff412f",
+        "testata": "foggiacalciomania",
+        "titolo": "Top & Flop di Monopoli-Foggia",
+        "sommario": "Tre punti sofferti e pesanti per il Monopoli che grazie ad una rete di Capone e ad un secondo tempo tutto cuore e grinta riesce ad avere la meglio su L'articolo Top & Flop di…",
+        "url": "https://foggiacalciomania.com/news-foggia-calcio/top-flop/top-flop-di-monopoli-foggia-4/",
+        "data": "2026-09-12T18:12:19.000Z",
+        "autore": "Redazione FCM 24 ore",
+        "categoria": "Top & Flop",
+        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Monopoli-Foggia-2.jpg"
+      },
+      {
+        "id": "foggiacalciomania-a78b7c034e",
+        "testata": "foggiacalciomania",
+        "titolo": "Un Foggia lento e prevedibile perde anche con il Monopoli (1-0)",
+        "sommario": "Squadra che non crea occasioni non segna. Squadra che non segna non vince. Possiamo sintetizzarla così la condizione del Foggia con il Monopoli. Lento, prevedibile, gioco in…",
+        "url": "https://foggiacalciomania.com/news-foggia-calcio/la-cronaca/un-foggia-lento-e-prevedibile-perde-anche-con-il-monopoli-1-0/",
+        "data": "2026-09-12T18:04:36.000Z",
+        "autore": "Roberto Parisi",
+        "categoria": "La Cronaca",
+        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Monopoli-Foggia-3.jpg"
+      },
+      {
         "id": "foggiacalciomania-155accad75",
         "testata": "foggiacalciomania",
         "titolo": "Diretta: Monopoli-Foggia 1 – 0 Foggia seconda sconfitta consecutiva",
-        "sommario": "| Monopoli-Foggia 1 – 0 | Rete: 37′ Capone | Monopoli (3-5-2): Tommasi; Colombara, Piccinini, Angileri; Valenti, Greco (64′ Calcagni), Battocchio, Garritano (64′ Gioielli), Tosi…",
+        "sommario": "Il Foggia di mister Auteri esce sconfitto dal San Nicola, è bastato un gol di Capone per regalare i tre punti al Monopoli. Ora martedi il Savoia allo Zaccheria. | L'articolo…",
         "url": "https://foggiacalciomania.com/news-foggia-calcio/diretta-monopoli-foggia-0-0-formazioni-ufficiali/",
         "data": "2026-09-12T15:30:34.000Z",
         "autore": "Redazione FCM 24 ore",
@@ -5301,17 +5400,6 @@
         "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/picerno-calcio.jpg"
       },
       {
-        "id": "calciofoggia-856dafc32b",
-        "testata": "calciofoggia",
-        "titolo": "Tre gare in sette giorni per capire quale possa essere il vero volto del Foggia",
-        "sommario": "La sconfitta interna con l’Audace Cerignola ormai alle spalle e il calendario che non aspetta tempi migliori né da tregua al gruppo guidato da Gaetano Auteri che è chiamato a…",
-        "url": "https://www.calciofoggia.it/tre-gare-in-sette-giorni-per-capire-quale-possa-essere-il-vero-volto-del-foggia/",
-        "data": "2026-09-09T12:25:25.000Z",
-        "autore": "Tiziano Errichiello",
-        "categoria": "FOGGIA CALCIO",
-        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Il-Foggia-in-campo-contro-il-Cerignola-Foto-Antonello-Forcelli.png"
-      },
-      {
         "id": "foggiacalciomania-1f09b136c6",
         "testata": "foggiacalciomania",
         "titolo": "Nonostante il digiuno quello di Monopoli è ancora un campo amico",
@@ -5321,94 +5409,6 @@
         "autore": "Redazione FCM 24 ore",
         "categoria": "Statistiche",
         "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/04/Monopoli-Foggia-2026-1.jpeg"
-      },
-      {
-        "id": "foggiacalciomania-72ab59d742",
-        "testata": "foggiacalciomania",
-        "titolo": "È dal settembre 2019 che mister Auteri contro il Monopoli…",
-        "sommario": "Sono già 3 i faccia a faccia fra Gaetano Auteri e Alberto Colombo nella Serie C. Nel 2022/2023 Pescara-Messina fu 1-0. Nel 2024/2025 sono arrivati Monopoli-Benevento 1-0 e…",
-        "url": "https://foggiacalciomania.com/news-foggia-calcio/statistiche/e-dal-settembre-2019-che-mister-auteri-contro-il-monopoli/",
-        "data": "2026-09-09T07:23:02.000Z",
-        "autore": "Redazione FCM 24 ore",
-        "categoria": "Statistiche",
-        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Auteri-43.jpeg"
-      },
-      {
-        "id": "calciofoggia-7bfc536d72",
-        "testata": "calciofoggia",
-        "titolo": "Abdoulaye Diop di Treviglio dirige Monopoli-Foggia",
-        "sommario": "Sarà il Sig. Abdoulaye Diop della sezione di Treviglio a dirigere l'incontro Monopoli-Foggia, in programma sabato 12 settembre alle ore 18:00, allo Stadio San Nicola di Bari. The…",
-        "url": "https://www.calciofoggia.it/abdoulaye-diop-di-treviglio-dirige-monopoli-foggia/",
-        "data": "2026-09-08T19:04:56.000Z",
-        "autore": "Fabio Bertazzoli",
-        "categoria": "FOGGIA CALCIO",
-        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Diop.png"
-      },
-      {
-        "id": "foggiacalciomania-229139e428",
-        "testata": "foggiacalciomania",
-        "titolo": "Giudice sportivo: ammenda al Calcio Foggia",
-        "sommario": "Il Giudice Sportivo, Dott. Stefano Palazzi, assistito da Irene Papi e dal Rappresentante dell’A.I.A. Sig. Silvano Torrini, nelle sedute del 7 e 8 settembre 2026 ha adottato le…",
-        "url": "https://foggiacalciomania.com/news-foggia-calcio/giudice-sportivo/giudice-sportivo-ammenda-al-calcio-foggia-5/",
-        "data": "2026-09-08T18:12:03.000Z",
-        "autore": "Redazione FCM 24 ore",
-        "categoria": "Giudice sportivo",
-        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2018/06/giudice-sportivo.jpg"
-      },
-      {
-        "id": "foggiacalciomania-a387f036d7",
-        "testata": "foggiacalciomania",
-        "titolo": "Serie C Girone C: risultati e marcatori terza giornata",
-        "sommario": "Rossoneri sconfitti in casa dal Cerignola, pari del Crotone in casa contro il Barletta. Sorrento vittorioso a Giugliano, Picerno strapazza l’Inter 23. Questi i risultati della…",
-        "url": "https://foggiacalciomania.com/news-foggia-calcio/138812/",
-        "data": "2026-09-08T17:53:12.000Z",
-        "autore": "Redazione FCM 24 ore",
-        "categoria": "News Calcio Foggia 1920",
-        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2025/08/palla334567.jpg"
-      },
-      {
-        "id": "foggiacalciomania-86c6dffae3",
-        "testata": "foggiacalciomania",
-        "titolo": "Monopoli-Foggia dirige Diop",
-        "sommario": "Sono state pubblicate le designazioni arbitrali per la quarta giornata del campionato di Serie C. Ecco nel dettaglio le scelte relative al girone C: Altamura – Bari: Arbitro…",
-        "url": "https://foggiacalciomania.com/news-foggia-calcio/designazioni/monopoli-foggia-dirige-diop/",
-        "data": "2026-09-08T15:46:13.000Z",
-        "autore": "Redazione FCM 24 ore",
-        "categoria": "Designazioni",
-        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2016/08/arbitro04.jpg"
-      },
-      {
-        "id": "calciofoggia-77d683e421",
-        "testata": "calciofoggia",
-        "titolo": "Giudice Sportivo: le decisioni relative alla terza giornata",
-        "sommario": "Diramato il comunicato del giudice sportivo relativo le gare della terza giornata di campionato. Clicca qui per leggere il comunicato completo © 2026, CALCIOFOGGIA.IT. Tutti i…",
-        "url": "https://www.calciofoggia.it/giudice-sportivo-le-decisioni-relative-alla-terza-giornata-2/",
-        "data": "2026-09-08T15:37:04.000Z",
-        "autore": "Mario",
-        "categoria": "CALCIO",
-        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2020/09/Zgiudice-sportivo.png"
-      },
-      {
-        "id": "foggiacalciomania-affb48585c",
-        "testata": "foggiacalciomania",
-        "titolo": "Ora Auteri ha tutti gli uomini per mettere in campo il modulo giusto per questo Foggia",
-        "sommario": "Entusiasmo facile quando vinci la prima gara, pareggi schiacciando un avversario come la Salernitata e ti trovi nel derby undicimila spettatori per spingere il Foggia alla…",
-        "url": "https://foggiacalciomania.com/news-foggia-calcio/ora-auteri-ha-tutti-gli-uomini-per-mettere-in-campo-il-modulo-giusto-per-questo-foggia/",
-        "data": "2026-09-08T10:43:45.000Z",
-        "autore": "Roberto Parisi",
-        "categoria": "News Calcio Foggia 1920",
-        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/08/Auteri-32-2.jpeg"
-      },
-      {
-        "id": "calciofoggia-c10372f9aa",
-        "testata": "calciofoggia",
-        "titolo": "Il punto sulla terza giornata",
-        "sommario": "Comanda la Basilicata, Potenza e Picerno , insieme al Sorrento, volano a con tre vittorie di fila e sono a punteggio pieno. Il Potenza liquida il Monopoli e il Picerno cala il…",
-        "url": "https://www.calciofoggia.it/il-punto-sulla-terza-giornata/",
-        "data": "2026-09-08T07:32:39.000Z",
-        "autore": "Mario Schena",
-        "categoria": "SERIE C",
-        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Serie-C-Girone-C.jpg"
       },
       {
         "id": "ilfoggia-9f741afccf",
@@ -5499,6 +5499,6 @@
         "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0088-scaled.jpg"
       }
     ],
-    "aggiornatoIl": "2026-09-12T18:01:07.924Z"
+    "aggiornatoIl": "2026-09-12T21:21:29.496Z"
   }
 }
