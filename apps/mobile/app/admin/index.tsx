@@ -32,7 +32,7 @@ import { usePresenza } from '../../lib/presenza';
 export default function Pannello() {
   const ruolo = useRuolo();
   const gutter = useGutter();
-  const { presenti, quanti } = usePresenza(puoModerare(ruolo));
+  const { presenti, quanti } = usePresenza();
   const [aperte, setAperte] = useState<number | null>(null);
 
   useEffect(() => {

@@ -86,11 +86,9 @@ export function MatchCenter({
     <>
       {fase === 'prima' ? (
         <>
+          {/* i punti li spiega gia la scheda, con i numeri: qui sarebbero due volte */}
           <GroupLabel>Il pronostico</GroupLabel>
           <View style={gutter}><Pronostico match={match} /></View>
-          <GroupNote>
-            Si chiude al fischio d’inizio. Esito indovinato 50 punti, risultato esatto 100.
-          </GroupNote>
         </>
       ) : null}
 

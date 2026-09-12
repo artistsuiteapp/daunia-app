@@ -19,7 +19,7 @@ import { usePresenza } from '../../lib/presenza';
 export default function Online() {
   const ruolo = useRuolo();
   const gutter = useGutter();
-  const { presenti, quanti } = usePresenza(puoModerare(ruolo));
+  const { presenti, quanti } = usePresenza();
 
   if (!puoModerare(ruolo)) {
     return (

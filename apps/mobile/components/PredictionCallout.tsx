@@ -4,7 +4,7 @@ import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 import { colors, radius, space, type } from '../theme/tokens';
-import { myPrediction, useFanplay } from '../lib/fanplay';
+import { usePronostico } from '../lib/pronostici';
 
 /**
  * Richiamo al pronostico dentro la scheda della prossima partita.
@@ -17,8 +17,8 @@ import { myPrediction, useFanplay } from '../lib/fanplay';
 export function PredictionCallout({ matchId, onAccent = false }: {
   matchId: string; onAccent?: boolean;
 }) {
-  useFanplay();
-  const guess = myPrediction(matchId);
+  const { mio } = usePronostico(matchId);
+  const guess: [number, number] | null = mio ? [mio.casa, mio.ospiti] : null;
   const pulse = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {

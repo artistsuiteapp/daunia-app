@@ -3,6 +3,7 @@ import { Platform, StyleSheet, Text, useWindowDimensions, View } from 'react-nat
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { ViewportContext } from '../theme/responsive';
+import { useTracciaPresenza } from '../lib/presenza';
 import { colors, radius, space, type } from '../theme/tokens';
 import { brand } from '../theme/brand';
 
@@ -24,6 +25,8 @@ const FRAME_MAX_HEIGHT = 896;
  * Su iOS e Android non fa nulla: children passano invariati.
  */
 export function AppShell({ children }: { children: ReactNode }) {
+  // chi ha l'app aperta risulta collegato, da qualsiasi schermata
+  useTracciaPresenza();
   const { width, height } = useWindowDimensions();
   const framed = Platform.OS === 'web' && width >= FRAME_BREAKPOINT;
 

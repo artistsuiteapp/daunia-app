@@ -121,19 +121,51 @@ html[data-kb="open"], html[data-kb="open"] body { overflow: hidden; position: re
 const VIEWPORT = `
 (function () {
   var root = document.documentElement;
-  function apply() {
+  var ultimaAltezza = -1;
+  var ultimaTastiera = -1;
+  var inCoda = false;
+
+  function misura() {
+    inCoda = false;
     var vv = window.visualViewport;
-    var h = vv ? vv.height : window.innerHeight;
+    var h = Math.round(vv ? vv.height : window.innerHeight);
     // quanto della finestra copre la tastiera: differenza fra la finestra e la
     // parte davvero visibile, tolto lo scorrimento della parte visibile stessa
     var kb = vv ? Math.max(0, Math.round(window.innerHeight - vv.height - vv.offsetTop)) : 0;
+
+    /*
+     * QUI STAVA IL BUG DELLA TASTIERA CHE SI CHIUDE DA SOLA
+     *
+     * Su iPhone, mentre si scrive, il visualViewport manda 'scroll' in
+     * continuazione: il browser insegue il cursore. Prima ogni evento
+     * riscriveva --app-height e mandava un evento a React, quindi a ogni
+     * lettera battuta l'intera app si rimisurava e si ridisegnava. Una
+     * rimisurazione del contenitore mentre si scrive, su Safari, chiude la
+     * tastiera.
+     *
+     * Adesso si scrive solo quando il numero e davvero cambiato di piu di un
+     * punto, e al massimo una volta per fotogramma. Battere una lettera non
+     * cambia l'altezza della finestra, quindi non succede piu niente.
+     */
+    var cambiata = Math.abs(h - ultimaAltezza) > 1 || Math.abs(kb - ultimaTastiera) > 1;
+    if (!cambiata) return;
+    ultimaAltezza = h;
+    ultimaTastiera = kb;
+
     // con la tastiera aperta si comanda a mano, altrimenti vince dvh
-    if (kb > 80) root.style.setProperty('--app-height', Math.round(h) + 'px');
+    if (kb > 80) root.style.setProperty('--app-height', h + 'px');
     else root.style.removeProperty('--app-height');
     root.style.setProperty('--kb', kb + 'px');
     root.setAttribute('data-kb', kb > 80 ? 'open' : 'closed');
     window.dispatchEvent(new CustomEvent('appviewport', { detail: { height: h, keyboard: kb } }));
   }
+
+  function apply() {
+    if (inCoda) return;
+    inCoda = true;
+    requestAnimationFrame(misura);
+  }
+
   if (window.visualViewport) {
     window.visualViewport.addEventListener('resize', apply);
     window.visualViewport.addEventListener('scroll', apply);
@@ -141,16 +173,26 @@ const VIEWPORT = `
   window.addEventListener('resize', apply);
   window.addEventListener('orientationchange', function () { setTimeout(apply, 120); });
 
-  // Con il contenitore ad altezza fissa iOS non porta da solo il campo attivo
-  // sopra la tastiera: lo si fa qui, dopo che l'animazione dei tasti e finita.
+  /*
+   * Con il contenitore ad altezza fissa iOS non porta da solo il campo attivo
+   * sopra la tastiera: lo si fa qui, dopo che l'animazione dei tasti e finita.
+   * Solo se serve davvero: uno scorrimento morbido su un campo gia visibile
+   * fa partire altri eventi di viewport, che fanno scorrere ancora, e in mezzo
+   * a quel rimbalzo la tastiera se ne va.
+   */
   document.addEventListener('focusin', function (e) {
     var el = e.target;
     if (!el || !el.tagName) return;
     var t = el.tagName.toLowerCase();
     if (t !== 'input' && t !== 'textarea' && !el.isContentEditable) return;
     setTimeout(function () {
-      if (typeof el.scrollIntoView === 'function') {
-        el.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      if (!document.contains(el) || typeof el.getBoundingClientRect !== 'function') return;
+      var r = el.getBoundingClientRect();
+      var vv = window.visualViewport;
+      var alto = vv ? vv.height : window.innerHeight;
+      var fuori = r.top < 8 || r.bottom > alto - 8;
+      if (fuori && typeof el.scrollIntoView === 'function') {
+        el.scrollIntoView({ block: 'center' });
       }
     }, 320);
   });

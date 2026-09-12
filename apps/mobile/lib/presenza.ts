@@ -3,7 +3,7 @@ import { AppState } from 'react-native';
 import type { RealtimeChannel } from '@supabase/supabase-js';
 
 import { supabase } from './supabase';
-import { utenteCorrente } from './auth';
+import { useSessione, utenteCorrente } from './auth';
 import type { Ruolo } from './moderazione';
 
 /**
@@ -106,32 +106,45 @@ async function stacca() {
  * Il canale si apre quando la prima schermata lo chiede e si chiude quando
  * l'ultima se ne va: due schermate aperte insieme non aprono due canali.
  */
-export function usePresenza(attivo = true): { presenti: Presente[]; quanti: number } {
-  const [, forza] = useState(0);
+/**
+ * Si annuncia. Va chiamata una volta sola, in cima all'app.
+ *
+ * QUI STAVA IL MOTIVO PER CUI NON SI VEDEVA MAI NESSUNO
+ *
+ * Il canale si apriva dentro le due schermate del pannello. Quindi comparivi
+ * nell'elenco solo mentre stavi guardando l'elenco, e per vedere qualcun altro
+ * sarebbe servito che anche lui, nello stesso momento, fosse fermo sulla stessa
+ * schermata da amministratore. In pratica: sempre vuoto, o solo te stesso.
+ *
+ * Adesso si annuncia chiunque abbia l'app aperta e un account, da qualsiasi
+ * schermata. Il pannello si limita a leggere.
+ */
+export function useTracciaPresenza(): void {
+  const { utente } = useSessione();
 
   useEffect(() => {
-    // il ruolo arriva dopo il primo disegno: finche non si sa, non si apre
-    // niente. Aprire un canale per poi mostrare "questa parte e per chi modera"
-    // sarebbe un collegamento tenuto aperto per nessuno.
-    if (!attivo) return;
-
-    const l = () => forza((n) => n + 1);
-    ascoltatori.add(l);
-    quantiUsano += 1;
-    if (quantiUsano === 1) void attacca();
+    if (!utente) { void stacca(); return; }
+    void attacca();
 
     const sub = AppState.addEventListener('change', (s) => {
       if (s === 'active') void attacca();
       else void stacca();
     });
 
-    return () => {
-      ascoltatori.delete(l);
-      quantiUsano -= 1;
-      sub.remove();
-      if (quantiUsano === 0) void stacca();
-    };
-  }, [attivo]);
+    return () => { sub.remove(); void stacca(); };
+  }, [utente?.id]);
+}
+
+/** Legge chi c'e. Non apre niente: il canale lo tiene aperto useTracciaPresenza. */
+export function usePresenza(): { presenti: Presente[]; quanti: number } {
+  const [, forza] = useState(0);
+
+  useEffect(() => {
+    const l = () => forza((n) => n + 1);
+    ascoltatori.add(l);
+    l();
+    return () => { ascoltatori.delete(l); };
+  }, []);
 
   return { presenti, quanti: presenti.length };
 }

@@ -12,7 +12,7 @@ import { BackBar } from '../components/BackBar';
 import { Crest } from '../components/Crest';
 import { Countdown } from '../components/Countdown';
 import { MatchCenter } from '../components/MatchCenter';
-import { colors, space, type } from '../theme/tokens';
+import { colors, radius, space, type } from '../theme/tokens';
 import { nextMatch, playedMatches } from '../lib/data';
 import { usePartite } from '../lib/partita-corrente';
 import { useArchivioPagelle } from '../lib/archivio';
@@ -191,11 +191,19 @@ function Porte() {
             key={v.titolo}
             onPress={() => router.push(v.href as never)}
             etichetta={v.titolo}
-            style={{ flexBasis: '48%', flexGrow: 1 }}
+            style={styles.mezza}
           >
+            {/*
+              * Tutte e quattro identiche: stessa altezza, icona sempre nello
+              * stesso punto, sottotitolo sempre su due righe anche quando ne
+              * riempie una. Prima le schede si allungavano ognuna quanto il suo
+              * testo e la griglia veniva a scalini.
+              */}
             <Card style={styles.porta}>
-              <Ionicons name={v.icona} size={20} color={colors.accentBright} />
-              <Text style={styles.portaTitolo}>{v.titolo}</Text>
+              <View style={styles.portaIcona}>
+                <Ionicons name={v.icona} size={19} color={colors.accentBright} />
+              </View>
+              <Text style={styles.portaTitolo} numberOfLines={1}>{v.titolo}</Text>
               <Text style={styles.portaSotto} numberOfLines={2}>{v.sotto}</Text>
             </Card>
           </Premi>
@@ -224,7 +232,13 @@ const styles = StyleSheet.create({
   riga: { ...type.subhead, color: colors.text, flex: 1 },
 
   porte: { flexDirection: 'row', flexWrap: 'wrap', gap: space.md },
-  porta: { padding: space.lg, gap: 5, minHeight: 112 },
+  mezza: { flexBasis: '48%', flexGrow: 1, flexShrink: 1 },
+  porta: { padding: space.lg, gap: 6, height: 132, justifyContent: 'flex-start' },
+  portaIcona: {
+    width: 34, height: 34, borderRadius: radius.md,
+    backgroundColor: colors.accentSoft, alignItems: 'center', justifyContent: 'center',
+    marginBottom: 2,
+  },
   portaTitolo: { ...type.subheadBold, color: colors.text },
   portaSotto: { ...type.caption, color: colors.textDim, lineHeight: 16 },
 });
