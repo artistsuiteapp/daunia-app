@@ -124,10 +124,12 @@ test('si ripassa dai feed solo dopo la soglia', () => {
   assert.equal(daRifare(prima, t0 + SOGLIA), true, 'alla soglia si riparte');
 });
 
-test('la soglia sta sotto le sei ore del cron', () => {
+test('la soglia sta sotto i venti minuti di pg_cron', () => {
   // se fosse piu lunga dell'intervallo fra due giri, ci sarebbero giri che non
-  // guardano mai i feed: e' il difetto per cui le notizie sembravano ferme
-  assert.ok(SOGLIA <= 6 * 60 * 60 * 1000, `soglia di ${SOGLIA / 3600000} ore`);
+  // guardano mai i feed: e' il difetto per cui le notizie sembravano ferme.
+  // Il numero e' venti perche l'ingest lo sveglia sveglia_ingest() ogni venti
+  // minuti; se un giorno quel cron rallenta, questo test va rivisto con lui.
+  assert.ok(SOGLIA <= 20 * 60 * 1000, `soglia di ${SOGLIA / 60000} minuti`);
 });
 
 test('senza giro precedente, o con un giro vuoto, si scarica comunque', () => {

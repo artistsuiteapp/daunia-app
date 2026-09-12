@@ -56,11 +56,21 @@ const PER_TESTATA = 10;
  * ancora fresca, nessuna richiesta" -- e da fuori sembrava che le notizie non
  * si aggiornassero piu.
  *
- * Tre ore vuol dire che ogni giro del cron (che passa ogni sei) rinfresca
- * davvero, e nelle ore delle partite, quando l'ingest gira ogni dieci minuti,
- * il freno regge lo stesso: tre richieste al giorno per testata, non una raffica.
+ * Le tre ore erano tarate sul cron di GitHub, che passava ogni sei. Adesso
+ * l'orologio e' pg_cron su Supabase e sveglia l'ingest ogni venti minuti: con
+ * la soglia a tre ore, otto giri su nove trovavano la rassegna "ancora fresca"
+ * e non guardavano i feed. Una notizia delle 14 poteva comparire alle 16.
+ *
+ * Un quarto d'ora sta appena sotto i venti minuti del cron, quindi ogni giro
+ * rinfresca davvero senza che una piccola oscillazione dell'orario faccia
+ * saltare un turno e aspettare quaranta minuti.
+ *
+ * Il costo e' modesto e va detto: tre feed RSS ogni venti minuti sono un
+ * centinaio scarso di richieste al giorno per testata, che e' esattamente il
+ * ritmo di un lettore RSS qualsiasi. Le pagine degli articoli, che costano
+ * davvero, restano limitate da IMMAGINI_PER_GIRO e si scaricano una volta sola.
  */
-export const SOGLIA = 3 * 60 * 60 * 1000;
+export const SOGLIA = 15 * 60 * 1000;
 
 /**
  * Quante immagini si cercano in un giro solo.
