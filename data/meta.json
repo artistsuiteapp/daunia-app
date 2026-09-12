@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-12T23:00:55.167Z",
+  "generatedAt": "2026-09-12T23:19:44.436Z",
   "season": "2026-2027",
   "competition": "Serie C",
   "sources": {
@@ -17,9 +17,9 @@
     "Anno corretto su Wikipedia per Foggia-Altamura: 2025-08-16 -> 2026-08-16.",
     "Nessuno stemma per \"Inter U23\": il sito del club non ha mai incontrato questa squadra.",
     "Solo 2 giocatori su 23 hanno la foto: la rosa sul sito del club e ferma alla stagione precedente.",
+    "Il negozio non ha restituito prodotti: la sezione shop resta vuota.",
     "Campo spostato 2026-09-12 Monopoli-Foggia: da \"Stadio Vito Simone Veneziani\" a \"Stadio San Nicola\".",
     "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
-    "API-Football rosa: Your account is suspended, check on https://dashboard.api-football.com.",
-    "Divieti, FoggiaToday: HTTP 403 su https://www.foggiatoday.it/rss"
+    "API-Football rosa: Your account is suspended, check on https://dashboard.api-football.com."
   ]
 }
