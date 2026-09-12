@@ -20,9 +20,11 @@ SplashScreen.preventAutoHideAsync().catch(() => {});
 export default function RootLayout() {
   /*
    * Scarica calendario, classifica, rosa e comunicati e li sostituisce a caldo.
-   * Va qui e in nessun altro posto: sta sopra tutte le schermate, quindi quando
-   * arrivano dati nuovi si ridisegnano tutte insieme e nessuna resta indietro a
-   * mostrare numeri diversi da quella accanto.
+   * Va qui perche lo scaricamento deve partire una volta sola per tutta l'app.
+   *
+   * Il ridisegno pero non passa di qui: se ne occupa `useDati()` dentro Screen.
+   * Contare su questo stato per far ridisegnare le schermate non funziona --
+   * i navigatori memorizzano le scene apposta.
    */
   useDatiFreschi();
 

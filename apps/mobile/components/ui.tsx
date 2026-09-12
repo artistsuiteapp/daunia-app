@@ -1,4 +1,5 @@
 import { Fragment, ReactNode, RefObject, useEffect, useMemo, useRef, useState } from 'react';
+import { useDati } from '../lib/bundle-remoto';
 import {
   Animated, LayoutChangeEvent, PanResponder, Platform, Pressable, ScrollView,
   StyleSheet, Text, View, ViewStyle,
@@ -34,6 +35,12 @@ export function Screen({
    */
   riferimento?: RefObject<ScrollView | null>;
 }) {
+  /*
+   * Sta qui e non nelle singole schermate: quando arriva un bundle nuovo
+   * devono ridisegnarsi tutte, e una che se ne dimentica mostrerebbe numeri
+   * diversi da quella accanto.
+   */
+  useDati();
   const insets = useSafeInsets();
   const keyboard = useKeyboardInset();
   // Sotto: la barra delle schede galleggia sopra il contenuto, e con la tastiera

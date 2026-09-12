@@ -22,7 +22,7 @@
  * legge da li, al secondo (lib/live.ts). Questo modulo e per le cose che
  * cambiano una volta ogni tanto.
  */
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useSyncExternalStore } from 'react';
 import { AppState } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -146,4 +146,32 @@ export function useDatiFreschi(): number {
   }, []);
 
   return v;
+}
+
+/**
+ * Fa ridisegnare chi mostra i dati quando arriva un bundle nuovo.
+ *
+ * PERCHE' NON BASTA IL LAYOUT RADICE
+ *
+ * `useDatiFreschi()` alza uno stato nel layout radice, e la prima versione si
+ * fidava che il ridisegno scendesse fino alle schermate. Non e' garantito: i
+ * navigatori memorizzano le scene apposta per non ridisegnare tutto a ogni
+ * cambio del genitore. Il risultato sarebbe stato il peggiore da diagnosticare:
+ * i dati scaricati e applicati davvero, la schermata davanti agli occhi ferma
+ * a prima, e la differenza visibile solo uscendo e rientrando.
+ *
+ * Con la sottoscrizione diretta non conta piu' cosa fa il navigatore.
+ *
+ * Sta dentro `Screen`, il contenitore comune di tutte le schermate, quindi
+ * nessuna puo dimenticarsene.
+ */
+export function useDati(): number {
+  return useSyncExternalStore(
+    (f) => {
+      ascoltatori.add(f);
+      return () => { ascoltatori.delete(f); };
+    },
+    () => versioneDati,
+    () => versioneDati,
+  );
 }
