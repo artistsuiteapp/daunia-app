@@ -103,7 +103,7 @@ export default function Trasferta() {
         <Crest uri={match.home.crest} name={match.home.shortName} size={46} />
         <View style={{ flex: 1 }}>
           <Text style={styles.titolo}>{match.home.shortName} – Foggia</Text>
-          <Text style={styles.quando}>{longDate(match.kickoff)} · {time(match.kickoff)}</Text>
+          <Text style={styles.quando}>{longDate(match.kickoff)}</Text>
           {match.venue ? <Text style={styles.quando}>{match.venue}{match.city ? `, ${match.city}` : ''}</Text> : null}
         </View>
       </View>
