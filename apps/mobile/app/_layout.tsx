@@ -13,10 +13,19 @@ import {
 import { colors } from '../theme/tokens';
 import { durata } from '../theme/motion';
 import { AppShell } from '../components/AppShell';
+import { useDatiFreschi } from '../lib/bundle-remoto';
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
 export default function RootLayout() {
+  /*
+   * Scarica calendario, classifica, rosa e comunicati e li sostituisce a caldo.
+   * Va qui e in nessun altro posto: sta sopra tutte le schermate, quindi quando
+   * arrivano dati nuovi si ridisegnano tutte insieme e nessuna resta indietro a
+   * mostrare numeri diversi da quella accanto.
+   */
+  useDatiFreschi();
+
   // Montserrat regge tutta l'interfaccia: i pesi bassi per il corpo, i corsivi
   // pesanti per numeri e titoli, come nella scritta del logo
   const [loaded, error] = useFonts({

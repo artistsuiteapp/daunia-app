@@ -93,7 +93,7 @@ export default function Notifiche() {
           <Text style={styles.spiegaTesto}>
             {Platform.OS === 'web'
               ? 'Questo browser non supporta le notifiche push. Su iPhone serve iOS 16.4 o più recente.'
-              : 'Le notifiche funzionano nella versione web aggiunta alla schermata Home.'}
+              : 'In questa versione installata non arrivano: Apple le concede solo alle app firmate con un account sviluppatore a pagamento. Nel frattempo le ricevi dalla versione web aggiunta alla schermata Home.'}
           </Text>
         </View>
       ) : (

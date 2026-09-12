@@ -17,3 +17,8 @@ supabase/.branches/
 .vercel
 .env*
 output/
+
+# progetto nativo generato da `expo prebuild`: si rigenera dal codice e dai
+# plugin, e versionarlo significa dover risolvere a mano i conflitti dei Pods
+apps/mobile/ios/
+apps/mobile/android/

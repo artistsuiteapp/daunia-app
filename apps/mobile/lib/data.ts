@@ -1,10 +1,20 @@
 /**
  * Accesso ai dati.
  *
- * I JSON prodotti dall'ingest sono inclusi nel bundle dell'app: la demo apre
- * istantanea e funziona senza rete, che in uno stadio o in una sala riunioni conta.
- * Se REMOTE_BASE e valorizzato, all'avvio si tenta un refresh in background e i
- * dati freschi sostituiscono quelli inclusi. In caso di errore si resta sui bundled.
+ * I JSON prodotti dall'ingest sono cotti dentro l'app: si apre istantanea e
+ * funziona senza rete, che allo stadio conta.
+ *
+ * PERCHE I VALORI SONO `let` E NON `const`
+ *
+ * Sul web la copia cotta bastava: ogni giro dell'ingest ripubblica il sito e chi
+ * apre l'app scarica il bundle nuovo insieme al codice. In un'app installata sul
+ * telefono no: il codice sta nel telefono e non cambia finche non si ricompila.
+ * Con i valori fissi, calendario, classifica, rosa e comunicati sarebbero rimasti
+ * fermi al giorno della compilazione -- per settimane.
+ *
+ * Quindi il bundle si puo sostituire a caldo: `applicaBundle()` riscrive questi
+ * valori e chi li importa vede i nuovi, perche i moduli ES tengono i legami vivi.
+ * Chi scarica e lib/bundle-remoto.ts.
  */
 import type {
   DataBundle, Match, NewsItem, Player, StandingRow,
@@ -15,21 +25,18 @@ import bundled from '../../../data/bundle.json';
 import { editorial } from './editorial';
 import { DEPARTED } from './squad-overrides';
 
-/** Vuoto = solo dati inclusi nel bundle. In produzione: il raw del repo o un CDN. */
-export const REMOTE_BASE = '';
+let base = bundled as unknown as DataBundle;
 
-const base = bundled as unknown as DataBundle;
-
-export const meta = base.meta;
-export const teams = base.teams as Team[];
-export const matches = base.matches as Match[];
-export const standings = base.standings as StandingRow[];
+export let meta = base.meta;
+export let teams = base.teams as Team[];
+export let matches = base.matches as Match[];
+export let standings = base.standings as StandingRow[];
 /**
  * Rosa, senza chi ha lasciato la squadra. Le uscite recenti stanno in
  * squad-overrides.ts: Wikipedia resta indietro su quelle.
  */
-export const squad = (base.squad as Player[]).filter((p) => !DEPARTED.includes(p.shortName));
-export const staff = base.staff as StaffMember[];
+export let squad = (base.squad as Player[]).filter((p) => !DEPARTED.includes(p.shortName));
+export let staff = base.staff as StaffMember[];
 /**
  * Le notizie sono solo quelle scritte da noi.
  *
@@ -51,12 +58,12 @@ export const news: NewsItem[] = [...editorial]
  * E' anche l'unica parte delle notizie che si aggiorna da sola: la scrive
  * l'ingest a ogni giro, mentre i pezzi della redazione stanno nel codice.
  */
-export const clubReleases = (base.news as NewsItem[])
+export let clubReleases = (base.news as NewsItem[])
   .filter((n) => n.kind === 'club')
   .sort((a, b) => String(b.date).localeCompare(String(a.date)));
-export const stadium = base.stadium as Stadium;
-export const tickets = base.tickets as TicketOffer[];
-export const stats = base.stats as TeamStats;
+export let stadium = base.stadium as Stadium;
+export let tickets = base.tickets as TicketOffer[];
+export let stats = base.stats as TeamStats;
 
 /**
  * Formazioni vere delle partite gia giocate.
@@ -65,10 +72,10 @@ export const stats = base.stats as TeamStats;
  * `season` rispondono con la stagione in corso, e le partite vecchie si
  * raggiungono per id. Non e una supposizione, e l'undici sceso in campo.
  */
-export const lineups = ((base as unknown as { lineups?: MatchLineup[] }).lineups ?? []);
+export let lineups = ((base as unknown as { lineups?: MatchLineup[] }).lineups ?? []);
 
 /** La prossima partita con l'id TheSportsDB: serve al punteggio dal vivo. */
-export const prossima = ((base as unknown as { prossima?: Prossima | null }).prossima ?? null);
+export let prossima = ((base as unknown as { prossima?: Prossima | null }).prossima ?? null);
 
 /** Un giocatore nell'undici pubblicato dalla Lega. */
 export type GiocatoreLega = { numero: number | null; nome: string; ruolo: string | null };
@@ -82,7 +89,7 @@ export type ColonnaLega = {
  * E l'unica fonte trovata che dia l'undici della Serie C senza abbonamento, e
  * l'unica in assoluto che dia anche il modulo e l'allenatore.
  */
-export const formazioniUfficiali = (
+export let formazioniUfficiali = (
   (base as unknown as { formazioniUfficiali?: Record<string, { casa: ColonnaLega; ospiti: ColonnaLega }> })
     .formazioniUfficiali ?? {}
 );
@@ -120,7 +127,43 @@ export type MatchLineup = {
   }>;
 };
 
-export const FOGGIA = teams.find((t) => t.isFoggia) ?? null;
+export let FOGGIA = teams.find((t) => t.isFoggia) ?? null;
+
+/**
+ * Sostituisce i dati con quelli appena scaricati.
+ *
+ * Riscrive tutti i valori derivati insieme: se se ne dimentica uno, meta dice
+ * una data e la classifica ne mostra un'altra, che e il difetto peggiore --
+ * sembra che l'app menta invece che essere indietro.
+ *
+ * Non fa da sola il ridisegno: chi chiama guarda `versioneDati` per sapere che
+ * qualcosa e cambiato.
+ */
+export function applicaBundle(nuovo: DataBundle): void {
+  base = nuovo;
+  meta = base.meta;
+  teams = base.teams as Team[];
+  matches = base.matches as Match[];
+  standings = base.standings as StandingRow[];
+  squad = (base.squad as Player[]).filter((p) => !DEPARTED.includes(p.shortName));
+  staff = base.staff as StaffMember[];
+  clubReleases = (base.news as NewsItem[])
+    .filter((n) => n.kind === "club")
+    .sort((a, b) => String(b.date).localeCompare(String(a.date)));
+  stadium = base.stadium as Stadium;
+  tickets = base.tickets as TicketOffer[];
+  stats = base.stats as TeamStats;
+  lineups = (base as unknown as { lineups?: MatchLineup[] }).lineups ?? [];
+  prossima = (base as unknown as { prossima?: Prossima | null }).prossima ?? null;
+  formazioniUfficiali = (
+    base as unknown as { formazioniUfficiali?: Record<string, { casa: ColonnaLega; ospiti: ColonnaLega }> }
+  ).formazioniUfficiali ?? {};
+  FOGGIA = teams.find((t) => t.isFoggia) ?? null;
+  versioneDati += 1;
+}
+
+/** Cresce di uno a ogni bundle nuovo applicato. Serve a far ridisegnare le schermate. */
+export let versioneDati = 0;
 
 // ---------------------------------------------------------------- selettori
 

@@ -7,10 +7,12 @@
     "start": "expo start",
     "start:clear": "expo start -c",
     "web": "expo start --web",
-    "ios": "expo start --ios",
-    "android": "expo start --android",
+    "ios": "expo run:ios",
+    "android": "expo run:android",
     "typecheck": "tsc --noEmit",
-    "export": "expo export --platform web"
+    "export": "expo export --platform web",
+    "prebuild:ios": "expo prebuild --platform ios --clean && node scripts/ios-senza-push.mjs",
+    "ios:device": "npm run prebuild:ios && open ios/IlTifodellaDaunia.xcworkspace"
   },
   "dependencies": {
     "@expo-google-fonts/barlow-condensed": "^0.4.1",

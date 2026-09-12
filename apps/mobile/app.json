@@ -15,7 +15,11 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "io.daunia.app"
+      "bundleIdentifier": "io.daunia.app",
+      "buildNumber": "1",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "package": "io.daunia.app",
@@ -44,7 +48,21 @@
       "expo-status-bar",
       "expo-font",
       "expo-image",
-      "expo-web-browser"
+      "expo-web-browser",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Serve per scegliere la foto del tuo profilo nella Curva.",
+          "cameraPermission": "Serve per scattare la foto del tuo profilo."
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/brand/adaptive-icon.png",
+          "color": "#08080A"
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
