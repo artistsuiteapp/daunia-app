@@ -56,7 +56,26 @@ const DOPO = 3 * 60 * MINUTO;
  * espulsioni. Otto minuti di ritardo su un nome sono accettabili; una
  * sospensione no. Con questi numeri il guardiano sta sotto le trenta chiamate.
  */
-const PAUSA_EVENTI = 8 * MINUTO;
+/**
+ * Ogni quanto si rileggono gli eventi, per fonte.
+ *
+ * Gli otto minuti erano tarati su API-Football: cento chiamate al giorno, e il
+ * 6 settembre una raffica ci e' costata la sospensione a meta partita. Con
+ * live-score-api il tetto e' millecinquecento, e il contatore `quota_af`
+ * protegge solo la vecchia strada -- quel freno stava difendendo un limite che
+ * non esiste piu.
+ *
+ * Non era un dettaglio. La rilettura accelera a un minuto solo quando manca il
+ * nome di un marcatore, e un cartellino non cambia il punteggio: non faceva
+ * scattare niente e restava in coda fino a otto minuti. In Monopoli-Foggia i
+ * due gialli erano nel database molto dopo che li avevano visti tutti.
+ *
+ * Con un minuto e una gara di duecento minuti di finestra il guardiano fa
+ * qualche centinaio di chiamate: dentro il tetto anche con due partite in
+ * settimana. Il ripiego API-Football resta largo, perche' li il limite e' vero.
+ */
+const PAUSA_EVENTI_LSA = MINUTO;
+const PAUSA_EVENTI_AF = 8 * MINUTO;
 const PAUSA_FORMAZIONI = 15 * MINUTO;
 /**
  * Ogni quanto si guarda il sito della Lega per le formazioni.
@@ -562,7 +581,7 @@ Deno.serve(async (req) => {
     .some((g) => !g.chi);
   const nomiMancanti = golSenzaNome
     || (riga.casa ?? 0) + (riga.ospiti ?? 0) > (riga.casa_af ?? 0) + (riga.ospiti_af ?? 0);
-  const pausa = nomiMancanti ? MINUTO : PAUSA_EVENTI;
+  const pausa = nomiMancanti ? MINUTO : (chiaviLSA ? PAUSA_EVENTI_LSA : PAUSA_EVENTI_AF);
 
   // Se la fonte ha gia risposto a vuoto tre volte per questa partita, non si
   // insiste: una gara non coperta si mangerebbe il budget senza dare niente.
