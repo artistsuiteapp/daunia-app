@@ -23,6 +23,8 @@ export type EventoAF = {
   time?: { elapsed?: number | null };
   team?: { id?: number };
   player?: { name?: string | null };
+  /** Nelle sostituzioni e' chi ENTRA: API-Football lo chiama cosi. */
+  assist?: { name?: string | null };
 };
 
 /**
@@ -210,4 +212,46 @@ export function cronologia(eventi: EventoAF[], nostroId: number, inCasa: boolean
     });
   }
   return fuori;
+}
+
+
+export type VoceCartellino = { minuto: number | null; chi: string | null; nostro: boolean; rosso: boolean };
+export type VoceCambio = { minuto: number | null; esce: string | null; entra: string | null; nostro: boolean };
+
+/**
+ * Cartellini e sostituzioni, dalla stessa lista di eventi dei gol.
+ *
+ * IL PEZZO CHE MANCAVA. Durante la partita si salvavano solo i gol, e i
+ * cartellini comparivano nell'app solo il giorno dopo. Per chi segue dal
+ * telefono e' mezza cronaca: sai che si sta perdendo, non sai che siete in
+ * dieci.
+ *
+ * Il secondo giallo conta come rosso: in campo il giocatore esce, e chi legge
+ * vuole sapere quello, non la sottigliezza del regolamento.
+ */
+export function cartelliniECambi(
+  eventi: EventoAF[],
+  nostroId: number,
+): { cartellini: VoceCartellino[]; cambi: VoceCambio[] } {
+  const cartellini: VoceCartellino[] = [];
+  const cambi: VoceCambio[] = [];
+
+  for (const x of eventi) {
+    const minuto = x.time?.elapsed ?? null;
+    const nostro = x.team?.id === nostroId;
+
+    if (x.type === 'Card') {
+      const d = String(x.detail ?? '');
+      // "Second Yellow card, Red Card" contiene tutt'e due: il rosso vince.
+      cartellini.push({ minuto, chi: x.player?.name ?? null, nostro, rosso: d.includes('Red') });
+    } else if (x.type === 'subst') {
+      cambi.push({ minuto, esce: x.player?.name ?? null, entra: x.assist?.name ?? null, nostro });
+    }
+  }
+
+  const perMinuto = (a: { minuto: number | null }, b: { minuto: number | null }) =>
+    (a.minuto ?? 999) - (b.minuto ?? 999);
+  cartellini.sort(perMinuto);
+  cambi.sort(perMinuto);
+  return { cartellini, cambi };
 }

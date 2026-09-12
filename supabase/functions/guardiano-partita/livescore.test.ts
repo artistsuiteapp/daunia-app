@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import { travesti, travestiTutti, eLaNostra, eventiDi, trovaPartita, CASA, OSPITI } from './livescore.ts';
-import { golVero, contaGol, cronologia } from './punteggio.ts';
+import { golVero, contaGol, cronologia, cartelliniECambi } from './punteggio.ts';
 
 /*
  * Il punto di questi test non e' il travestimento in se': e' che quello che
@@ -148,4 +148,49 @@ test('trova la nostra partita nel feed e ne prende l id', async () => {
   assert.equal(trovata?.id, '731200');
   assert.equal(trovata?.punteggio, '0 - 1');
   assert.equal(spia.visti.length, 1, 'trovata in campionato: la coppa non si chiede');
+});
+
+/*
+ * I cartellini e i cambi dal vivo: il pezzo che mancava in Monopoli-Foggia.
+ * Si controlla la catena intera, dagli eventi di live-score-api fino alla
+ * forma che finisce in `stato_partita`.
+ */
+test('il giallo arriva con minuto, nome e lato', () => {
+  const ev = travestiTutti([{ event: 'YELLOW_CARD', time: '5', is_home: false, player: { name: 'G. Todisco' } }]);
+  const { cartellini } = cartelliniECambi(ev, OSPITI);
+  assert.deepEqual(cartellini, [{ minuto: 5, chi: 'G. Todisco', nostro: true, rosso: false }]);
+});
+
+test('il secondo giallo risulta rosso', () => {
+  const ev = travestiTutti([{ event: 'YELLOW_RED_CARD', time: '80', is_home: true, player: { name: 'Tizio' } }]);
+  const { cartellini } = cartelliniECambi(ev, OSPITI);
+  assert.equal(cartellini[0].rosso, true);
+  assert.equal(cartellini[0].nostro, false, 'era del Monopoli');
+});
+
+test('il cambio porta chi esce e chi entra', () => {
+  const ev = travestiTutti([
+    { event: 'SUBSTITUTION', time: '61', is_home: false, player: { name: 'Esce' }, info: { name: 'Entra' } },
+  ]);
+  const { cambi } = cartelliniECambi(ev, OSPITI);
+  assert.deepEqual(cambi, [{ minuto: 61, esce: 'Esce', entra: 'Entra', nostro: true }]);
+});
+
+test('cartellini e cambi escono in ordine di minuto', () => {
+  const ev = travestiTutti([
+    { event: 'RED_CARD', time: '70', is_home: true, player: { name: 'B' } },
+    { event: 'YELLOW_CARD', time: '12', is_home: true, player: { name: 'A' } },
+  ]);
+  const { cartellini } = cartelliniECambi(ev, OSPITI);
+  assert.deepEqual(cartellini.map((c) => c.chi), ['A', 'B']);
+});
+
+test('i gol non finiscono fra i cartellini', () => {
+  const ev = travestiTutti([
+    { event: 'GOAL', time: '10', is_home: true, player: { name: 'X' } },
+    { event: 'GOAL_PENALTY', time: '20', is_home: true, player: { name: 'Y' } },
+  ]);
+  const { cartellini, cambi } = cartelliniECambi(ev, OSPITI);
+  assert.equal(cartellini.length, 0);
+  assert.equal(cambi.length, 0);
 });

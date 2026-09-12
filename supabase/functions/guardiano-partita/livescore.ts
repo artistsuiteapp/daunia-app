@@ -83,7 +83,8 @@ export function travesti(e: EventoLSA): EventoAF | null {
       // deve far partire la notifica dell'espulsione.
       return { type: 'Card', detail: 'Second Yellow card, Red Card', time, team, player };
     case 'SUBSTITUTION':
-      return { type: 'subst', detail: 'Substitution', time, team, player };
+      // `player` esce, `info` entra: e' l'unica fonte che ce li da tutti e due.
+      return { type: 'subst', detail: 'Substitution', time, team, player, assist: { name: e?.info?.name ?? null } };
     default:
       return null;
   }

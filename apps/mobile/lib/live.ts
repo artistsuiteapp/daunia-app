@@ -39,6 +39,9 @@ const BATTITO = 15_000;
 let stato: Live | null = null;
 /** i gol della partita in corso, col minuto: la cronologia che il guardiano registra */
 let gol: GolVivo[] = [];
+/** cartellini e cambi della partita in corso: prima si vedevano solo il giorno dopo */
+let cartellini: CartellinoVivo[] = [];
+let cambi: CambioVivo[] = [];
 /** l'istante del triplice fischio, che decide quando chiude la chat */
 let finitaIl: string | null = null;
 /**
@@ -64,6 +67,29 @@ function annuncia() {
  * Serie C non sempre. Minuto e punteggio invece si sanno, e durante la partita
  * sono la meta che conta -- "48' 0-2" dice quasi tutto.
  */
+/**
+ * Un cartellino visto dal vivo.
+ *
+ * Prima non esisteva: durante la partita si salvavano solo i gol, e i
+ * cartellini comparivano il giorno dopo con l'aggiornamento dati. Per chi
+ * segue dal telefono era mezza cronaca -- sapeva che si stava perdendo, non
+ * che eravate in dieci.
+ */
+export type CartellinoVivo = {
+  minuto: number | null;
+  chi: string | null;
+  /** true se e un giocatore del Foggia */
+  nostro: boolean;
+  rosso: boolean;
+};
+
+export type CambioVivo = {
+  minuto: number | null;
+  esce: string | null;
+  entra: string | null;
+  nostro: boolean;
+};
+
 export type GolVivo = {
   minuto: string | null;
   /** null finche la fonte degli eventi non pubblica il marcatore */
@@ -83,6 +109,8 @@ type Riga = {
   aggiornato_il?: string | null;
   finita_il?: string | null;
   gol?: GolVivo[] | null;
+  cartellini?: CartellinoVivo[] | null;
+  cambi?: CambioVivo[] | null;
   formazione?: FormazioneVivo | null;
 };
 
@@ -106,8 +134,10 @@ function daRiga(r: Riga | null): Live | null {
   }, Number.isFinite(scritto) ? scritto : Date.now());
 }
 
-function applica(letto: Live | null, cronologia?: GolVivo[] | null) {
+function applica(letto: Live | null, cronologia?: GolVivo[] | null, r?: Riga) {
   if (Array.isArray(cronologia)) gol = cronologia;
+  if (Array.isArray(r?.cartellini)) cartellini = r.cartellini;
+  if (Array.isArray(r?.cambi)) cambi = r.cambi;
   if (!letto) { if (Array.isArray(cronologia)) annuncia(); return; }
   stato = letto;
   annuncia();
@@ -127,14 +157,14 @@ async function chiediAlDatabase(): Promise<boolean> {
   if (!supabase || !id) return false;
   const { data, error } = await supabase
     .from('stato_partita')
-    .select('stato, casa, ospiti, minuto, gol, aggiornato_il, finita_il, formazione')
+    .select('stato, casa, ospiti, minuto, gol, cartellini, cambi, aggiornato_il, finita_il, formazione')
     .eq('partita', String(id))
     .maybeSingle();
   if (error || !data) return false;
   const r = data as Riga;
   finitaIl = r.finita_il ?? null;
   formazioneVivo = r.formazione ?? null;
-  applica(daRiga(r), r.gol ?? []);
+  applica(daRiga(r), r.gol ?? [], r);
   return true;
 }
 
@@ -179,7 +209,7 @@ function ascoltaIlDatabase() {
         const r = m.new as Riga;
         finitaIl = r.finita_il ?? null;
         formazioneVivo = r.formazione ?? null;
-        applica(daRiga(r), r.gol ?? []);
+        applica(daRiga(r), r.gol ?? [], r);
       },
     )
     .subscribe();
@@ -262,6 +292,31 @@ export function fineVera(): string | null {
 /** L'undici ufficiale della partita in corso, se il guardiano l'ha gia preso. */
 export function formazioneDalVivo(): FormazioneVivo | null {
   return formazioneVivo;
+}
+
+/** Cartellini e cambi della partita in corso, come li scrive il guardiano. */
+export function useCronacaVivo(): { cartellini: CartellinoVivo[]; cambi: CambioVivo[] } {
+  return useSyncExternalStore(
+    (f) => {
+      ascoltatori = [...ascoltatori, f];
+      return () => { ascoltatori = ascoltatori.filter((x) => x !== f); };
+    },
+    () => cronacaFerma(),
+    () => cronacaFerma(),
+  );
+}
+
+/*
+ * `useSyncExternalStore` confronta il risultato per identita: costruire
+ * l'oggetto a ogni chiamata farebbe girare React all'infinito. Si tiene fermo
+ * e si rifa solo quando una delle due liste cambia davvero.
+ */
+let cronacaCache: { cartellini: CartellinoVivo[]; cambi: CambioVivo[] } = { cartellini, cambi };
+function cronacaFerma() {
+  if (cronacaCache.cartellini !== cartellini || cronacaCache.cambi !== cambi) {
+    cronacaCache = { cartellini, cambi };
+  }
+  return cronacaCache;
 }
 
 export function useGolVivo(): GolVivo[] {
