@@ -15,6 +15,11 @@ import type { ReactNode } from 'react';
  *    tutto quello che sta in fondo finisce sotto i tasti. Qui si misura la parte
  *    visibile e si tiene aggiornata un'altezza vera.
  */
+const SITO = 'https://daunia.vercel.app';
+const TITOLO = 'Il Tifo della Daunia — l’app dei tifosi del Foggia';
+const DESCRIZIONE = 'Pagelle, pronostici, classifica dei tifosi e la Curva dove si discute. '
+  + 'App non ufficiale per i tifosi del Calcio Foggia 1920: progetto indipendente, dati da fonti pubbliche.';
+
 export default function Root({ children }: { children: ReactNode }) {
   return (
     <html lang="it">
@@ -37,10 +42,37 @@ export default function Root({ children }: { children: ReactNode }) {
         <meta name="apple-mobile-web-app-title" content="Tifo Daunia" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-        <meta
-          name="description"
-          content="App non ufficiale per i tifosi del Calcio Foggia 1920. Progetto indipendente, dati da fonti pubbliche."
-        />
+        {/*
+          * Il nome della pagina e la scheda che esce quando si condivide.
+          *
+          * Prima non c'era nessuno dei due: la linguetta del browser mostrava
+          * l'indirizzo, il segnalibro non aveva nome, e il link incollato in un
+          * gruppo usciva nudo — testo blu e basta. Un link cosi non lo apre
+          * nessuno, ed e il modo in cui questa app si passa di mano.
+          *
+          * Vale anche per l'app installata: quando si tocca "Condividi la
+          * partita" viene mandato un indirizzo di questo sito, e l'anteprima
+          * che si vede dall'altra parte la decidono questi tag.
+          */}
+        <title>{TITOLO}</title>
+        <meta name="description" content={DESCRIZIONE} />
+        <meta name="application-name" content="Tifo Daunia" />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Il Tifo della Daunia" />
+        <meta property="og:locale" content="it_IT" />
+        <meta property="og:title" content={TITOLO} />
+        <meta property="og:description" content={DESCRIZIONE} />
+        <meta property="og:url" content={SITO} />
+        <meta property="og:image" content={`${SITO}/anteprima.png`} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Il Tifo della Daunia — pagelle, pronostici e la Curva" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={TITOLO} />
+        <meta name="twitter:description" content={DESCRIZIONE} />
+        <meta name="twitter:image" content={`${SITO}/anteprima.png`} />
 
         <ScrollViewStyleReset />
         <style dangerouslySetInnerHTML={{ __html: CSS }} />

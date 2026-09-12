@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { supabase } from './supabase';
 import { useSessione, utenteCorrente } from './auth';
 import { livelloDi, alProssimoLivello, type Livello } from './match-center-core.ts';
+import { registra } from './misure';
 
 /**
  * Punti, classifiche, livelli e badge, dal lato dell'app.
@@ -172,6 +173,7 @@ export async function caricaBadge(utente?: string): Promise<Badge[]> {
 export async function segnalaCondivisione(): Promise<number> {
   if (!supabase || !utenteCorrente()) return 0;
   const { data, error } = await supabase.rpc('punti_condivisione');
+  registra('condiviso');
   return error ? 0 : Number(data ?? 0);
 }
 

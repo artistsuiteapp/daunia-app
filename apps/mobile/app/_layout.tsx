@@ -67,6 +67,7 @@ export default function RootLayout() {
           <Stack.Screen name="admin/index" />
           <Stack.Screen name="admin/utenti" />
           <Stack.Screen name="admin/online" />
+          <Stack.Screen name="admin/numeri" />
           <Stack.Screen name="accedi" />
           <Stack.Screen name="benvenuto" options={{ animation: 'fade' }} />
           <Stack.Screen name="tickets" />

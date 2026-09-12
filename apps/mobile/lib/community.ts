@@ -2,6 +2,7 @@ import { useEffect, useSyncExternalStore } from 'react';
 import type { Ionicons } from '@expo/vector-icons';
 
 import { supabase, backendAttivo } from './supabase';
+import { registra } from './misure';
 import { maschera } from './filtro-core.ts';
 import { utenteCorrente } from './auth';
 
@@ -256,6 +257,7 @@ export async function addDiscussion(input: { author: string; title: string; body
       argomento: input.topic,
     }).select('id').single();
     if (error) throw new Error(tradotto(error.message));
+    registra('curva_scritto');
     await ricarica();
     return { id: (data as { id: string }).id } as Discussion;
   }
@@ -288,6 +290,7 @@ export async function addReply(on: string, author: string, body: string) {
       discussione: on, autore: u.id, testo: text,
     });
     if (error) throw new Error(tradotto(error.message));
+    registra('curva_scritto');
     await ricarica();
     return;
   }

@@ -75,6 +75,12 @@ export default function Pannello() {
           onPress={() => router.push('/admin/utenti' as never)}
         />
         <Porta
+          icona="bar-chart"
+          titolo="I numeri"
+          sotto="Quanti la usano, e quanti tornano"
+          onPress={() => router.push('/admin/numeri' as never)}
+        />
+        <Porta
           icona="radio"
           titolo="Chi c’è adesso"
           sotto={quanti === 0 ? 'Nessuno collegato' : quanti === 1 ? 'Una persona collegata' : `${quanti} persone collegate`}

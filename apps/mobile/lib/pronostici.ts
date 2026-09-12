@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { supabase } from './supabase';
 import { useSessione, utenteCorrente } from './auth';
 import { scorePrediction } from './prediction-score';
+import { registra } from './misure';
 
 /**
  * I propri pronostici, con com'e' andata.
@@ -259,6 +260,7 @@ export async function salvaPronostico(
   mieiPerPartita = { ...mieiPerPartita, [partita]: { casa, ospiti } };
   salvaCopia();
   avvisaPronostici();
+  registra('pronostico', partita);
   return { ok: true, messaggio: `Salvato: ${casa}–${ospiti}.` };
 }
 

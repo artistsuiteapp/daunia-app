@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import type { Session, User } from '@supabase/supabase-js';
 
 import { supabase, backendAttivo, messaggioErrore } from './supabase';
+import { registra } from './misure';
 
 /**
  * Accesso, registrazione e profilo.
@@ -76,6 +77,7 @@ export async function registrati(nome: string, email: string, password: string) 
   });
   if (error) return { errore: messaggioErrore(error) };
 
+  registra('iscritto');
   // con la conferma via email attiva non c'e sessione finche non si clicca
   return { errore: null, confermaRichiesta: !data.session };
 }
