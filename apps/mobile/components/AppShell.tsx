@@ -4,6 +4,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 import { ViewportContext } from '../theme/responsive';
 import { useTracciaPresenza } from '../lib/presenza';
+import { VersioneNuova } from './VersioneNuova';
+import { useApertura } from '../lib/misure';
 import { colors, radius, space, type } from '../theme/tokens';
 import { brand } from '../theme/brand';
 
@@ -27,6 +29,8 @@ const FRAME_MAX_HEIGHT = 896;
 export function AppShell({ children }: { children: ReactNode }) {
   // chi ha l'app aperta risulta collegato, da qualsiasi schermata
   useTracciaPresenza();
+  // e l'apertura si conta una volta per avvio, senza sapere chi e
+  useApertura();
   const { width, height } = useWindowDimensions();
   const framed = Platform.OS === 'web' && width >= FRAME_BREAKPOINT;
 
@@ -40,6 +44,7 @@ export function AppShell({ children }: { children: ReactNode }) {
     return (
       <ViewportContext.Provider value={null}>
         {children}
+        <VersioneNuova />
       </ViewportContext.Provider>
     );
   }
@@ -57,6 +62,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           <View style={styles.screen}>
             <ViewportContext.Provider value={frame}>
               {children}
+              <VersioneNuova />
             </ViewportContext.Provider>
           </View>
         </View>

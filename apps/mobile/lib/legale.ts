@@ -16,7 +16,7 @@ export type Blocco =
   | { tipo: 'elenco'; voci: string[] }
   | { tipo: 'nota'; testo: string };
 
-export const AGGIORNATO_AL = '5 settembre 2026';
+export const AGGIORNATO_AL = '12 settembre 2026';
 export const CONTATTO = 'addigitalexperts@aol.com';
 
 export const privacy: Blocco[] = [
@@ -28,7 +28,15 @@ export const privacy: Blocco[] = [
   { tipo: 'paragrafo', testo: `Il titolare del trattamento è la persona fisica che gestisce il progetto. Per qualsiasi richiesta si scrive a ${CONTATTO}, e la risposta arriva entro trenta giorni.` },
 
   { tipo: 'titolo', testo: 'Cosa serve per usare l\'app senza account' },
-  { tipo: 'paragrafo', testo: "Senza registrarti non viene raccolto nulla che ti riguardi. Partite, classifica, rosa e statistiche si leggono senza dire chi sei. Quello che scrivi o voti in modalità dimostrativa resta nella memoria del tuo dispositivo e non viene inviato da nessuna parte." },
+  { tipo: 'paragrafo', testo: "Senza registrarti non viene raccolto niente che ti riguardi come persona: non il nome, non l'email, niente che permetta di risalire a te. Partite, classifica, rosa e statistiche si leggono senza dire chi sei. Quello che scrivi o voti senza account resta nella memoria del tuo dispositivo e non viene inviato da nessuna parte." },
+  { tipo: 'paragrafo', testo: "Viene contato quanto l'app viene usata, e per farlo serve distinguere un'installazione dall'altra. Al primo avvio l'app genera un numero casuale, lo tiene sul dispositivo, e lo manda insieme a poche informazioni su cosa è successo — per esempio \"aperta\" o \"messo un pronostico\" — con la data e se sei su telefono o su computer. Serve a sapere quante persone la usano e quante tornano la settimana dopo." },
+  { tipo: 'elenco', voci: [
+    'Quel numero è casuale e non ha niente a che vedere con te: non è il codice del telefono, non è un indirizzo, e non viene condiviso con nessun altro.',
+    "Non viene collegato al tuo account nemmeno se ti registri: nella tabella dove finisce, la colonna per collegarlo non esiste.",
+    'Non ci sono strumenti di terze parti e non ci sono cookie di tracciamento: i dati restano nel database del progetto.',
+    'Si cancellano da soli dopo tredici mesi.',
+    'Sparisce cancellando i dati del sito dal browser, o disinstallando l\'app.',
+  ] },
 
   { tipo: 'titolo', testo: 'Cosa viene raccolto quando ti registri' },
   { tipo: 'elenco', voci: [

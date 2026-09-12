@@ -1,0 +1,15 @@
+# Il Tifo della Daunia
+# Le pagine pubbliche si possono indicizzare. Quelle di servizio e le schede
+# delle persone no: non hanno motivo di finire su un motore di ricerca.
+
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /profilo
+Disallow: /segnalazioni
+Disallow: /bloccati
+Disallow: /notifiche
+Disallow: /accedi
+Disallow: /utente/
+
+Sitemap: https://daunia.vercel.app/sitemap.xml

@@ -5,6 +5,7 @@ import { utenteCorrente } from './auth';
 
 import { scorePrediction } from './prediction-score';
 import { pronosticoDi, ricaricaPronostici, salvaPronostico } from './pronostici';
+import { registra } from './misure';
 
 /**
  * Le tre cose che i tifosi fanno nell'app: dire che ci sono, dare i voti,
@@ -207,6 +208,7 @@ export function rate(matchId: string, playerId: string, vote: number) {
   const forMatch = { ...(store.ratings[matchId] ?? {}), [playerId]: vote };
   store = { ...store, ratings: { ...store.ratings, [matchId]: forMatch } };
   commit();
+  registra('pagella', matchId);
   const u = utenteCorrente();
   if (supabase && u) {
     void supabase.from('voti')
@@ -354,6 +356,7 @@ export function miaPreferenzaMese(mese: string): string | null {
 export function scegliMvp(matchId: string, giocatore: string) {
   store = { ...store, mvp: { ...(store.mvp ?? {}), [matchId]: giocatore } };
   commit();
+  registra('migliore', matchId);
   const u = utenteCorrente();
   if (supabase && u) {
     void supabase.from('mvp_voti')
