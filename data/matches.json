@@ -463,8 +463,8 @@
     "competition": "Serie C",
     "season": "2026-2027",
     "score": null,
-    "venue": "Stadio Vito Simone Veneziani",
-    "city": "Monopoli",
+    "venue": "Stadio San Nicola",
+    "city": "Bari",
     "attendance": null,
     "referee": null,
     "goals": [],
@@ -472,6 +472,14 @@
     "foggiaResult": null,
     "reportUrl": null,
     "source": "wikipedia",
+    "campoSpostato": {
+      "eraPrevisto": "Stadio Vito Simone Veneziani",
+      "perche": "Il Monopoli gioca a Bari: il Veneziani non e agibile per il campionato.",
+      "fonti": [
+        "https://www.calciofoggia.it/",
+        "https://foggiacalciomania.com/"
+      ]
+    },
     "home": {
       "id": "monopoli",
       "name": "SS MONOPOLI 1966",
