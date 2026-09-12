@@ -27,6 +27,28 @@
   ],
   "articoli": [
     {
+      "id": "foggiacalciomania-155accad75",
+      "testata": "foggiacalciomania",
+      "titolo": "Diretta: Monopoli-Foggia 1 – 0 Foggia seconda sconfitta consecutiva",
+      "sommario": "| Monopoli-Foggia 1 – 0 | Rete: 37′ Capone | Monopoli (3-5-2): Tommasi; Colombara, Piccinini, Angileri; Valenti, Greco (64′ Calcagni), Battocchio, Garritano (64′ Gioielli), Tosi…",
+      "url": "https://foggiacalciomania.com/news-foggia-calcio/diretta-monopoli-foggia-0-0-formazioni-ufficiali/",
+      "data": "2026-09-12T15:30:34.000Z",
+      "autore": "Redazione FCM 24 ore",
+      "categoria": "News Calcio Foggia 1920",
+      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2023/03/rete-foggia.jpg"
+    },
+    {
+      "id": "calciofoggia-5eca8d5c30",
+      "testata": "calciofoggia",
+      "titolo": "Monopoli-Foggia 1-0 (risultato finale)",
+      "sommario": "Secondo tempo 90’+9 – Termina 1-0 tra Monopoli e Foggia: decide il gol di Capone al 36′. 90’+8 – Decisione finale: niente calcio di rigore. 90’+7 – Altra carta FVS giocata dal…",
+      "url": "https://www.calciofoggia.it/monopoli-foggia-campionato-2026-2027/",
+      "data": "2026-09-12T15:00:46.000Z",
+      "autore": "Armando Borrelli",
+      "categoria": "FOGGIA CALCIO",
+      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Monopoli-Foggia.png"
+    },
+    {
       "id": "calciofoggia-b096f4497c",
       "testata": "calciofoggia",
       "titolo": "Monopoli-Foggia, al San Nicola di Bari va in scena il derby del riscatto per entrambe le formazioni",
@@ -236,17 +258,6 @@
       "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/09/IMG_1496-scaled.jpg"
     },
     {
-      "id": "calciofoggia-a97fdc292b",
-      "testata": "calciofoggia",
-      "titolo": "Risultati, marcatori e classifica 3ª giornata",
-      "sommario": "In vetta alla classifica continua la marcia del Picerno, protagonista di un netto 4-1 contro l’Inter U23. Il Picerno resta così a punteggio pieno con 9 punti, insieme a Potenza e…",
-      "url": "https://www.calciofoggia.it/risultati-marcatori-e-classifica-3a-giornata/",
-      "data": "2026-09-07T21:09:45.000Z",
-      "autore": "Fabio Bertazzoli",
-      "categoria": "SERIE C",
-      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/02/serie_c_pallone_2025_2026.webp"
-    },
-    {
       "id": "ilfoggia-7fb6b557bb",
       "testata": "ilfoggia",
       "titolo": "IL CERIGNOLA ROVINA LA FESTA AL FOGGIA.",
@@ -267,17 +278,6 @@
       "autore": "Foggia Calcio Movie",
       "categoria": "Gallery",
       "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/09/IMG_2479-scaled.jpg"
-    },
-    {
-      "id": "foggiacalciomania-d3be279d55",
-      "testata": "foggiacalciomania",
-      "titolo": "Lo Zac su Foggia-Audace Cerignola. Il racconto della partita",
-      "sommario": "Vuoi leggere gratuitamente il giornale che racconta le partite del Foggia? Clicca qui sfogliare gratuitamente il giornale Lo ZAC Lo Zac 6 settembre 2026 L'articolo Lo Zac su…",
-      "url": "https://foggiacalciomania.com/news-foggia-calcio/lo-zac-su-foggia-audace-cerignola-il-racconto-della-partita/",
-      "data": "2026-09-06T22:42:25.000Z",
-      "autore": "Roberto Parisi",
-      "categoria": "News Calcio Foggia 1920",
-      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/page_1.png"
     },
     {
       "id": "ilfoggia-b648eda3ee",
@@ -335,5 +335,5 @@
       "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0088-scaled.jpg"
     }
   ],
-  "aggiornatoIl": "2026-09-12T14:51:13.681Z"
+  "aggiornatoIl": "2026-09-12T18:01:07.924Z"
 }
