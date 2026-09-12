@@ -91,9 +91,9 @@ export function AzioniContenuto({ tipo, id, autore, autoreNome, onFatto }: {
   async function nascondiOra() {
     if (tipo === 'trasferta' || tipo === 'profilo' || inCorso) return;
     setInCorso(true);
-    const ok = await nascondi(tipo, id, true);
+    const esito = await nascondi(tipo, id, true);
     setInCorso(false);
-    setEsito(ok ? 'Nascosto a tutti.' : 'Non è riuscito.');
+    setEsito(esito.ok ? 'Nascosto a tutti.' : `Non è riuscito. ${esito.perche ?? ''}`.trim());
     onFatto?.();
   }
 
