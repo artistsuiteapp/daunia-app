@@ -16,6 +16,17 @@ import { scadenza } from '../util.mjs';/**
  * risponde con `players: []` su Serie A, B e C italiane, quindi non e un buco
  * della Serie C ma dell'endpoint.
  *
+ * I NOMI DEGLI EVENTI VANNO COPIATI DAI LORO DOCUMENTI, NON INDOVINATI.
+ * Il primo giro li aveva indovinati: cercava `PENALTY`, che da loro non
+ * esiste -- si chiama `GOAL_PENALTY`. Un gol su rigore non entrava in nessun
+ * ramo e finiva nel nulla, senza un errore e senza un avviso: il tabellino
+ * diceva 1-0 con un solo marcatore su due. Stessa storia per
+ * `YELLOW_RED_CARD`, il secondo giallo.
+ *
+ * L'elenco completo, dalla loro pagina "getting match events data":
+ * GOAL, GOAL_PENALTY, OWN_GOAL, YELLOW_CARD, RED_CARD, YELLOW_RED_CARD,
+ * SUBSTITUTION, MISSED_PENALTY.
+ *
  * Le credenziali stanno in LSA_KEY e LSA_SECRET. Senza, il modulo non fa
  * niente e lo dice: l'ingest continua a girare con le altre fonti.
  */
@@ -69,14 +80,14 @@ function traduci(eventi) {
     const lato = e.is_home ? 'home' : 'away';
     if (!Number.isFinite(minuto)) continue;
 
-    if (e.event === 'GOAL' || e.event === 'PENALTY') {
+    if (e.event === 'GOAL' || e.event === 'GOAL_PENALTY') {
       gol.push({
         minute: minuto,
         extra: null,
         scorer: chi ?? 'sconosciuto',
         side: lato,
-        ownGoal: e.event === 'OWN_GOAL',
-        penalty: e.event === 'PENALTY',
+        ownGoal: false,
+        penalty: e.event === 'GOAL_PENALTY',
       });
     } else if (e.event === 'OWN_GOAL') {
       // l'autogol vale per l'altra squadra: qui il lato si gira
@@ -84,8 +95,10 @@ function traduci(eventi) {
         minute: minuto, extra: null, scorer: chi ?? 'sconosciuto',
         side: lato === 'home' ? 'away' : 'home', ownGoal: true, penalty: false,
       });
-    } else if (e.event === 'YELLOW_CARD' || e.event === 'RED_CARD') {
-      cartellini.push({ minute: minuto, player: chi, side: lato, rosso: e.event === 'RED_CARD' });
+    } else if (e.event === 'YELLOW_CARD' || e.event === 'RED_CARD' || e.event === 'YELLOW_RED_CARD') {
+      // YELLOW_RED_CARD e il secondo giallo: in campo il giocatore esce, quindi
+      // vale come rosso. Prima non entrava in nessun ramo e spariva.
+      cartellini.push({ minute: minuto, player: chi, side: lato, rosso: e.event !== 'YELLOW_CARD' });
     } else if (e.event === 'SUBSTITUTION') {
       cambi.push({ minute: minuto, esce: chi, entra: e.info?.name ?? null, side: lato });
     }
