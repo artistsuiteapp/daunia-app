@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-12T22:40:34.607Z",
+    "generatedAt": "2026-09-12T23:00:55.167Z",
     "season": "2026-2027",
     "competition": "Serie C",
     "sources": {
@@ -20,7 +20,8 @@
       "Solo 2 giocatori su 23 hanno la foto: la rosa sul sito del club e ferma alla stagione precedente.",
       "Campo spostato 2026-09-12 Monopoli-Foggia: da \"Stadio Vito Simone Veneziani\" a \"Stadio San Nicola\".",
       "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
-      "API-Football rosa: Your account is suspended, check on https://dashboard.api-football.com."
+      "API-Football rosa: Your account is suspended, check on https://dashboard.api-football.com.",
+      "Divieti, FoggiaToday: HTTP 403 su https://www.foggiatoday.it/rss"
     ]
   },
   "teams": [
@@ -4772,13 +4773,13 @@
     }
   ],
   "prossima": {
-    "eventId": 2555023,
-    "fixtureId": 1609027,
-    "kickoff": "2026-09-12T16:00:00Z",
-    "label": "Monopoli vs Foggia",
+    "eventId": 2555027,
+    "fixtureId": 1609037,
+    "kickoff": "2026-09-15T19:00:00Z",
+    "label": "Foggia vs Savoia",
     "competition": "Italian Serie C Girone C",
-    "home": "Monopoli",
-    "away": "Foggia"
+    "home": "Foggia",
+    "away": "Savoia"
   },
   "formazioniUfficiali": {
     "wp-2026-2027-003": {
