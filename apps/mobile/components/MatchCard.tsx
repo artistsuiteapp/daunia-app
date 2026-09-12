@@ -6,7 +6,6 @@ import type { Match } from '@satanelli/core';
 
 import { Crest } from './Crest';
 import { Countdown } from './Countdown';
-import { CampoSpostato } from './CampoSpostato';
 import { Badge, ListRow } from './ui';
 import { colors, gradients, radius, space, type } from '../theme/tokens';
 import { shortDate, time } from '../lib/format';
@@ -51,8 +50,6 @@ export function MatchHeroCard({ match }: { match: Match }) {
       </View>
 
       {match.venue ? <Text style={styles.heroVenue} numberOfLines={1}>{match.venue}</Text> : null}
-
-      <CampoSpostato match={match} />
 
       {!played && match.kickoff ? (
         <View style={styles.heroCountdown}><Countdown kickoff={match.kickoff} onColour /></View>
