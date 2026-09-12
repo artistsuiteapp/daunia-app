@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-12T12:24:47.907Z",
+    "generatedAt": "2026-09-12T12:49:12.422Z",
     "season": "2026-2027",
     "competition": "Serie C",
     "sources": {
@@ -20,6 +20,7 @@
       "Solo 2 giocatori su 23 hanno la foto: la rosa sul sito del club e ferma alla stagione precedente.",
       "Campo spostato 2026-09-12 Monopoli-Foggia: da \"Stadio Vito Simone Veneziani\" a \"Stadio San Nicola\".",
       "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
+      "Divieti, FoggiaToday: HTTP 403 su https://www.foggiatoday.it/rss",
       "Trasferta a Monopoli fra meno di una settimana e nessuna notizia sul divieto: controlla a mano, potrebbe essersi rotto il riconoscimento."
     ]
   },
@@ -641,7 +642,7 @@
       "source": "wikipedia",
       "campoSpostato": {
         "eraPrevisto": "Stadio Vito Simone Veneziani",
-        "perche": "Il Monopoli gioca a Bari: il Veneziani non e agibile per il campionato.",
+        "perche": "Il Monopoli gioca a Bari: il Veneziani non è agibile per il campionato.",
         "fonti": [
           "https://www.calciofoggia.it/",
           "https://foggiacalciomania.com/"
