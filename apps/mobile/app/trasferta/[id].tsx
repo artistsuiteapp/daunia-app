@@ -4,6 +4,7 @@ import { useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 import { Screen, GroupLabel, GroupNote, Empty, useGutter } from '../../components/ui';
+import { CampoSpostato } from '../../components/CampoSpostato';
 import { BackBar } from '../../components/BackBar';
 import { Crest } from '../../components/Crest';
 import { SoloConAccount } from '../../components/SoloConAccount';
@@ -105,6 +106,10 @@ export default function Trasferta() {
           <Text style={styles.quando}>{longDate(match.kickoff)} · {time(match.kickoff)}</Text>
           {match.venue ? <Text style={styles.quando}>{match.venue}{match.city ? `, ${match.city}` : ''}</Text> : null}
         </View>
+      </View>
+
+      <View style={gutter}>
+        <CampoSpostato match={match} />
       </View>
 
       <View style={[styles.stato, s.grave ? styles.grave : styles.calmo, gutter]}>
