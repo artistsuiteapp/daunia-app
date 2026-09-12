@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-12T11:45:39.418Z",
+  "generatedAt": "2026-09-12T12:14:44.386Z",
   "season": "2026-2027",
   "competition": "Serie C",
   "sources": {
@@ -18,8 +18,8 @@
     "Nessuno stemma per \"Inter U23\": il sito del club non ha mai incontrato questa squadra.",
     "Solo 2 giocatori su 23 hanno la foto: la rosa sul sito del club e ferma alla stagione precedente.",
     "Il negozio non ha restituito prodotti: la sezione shop resta vuota.",
+    "Campo spostato 2026-09-12 Monopoli-Foggia: nessuna partita corrisponde, la riga si puo togliere.",
     "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
-    "Divieti, FoggiaToday: HTTP 403 su https://www.foggiatoday.it/rss",
     "Trasferta a Monopoli fra meno di una settimana e nessuna notizia sul divieto: controlla a mano, potrebbe essersi rotto il riconoscimento."
   ]
 }
