@@ -12,6 +12,7 @@
  * partita nessuno tira giu la pagina per aggiornare.
  */
 import { useEffect, useSyncExternalStore } from 'react';
+import { AppState } from 'react-native';
 
 import { supabase } from './supabase';
 import { utenteCorrente } from './auth';
@@ -63,16 +64,40 @@ export function salaAperta(kickoff?: string | null, adesso = Date.now()): boolea
   return chatAperta(kickoff ?? prossima?.kickoff, fineVera(), adesso);
 }
 
+/**
+ * Aggiunge messaggi senza perdere quelli che ci sono gia.
+ *
+ * IL DIFETTO CHE RISOLVE, visto in Monopoli-Foggia del 12 settembre.
+ *
+ * `carica()` prima faceva `[partita]: nuovi`, cioe SOSTITUIVA. Ma `carica()` e
+ * asincrona e `subscribe()` avviene subito dopo: un messaggio spinto dal
+ * database mentre la lettura era ancora in volo veniva aggiunto alla lista e
+ * poi cancellato dalla fotografia vecchia che arrivava un istante dopo.
+ *
+ * Unire invece di sostituire toglie il problema alla radice, e vale anche per
+ * la ricarica periodica: due sorgenti che scrivono nello stesso posto non si
+ * devono pestare i piedi.
+ */
+function unisci(partita: string, arrivati: Messaggio[]) {
+  const perId = new Map<string, Messaggio>();
+  for (const m of store.per[partita] ?? []) perId.set(m.id, m);
+  for (const m of arrivati) perId.set(m.id, m);
+  const tutti = [...perId.values()].sort((a, b) => String(a.creato_il).localeCompare(String(b.creato_il)));
+  store = { ...store, per: { ...store.per, [partita]: tutti } };
+  annuncia();
+}
+
 async function carica(partita: string) {
   if (!supabase) return;
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from('messaggi_live')
     .select('id, partita, utente, testo, creato_il, profiles(nome, avatar)')
     .eq('partita', partita)
     .order('creato_il', { ascending: true })
     .limit(300);
-  store = { per: { ...store.per, [partita]: (data ?? []).map((r) => daRiga(r as unknown as Riga)) }, caricata: partita };
-  annuncia();
+  if (error) return;
+  unisci(partita, (data ?? []).map((r) => daRiga(r as unknown as Riga)));
+  store = { ...store, caricata: partita };
 }
 
 /**
@@ -97,16 +122,45 @@ export function useSala(partita: string | null): Messaggio[] {
           // volta sola per messaggio
           const { data } = await supabase!
             .from('profiles').select('nome, avatar').eq('id', nuovo.utente).maybeSingle();
-          const m = daRiga({ ...nuovo, profiles: data as { nome?: string; avatar?: string } | null });
-          const attuali = store.per[partita] ?? [];
-          if (attuali.some((x) => x.id === m.id)) return;
-          store = { ...store, per: { ...store.per, [partita]: [...attuali, m] } };
-          annuncia();
+          unisci(partita, [daRiga({ ...nuovo, profiles: data as { nome?: string; avatar?: string } | null })]);
         },
       )
-      .subscribe();
+      /*
+       * Il canale puo non aprirsi, e prima non se ne accorgeva nessuno.
+       *
+       * `.subscribe()` senza richiamo e muto: se il canale cade, la chat
+       * resta ferma e sembra che non stia scrivendo nessuno. In Monopoli-Foggia
+       * e successo esattamente questo -- si doveva uscire e rientrare per
+       * vedere i messaggi nuovi.
+       *
+       * Quando il canale torna su si rilegge subito: nel frattempo puo essere
+       * arrivato qualcosa che il canale non ha visto.
+       */
+      .subscribe((stato) => {
+        if (stato === 'SUBSCRIBED') void carica(partita);
+      });
 
-    return () => { void supabase?.removeChannel(canale); };
+    /*
+     * La rete di sicurezza: si rilegge comunque ogni quindici secondi.
+     *
+     * Il tempo reale e piu bello, ma la chat della partita non puo dipendere
+     * da un solo meccanismo. Quindici secondi su una lettura piccola non si
+     * sentono, e tolgono di mezzo tutta questa classe di difetti: canale
+     * caduto, telefono che ha dormito, rete che e andata e tornata.
+     */
+    const battito = setInterval(() => { void carica(partita); }, 15_000);
+
+    // Tornando sull'app dopo che il telefono ha dormito il canale e quasi
+    // sempre morto: si rilegge senza aspettare i quindici secondi.
+    const risveglio = AppState.addEventListener('change', (s) => {
+      if (s === 'active') void carica(partita);
+    });
+
+    return () => {
+      clearInterval(battito);
+      risveglio.remove();
+      void supabase?.removeChannel(canale);
+    };
   }, [partita]);
 
   return useSyncExternalStore(

@@ -198,17 +198,25 @@ export function eBloccato(chi: string | null | undefined): boolean {
 
 // --------------------------------------------------------------- moderare
 
-/** Nasconde o rimette in chiaro. Passa solo a chi ha il ruolo: lo decide il database. */
+/**
+ * Nasconde o rimette in chiaro. Passa solo a chi ha il ruolo: lo decide il
+ * database.
+ *
+ * Restituiva `boolean` e basta, e l'app diceva "Non e riuscito" senza altro.
+ * Il 12 settembre, a partita in corso, il tasto non funzionava e da qui non si
+ * poteva capire perche: il messaggio del database veniva buttato via. Adesso
+ * torna indietro, cosi la prossima volta si legge invece di indovinare.
+ */
 export async function nascondi(
   tipo: 'discussione' | 'risposta' | 'messaggio',
   id: string,
   nascosto = true,
-): Promise<boolean> {
-  if (!supabase) return false;
+): Promise<{ ok: boolean; perche?: string }> {
+  if (!supabase) return { ok: false, perche: 'Non sei collegato.' };
   const tabella = tipo === 'messaggio' ? 'messaggi_live' : tipo === 'risposta' ? 'risposte' : 'discussioni';
   const campo = tipo === 'messaggio' ? 'nascosto' : 'nascosta';
   const { error } = await supabase.from(tabella).update({ [campo]: nascosto }).eq('id', id);
-  return !error;
+  return error ? { ok: false, perche: error.message } : { ok: true };
 }
 
 /**
