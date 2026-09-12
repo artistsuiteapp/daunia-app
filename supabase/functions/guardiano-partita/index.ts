@@ -648,8 +648,23 @@ Deno.serve(async (req) => {
       // `golVero` scarta il rigore sbagliato, che API-Football marca comunque
       // come "Goal": prima diventava una notifica di gol mai segnato.
       if (golVero(x)) {
-        const firma = `gol-${minuto}-${chi}`;
-        if (!detti.has(firma)) {
+        /*
+         * LA FIRMA NON PUO CONTENERE IL NOME.
+         *
+         * live-score-api pubblica il gol subito e il marcatore qualche minuto
+         * dopo. La firma era `gol-36-` senza nome e diventava `gol-36-A.
+         * Capone` quando il nome arrivava: due firme diverse per lo stesso
+         * gol, quindi due notifiche. Succedeva a OGNI gol.
+         *
+         * Minuto e lato bastano a distinguere: due gol allo stesso minuto e
+         * dalla stessa parte non esistono. Il nome resta nel testo della
+         * notifica, che e' dove serve, e non nella sua identita'.
+         */
+        const firma = `gol-${minuto}-${suoi ? 'noi' : 'loro'}`;
+        // le firme vecchie col nome dentro restano valide per questa partita
+        const giaVisto = detti.has(firma)
+          || [...detti].some((f) => f.startsWith(`gol-${minuto}-`));
+        if (!giaVisto) {
           detti.add(firma);
           const autogol = x.detail === 'Own Goal';
           nuoviGol.push({ minuto, chi, nostro: suoi !== autogol, autogol });
