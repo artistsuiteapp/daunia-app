@@ -15,6 +15,7 @@
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 import { manda, type Iscrizione } from './push.ts';
 import { trovaId, formazioniDi } from './legapro.ts';
+import { trovaPartita, eventiDi, CASA as LSA_CASA, OSPITI as LSA_OSPITI } from './livescore.ts';
 import {
   contaGol, concorda, titoloGol, golVero, golDalTabellone, minutoStimato, cronologia,
   type EventoAF, type Punteggio,
@@ -107,6 +108,23 @@ const db = createClient(
 );
 
 const chiaveAF = Deno.env.get('API_FOOTBALL_KEY') ?? '';
+/*
+ * live-score-api: da qui in poi la fonte dei nomi.
+ *
+ * API-Football e' stato sospeso due volte, e il 12 settembre risultava
+ * sospeso ancora: cento chiamate al giorno non bastano quando l'ingest ne fa
+ * quaranta e il guardiano trenta. Questi ne danno millecinquecento al giorno
+ * gia' in prova, e l'ingest li usa gia' per i tabellini delle partite finite,
+ * quindi la copertura della Serie C e' verificata e non sperata.
+ *
+ * Resta tutto facoltativo: senza queste due chiavi il guardiano fa
+ * esattamente quello che faceva prima.
+ */
+const chiaviLSA = (() => {
+  const key = Deno.env.get('LSA_KEY') ?? '';
+  const secret = Deno.env.get('LSA_SECRET') ?? '';
+  return key && secret ? { key, secret } : null;
+})();
 const viaRapid = (Deno.env.get('API_FOOTBALL_VIA') ?? '').toLowerCase() === 'rapidapi';
 const AF = viaRapid ? AF_RAPIDAPI : AF_DIRETTO;
 const testaAF: HeadersInit = viaRapid
@@ -517,40 +535,72 @@ Deno.serve(async (req) => {
     > (riga.casa_af ?? 0) + (riga.ospiti_af ?? 0);
   const pausa = nomiMancanti ? MINUTO : PAUSA_EVENTI;
 
-  // Se API-Football ha gia risposto a vuoto tre volte per questa partita, non
-  // si insiste: le chiamate del piano gratuito sono cento al giorno e una
-  // partita non coperta se le mangia tutte senza dare niente in cambio.
-  const vaLetto = chiaveAF && riga.fixture_id && (riga.af_a_vuoto ?? 0) < RESE
+  // Se la fonte ha gia risposto a vuoto tre volte per questa partita, non si
+  // insiste: una gara non coperta si mangerebbe il budget senza dare niente.
+  const puoLeggere = Boolean(chiaviLSA) || Boolean(chiaveAF && riga.fixture_id);
+  const vaLetto = puoLeggere && (riga.af_a_vuoto ?? 0) < RESE
     && (cambiato || (IN_GIOCO.includes(stato) && eventiVecchi > pausa));
 
   /** il punteggio contato dagli eventi: la seconda fonte, gratis */
   let daEventi: Punteggio | null = null;
   const nuoviGol: Array<{ minuto: number; chi: string; nostro: boolean; autogol: boolean }> = [];
 
-  if (vaLetto && await possoChiamareAF()) {
-    patch.eventi_letti_il = new Date().toISOString();
-    const d = await json(`${AF}/fixtures/events?fixture=${riga.fixture_id}`, testaAF);
-    const lista = (d?.response ?? []) as EventoAF[];
+  if (vaLetto) {
+    /*
+     * Prima live-score-api, poi API-Football se il primo non dice niente.
+     *
+     * L'ordine conta e la seconda strada resta aperta apposta: cambiare la
+     * fonte degli eventi il pomeriggio della partita e' accettabile solo se
+     * il fallimento della fonte nuova riporta al comportamento di prima
+     * invece di spegnere le notifiche.
+     */
+    let lista: EventoAF[] = [];
+    /** chi ha risposto: serve a sapere quale id di squadra usare a valle */
+    let nostroId = FOGGIA_AF;
+    let rifiutata = false;
+
+    if (chiaviLSA) {
+      patch.eventi_letti_il = new Date().toISOString();
+      const loro = await trovaPartita(chiaviLSA);
+      if (loro) {
+        lista = await eventiDi(loro.id, chiaviLSA);
+        // Le squadre finte del travestimento: noi siamo il lato giusto.
+        nostroId = inCasa ? LSA_CASA : LSA_OSPITI;
+      } else {
+        rifiutata = true;
+      }
+    }
+
+    if (!lista.length && chiaveAF && riga.fixture_id && await possoChiamareAF()) {
+      patch.eventi_letti_il = new Date().toISOString();
+      const d = await json(`${AF}/fixtures/events?fixture=${riga.fixture_id}`, testaAF);
+      const daAF = (d?.response ?? []) as EventoAF[];
+      if (daAF.length) {
+        lista = daAF;
+        nostroId = FOGGIA_AF;
+      }
+      // `errors` non vuoto vuol dire quota finita o account sospeso: la
+      // risposta arriva con stato 200 e non si distingue da una partita senza
+      // eventi se non guardando qui dentro.
+      rifiutata = !d
+        || (d.errors && !Array.isArray(d.errors) && Object.keys(d.errors).length > 0);
+    }
+
     if (lista.length) {
-      daEventi = contaGol(lista, FOGGIA_AF, inCasa);
+      daEventi = contaGol(lista, nostroId, inCasa);
       // La cronaca con i nomi sostituisce quella ricavata dal tabellone: stessi
       // gol, ma si sa chi e quando. La scheda partita legge questa colonna.
-      const conNomi = cronologia(lista, FOGGIA_AF, inCasa);
+      const conNomi = cronologia(lista, nostroId, inCasa);
       if (conNomi.length) patch.gol = conNomi;
     }
 
-    // `errors` non vuoto vuol dire quota finita o account sospeso: la risposta
-    // arriva con stato 200 e non si distingue da una partita senza eventi se
-    // non guardando qui dentro.
-    const rifiutata = !d
-      || (d.errors && !Array.isArray(d.errors) && Object.keys(d.errors).length > 0);
     const inutile = rifiutata || (IN_GIOCO.includes(stato) && !lista.length);
     patch.af_a_vuoto = inutile ? (riga.af_a_vuoto ?? 0) + 1 : 0;
 
     for (const x of lista) {
       const minuto = x.time?.elapsed ?? 0;
       const chi = x.player?.name ?? '';
-      const suoi = x.team?.id === FOGGIA_AF;
+      const suoi = x.team?.id === nostroId;
 
       // `golVero` scarta il rigore sbagliato, che API-Football marca comunque
       // come "Goal": prima diventava una notifica di gol mai segnato.
