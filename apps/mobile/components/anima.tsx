@@ -35,11 +35,23 @@ import { curva, durata, menoMovimento, molla, quanto } from '../theme/motion';
  * il mouse no, perche il dito non copre niente e senza il cambio di colore non
  * si capisce se il clic e arrivato.
  */
-export function Premi({ onPress, onLongPress, children, style, disabled = false, scala = 0.96, etichetta }: {
+export function Premi({
+  onPress, onLongPress, children, style, contenitore, disabled = false, scala = 0.96, etichetta,
+}: {
   onPress?: () => void;
   onLongPress?: () => void;
   children: ReactNode;
+  /** l'aspetto: fondo, bordi, spaziature. Sta sul pezzo che si schiaccia. */
   style?: StyleProp<ViewStyle>;
+  /**
+   * La posizione dentro il genitore: larghezza, flex, quanto spazio prende.
+   *
+   * Va tenuta separata perche il pezzo che si schiaccia sta DENTRO il tasto,
+   * e in una griglia e il tasto quello che deve sapere quanto e largo. Messa
+   * insieme all'aspetto, le quattro schede del Match Center si mettevano in
+   * colonna, ognuna larga quanto il suo testo.
+   */
+  contenitore?: StyleProp<ViewStyle>;
   disabled?: boolean;
   scala?: number;
   etichetta?: string;
@@ -64,6 +76,7 @@ export function Premi({ onPress, onLongPress, children, style, disabled = false,
       hitSlop={8}
       onPressIn={() => { setGiu(true); a(scala, molla.tasto).start(); }}
       onPressOut={() => { setGiu(false); a(1, molla.ritorno).start(); }}
+      style={contenitore}
     >
       <Animated.View
         style={[

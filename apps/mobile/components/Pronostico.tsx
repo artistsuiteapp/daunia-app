@@ -78,16 +78,28 @@ export function Pronostico({ match }: { match: Match }) {
           <View style={stili.attesa}><ActivityIndicator color={colors.accent} /></View>
         ) : (
           <>
+            {/*
+              * Nomi sopra, contatori sotto, su due righe distinte.
+              * Con tutto in una riga sola il trattino andava tenuto giu a mano
+              * con un margine fisso, e bastava uno stemma mancante o un nome su
+              * due righe per vederlo fuori posto.
+              */}
             <View style={stili.tabellone}>
+              <Squadra squadra={match.home} />
+              <View style={stili.mezzo} />
+              <Squadra squadra={match.away} />
+            </View>
+
+            <View style={stili.contatori}>
               <Contatore
-                squadra={match.home}
+                nome={match.home.shortName}
                 valore={casa}
                 attivo={apertoInModifica && !chiuso && conAccount}
                 onCambia={setCasa}
               />
-              <Text style={stili.trattino}>–</Text>
+              <View style={stili.mezzo} />
               <Contatore
-                squadra={match.away}
+                nome={match.away.shortName}
                 valore={ospiti}
                 attivo={apertoInModifica && !chiuso && conAccount}
                 onCambia={setOspiti}
@@ -171,19 +183,25 @@ function cominciata(match: Match): boolean {
   return Number.isFinite(t) ? Date.now() >= t : false;
 }
 
-function Contatore({ squadra, valore, attivo, onCambia }: {
-  squadra: Match['home']; valore: number; attivo: boolean; onCambia: (v: number) => void;
-}) {
+function Squadra({ squadra }: { squadra: Match['home'] }) {
   return (
     <View style={stili.lato}>
       <Crest uri={squadra.crest} name={squadra.shortName} size={40} />
       <Text style={stili.squadra} numberOfLines={1}>{squadra.shortName}</Text>
+    </View>
+  );
+}
 
+function Contatore({ nome, valore, attivo, onCambia }: {
+  nome: string; valore: number; attivo: boolean; onCambia: (v: number) => void;
+}) {
+  return (
+    <View style={stili.lato}>
       <View style={stili.contatore}>
         <Premi
           onPress={() => onCambia(Math.max(0, valore - 1))}
           disabled={!attivo || valore === 0}
-          etichetta={`Un gol in meno per ${squadra.shortName}`}
+          etichetta={`Un gol in meno per ${nome}`}
           style={[stili.passo, (!attivo || valore === 0) && stili.passoSpento]}
         >
           <Ionicons name="remove" size={22} color={colors.text} />
@@ -194,7 +212,7 @@ function Contatore({ squadra, valore, attivo, onCambia }: {
         <Premi
           onPress={() => onCambia(Math.min(MAX, valore + 1))}
           disabled={!attivo || valore === MAX}
-          etichetta={`Un gol in più per ${squadra.shortName}`}
+          etichetta={`Un gol in più per ${nome}`}
           style={[stili.passo, (!attivo || valore === MAX) && stili.passoSpento]}
         >
           <Ionicons name="add" size={22} color={colors.text} />
@@ -225,12 +243,13 @@ const stili = StyleSheet.create({
   spiega: { ...type.subhead, color: colors.textDim, lineHeight: 21 },
   attesa: { paddingVertical: space.xl, alignItems: 'center' },
 
-  tabellone: { flexDirection: 'row', alignItems: 'flex-start', gap: space.sm, marginTop: space.sm },
+  tabellone: { flexDirection: 'row', alignItems: 'flex-end', gap: space.sm, marginTop: space.sm },
+  contatori: { flexDirection: 'row', alignItems: 'center', gap: space.sm },
+  mezzo: { width: 22 },
   lato: { flex: 1, alignItems: 'center', gap: 6 },
   squadra: { ...type.subheadBold, color: colors.text },
-  trattino: { ...type.title1, color: colors.textFaint, marginTop: 56 },
 
-  contatore: { flexDirection: 'row', alignItems: 'center', gap: space.sm, marginTop: 2 },
+  contatore: { flexDirection: 'row', alignItems: 'center', gap: space.sm },
   // quarantaquattro punti: la misura minima perche un dito ci prenda sempre
   passo: {
     width: 44, height: 44, borderRadius: radius.md,

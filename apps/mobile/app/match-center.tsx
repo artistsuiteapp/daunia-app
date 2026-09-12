@@ -161,7 +161,7 @@ function Porte() {
     {
       icona: 'trophy' as const,
       titolo: 'Premi',
-      sotto: 'Il migliore della partita e quello del mese',
+      sotto: 'Migliore della partita e del mese',
       href: '/match-center/premi',
     },
     {
@@ -191,7 +191,8 @@ function Porte() {
             key={v.titolo}
             onPress={() => router.push(v.href as never)}
             etichetta={v.titolo}
-            style={styles.mezza}
+            contenitore={styles.mezza}
+            style={{ flex: 1 }}
           >
             {/*
               * Tutte e quattro identiche: stessa altezza, icona sempre nello
@@ -233,7 +234,7 @@ const styles = StyleSheet.create({
 
   porte: { flexDirection: 'row', flexWrap: 'wrap', gap: space.md },
   mezza: { flexBasis: '48%', flexGrow: 1, flexShrink: 1 },
-  porta: { padding: space.lg, gap: 6, height: 132, justifyContent: 'flex-start' },
+  porta: { padding: space.lg, gap: 6, height: 132, justifyContent: 'flex-start', width: '100%' },
   portaIcona: {
     width: 34, height: 34, borderRadius: radius.md,
     backgroundColor: colors.accentSoft, alignItems: 'center', justifyContent: 'center',
