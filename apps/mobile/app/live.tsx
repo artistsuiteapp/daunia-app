@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Screen, useGutter, Empty } from '../components/ui';
 import { BackBar } from '../components/BackBar';
 import { Avatar } from '../components/Avatar';
+import { NomeUtente } from '../components/NomeUtente';
 import { Crest } from '../components/Crest';
 import { PallinoLive } from '../components/PallinoLive';
 import { SoloConAccount } from '../components/SoloConAccount';
@@ -17,7 +18,7 @@ import { useLive, liveDi } from '../lib/live';
 import { etichettaFase } from '../lib/live-core';
 import { useSala, manda, cancella, salaAperta, LIMITE } from '../lib/sala';
 import { ioSono } from '../lib/trasferte';
-import { controlla, spiegazione } from '../lib/filtro-core.ts';
+import { maschera, AVVISO_COPERTO } from '../lib/filtro-core.ts';
 
 /**
  * La chat della partita.
@@ -41,6 +42,7 @@ export default function Live() {
 
   const [testo, setTesto] = useState('');
   const [errore, setErrore] = useState<string | null>(null);
+  const [nota, setNota] = useState<string | null>(null);
   const [inCorso, setInCorso] = useState(false);
   const lista = useRef<ScrollView>(null);
 
@@ -55,15 +57,24 @@ export default function Live() {
   const invia = async () => {
     const t = testo.trim();
     if (!t || !match) return;
-    // stessa regola del database, detta prima di premere
-    const esito = controlla(t);
-    if (!esito.pulito) return setErrore(spiegazione(esito));
+
+    /*
+     * Le parolacce si coprono, il messaggio parte lo stesso.
+     *
+     * In una chat che dura novanta minuti un messaggio respinto non diventa un
+     * messaggio migliore: diventa una persona che smette di scrivere. Si copre
+     * la parola e si va avanti. Il database fa la stessa cosa a prescindere,
+     * qui si fa prima cosi chi scrive vede subito com'e venuto.
+     */
+    const { testo: pulito, cambiato } = maschera(t);
 
     setErrore(null);
+    setNota(null);
     setInCorso(true);
     try {
-      await manda(match.id, t);
+      await manda(match.id, pulito);
       setTesto('');
+      if (cambiato) setNota(AVVISO_COPERTO);
     } catch (e) {
       setErrore(e instanceof Error ? e.message : 'Non è partito.');
     } finally {
@@ -114,7 +125,7 @@ export default function Live() {
             <View key={m.id} style={[styles.messaggio, m.utente === io && styles.mio]}>
               <Avatar uri={m.avatar} name={m.autore} size={28} />
               <View style={{ flex: 1 }}>
-                <Text style={styles.autore}>{m.autore}</Text>
+                <NomeUtente id={m.utente} nome={m.autore} stile={styles.autore} />
                 <Text style={styles.testoMessaggio}>{m.testo}</Text>
               </View>
               {m.utente === io ? (
@@ -141,10 +152,11 @@ export default function Live() {
       ) : (
         <View style={[styles.scrivi, gutter]}>
           {errore ? <Text style={styles.errore}>{errore}</Text> : null}
+          {nota ? <Text style={styles.nota}>{nota}</Text> : null}
           <View style={styles.riga}>
             <TextInput
               value={testo}
-              onChangeText={(t) => { setTesto(t); if (errore) setErrore(null); }}
+              onChangeText={(t) => { setTesto(t); if (errore) setErrore(null); if (nota) setNota(null); }}
               placeholder={aperta
                 ? 'Scrivi…'
                 : vivo?.finita
@@ -191,6 +203,7 @@ const styles = StyleSheet.create({
 
   scrivi: { paddingBottom: space.md, gap: 6 },
   errore: { ...type.caption, color: colors.accentBright },
+  nota: { ...type.caption, color: colors.textDim },
   riga: { flexDirection: 'row', alignItems: 'center', gap: space.sm },
   input: {
     flex: 1, backgroundColor: colors.surfaceHi, borderRadius: radius.pill,

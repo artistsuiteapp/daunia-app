@@ -11,6 +11,7 @@ import {
 } from '@expo-google-fonts/montserrat';
 
 import { colors } from '../theme/tokens';
+import { durata } from '../theme/motion';
 import { AppShell } from '../components/AppShell';
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
@@ -38,7 +39,16 @@ export default function RootLayout() {
           screenOptions={{
             headerShown: false,
             contentStyle: { backgroundColor: colors.bg },
+            /*
+             * Duecentosessanta millisecondi, gli stessi di theme/motion.ts.
+             * Il valore di serie e piu lungo e su web fa sembrare ogni
+             * passaggio una cosa che deve finire prima di poter toccare
+             * qualcosa.
+             */
             animation: 'slide_from_right',
+            animationDuration: durata.media,
+            gestureEnabled: true,
+            animationTypeForReplace: 'push',
           }}
         >
           <Stack.Screen name="(tabs)" />
@@ -53,6 +63,10 @@ export default function RootLayout() {
           <Stack.Screen name="condizioni" />
           <Stack.Screen name="privacy" />
           <Stack.Screen name="profilo" />
+          <Stack.Screen name="utente/[id]" />
+          <Stack.Screen name="admin/index" />
+          <Stack.Screen name="admin/utenti" />
+          <Stack.Screen name="admin/online" />
           <Stack.Screen name="accedi" />
           <Stack.Screen name="benvenuto" options={{ animation: 'fade' }} />
           <Stack.Screen name="tickets" />

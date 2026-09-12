@@ -7,6 +7,7 @@ import { Screen, useGutter } from '../../components/ui';
 import { BackBar } from '../../components/BackBar';
 import { colors, radius, space, type } from '../../theme/tokens';
 import { TOPICS, addDiscussion, type Topic } from '../../lib/community';
+import { useProfilo } from '../../lib/auth';
 
 /**
  * Scrittura di un post nella demo.
@@ -17,12 +18,33 @@ import { TOPICS, addDiscussion, type Topic } from '../../lib/community';
  */
 export default function NuovoPost() {
   const gutter = useGutter();
+  const profilo = useProfilo();
+  const conAccount = Boolean(profilo);
+  const nomeMio = profilo?.nome ?? 'il tuo nome';
   const [author, setAuthor] = useState('');
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [topic, setTopic] = useState<Topic>('Partita');
 
-  const ready = title.trim().length >= 4 && body.trim().length >= 20;
+  /*
+   * PERCHE QUESTI NUMERI SONO SCESI
+   *
+   * Servivano quattro caratteri di titolo e VENTI di testo. "Forza Foggia" ne
+   * ha dodici: il tasto restava grigio con scritto "Servono un titolo e qualche
+   * riga", che non dice quale dei due manca ne quanto. Chi non sviluppa app
+   * legge un tasto grigio e conclude che non si puo scrivere -- ed e successo.
+   *
+   * Adesso bastano tre caratteri di titolo e dieci di testo, e quando manca
+   * qualcosa il tasto dice esattamente cosa.
+   */
+  const titoloCorto = title.trim().length < 3;
+  const testoCorto = body.trim().length < 10;
+  const ready = !titoloCorto && !testoCorto;
+  const cheManca = titoloCorto && testoCorto
+    ? 'Scrivi un titolo e due righe'
+    : titoloCorto
+      ? 'Manca il titolo'
+      : 'Scrivi ancora qualche parola';
 
   const [errore, setErrore] = useState<string | null>(null);
   const [inCorso, setInCorso] = useState(false);
@@ -47,24 +69,34 @@ export default function NuovoPost() {
       <View style={[styles.wrap, gutter]}>
         <Text style={styles.heading}>Apri una discussione</Text>
 
+{/*
+          * Il testo che stava qui diceva che la discussione restava nel browser
+          * e non la vedeva nessuno. Non era piu vero da quando ci sono gli
+          * account: viene pubblicata e la leggono tutti. Uno che ci credeva o
+          * non scriveva niente, o scriveva cose che non avrebbe messo in
+          * pubblico. Adesso c'e scritto quello che succede davvero.
+          */}
         <View style={styles.notice}>
-          <Ionicons name="phone-portrait-outline" size={16} color={colors.accentBright} />
+          <Ionicons name="people-outline" size={16} color={colors.accentBright} />
           <Text style={styles.noticeText}>
-            Questa discussione resta nella memoria di questo browser. Non viene inviato, non lo vede
-            nessun altro, e sparisce se cancelli i dati del sito.
+            {conAccount
+              ? `La leggono tutti quelli che aprono la Curva, e la firmi tu: ${nomeMio}. Puoi cancellarla quando vuoi.`
+              : 'Senza account resta soltanto su questo telefono e non la vede nessuno. Per pubblicarla davvero serve un account.'}
           </Text>
         </View>
 
-        <Field label="Come ti firmi">
-          <TextInput
-            value={author}
-            onChangeText={setAuthor}
-            placeholder="Il tuo nome, o come vuoi farti chiamare"
-            placeholderTextColor={colors.textFaint}
-            style={styles.input}
-            maxLength={40}
-          />
-        </Field>
+        {!conAccount ? (
+          <Field label="Come ti firmi">
+            <TextInput
+              value={author}
+              onChangeText={setAuthor}
+              placeholder="Il tuo nome, o come vuoi farti chiamare"
+              placeholderTextColor={colors.textFaint}
+              style={styles.input}
+              maxLength={40}
+            />
+          </Field>
+        ) : null}
 
         <Field label="Argomento">
           <View style={styles.topics}>
@@ -110,7 +142,7 @@ export default function NuovoPost() {
           style={({ pressed }) => [styles.cta, !ready && styles.ctaOff, pressed && ready && { opacity: 0.85 }]}
         >
           <Text style={[styles.ctaText, !ready && styles.ctaTextOff]}>
-            {inCorso ? 'Un momento…' : ready ? 'Apri la discussione' : 'Servono un titolo e qualche riga'}
+            {inCorso ? 'Un momento…' : ready ? 'Pubblica la discussione' : cheManca}
           </Text>
         </Pressable>
       </View>

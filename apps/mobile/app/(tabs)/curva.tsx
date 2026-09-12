@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { Screen, useGutter, Empty } from '../../components/ui';
 import { Avatar } from '../../components/Avatar';
+import { NomeUtente } from '../../components/NomeUtente';
 import { BrandMark } from '../../components/BrandMark';
 import { Reveal } from '../../components/Reveal';
 import { colors, radius, space, type } from '../../theme/tokens';
@@ -138,7 +139,7 @@ function Card({ discussion: d }: { discussion: Discussion }) {
       <View style={styles.cardHead}>
         <Avatar uri={null} name={d.author} size={32} />
         <View style={{ flex: 1 }}>
-          <Text style={styles.author} numberOfLines={1}>{d.author}</Text>
+          <NomeUtente id={d.autoreId} nome={d.author} stile={styles.author} apribile={false} />
           <Text style={styles.meta}>{relative(d.date)}</Text>
         </View>
         <View style={styles.topicTag}>

@@ -8,7 +8,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { accorcia, articolo, daRifare, idArticolo, immagineDa, leggiVoci, quando, FILTRO_FOGGIA } from '../src/sources/stampa.mjs';
+import { accorcia, articolo, daRifare, idArticolo, immagineDa, leggiVoci, quando, FILTRO_FOGGIA, SOGLIA } from '../src/sources/stampa.mjs';
 
 const FEED = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
@@ -114,12 +114,20 @@ test('senza og:image resta null, e un percorso relativo non conta', () => {
   assert.equal(immagineDa('<meta property="og:image" content="/wp-content/foto.jpg">'), null);
 });
 
-test('si ripassa dai feed solo dopo dodici ore', () => {
+test('si ripassa dai feed solo dopo la soglia', () => {
   const t0 = Date.parse('2026-09-08T06:00:00.000Z');
   const prima = { aggiornatoIl: new Date(t0).toISOString(), articoli: [{ id: 'x' }] };
 
-  assert.equal(daRifare(prima, t0 + 11 * 60 * 60 * 1000), false, 'a undici ore si sta fermi');
-  assert.equal(daRifare(prima, t0 + 12 * 60 * 60 * 1000), true, 'a dodici si riparte');
+  // la soglia si legge da dove sta, invece di ripeterne il valore qui: cosi
+  // cambiarla non fa fallire un test che sta solo descrivendo la regola
+  assert.equal(daRifare(prima, t0 + SOGLIA - 60 * 1000), false, 'un minuto prima si sta fermi');
+  assert.equal(daRifare(prima, t0 + SOGLIA), true, 'alla soglia si riparte');
+});
+
+test('la soglia sta sotto le sei ore del cron', () => {
+  // se fosse piu lunga dell'intervallo fra due giri, ci sarebbero giri che non
+  // guardano mai i feed: e' il difetto per cui le notizie sembravano ferme
+  assert.ok(SOGLIA <= 6 * 60 * 60 * 1000, `soglia di ${SOGLIA / 3600000} ore`);
 });
 
 test('senza giro precedente, o con un giro vuoto, si scarica comunque', () => {

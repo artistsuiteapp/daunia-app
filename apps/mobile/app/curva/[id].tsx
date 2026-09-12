@@ -8,7 +8,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { Screen, Empty, useGutter } from '../../components/ui';
 import { BackBar } from '../../components/BackBar';
 import { Avatar } from '../../components/Avatar';
-import { controlla, spiegazione } from '../../lib/filtro-core.ts';
+import { NomeUtente } from '../../components/NomeUtente';
+import { maschera, AVVISO_COPERTO } from '../../lib/filtro-core.ts';
 import { colors, radius, space, type } from '../../theme/tokens';
 import { relative, shortDate } from '../../lib/format';
 import { useOspite } from '../../lib/ospite';
@@ -77,19 +78,19 @@ export default function DiscussionPage() {
     if (!testo) return;
 
     /*
-     * Il filtro parla prima del database.
+     * Le parolacce si coprono, il messaggio parte.
      *
-     * Il controllo vero sta in Postgres e non si aggira, ma se lasciassimo
-     * decidere solo lui l'utente vedrebbe il testo tornare nel campo senza
-     * una parola di spiegazione, e riscriverebbe la stessa cosa.
+     * La regola vera sta in Postgres e copre le stesse parole; qui si fa
+     * prima, cosi chi scrive vede subito com'e venuto invece di scoprirlo
+     * dopo l'invio.
      */
-    const esito = controlla(testo);
-    if (!esito.pulito) { setAvviso(spiegazione(esito)); return; }
+    const { cambiato } = maschera(testo);
 
     setDraft('');
     setAvviso(null);
     try {
       await addReply(d.id, 'Tu', testo);
+      if (cambiato) setAvviso(AVVISO_COPERTO);
     } catch (e) {
       // se il salvataggio fallisce il testo torna nel campo, invece di sparire
       setDraft(testo);
@@ -99,12 +100,10 @@ export default function DiscussionPage() {
     }
   };
 
-  /** Mentre si scrive: l'avviso compare appena la frase e completa. */
+  /** Mentre si scrive: l'avviso di prima sparisce appena si tocca il campo. */
   const scrivendo = (t: string) => {
     setDraft(t);
-    if (!avviso) return;
-    // sparisce da solo appena il testo torna pulito, senza dover reinviare
-    if (controlla(t.trim()).pulito) setAvviso(null);
+    if (avviso) setAvviso(null);
   };
 
   return (
@@ -114,7 +113,7 @@ export default function DiscussionPage() {
       <View style={[styles.head, gutter]}>
         <Avatar uri={null} name={d.author} size={40} />
         <View style={{ flex: 1 }}>
-          <Text style={styles.author}>{d.author}</Text>
+          <NomeUtente id={d.autoreId} nome={d.author} stile={styles.author} />
           <Text style={styles.meta}>{shortDate(d.date)}</Text>
         </View>
         <View style={styles.topicTag}>
@@ -191,10 +190,12 @@ export default function DiscussionPage() {
             <View key={rep.id} style={[styles.reply, !rep.sample && styles.replyMine]}>
               <Avatar uri={null} name={rep.author} size={28} />
               <View style={{ flex: 1, gap: 2 }}>
-                <Text style={styles.replyAuthor}>
-                  {rep.author} <Text style={styles.replyDate}>· {relative(rep.date)}</Text>
-                  {rep.modificata ? <Text style={styles.replyDate}> · modificato</Text> : null}
-                </Text>
+                <View style={styles.replyHead}>
+                  <NomeUtente id={rep.autoreId} nome={rep.author} stile={styles.replyAuthor} />
+                  <Text style={styles.replyDate}>
+                    · {relative(rep.date)}{rep.modificata ? ' · modificato' : ''}
+                  </Text>
+                </View>
 
                 {inModifica ? (
                   <View style={{ gap: 6 }}>
@@ -357,6 +358,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(204,17,17,0.10)', borderRadius: radius.lg,
     padding: space.sm, marginLeft: -space.sm, marginRight: -space.sm,
   },
+  replyHead: { flexDirection: 'row', alignItems: 'center', gap: 4, flexWrap: 'wrap' },
   replyAuthor: { ...type.footnoteBold, color: colors.text },
   replyDate: { ...type.caption, color: colors.textFaint },
   comandi: { flexDirection: 'row', gap: space.md, paddingTop: 2 },

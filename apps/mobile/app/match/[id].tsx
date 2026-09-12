@@ -10,16 +10,13 @@ import { Lineup } from '../../components/Lineup';
 import { Avatar } from '../../components/Avatar';
 import { lineupPerPartita } from '../../lib/lineup';
 import { BackBar } from '../../components/BackBar';
+import { MatchCenter } from '../../components/MatchCenter';
 import { Crest } from '../../components/Crest';
 import { Countdown } from '../../components/Countdown';
 import { colors, radius, space, type } from '../../theme/tokens';
 import { longDate, shortDate, thousands } from '../../lib/format';
 import { matchById, matches } from '../../lib/data';
-import { Pagelle } from '../../components/Pagelle';
-import { VotaMvp } from '../../components/VotaMvp';
-import { statoMigliore } from '../../lib/premi-core';
-import { fineVera } from '../../lib/live';
-import { Pronostico } from '../../components/Pronostico';
+import { faseDi } from '../../lib/match-center-core';
 import { useDatiPartita } from '../../lib/fanplay';
 import { useLive, liveDi, useGolVivo } from '../../lib/live';
 import { etichettaFase } from '../../lib/live-core';
@@ -166,56 +163,7 @@ export default function MatchDetail() {
       </View>
 
       {view === 'gioco' ? (
-        <>
-          {/*
-            * Prima il migliore, poi le pagelle.
-            *
-            * Sono due domande diverse e la prima e piu facile: "chi ti e
-            * piaciuto di piu" si risponde d'istinto, mettere undici voti da
-            * 4 a 10 e un lavoro. Chi arriva a caldo fa la prima e magari si
-            * ferma li, ed e gia un voto in piu.
-            */}
-          {played ? (
-            <>
-              <GroupLabel>Il migliore in campo</GroupLabel>
-              <View style={[gutter, { marginBottom: space.lg }]}>
-                <VotaMvp
-                  matchId={match.id}
-                  giocatori={lineup.slots.map((sl) => sl.player).filter((pl): pl is NonNullable<typeof pl> => !!pl)}
-                  chiuso={statoMigliore(fineVera() ?? match.kickoff, undefined).fase !== 'votazione'}
-                />
-              </View>
-            </>
-          ) : null}
-
-          <GroupLabel>{played ? 'Le pagelle della Curva' : 'Il pronostico'}</GroupLabel>
-          <View style={gutter}>
-            {played ? (
-              <Pagelle
-                matchId={match.id}
-                /*
-                 * Si vota chi e sceso in campo, non chi pensavamo giocasse.
-                 *
-                 * `lineup` porta l'undici ufficiale quando la fonte lo ha
-                 * pubblicato; altrimenti ripiega su quello della partita
-                 * precedente, che per le pagelle e un dato sbagliato: si
-                 * finirebbe per dare un voto a chi era in tribuna. Quando la
-                 * fonte manca lo si dice sotto, invece di far votare al buio.
-                 */
-                players={lineup.slots.map((sl) => sl.player).filter((pl): pl is NonNullable<typeof pl> => !!pl)}
-              />
-            ) : (
-              <Pronostico match={match} />
-            )}
-          </View>
-          <GroupNote>
-            {!played
-              ? 'Il pronostico resta su questo dispositivo. Con gli account veri entra in una classifica vera.'
-              : lineup.fonte === 'ufficiale'
-                ? 'Questo è l’undici sceso in campo. I voti fanno una media sola per tutti, e il giorno dopo le pagelle della Curva finiscono in home.'
-                : `Attenzione: la formazione ufficiale di questa partita non è ancora arrivata, quindi qui c’è ${lineup.fonte === 'ultima' ? 'l’undici della partita precedente' : 'una formazione costruita dalla rosa'}. I voti valgono lo stesso, ma controlla i nomi prima.`}
-          </GroupNote>
-        </>
+        <MatchCenter match={match} fase={faseDi(match, vivo)} lineup={lineup} />
       ) : null}
 
       {view === 'formazione' ? (

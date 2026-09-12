@@ -5,6 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { brand } from '../theme/brand';
 import { BrandMark } from './BrandMark';
 import { colors, radius, space, type } from '../theme/tokens';
+import { menoMovimento, quanto } from '../theme/motion';
 import { useLayout } from '../theme/responsive';
 import { FormStrip } from './FormStrip';
 
@@ -29,8 +30,9 @@ export function BrandHeader({ crest, competition, season, form, position, points
   const enter = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
+    if (menoMovimento()) { enter.setValue(1); return; }
     Animated.timing(enter, {
-      toValue: 1, duration: 620, delay: 120,
+      toValue: 1, duration: quanto(520), delay: 80,
       easing: Easing.out(Easing.back(1.4)), useNativeDriver: true,
     }).start();
   }, [enter]);
@@ -51,7 +53,7 @@ export function BrandHeader({ crest, competition, season, form, position, points
         </Animated.View>
 
         <View style={styles.titleCol}>
-          <Text style={styles.line1}>Il tifo della</Text>
+          <Text style={styles.line1}>Tifo</Text>
           <Text style={styles.line2}>Daunia</Text>
           <Text style={styles.meta} numberOfLines={1}>
             {competition} · Girone C · {season.replace('-', '/')}
@@ -93,19 +95,19 @@ function Stat({ value, label }: { value: string; label: string }) {
 }
 
 const styles = StyleSheet.create({
-  wrap: { paddingTop: space.sm, paddingBottom: space.lg, overflow: 'hidden' },
+  wrap: { paddingTop: space.md, paddingBottom: space.xl, overflow: 'hidden' },
 
   row: { flexDirection: 'row', alignItems: 'center', gap: space.lg },
   crest: { width: 104, height: 104 },
   titleCol: { flex: 1 },
   line1: { ...type.title3, fontWeight: '400', color: colors.textDim },
   line2: { ...type.displayTitle, fontSize: 42, lineHeight: 46, color: colors.text },
-  meta: { ...type.footnote, color: colors.textFaint, marginTop: 4 },
+  meta: { ...type.footnote, color: colors.textFaint, marginTop: 6 },
 
   stats: {
     flexDirection: 'row', alignItems: 'center', gap: space.lg,
-    marginTop: space.lg, backgroundColor: 'rgba(255,255,255,0.05)',
-    borderRadius: radius.xl, paddingVertical: space.md, paddingHorizontal: space.lg,
+    marginTop: space.xl, backgroundColor: 'rgba(255,255,255,0.05)',
+    borderRadius: radius.xl, paddingVertical: space.lg, paddingHorizontal: space.lg,
   },
   statCol: { gap: 1 },
   formCol: { gap: 4 },
@@ -113,5 +115,5 @@ const styles = StyleSheet.create({
   statLabel: { ...type.caption, color: colors.textFaint },
   sep: { width: StyleSheet.hairlineWidth, height: 26, backgroundColor: colors.separator },
 
-  disclaimer: { ...type.caption, color: colors.textFaint, marginTop: space.md },
+  disclaimer: { ...type.caption, color: colors.textFaint, marginTop: space.lg, lineHeight: 17 },
 });

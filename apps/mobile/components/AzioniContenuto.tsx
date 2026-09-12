@@ -23,7 +23,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { colors, radius, space, type } from '../theme/tokens';
 import { Premi } from './anima';
 import {
-  MOTIVI, blocca, eBloccato, nascondi, puoModerare, segnala, sblocca, useRuolo,
+  MOTIVI, blocca, eBloccato, elimina, nascondi, puoModerare, segnala, sblocca, useRuolo,
   type Motivo, type TipoBersaglio,
 } from '../lib/moderazione';
 
@@ -42,6 +42,7 @@ export function AzioniContenuto({ tipo, id, autore, autoreNome, onFatto }: {
   const [dettaglio, setDettaglio] = useState('');
   const [esito, setEsito] = useState<string | null>(null);
   const [inCorso, setInCorso] = useState(false);
+  const [confermaCancella, setConfermaCancella] = useState(false);
 
   if (ruolo === 'anonimo') return null;
 
@@ -51,6 +52,7 @@ export function AzioniContenuto({ tipo, id, autore, autoreNome, onFatto }: {
     setMotivo(null);
     setDettaglio('');
     setEsito(null);
+    setConfermaCancella(false);
   };
 
   async function mandaSegnalazione() {
@@ -73,6 +75,16 @@ export function AzioniContenuto({ tipo, id, autore, autoreNome, onFatto }: {
       setEsito(r.messaggio);
     }
     setInCorso(false);
+    onFatto?.();
+  }
+
+  async function cancellaOra() {
+    if (tipo === 'trasferta' || tipo === 'profilo' || inCorso) return;
+    setInCorso(true);
+    const ok = await elimina(tipo, id);
+    setInCorso(false);
+    setConfermaCancella(false);
+    setEsito(ok ? 'Cancellato. Non c’è più da nessuna parte.' : 'Non è riuscito.');
     onFatto?.();
   }
 
@@ -100,6 +112,19 @@ export function AzioniContenuto({ tipo, id, autore, autoreNome, onFatto }: {
               <View style={{ gap: space.lg }}>
                 <Text style={styles.esito}>{esito}</Text>
                 <Bottone label="Chiudi" onPress={chiude} />
+              </View>
+            ) : confermaCancella ? (
+              <View style={{ gap: space.sm }}>
+                <Text style={styles.titolo}>Cancellare per sempre?</Text>
+                <Text style={styles.sotto}>
+                  Non si torna indietro e non resta niente, nemmeno nella coda delle
+                  segnalazioni. Se basta toglierlo dagli occhi, nascondilo: quello si disfa.
+                </Text>
+                <Bottone
+                  label={inCorso ? 'Un attimo…' : 'Sì, cancella'}
+                  onPress={cancellaOra}
+                />
+                <Bottone label="No, torna indietro" tono="piano" onPress={() => setConfermaCancella(false)} />
               </View>
             ) : motivo === null ? (
               <View style={{ gap: space.sm }}>
@@ -129,9 +154,19 @@ export function AzioniContenuto({ tipo, id, autore, autoreNome, onFatto }: {
                   <Riga
                     icona="eye-off-outline"
                     label="Nascondi a tutti"
-                    sotto="Solo chi modera vede questa voce."
+                    sotto="Solo chi modera vede questa voce. Si può rimettere."
                     tono="grave"
                     onPress={nascondiOra}
+                  />
+                ) : null}
+
+                {ruolo === 'admin' && tipo !== 'trasferta' && tipo !== 'profilo' ? (
+                  <Riga
+                    icona="trash-outline"
+                    label="Cancella per sempre"
+                    sotto="Non si torna indietro."
+                    tono="grave"
+                    onPress={() => setConfermaCancella(true)}
                   />
                 ) : null}
               </View>

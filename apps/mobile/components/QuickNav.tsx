@@ -1,19 +1,20 @@
 import { router } from 'expo-router';
 import { useEffect, useRef } from 'react';
-import { Animated, Easing, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Animated, ScrollView, StyleSheet, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { colors, radius, space, type } from '../theme/tokens';
+import { curva, menoMovimento } from '../theme/motion';
+import { Premi } from './anima';
 import { useLayout } from '../theme/responsive';
 
 type Item = { icon: keyof typeof Ionicons.glyphMap; label: string; href: string; pulsa?: boolean };
 
 const ITEMS: Item[] = [
-  { icon: 'ticket', label: 'Biglietti', href: '/tickets' },
+  { icon: 'game-controller', label: 'Match Center', href: '/match-center' },
   { icon: 'shirt', label: 'Rosa', href: '/squad' },
-  { icon: 'trophy', label: 'Pronostici', href: '/pronostici' },
+  { icon: 'ticket', label: 'Biglietti', href: '/tickets' },
+  { icon: 'podium', label: 'Classifiche', href: '/classifica' },
   { icon: 'stats-chart', label: 'Statistiche', href: '/stats' },
-  { icon: 'list', label: 'Classifica', href: '/standings' },
-  { icon: 'location', label: 'Stadio', href: '/stadium' },
 ];
 
 /**
@@ -36,7 +37,7 @@ export function QuickNav({ pagelle }: { pagelle?: string | null } = {}) {
   const { gutter } = useLayout();
   const voci: Item[] = pagelle
     ? [{ icon: 'star', label: 'Pagelle', href: pagelle, pulsa: true },
-       ...ITEMS.filter((x) => x.label !== 'Biglietti')]
+       ...ITEMS.filter((x) => x.label !== 'Match Center')]
     : ITEMS;
   return (
     <ScrollView
@@ -61,10 +62,10 @@ function Pastiglia({ item, prima }: { item: Item; prima: boolean }) {
   const v = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
-    if (!item.pulsa) return;
+    if (!item.pulsa || menoMovimento()) return;
     const ciclo = Animated.loop(Animated.sequence([
-      Animated.timing(v, { toValue: 0.45, duration: 800, easing: Easing.inOut(Easing.quad), useNativeDriver: true }),
-      Animated.timing(v, { toValue: 1, duration: 800, easing: Easing.inOut(Easing.quad), useNativeDriver: true }),
+      Animated.timing(v, { toValue: 0.45, duration: 800, easing: curva.morbida, useNativeDriver: true }),
+      Animated.timing(v, { toValue: 1, duration: 800, easing: curva.morbida, useNativeDriver: true }),
     ]));
     ciclo.start();
     return () => ciclo.stop();
@@ -72,22 +73,23 @@ function Pastiglia({ item, prima }: { item: Item; prima: boolean }) {
 
   return (
     <Animated.View style={item.pulsa ? { opacity: v } : undefined}>
-      <Pressable
+      <Premi
         onPress={() => router.push(item.href as never)}
-        style={({ pressed }) => [styles.chip, prima && styles.chipLead, pressed && { opacity: 0.7 }]}
+        etichetta={item.label}
+        style={[styles.chip, prima && styles.chipLead]}
       >
         <Ionicons name={item.icon} size={17} color={prima ? colors.onAccent : colors.accentBright} />
         <Text style={[styles.label, prima && styles.labelLead]} numberOfLines={1}>{item.label}</Text>
-      </Pressable>
+      </Premi>
     </Animated.View>
   );
 }
 
 const styles = StyleSheet.create({
-  row: { gap: space.sm, paddingVertical: space.sm },
+  row: { gap: 10, paddingVertical: space.sm },
   chip: {
     flexDirection: 'row', alignItems: 'center', gap: 7,
-    paddingHorizontal: space.lg, paddingVertical: 10, borderRadius: radius.pill,
+    paddingHorizontal: space.lg, paddingVertical: 12, borderRadius: radius.pill,
     backgroundColor: colors.surface,
     borderWidth: StyleSheet.hairlineWidth, borderColor: 'rgba(255,255,255,0.08)',
   },

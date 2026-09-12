@@ -1,7 +1,7 @@
 import { strict as assert } from 'node:assert';
 import { test } from 'node:test';
 
-import { controlla, bestemmia, parolaccia, normalizza, spiegazione } from '../lib/filtro-core.ts';
+import { controlla, bestemmia, parolaccia, normalizza, spiegazione, maschera, oscura } from '../lib/filtro-core.ts';
 
 /*
  * Due elenchi.
@@ -98,4 +98,69 @@ test('la spiegazione c e sempre quando si blocca, mai quando passa', () => {
   assert.equal(spiegazione(controlla('ciao')), null);
   assert.match(spiegazione(controlla('dio porco')) ?? '', /bestemmie/);
   assert.match(spiegazione(controlla('coglione')) ?? '', /parola/);
+});
+
+/* ------------------------------------------------------------ oscuramento */
+
+test('la parolaccia si copre e il resto della frase resta', () => {
+  const r = maschera('che coglione l’arbitro');
+  assert.equal(r.testo, 'che c******* l’arbitro');
+  assert.equal(r.cambiato, true);
+});
+
+test('una frase pulita non viene toccata', () => {
+  const r = maschera('che gol di Petito al 24esimo');
+  assert.equal(r.testo, 'che gol di Petito al 24esimo');
+  assert.equal(r.cambiato, false);
+});
+
+test('la bestemmia su due parole si copre tutta', () => {
+  assert.equal(maschera('dio porco che partita').testo, 'd** p**** che partita');
+});
+
+test('la bestemmia attaccata si copre come una parola sola', () => {
+  assert.equal(maschera('porcodio').testo, 'p*******');
+});
+
+test('scritta spezzata lettera per lettera: si copre tutto', () => {
+  // non esiste una parola da coprire, e chi scrive cosi lo fa apposta
+  const r = maschera('d i o p o r c o');
+  assert.equal(r.cambiato, true);
+  assert.ok(controlla(r.testo).pulito);
+});
+
+test('la punteggiatura e gli spazi restano dov erano', () => {
+  assert.equal(maschera('ma che cazzo, davvero?').testo, 'ma che c****, davvero?');
+});
+
+test('coprire due volte non cambia niente', () => {
+  const una = maschera('sei uno stronzo').testo;
+  assert.equal(maschera(una).testo, una);
+});
+
+test('la famiglia ki te mu ort si copre in tutte le sue forme', () => {
+  for (const parola of ['kitemu', 'kitemuort', 'kitemmuort', 'kitemuortt', 'kitestramu', 'chitemurt']) {
+    const r = maschera(`vai ${parola} va`);
+    assert.equal(r.cambiato, true, parola);
+    assert.ok(r.testo.includes('*'), parola);
+  }
+});
+
+test('le parole italiane che somigliano al dialetto passano', () => {
+  // "recitemmo" contiene "citemmo": la regola parte dall'inizio della parola
+  for (const frase of ['recitemmo la formazione', 'la chitarra di mio fratello', 'citeremo le fonti']) {
+    assert.equal(maschera(frase).cambiato, false, frase);
+  }
+});
+
+test('le aggiunte nostre sono nell elenco', () => {
+  for (const parola of ['bastarda', 'zoccola', 'puttana', 'cornuto', 'strunzo']) {
+    assert.equal(maschera(parola).cambiato, true, parola);
+  }
+});
+
+test('oscura tiene la prima lettera', () => {
+  assert.equal(oscura('merda'), 'm****');
+  assert.equal(oscura('a'), '*');
+  assert.equal(oscura(''), '*');
 });

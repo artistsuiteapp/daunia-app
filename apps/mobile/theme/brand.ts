@@ -19,7 +19,7 @@ export const brand = {
 
   name: 'Il Tifo della Daunia',
   /** forma corta, per gli spazi stretti */
-  shortName: 'Il Tifo',
+  shortName: 'Tifo Daunia',
   /** Nominato solo in testi descrittivi, mai come marchio del prodotto. */
   clubName: 'Calcio Foggia 1920',
   tagline: "L'app dei tifosi rossoneri",

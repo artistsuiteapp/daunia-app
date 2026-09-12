@@ -30,6 +30,13 @@ import { supabase } from './supabase';
 
 const CHIAVE_PUBBLICA = process.env.EXPO_PUBLIC_VAPID_PUBLIC_KEY?.trim();
 
+/*
+ * Le notifiche sono la cosa piu facile da sbagliare in un'app di tifosi: al
+ * terzo avviso inutile si toglie il permesso, e quello non torna piu. Per
+ * questo sono tutte fatti della partita, una per fatto, e le ultime due --
+ * pronostico ed esito -- arrivano solo a chi riguardano: il promemoria a chi
+ * non ha ancora giocato, il risultato a chi aveva giocato.
+ */
 export type Preferenze = {
   formazioni: boolean;
   inizio: boolean;
@@ -37,10 +44,13 @@ export type Preferenze = {
   espulsione: boolean;
   intervallo: boolean;
   fine: boolean;
+  pronostico: boolean;
+  esito: boolean;
 };
 
 export const PREFERENZE_INIZIALI: Preferenze = {
   formazioni: true, inizio: true, gol: true, espulsione: true, intervallo: true, fine: true,
+  pronostico: true, esito: true,
 };
 
 export const ETICHETTE: Record<keyof Preferenze, string> = {
@@ -50,6 +60,8 @@ export const ETICHETTE: Record<keyof Preferenze, string> = {
   espulsione: 'Espulsioni',
   intervallo: 'Fine primo tempo',
   fine: 'Fine partita',
+  pronostico: 'Un’ora prima, se non hai pronosticato',
+  esito: 'Com’è andato il tuo pronostico',
 };
 
 export type Stato =

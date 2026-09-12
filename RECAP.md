@@ -1,7 +1,7 @@
 # Il Tifo della Daunia — recap completo
 
 App per i tifosi del Calcio Foggia 1920. **Progetto indipendente**, non affiliato
-al club. Aggiornato al 8 settembre 2026.
+al club. Aggiornato al 10 settembre 2026.
 
 Questo file esiste per riprendere il lavoro in una chat nuova senza perdere
 niente: cosa c'è, come funziona, cosa manca, e le decisioni prese con il
@@ -11,10 +11,17 @@ perché — che è la parte che non si ricostruisce leggendo il codice.
 
 ## In due righe
 
-- **Codice**: `~/dev/daunia-app`, repository privato `artistsuiteapp/daunia-app`
+- **Codice**: `~/dev/daunia-app`, repository **pubblico** `artistsuiteapp/daunia-app`
 - **Online**: <https://daunia.vercel.app> (PWA, da aggiungere alla schermata Home)
+- **Dominio**: `iltifodelladaunia.it`, comprato su IONOS. Vetrina pronta in `sito/index.html`, non ancora pubblicata
 - **Stack**: Expo / React Native (iOS, Android e web dallo stesso codice), Supabase, GitHub Actions
-- **Stato**: 116 commit, 27 migrazioni, 21 schermate, **208 test**
+- **Stato**: 134 commit, 30 migrazioni, 24 schermate, **221 test**
+
+Il repository è pubblico dal 8 settembre, e non è una svista: sui repo pubblici
+i minuti di GitHub Actions sono gratis e illimitati. Verificato prima di
+aprirlo che in tutta la storia non ci fosse mai stato committato un segreto.
+Sono attivi secret scanning e push protection: se una chiave finisce per errore
+in un commit, il push viene bloccato.
 
 ---
 
@@ -22,17 +29,22 @@ perché — che è la parte che non si ricostruisce leggendo il codice.
 
 ```bash
 cd ~/dev/daunia-app
-npm test                    # 208 test
+npm test                    # 221 test
 npx tsc --noEmit -p apps/mobile
 npm run build:web
 npx vercel --prod --yes
-npx vercel alias set <url-del-deploy> daunia.vercel.app   # NON si sposta da solo
 ```
 
-L'alias è il passo che si dimentica: senza, il sito resta al deploy precedente.
+**Non serve `vercel alias set`.** C'era, e per due giorni ha fatto fallire ogni
+giro con `Error: User not found`, mandando quattro o cinque email di errore al
+giorno per un deploy che era andato benissimo. `deploy --prod` assegna già i
+domini di produzione del progetto: `alias set` è un'operazione a livello di
+account e gli id del progetto non bastano ad autorizzarla.
 
-Da GitHub Actions il deploy è automatico dopo ogni aggiornamento dei dati
-(serve `VERCEL_TOKEN`, già impostato).
+Da GitHub Actions il deploy parte quando cambiano i dati **oppure** su ogni
+push. Prima solo sui dati, e il difetto era invisibile: una modifica al codice
+del sito arrivava in produzione soltanto se per combinazione, nello stesso
+giro, cambiava anche un dato.
 
 ---
 
@@ -53,6 +65,8 @@ Da GitHub Actions il deploy è automatico dopo ogni aggiornamento dei dati
 - **Chat dal vivo**: apre 10 minuti prima del fischio, chiude 20 dopo il triplice
   vero. Legge chiunque, scrive chi ha un account
 - **Filtro parolacce e bestemmie**: gira nel database, non nel telefono
+- **Segnalazione e blocco** su ogni contenuto altrui, con la coda per chi modera
+  in `Profilo → Segnalazioni`
 
 ### Gioco
 
@@ -65,10 +79,84 @@ Da GitHub Actions il deploy è automatico dopo ogni aggiornamento dei dati
 
 ### Altro
 
-- **Trasferte**: stato del divieto, chi ci va, da dove si parte
+- **Trasferte**: stato del divieto, chi ci va, da dove si parte. Chi ha
+  dichiarato può correggere o togliersi (il modulo si riempie da solo)
 - **Stadio in 3D** con i settori e chi ha detto che c'è
 - **Biglietti**: solo link a Vivaticket, mai vendita diretta
-- **News** scritte dalla redazione
+- **Notizie**: la rassegna delle testate che hanno dato il permesso. I pezzi
+  scritti da noi sono usciti di scena
+
+---
+
+## La rassegna stampa
+
+Tre testate hanno autorizzato per iscritto la presenza dei loro articoli:
+
+| Testata | Contatto | Feed |
+|---|---|---|
+| CalcioFoggia.it | `redazione@calciofoggia.it` | `/feed/` |
+| Foggiacalciomania | `redazione@foggiacalciomania.com` | `/feed/` |
+| ilFoggia.com | `ilfoggiainfo@gmail.com` | `/feed/` |
+
+**La regola a cui hanno detto di sì, e che non si tocca**: entrano titolo, link,
+data e il sommario tagliato a 180 caratteri. Il corpo no, nemmeno quando il feed
+lo porta intero — e lo porta quasi sempre. C'è un test che fallisce se qualcuno
+aggiunge il campo. L'anteprima è l'`og:image` scelta dalla loro redazione,
+collegata dal loro server, mai copiata.
+
+Chi tocca un articolo finisce sulla loro pagina, aperta col browser di sistema
+(`lib/apri.ts`): SFSafariViewController su iPhone, Custom Tabs su Android. I
+loro banner e i loro cookie girano come sul sito, quindi per la testata resta una
+visita normale. Una WebView che ripulisce la pagina sarebbe un problema con le
+redazioni prima ancora che con Apple.
+
+Si guarda **due volte al giorno**, e il freno sta nel dato e non nel cron:
+`data/stampa.json` porta l'ora dell'ultimo giro. Il workflow batte ogni sei ore
+per altri motivi e in CI la cache su disco è spenta, quindi non poteva stare né
+lì né lì.
+
+Per aggiungere una testata: sei righe in `TESTATE`, dentro
+`services/ingest/src/sources/stampa.mjs`. Per toglierne una: `attiva: false`,
+una riga sola, perché nella mail c'era scritto "vi tolgo in giornata".
+`logoSuChiaro` dice se il loro logo ha inchiostro scuro e vuole una piastra
+chiara: è per testata perché ognuno disegna il proprio marchio a modo suo.
+
+Le generaliste (FoggiaToday, l'Immediato) hanno bisogno di `FILTRO_FOGGIA`,
+altrimenti la sezione si riempie di cronaca e incidenti stradali.
+
+---
+
+## Ruoli e moderazione
+
+Tre ruoli in `profiles.ruolo`: `utente` (chi si registra), `moderatore` (nasconde
+contenuti, vede la coda), `admin` (assegna i ruoli, sospende). Moderatore e admin
+**si danno solo dal pannello Supabase**, mai dall'app.
+
+```sql
+update profiles set ruolo = 'admin'
+where id = (select id from auth.users where email = 'tua-email@esempio.it');
+```
+
+**La trappola che c'era**: `profiles` ha una policy che lascia a ognuno
+modificare il proprio profilo. Aggiungere una colonna `ruolo` e basta avrebbe
+significato che chiunque poteva scriversi `admin` da solo — la chiave anonima sta
+dentro l'app ed è pubblica per progetto. Un trigger rifiuta ogni modifica di
+ruolo e sospensione che non arrivi da un admin già tale.
+
+**Il blocco vive nelle politiche di lettura, non nel telefono.** Chi hai bloccato
+non ti viene consegnato nemmeno chiamando l'API a mano. Attenzione: le policy in
+Postgres **si sommano con OR**, quindi la vecchia policy permissiva della chat è
+stata tolta per nome. Una lasciata viva avrebbe annullato il blocco in silenzio.
+
+**Alla terza persona diversa** che segnala lo stesso contenuto, quello si nasconde
+da solo in attesa di revisione (`soglia_segnalazioni()`, una funzione da sola
+perché il numero andrà rivisto sui dati veri). Tre persone d'accordo possono
+zittire chiunque, e in una tifoseria succederà: per questo *respingere* rimette
+in chiaro il contenuto. Se assolvere non riportasse indietro, la sparizione
+automatica sarebbe una condanna senza appello.
+
+Apple (linea guida 1.2) e Google chiedono tre cose a chi pubblica un'app dove la
+gente scrive: filtro, segnalazione, blocco. Ci sono tutte e tre.
 
 ---
 

@@ -1,9 +1,10 @@
 import { useEffect, useRef } from 'react';
-import { Animated, Easing, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Animated, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 import { colors, radius, space, type } from '../theme/tokens';
+import { curva, durata, quanto } from '../theme/motion';
 import { useSafeInsets, useKeyboardOpen } from '../lib/viewport';
 import { PallinoLive } from './PallinoLive';
 import { salaAperta } from '../lib/sala';
@@ -123,12 +124,20 @@ function Tab({ focused, label, icon, onPress }: {
   const grow = useRef(new Animated.Value(focused ? 1 : 0)).current;
 
   useEffect(() => {
+    /*
+     * Va sul driver nativo, e conta.
+     *
+     * Il commento di prima diceva che la pillola cambia larghezza: non e vero,
+     * cambia solo scala e colore. Tenerla fuori dal driver nativo voleva dire
+     * far girare l'animazione sul filo principale, lo stesso che sta montando
+     * la schermata nuova — ed e per questo che il cambio scheda si impuntava
+     * proprio nel momento in cui si cambia scheda.
+     */
     Animated.timing(grow, {
       toValue: focused ? 1 : 0,
-      duration: 220,
-      easing: Easing.out(Easing.cubic),
-      // la pillola cambia larghezza: e una proprieta di layout, non va sul driver nativo
-      useNativeDriver: false,
+      duration: quanto(durata.media),
+      easing: curva.entra,
+      useNativeDriver: true,
     }).start();
   }, [focused, grow]);
 
@@ -145,7 +154,7 @@ function Tab({ focused, label, icon, onPress }: {
           styles.pill,
           {
             backgroundColor: focused ? colors.accent : 'transparent',
-            transform: [{ scale: grow.interpolate({ inputRange: [0, 1], outputRange: [0.92, 1] }) }],
+            transform: [{ scale: grow.interpolate({ inputRange: [0, 1], outputRange: [0.9, 1] }) }],
           },
         ]}
       >
@@ -176,7 +185,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
     backgroundColor: '#141416',
     borderRadius: radius.pill,
-    paddingHorizontal: 4, paddingVertical: 7,
+    paddingHorizontal: 6, paddingVertical: 8,
     borderWidth: StyleSheet.hairlineWidth, borderColor: 'rgba(255,255,255,0.10)',
     maxWidth: 460, width: '100%',
     ...Platform.select({
@@ -189,11 +198,11 @@ const styles = StyleSheet.create({
   },
   // ogni voce prende la stessa fetta: cosi la barra resta simmetrica e le
   // etichette lunghe non schiacciano quelle corte
-  tab: { flex: 1, alignItems: 'center', gap: 2, paddingVertical: 2 },
+  tab: { flex: 1, alignItems: 'center', gap: 3, paddingVertical: 4, paddingHorizontal: 2 },
   pill: {
     alignItems: 'center', justifyContent: 'center',
     width: 44, height: 32, borderRadius: radius.pill,
   },
-  label: { ...type.caption, color: colors.textDim, fontSize: 9.5, letterSpacing: 0.1 },
+  label: { ...type.caption, color: colors.textDim, fontSize: 10, letterSpacing: 0.1 },
   labelOn: { color: colors.text, fontWeight: '700' },
 });

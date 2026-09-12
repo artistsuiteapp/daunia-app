@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Daunia",
+    "name": "Il Tifo della Daunia",
     "slug": "daunia",
     "version": "0.1.0",
     "orientation": "portrait",
@@ -9,6 +9,7 @@
     "newArchEnabled": true,
     "backgroundColor": "#08080A",
     "splash": {
+      "image": "./assets/brand/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#08080A"
     },
@@ -19,19 +20,23 @@
     "android": {
       "package": "io.daunia.app",
       "adaptiveIcon": {
+        "foregroundImage": "./assets/brand/adaptive-icon.png",
         "backgroundColor": "#08080A"
       },
       "edgeToEdgeEnabled": true
     },
     "web": {
       "bundler": "metro",
-      "output": "static"
+      "output": "static",
+      "favicon": "./assets/brand/favicon.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
+          "image": "./assets/brand/splash.png",
+          "imageWidth": 220,
           "backgroundColor": "#08080A",
           "resizeMode": "contain"
         }
@@ -43,6 +48,7 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "icon": "./assets/brand/icon.png"
   }
 }

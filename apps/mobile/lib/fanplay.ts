@@ -4,6 +4,7 @@ import { supabase } from './supabase';
 import { utenteCorrente } from './auth';
 
 import { scorePrediction } from './prediction-score';
+import { pronosticoDi, ricaricaPronostici, salvaPronostico } from './pronostici';
 
 /**
  * Le tre cose che i tifosi fanno nell'app: dire che ci sono, dare i voti,
@@ -233,25 +234,29 @@ export function myRatingCount(matchId: string): number {
 
 /* -------------------------------------------------------------- pronostici */
 
+/*
+ * I pronostici sono usciti da qui.
+ *
+ * Stavano in due posti che non si parlavano -- questa copia nel telefono e la
+ * riga nel database -- e le due schermate ne leggevano una ciascuna. Adesso la
+ * verita e una sola e sta in lib/pronostici.ts; queste funzioni restano solo
+ * perche le chiamano ancora delle schermate, e rimandano la in mezzo.
+ */
 export function myPrediction(matchId: string): [number, number] | null {
-  return store.predictions[matchId] ?? null;
+  const p = pronosticoDi(matchId);
+  return p ? [p.casa, p.ospiti] : null;
 }
 
-export function predict(matchId: string, home: number, away: number) {
-  store = { ...store, predictions: { ...store.predictions, [matchId]: [home, away] } };
-  commit();
-  const u = utenteCorrente();
-  if (supabase && u) {
-    void supabase.from('pronostici')
-      .upsert({ utente: u.id, partita: matchId, casa: home, ospiti: away });
-  }
+export async function predict(matchId: string, home: number, away: number) {
+  const r = await salvaPronostico(matchId, home, away);
+  version += 1;
+  listeners.forEach((l) => l());
+  return r;
 }
 
-export function clearPrediction(matchId: string) {
-  const next = { ...store.predictions };
-  delete next[matchId];
-  store = { ...store, predictions: next };
-  commit();
+/** Da chiamare quando si apre una schermata che mostra un pronostico. */
+export function caricaPronostici() {
+  return ricaricaPronostici();
 }
 
 export { scorePrediction } from './prediction-score';

@@ -18,6 +18,7 @@ import { relative } from '../../lib/format';
 import { useSafeInsets } from '../../lib/viewport';
 import { useBenvenuto } from '../../lib/ospite';
 import { useProfilo } from '../../lib/auth';
+import { usePartite } from '../../lib/partita-corrente';
 import { useLive } from '../../lib/live';
 import { eOggi } from '../../lib/live-core';
 import { salaAperta } from '../../lib/sala';
@@ -172,9 +173,10 @@ export default function Home() {
     });
     return a;
   }, [chatViva, oggi, pagelle, next, adessoFinito, vivoPremio, miglioreOra]);
-  const last = lastMatch();
+  // l'ultima giocata compresa quella appena finita: vedi lib/partita-corrente.ts
+  const { partite, ultima: last } = usePartite();
   const row = foggiaRow();
-  const scorer = topScorers()[0];
+  const scorer = topScorers(partite)[0];
   const upcoming = upcomingMatches().slice(0, 8);
 
   return (
@@ -196,7 +198,7 @@ export default function Home() {
         crest={FOGGIA?.crest ?? null}
         competition={meta.competition}
         season={meta.season}
-        form={recentForm()}
+        form={recentForm(5, partite)}
         position={row?.position ?? null}
         points={row?.points ?? null}
       />
@@ -306,7 +308,12 @@ export default function Home() {
 
 function Action({ label, onPress }: { label: string; onPress: () => void }) {
   return (
-    <Pressable onPress={onPress} hitSlop={10}>
+    <Pressable
+      onPress={onPress}
+      hitSlop={12}
+      accessibilityRole="button"
+      style={({ pressed }) => (pressed ? { opacity: 0.55 } : undefined)}
+    >
       <Text style={styles.action}>{label}</Text>
     </Pressable>
   );
@@ -317,12 +324,12 @@ function diffLabel(d: number) {
 }
 
 const styles = StyleSheet.create({
-  greeting: { paddingBottom: space.md, backgroundColor: colors.bg },
+  greeting: { paddingBottom: space.lg, backgroundColor: colors.bg },
   action: { ...type.subhead, color: colors.accentBright },
-  stack: { gap: space.sm, marginTop: space.sm },
+  stack: { gap: space.md, marginTop: space.md },
 
-  tiles: { flexDirection: 'row', flexWrap: 'wrap', gap: space.sm },
-  tile: { flexGrow: 1, flexBasis: '46%', padding: space.md },
+  tiles: { flexDirection: 'row', flexWrap: 'wrap', gap: space.md },
+  tile: { flexGrow: 1, flexBasis: '46%', padding: space.lg },
 
   lastName: { ...type.subhead, color: colors.text, flex: 1 },
   lastRight: { textAlign: 'right' },

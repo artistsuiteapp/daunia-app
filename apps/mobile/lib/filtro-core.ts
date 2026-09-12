@@ -26,7 +26,7 @@
  * Questo file non ha React ne rete: e sotto test, ed e la copia di riferimento
  * della stessa regola che vive nel database.
  */
-import { PAROLACCE } from './parolacce.ts';
+import { PAROLACCE, PAROLACCE_NOSTRE } from './parolacce.ts';
 
 export type Motivo = 'bestemmia' | 'parolaccia';
 export type Esito = { pulito: true } | { pulito: false; motivo: Motivo; trovato: string };
@@ -50,6 +50,8 @@ const QUALIFICHE = [
   'schifoso', 'schifosa', 'zozzo', 'zozza',
   'lurido', 'lurida', 'sporco', 'sporca',
   'infame', 'cornuto', 'impestato', 'marcio', 'fottuto',
+  'zoccola', 'mignotta', 'strunzo', 'strunz', 'fetente', 'fetent',
+  'curnut', 'pezzente', 'sfondato', 'ubriaco', 'porcaccio', 'porcaccia',
 ];
 
 /*
@@ -122,7 +124,23 @@ export function bestemmia(testo: string): string | null {
   return null;
 }
 
-const ELENCO = new Set(PAROLACCE);
+/*
+ * La famiglia "ki te mu ort".
+ *
+ * Si scrive in venti modi -- kitemu, kitemmuort, kitestramuort, chitemurt --
+ * e un elenco fisso li perde tutti tranne quelli che uno si e ricordato. La
+ * forma pero e sempre la stessa: ki/chi + te + (stra) + m + u/o + rt.
+ *
+ * Due regole invece di una, e la differenza e dove si puo guardare.
+ * ANCORATA vale su una parola sola e parte dall'inizio, altrimenti prenderebbe
+ * dentro parole italiane vere: "recitemmo" contiene "citemmo" e non c'entra
+ * niente. LIBERA gira su tutto il testo attaccato, per chi spezza la parola,
+ * ma pretende "uort" per intero: cosi non tocca niente di innocente.
+ */
+const DIALETTO_ANCORATO = /^(k|c)h?ite(stra)?m+[uo]+r?t*/;
+const DIALETTO_LIBERO = /(k|c)h?ite(stra)?m+uort/;
+
+const ELENCO = new Set([...PAROLACCE, ...PAROLACCE_NOSTRE]);
 
 /**
  * Cerca una parolaccia.
@@ -132,9 +150,13 @@ const ELENCO = new Set(PAROLACCE);
  * ha fatto niente si fa odiare in fretta.
  */
 export function parolaccia(testo: string): string | null {
-  const { parole } = normalizza(testo);
-  for (const p of parole) if (ELENCO.has(p)) return p;
-  return null;
+  const { parole, unito } = normalizza(testo);
+  for (const p of parole) {
+    if (ELENCO.has(p)) return p;
+    if (DIALETTO_ANCORATO.test(p)) return p;
+  }
+  const spezzata = DIALETTO_LIBERO.exec(unito);
+  return spezzata ? spezzata[0] : null;
 }
 
 /** Il giudizio completo. */
@@ -153,3 +175,110 @@ export function spiegazione(e: Esito): string | null {
     ? 'Qui le bestemmie non passano. Riscrivi senza e il messaggio parte.'
     : 'C\'è una parola che qui non passa. Riscrivi e il messaggio parte.';
 }
+
+/* ------------------------------------------------------------ oscuramento */
+
+/**
+ * COPRIRE INVECE DI RESPINGERE
+ *
+ * Prima il messaggio con una parolaccia non partiva. Sembra la scelta severa
+ * ed e la piu debole: chi ha scritto non sa quale parola ha fatto scattare il
+ * filtro, riprova, sbaglia di nuovo, e alla terza volta smette di scrivere.
+ * In una chat che dura novanta minuti significa perdere la persona, non la
+ * parolaccia.
+ *
+ * Adesso il messaggio parte sempre e la parola si copre: resta la prima
+ * lettera, il resto diventa asterischi. Si capisce che c'e un limite, si vede
+ * dove, e la frase intorno non si perde.
+ *
+ * L'oscuramento e definitivo: nel database finisce il testo gia coperto, non
+ * l'originale con una bandierina. Non si conserva quello che non si vuole
+ * pubblicare.
+ */
+
+/** Una parola coperta: resta la prima lettera, il resto diventa asterischi. */
+export function oscura(parola: string): string {
+  return parola.length <= 1 ? '*' : parola[0]! + '*'.repeat(parola.length - 1);
+}
+
+/*
+ * Le parole si cercano sul testo ORIGINALE, non su quello normalizzato.
+ *
+ * La normalizzazione toglie accenti, cambia i numeri in lettere e comprime le
+ * ripetizioni: le posizioni non tornano piu, e non si saprebbe piu quale pezzo
+ * del testo vero coprire. Quindi si tagliano prima le parole dov'erano, e ogni
+ * parola si normalizza per conto suo.
+ */
+const PAROLA = /[\p{L}\p{N}@$]+/gu;
+
+type Pezzo = { da: number; a: number; parola: string; norm: string };
+
+function pezzi(testo: string): Pezzo[] {
+  const fuori: Pezzo[] = [];
+  PAROLA.lastIndex = 0;
+  let m: RegExpExecArray | null;
+  while ((m = PAROLA.exec(testo)) !== null) {
+    fuori.push({ da: m.index, a: m.index + m[0].length, parola: m[0], norm: normalizza(m[0]).unito });
+  }
+  return fuori;
+}
+
+function ricomponi(testo: string, elenco: Pezzo[], coperti: Set<number>): string {
+  let fuori = '';
+  let cursore = 0;
+  elenco.forEach((p, i) => {
+    if (!coperti.has(i)) return;
+    fuori += testo.slice(cursore, p.da) + oscura(p.parola);
+    cursore = p.a;
+  });
+  return fuori + testo.slice(cursore);
+}
+
+/**
+ * Copre quello che non deve comparire e restituisce il resto intatto.
+ *
+ * Tre passaggi, dal piu preciso al piu grosso:
+ *  1. due parole di seguito che fanno una bestemmia -- si coprono tutte e due
+ *  2. una parola sola: parolaccia, bestemmia attaccata, o famiglia dialettale
+ *  3. se dopo i primi due la bestemmia c'e ancora, vuol dire che e stata
+ *     scritta spezzata ("d i o p o r c o") e non esiste una parola da coprire:
+ *     li si copre tutto. Capita di rado e chi ci arriva lo ha fatto apposta.
+ */
+export function maschera(testo: string): { testo: string; cambiato: boolean } {
+  const originale = String(testo ?? '');
+  const elenco = pezzi(originale);
+  if (elenco.length === 0) return { testo: originale, cambiato: false };
+
+  const coperti = new Set<number>();
+
+  for (let i = 0; i < elenco.length - 1; i++) {
+    const a = elenco[i]!.norm;
+    const b = elenco[i + 1]!.norm;
+    if ((NOMI.includes(a) && QUALIFICHE.includes(b)) || (QUALIFICHE.includes(a) && NOMI.includes(b))) {
+      coperti.add(i);
+      coperti.add(i + 1);
+    }
+  }
+
+  elenco.forEach((p, i) => {
+    if (!p.norm) return;
+    if (ELENCO.has(p.norm) || DIALETTO_ANCORATO.test(p.norm)) { coperti.add(i); return; }
+    for (const n of NOMI) {
+      if (!p.norm.includes(n)) continue;
+      for (const q of QUALIFICHE) {
+        if (attaccate(p.norm, n, q)) { coperti.add(i); return; }
+      }
+    }
+  });
+
+  let fuori = ricomponi(originale, elenco, coperti);
+  if (!controlla(fuori).pulito) {
+    elenco.forEach((_, i) => coperti.add(i));
+    fuori = ricomponi(originale, elenco, coperti);
+  }
+
+  return { testo: fuori, cambiato: coperti.size > 0 };
+}
+
+/** Quello che si dice a chi ha scritto quando qualcosa e stato coperto. */
+export const AVVISO_COPERTO = 'Qualche parola l’abbiamo coperta. Il resto è partito.';
