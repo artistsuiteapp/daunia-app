@@ -14,7 +14,8 @@ const ITEMS: Item[] = [
   { icon: 'ticket', label: 'Biglietti', href: '/tickets' },
   { icon: 'shirt', label: 'Rosa', href: '/squad' },
   { icon: 'car-sport', label: 'Trasferte', href: '/trasferte' },
-  { icon: 'podium', label: 'Classifiche', href: '/classifica' },
+  // la classifica del girone: quella dei tifosi sta nel Match Center e nel profilo
+  { icon: 'podium', label: 'Classifica', href: '/standings' },
   { icon: 'stats-chart', label: 'Statistiche', href: '/stats' },
 ];
 
