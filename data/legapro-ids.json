@@ -14,11 +14,6 @@
       "ospiti": "AC Renate"
     },
     {
-      "id": "57zj3tma4ws73ilxvu9wuvdw4",
-      "casa": "AS Cittadella",
-      "ospiti": "US Pergolettese Crema"
-    },
-    {
       "id": "59t5mcvw9w6r5m1xr1uxcjlzo",
       "casa": "ACD Ospitaletto",
       "ospiti": "AC Lumezzane"
@@ -29,14 +24,19 @@
       "ospiti": "Novara FC"
     },
     {
-      "id": "59fx90ax6jrvjoec8ayzr3uvo",
-      "casa": "Calcio Lecco 1912",
-      "ospiti": "FC Arzignano Valchiampo"
+      "id": "57zj3tma4ws73ilxvu9wuvdw4",
+      "casa": "AS Cittadella",
+      "ospiti": "US Pergolettese Crema"
     },
     {
       "id": "58pp4u76dr4520btfabxl1qms",
       "casa": "AS Giana Erminio",
       "ospiti": "US Albinoleffe"
+    },
+    {
+      "id": "59fx90ax6jrvjoec8ayzr3uvo",
+      "casa": "Calcio Lecco 1912",
+      "ospiti": "FC Arzignano Valchiampo"
     },
     {
       "id": "5a6q31viixtm961kwhcplvod0",
@@ -69,14 +69,14 @@
       "ospiti": "Pro Vercelli 1892"
     },
     {
-      "id": "5cpck2dqns5pgostcpgxkhzis",
-      "casa": "AC Lumezzane",
-      "ospiti": "AS Giana Erminio"
-    },
-    {
       "id": "5daq4qtfc0alh2ztrzkfz30us",
       "casa": "US Pergolettese Crema",
       "ospiti": "Union Brescia"
+    },
+    {
+      "id": "5cpck2dqns5pgostcpgxkhzis",
+      "casa": "AC Lumezzane",
+      "ospiti": "AS Giana Erminio"
     },
     {
       "id": "5d01anrfvtmwlhsltwd8iq0b8",
@@ -89,14 +89,14 @@
       "ospiti": "AS Cittadella"
     },
     {
-      "id": "5c42ffzacbw1zkjpkqit20ftg",
-      "casa": "Desenzano FC",
-      "ospiti": "AC Trento"
-    },
-    {
       "id": "5dwhoc2jjk3z8ucvmjm8zlses",
       "casa": "Treviso",
       "ospiti": "Calcio Lecco 1912"
+    },
+    {
+      "id": "5c42ffzacbw1zkjpkqit20ftg",
+      "casa": "Desenzano FC",
+      "ospiti": "AC Trento"
     },
     {
       "id": "5b7scwu7xfnnvkgvlzhs89tlg",
@@ -119,9 +119,9 @@
       "ospiti": "US Pergolettese Crema"
     },
     {
-      "id": "5fof0b8606tvjl6osyp6pxwyc",
-      "casa": "ACD Ospitaletto",
-      "ospiti": "FC Arzignano Valchiampo"
+      "id": "5esf9qal61vyw8xys8pp8h34k",
+      "casa": "AS Cittadella",
+      "ospiti": "AC Lumezzane"
     },
     {
       "id": "5gv9mnuexa8vukvjwsbhjtudw",
@@ -129,14 +129,9 @@
       "ospiti": "Desenzano FC"
     },
     {
-      "id": "5esf9qal61vyw8xys8pp8h34k",
-      "casa": "AS Cittadella",
-      "ospiti": "AC Lumezzane"
-    },
-    {
-      "id": "5ehtb3ln9izo3js42im8ujj84",
-      "casa": "Alcione Milano",
-      "ospiti": "Treviso"
+      "id": "5fof0b8606tvjl6osyp6pxwyc",
+      "casa": "ACD Ospitaletto",
+      "ospiti": "FC Arzignano Valchiampo"
     },
     {
       "id": "5gknvqyis8hgp3488ew4sxus4",
@@ -149,14 +144,14 @@
       "ospiti": "Novara FC"
     },
     {
+      "id": "5ehtb3ln9izo3js42im8ujj84",
+      "casa": "Alcione Milano",
+      "ospiti": "Treviso"
+    },
+    {
       "id": "5fz3nmeffq8e1ivrhhkixxp1w",
       "casa": "Pro Vercelli 1892",
       "ospiti": "US Folgore Caratese"
-    },
-    {
-      "id": "5jtzl0gm299x8qm7t3aidf0no",
-      "casa": "Treviso",
-      "ospiti": "Pro Vercelli 1892"
     },
     {
       "id": "5hgq42axuv6unuq095fqsiplg",
@@ -164,9 +159,9 @@
       "ospiti": "AS Cittadella"
     },
     {
-      "id": "5icrhmwgxs0lwy23j0o432k9g",
-      "casa": "Calcio Lecco 1912",
-      "ospiti": "AS Giana Erminio"
+      "id": "5jtzl0gm299x8qm7t3aidf0no",
+      "casa": "Treviso",
+      "ospiti": "Pro Vercelli 1892"
     },
     {
       "id": "5hrdyp7345640mp2r9ovsj1g4",
@@ -174,19 +169,24 @@
       "ospiti": "US Albinoleffe"
     },
     {
+      "id": "5icrhmwgxs0lwy23j0o432k9g",
+      "casa": "Calcio Lecco 1912",
+      "ospiti": "AS Giana Erminio"
+    },
+    {
       "id": "5j8o5z5x5oqj2hoeq53apmrkk",
       "casa": "ACD Ospitaletto",
       "ospiti": "Juventus Next Gen"
     },
     {
-      "id": "5ine3tb7f4q1b7mm7r4q3sf10",
-      "casa": "AC Lumezzane",
-      "ospiti": "AC Renate"
-    },
-    {
       "id": "5i1zouk3b753fcrhiwq8idmok",
       "casa": "US Folgore Caratese",
       "ospiti": "Alcione Milano"
+    },
+    {
+      "id": "5ine3tb7f4q1b7mm7r4q3sf10",
+      "casa": "AC Lumezzane",
+      "ospiti": "AC Renate"
     },
     {
       "id": "bv750wug9m6ol4qrta096115g",
