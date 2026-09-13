@@ -1,4 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
+import { Platform } from 'react-native';
+import * as Linking from 'expo-linking';
 import { Stack, router } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
@@ -14,7 +16,8 @@ import { colors } from '../theme/tokens';
 import { durata } from '../theme/motion';
 import { AppShell } from '../components/AppShell';
 import { useDatiFreschi } from '../lib/bundle-remoto';
-import { quandoRecupero } from '../lib/auth';
+import { entraDaCollegamento, quandoRecupero } from '../lib/auth';
+import { parametriRecupero } from '../lib/recupero-core';
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
@@ -31,6 +34,29 @@ export default function RootLayout() {
 
   // chi entra da un collegamento di recupero finisce dove si sceglie la password
   useEffect(() => quandoRecupero(() => router.replace('/nuova-password' as never)), []);
+
+  /*
+   * I collegamenti delle email, sul telefono.
+   *
+   * Conferma dell'iscrizione e recupero password tornano come
+   * `daunia://accedi#access_token=...` o `daunia://nuova-password#...`. Sul web
+   * li legge supabase-js; qui nessuno li guardava. Si leggono in un posto solo,
+   * perche lo stesso token usato due volte la seconda volta fallisce.
+   */
+  const indirizzo = Linking.useURL();
+  const letto = useRef<string | null>(null);
+  useEffect(() => {
+    if (Platform.OS === 'web' || !indirizzo || letto.current === indirizzo) return;
+    const p = parametriRecupero(indirizzo);
+    if (!p.accesso && !p.codice && !p.errore) return;
+    letto.current = indirizzo;
+    const recupero = p.tipo === 'recovery' || indirizzo.includes('nuova-password');
+    void entraDaCollegamento(indirizzo).then((r) => {
+      const errore = r.errore ? `?errore=${encodeURIComponent(r.errore)}` : '';
+      if (recupero) router.replace(`/nuova-password${errore}` as never);
+      else router.replace((r.errore ? `/accedi${errore}` : '/') as never);
+    });
+  }, [indirizzo]);
 
   // Montserrat regge tutta l'interfaccia: i pesi bassi per il corpo, i corsivi
   // pesanti per numeri e titoli, come nella scritta del logo

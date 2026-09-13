@@ -18,9 +18,9 @@ site_url = "https://daunia.vercel.app"
 additional_redirect_urls = [
   "https://daunia.vercel.app",
   "https://daunia.vercel.app/accedi",
-  # il collegamento dell'email di recupero: dal browser e dall'app installata
-  "https://daunia.vercel.app/nuova-password",
-  "daunia://nuova-password",
+  # le email di conferma e recupero riportano nell'app installata
+  # (daunia://accedi, daunia://nuova-password)
+  "daunia://**",
   "http://localhost:8081",
   "http://localhost:8899",
 ]

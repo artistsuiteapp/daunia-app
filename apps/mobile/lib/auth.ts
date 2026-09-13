@@ -92,8 +92,10 @@ export async function registrati(nome: string, email: string, password: string) 
   const { data, error } = await supabase.auth.signUp({
     email: email.trim(),
     password,
-    // il nome viaggia nei metadati: il trigger crea_profilo lo legge da li
-    options: { data: { nome: nome.trim() } },
+    // il nome viaggia nei metadati: il trigger crea_profilo lo legge da li.
+    // Senza emailRedirectTo la conferma riportava all'indirizzo di default del
+    // progetto, cioe al sito: spento quello, nessuno finiva l'iscrizione.
+    options: { data: { nome: nome.trim() }, emailRedirectTo: ritorno('/accedi') },
   });
   if (error) return { errore: messaggioErrore(error) };
 
@@ -136,23 +138,22 @@ export async function esci() {
 export async function recuperaPassword(email: string) {
   if (!supabase) return { errore: 'Le iscrizioni non sono ancora aperte.' };
   if (!EMAIL.test(email.trim())) return { errore: "L'indirizzo email non sembra valido." };
-  await supabase.auth.resetPasswordForEmail(email.trim(), { redirectTo: ritornoRecupero() });
+  await supabase.auth.resetPasswordForEmail(email.trim(), { redirectTo: ritorno('/nuova-password') });
   return { errore: null };
 }
 
 /**
- * Dove riporta l'email di recupero.
+ * Dove riportano le email (conferma dell'iscrizione, recupero password).
  *
- * Prima era scritto a mano l'indirizzo del sito, e la pagina d'arrivo era
- * quella di accesso: nessuna schermata chiedeva la password nuova, e chi aveva
- * installato l'app finiva su un sito che non si pubblica piu. Dal telefono si
- * torna nell'app, dal browser alla stessa origine.
+ * Prima il recupero aveva scritto a mano l'indirizzo del sito, e la conferma
+ * non ne aveva nessuno. Dal telefono si torna nell'app (`daunia://...`), dal
+ * browser alla stessa origine da cui si e partiti.
  */
-function ritornoRecupero(): string {
+function ritorno(percorso: string): string {
   if (Platform.OS === 'web' && typeof window !== 'undefined') {
-    return `${window.location.origin}/nuova-password`;
+    return `${window.location.origin}${percorso}`;
   }
-  return Linking.createURL('/nuova-password');
+  return Linking.createURL(percorso);
 }
 
 /**

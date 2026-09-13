@@ -23,7 +23,8 @@ type Modo = 'accesso' | 'registrazione' | 'recupero';
  */
 export default function Accedi() {
   const gutter = useGutter();
-  const { modo: modoIniziale } = useLocalSearchParams<{ modo?: string }>();
+  // `errore` arriva da un collegamento di conferma scaduto, letto in _layout.tsx
+  const { modo: modoIniziale, errore: erroreCollegamento } = useLocalSearchParams<{ modo?: string; errore?: string }>();
   const [modo, setModo] = useState<Modo>(
     modoIniziale === 'registrazione' || modoIniziale === 'recupero' ? modoIniziale : 'accesso',
   );
@@ -32,7 +33,7 @@ export default function Accedi() {
   const [password, setPassword] = useState('');
   const [mostraPassword, setMostraPassword] = useState(false);
   const [resta, setResta] = useState(true);
-  const [errore, setErrore] = useState<string | null>(null);
+  const [errore, setErrore] = useState<string | null>(erroreCollegamento ?? null);
   const [avviso, setAvviso] = useState<string | null>(null);
   const [inCorso, setInCorso] = useState(false);
 

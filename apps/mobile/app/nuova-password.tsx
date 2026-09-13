@@ -1,7 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
-import { router } from 'expo-router';
-import * as Linking from 'expo-linking';
-import { Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { useEffect, useState } from 'react';
+import { router, useLocalSearchParams } from 'expo-router';
+import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import { Screen, useGutter } from '../components/ui';
@@ -9,7 +8,7 @@ import { BackBar } from '../components/BackBar';
 import { BrandMark } from '../components/BrandMark';
 import { SfondoCitta } from '../components/SfondoCitta';
 import { colors, radius, space, type } from '../theme/tokens';
-import { cambiaPassword, entraDaCollegamento, useSessione } from '../lib/auth';
+import { cambiaPassword, useSessione } from '../lib/auth';
 
 /**
  * La password nuova, dopo il collegamento dell'email.
@@ -21,23 +20,18 @@ import { cambiaPassword, entraDaCollegamento, useSessione } from '../lib/auth';
 export default function NuovaPassword() {
   const gutter = useGutter();
   const sessione = useSessione();
-  const url = Linking.useURL();
-  const provato = useRef<string | null>(null);
+  // il collegamento lo legge _layout.tsx; qui arriva solo l'eventuale errore
+  const { errore: erroreCollegamento } = useLocalSearchParams<{ errore?: string }>();
 
   const [password, setPassword] = useState('');
   const [conferma, setConferma] = useState('');
   const [mostra, setMostra] = useState(false);
-  const [errore, setErrore] = useState<string | null>(null);
+  const [errore, setErrore] = useState<string | null>(erroreCollegamento ?? null);
   const [fatto, setFatto] = useState(false);
   const [inCorso, setInCorso] = useState(false);
   const [attesa, setAttesa] = useState(true);
 
-  // sul telefono i dati di accesso arrivano nell'indirizzo, e vanno usati una volta
-  useEffect(() => {
-    if (Platform.OS === 'web' || !url || provato.current === url) return;
-    provato.current = url;
-    void entraDaCollegamento(url).then((r) => { if (r.errore) setErrore(r.errore); });
-  }, [url]);
+  useEffect(() => { if (erroreCollegamento) setErrore(erroreCollegamento); }, [erroreCollegamento]);
 
   // un attimo per lasciare arrivare la sessione, prima di dire che manca
   useEffect(() => {
