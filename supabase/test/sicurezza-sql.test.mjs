@@ -256,3 +256,48 @@ test('chi e bloccato non vede il contatto per la trasferta', async () => {
   const dopo = await come(db, EVA, () => db.query(`select riferimento from trasferte_contatti`));
   assert.equal(dopo.rows.length, 0);
 });
+
+// ------------------------------------------------------- statistiche d'uso
+
+test('le statistiche d\'uso non si riempiono con uno script', async () => {
+  const inst = 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa';
+  await rifiuta(null,
+    `insert into eventi (installazione, evento, piattaforma) select '${inst}', 'apertura', 'web' from generate_series(1, 5000)`, 'troppi eventi');
+  for (let i = 0; i < 40; i += 1) {
+    await come(db, null, () => db.query(`insert into eventi (installazione, evento, piattaforma) values ('${inst}', 'apertura', 'ios')`));
+  }
+  await rifiuta(null, `insert into eventi (installazione, evento, piattaforma) values ('${inst}', 'apertura', 'ios')`, 'troppi eventi');
+  // un'altra installazione conta ancora
+  await come(db, null, () => db.query(`insert into eventi (installazione, evento, piattaforma) values (gen_random_uuid(), 'apertura', 'ios')`));
+  // e la data non la sceglie chi scrive
+  await come(db, null, () => db.query(`insert into eventi (installazione, evento, piattaforma, creato_il) values (gen_random_uuid(), 'apertura', 'ios', '2020-01-01')`));
+  assert.equal((await uno(`select count(*)::int as n from eventi where creato_il < '2021-01-01'`)).n, 0);
+});
+
+test('la pulizia degli eventi e in calendario', async () => {
+  assert.ok(await uno(`select 1 as c from cron.job where jobname = 'pulisci-eventi'`));
+  await rifiuta(null, `select pulisci_eventi()`);
+});
+
+// ------------------------------------------------------------ chi c'e
+
+test('chi c\'e lo decide il token, non il telefono', async () => {
+  await come(db, EVA, () => db.query(`select ci_sono()`));
+  await come(db, CARLA, () => db.query(`select ci_sono()`));
+  // nessuno scrive la riga di un altro
+  await rifiuta(EVA, `insert into collegati (utente) values ('${ANNA}')`);
+  await rifiuta(null, `select ci_sono()`);
+
+  const elenco = await come(db, MARCO, () => db.query(`select utente, nome from chi_ce()`));
+  assert.deepEqual(new Set(elenco.rows.map((r) => r.utente)), new Set([EVA, CARLA]));
+  // il nome viene dal profilo
+  assert.equal(elenco.rows.find((r) => r.utente === CARLA).nome, 'Carla 👨‍👩‍👧');
+
+  await rifiuta(EVA, `select * from chi_ce()`, 'moderatore');
+  await rifiuta(null, `select * from chi_ce()`);
+  assert.equal((await come(db, EVA, () => db.query(`select * from collegati`))).rows.length, 0);
+
+  await come(db, EVA, () => db.query(`select me_ne_vado()`));
+  const dopo = await come(db, MARCO, () => db.query(`select utente from chi_ce()`));
+  assert.deepEqual(dopo.rows.map((r) => r.utente), [CARLA]);
+});

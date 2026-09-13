@@ -749,3 +749,124 @@ begin
     );
   end loop;
 end $$;
+
+-- =====================================================================
+-- 9. LE STATISTICHE D'USO
+-- =====================================================================
+/*
+ * Chiunque, senza account, poteva scrivere un numero illimitato di eventi:
+ * cinquemila in una richiesta passavano. Contare anche chi guarda senza
+ * iscriversi resta giusto, quindi la scrittura anonima rimane; ha un tetto per
+ * installazione e uno complessivo, cosi il peggio che uno script puo fare e
+ * sporcare un'ora di numeri, non riempire il database.
+ *
+ * E la pulizia a tredici mesi era scritta in una funzione che non chiamava
+ * nessuno: gli eventi non sarebbero mai stati cancellati.
+ */
+create or replace function frena_eventi()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  -- security definer: current_user qui e il proprietario, il ruolo della
+  -- richiesta lo dice il token
+  if coalesce(auth.role(), '') not in ('anon', 'authenticated') then
+    return new;
+  end if;
+
+  if (select count(*) from eventi
+       where installazione = new.installazione
+         and creato_il > now() - interval '10 minutes') >= 40
+     or (select count(*) from eventi where creato_il > now() - interval '1 hour') >= 3000 then
+    raise exception 'troppi eventi';
+  end if;
+
+  new.creato_il := now();
+  return new;
+end $$;
+
+drop trigger if exists freno on eventi;
+create trigger freno before insert on eventi
+  for each row execute function frena_eventi();
+
+revoke execute on function pulisci_eventi() from public, anon, authenticated;
+select cron.schedule('pulisci-eventi', '17 4 * * *', 'select pulisci_eventi()');
+
+-- =====================================================================
+-- 10. CHI C'E ADESSO
+-- =====================================================================
+/*
+ * L'elenco del pannello veniva dalla presence di Realtime, dove il nome, la
+ * foto e perfino l'identificativo li dichiara il telefono: chiunque poteva
+ * comparire a chi modera come un'altra persona. Realtime non puo controllarlo,
+ * perche quel contenuto le regole di Postgres non lo vedono.
+ *
+ * Adesso il telefono dice solo "ci sono", e chi sia lo decide il token. Resta
+ * una riga per persona con l'ultima volta che si e fatta sentire, cancellata
+ * dopo cinque minuti: una fotografia di adesso, non un registro di abitudini.
+ */
+create table if not exists collegati (
+  utente   uuid primary key references profiles on delete cascade,
+  da       timestamptz not null default now(),
+  visto_il timestamptz not null default now()
+);
+alter table collegati enable row level security;
+-- nessuna politica: si passa solo dalle funzioni qui sotto
+
+create or replace function ci_sono()
+returns void
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  if auth.uid() is null then
+    return;
+  end if;
+  delete from collegati where visto_il < now() - interval '5 minutes';
+  insert into collegati (utente, da, visto_il)
+  values (auth.uid(), now(), now())
+  on conflict (utente) do update
+    set da = case when collegati.visto_il < now() - interval '150 seconds' then now() else collegati.da end,
+        visto_il = now();
+end $$;
+
+create or replace function me_ne_vado()
+returns void
+language sql
+security definer
+set search_path = public
+as $$
+  delete from collegati where utente = auth.uid();
+$$;
+
+create or replace function chi_ce()
+returns table (utente uuid, nome text, avatar text, da timestamptz)
+language plpgsql
+stable
+security definer
+set search_path = public
+as $$
+begin
+  if not e_moderatore() then
+    raise exception 'serve il ruolo di moderatore';
+  end if;
+  return query
+    select c.utente, p.nome, p.avatar, c.da
+    from collegati c join profiles p on p.id = c.utente
+    where c.visto_il > now() - interval '150 seconds'
+    order by c.da;
+end $$;
+
+revoke execute on function ci_sono() from public, anon;
+revoke execute on function me_ne_vado() from public, anon;
+revoke execute on function chi_ce() from public, anon;
+grant execute on function ci_sono() to authenticated;
+grant execute on function me_ne_vado() to authenticated;
+grant execute on function chi_ce() to authenticated;
+
+-- il canale di Realtime non serve piu a niente: niente regole che lo tengano aperto
+drop policy if exists "presenza: si annuncia chi ha un account" on realtime.messages;
+drop policy if exists "presenza: la legge chi ha un account" on realtime.messages;

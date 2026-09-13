@@ -58,8 +58,8 @@ export default function Online() {
       )}
 
       <GroupNote>
-        Si aggiorna da solo. Chi chiude l’app sparisce da qui dopo pochi secondi, e non resta
-        traccia di chi c’era.
+        Si aggiorna ogni mezzo minuto. Chi chiude l’app sparisce da qui subito, o entro due
+        minuti se il telefono si spegne di colpo, e non resta traccia di chi c’era.
       </GroupNote>
     </Screen>
   );
