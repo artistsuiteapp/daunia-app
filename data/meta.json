@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-13T11:20:53.084Z",
+  "generatedAt": "2026-09-13T11:40:57.716Z",
   "season": "2026-2027",
   "competition": "Serie C",
   "sources": {
@@ -22,6 +22,8 @@
     "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
     "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
     "API-Football rosa: Your account is suspended, check on https://dashboard.api-football.com.",
-    "Lega Pro: Foggia-Altamura e' finita da ore e non ha un id nel calendario della Lega: la formazione non entrera' mai nell'archivio"
+    "Divieti, FoggiaToday: HTTP 403 su https://www.foggiatoday.it/rss",
+    "Lega Pro: Foggia-Altamura e' finita da ore e non ha un id nel calendario della Lega: la formazione non entrera' mai nell'archivio",
+    "Stampa, CalcioFoggia.it: HTTP 415 su https://www.calciofoggia.it/feed/"
   ]
 }
