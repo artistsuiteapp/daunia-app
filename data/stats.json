@@ -52,31 +52,31 @@
     },
     {
       "matchday": 3,
-      "venue": "away",
+      "venue": "home",
       "result": "L",
       "position": 10
     },
     {
       "matchday": 4,
-      "venue": "home",
+      "venue": "away",
       "result": "L",
       "position": 14
     },
     {
       "matchday": 5,
-      "venue": "away",
-      "result": null,
-      "position": null
-    },
-    {
-      "matchday": 6,
       "venue": "home",
       "result": null,
       "position": null
     },
     {
-      "matchday": 7,
+      "matchday": 6,
       "venue": "away",
+      "result": null,
+      "position": null
+    },
+    {
+      "matchday": 7,
+      "venue": "home",
       "result": null,
       "position": null
     },
