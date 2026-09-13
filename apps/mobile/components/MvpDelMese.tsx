@@ -81,7 +81,8 @@ export function MvpDelMese() {
           <View style={styles.vinto}>
             <Avatar
               uri={squad.find((p) => p.id === vincitore.giocatore)?.photo ?? null}
-              name={vincitore.giocatore}
+              // il nome e non l'identificativo: da "wp-..." l'iniziale era sempre una W
+              name={squad.find((p) => p.id === vincitore.giocatore)?.shortName ?? vincitore.giocatore}
               size={44}
             />
             <View style={{ flex: 1 }}>

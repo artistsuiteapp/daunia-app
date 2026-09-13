@@ -177,7 +177,8 @@ const styles = StyleSheet.create({
   tile: { flex: 1, padding: space.md, alignItems: 'center' },
 
   rowText: { ...type.subhead, color: colors.text, flex: 1 },
-  date: { ...type.footnote, color: colors.textFaint },
+  // i valori pesano quanto le etichette: "1,87m" a 15 punti tenue si perdeva accanto ad "Altezza"
+  date: { ...type.subhead, color: colors.textDim },
 
   row: { gap: space.lg, paddingVertical: space.xs },
   mini: { alignItems: 'center', gap: 5, width: 60 },

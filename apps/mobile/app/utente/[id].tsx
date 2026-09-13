@@ -115,7 +115,7 @@ export default function SchedaUtente() {
         {prossimo
           ? `Con altri ${prossimo.mancano} punti diventa ${prossimo.livello.nome}.`
           : 'Più in alto di così non si va.'}
-        {' '}Il colore del nome dice il livello; rosso e azzurro dicono chi tiene in ordine la Curva.
+        {' '}Il livello e il ruolo sono scritti accanto al nome, e hanno anche un colore.
       </GroupNote>
     </Screen>
   );

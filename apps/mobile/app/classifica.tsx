@@ -89,12 +89,13 @@ export default function Classifica() {
                 right={<Text style={styles.punti}>{r.punti}</Text>}
               >
                 <Text style={[styles.posizione, r.posizione <= 3 && styles.podio]}>{r.posizione}</Text>
-                <Avatar uri={r.avatar} name={r.nome} size={28} />
+                <Avatar uri={r.avatar} name={r.nome} size={36} />
                 <NomeUtente
                   id={r.utente}
                   nome={r.nome}
                   stile={[styles.nome, r.utente === utente?.id && styles.nomeMio]}
                   suffisso={r.utente === utente?.id ? '· tu' : undefined}
+                  mostraLivello
                 />
               </ListRow>
             ))}
@@ -120,7 +121,7 @@ export default function Classifica() {
       <GroupNote>
         Pronostico 10 punti, esito indovinato 50, risultato esatto 100.
         Sondaggio 5, migliore in campo 5, pagelle 5.
-        {'\n'}Il colore del nome dice il livello.
+        {'\n'}Accanto al nome c'è il livello, che cresce con i punti.
       </GroupNote>
     </Screen>
   );

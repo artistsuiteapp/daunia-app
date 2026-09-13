@@ -13,6 +13,7 @@ import { etichettaFase } from '../lib/live-core';
 import { salaAperta } from '../lib/sala';
 import { PredictionCallout } from './PredictionCallout';
 import { CampoSpostato } from './CampoSpostato';
+import { menoMovimento } from '../theme/motion';
 
 type Tone = 'accent' | 'dark';
 
@@ -48,6 +49,12 @@ export function EventCard({ match, tone = 'dark', compatta = false }: {
       onPress={() => router.push(`/match/${match.id}` as never)}
       // anche le compatte si aprono: erano l'unica scheda non toccabile
       disabled={false}
+      // le compatte si leggono in una frase; le grandi no, hanno pulsanti dentro
+      accessible={compatta ? true : undefined}
+      accessibilityRole={compatta ? 'button' : undefined}
+      accessibilityLabel={compatta
+        ? `${match.home.shortName} contro ${match.away.shortName}, ${played ? `finita ${casa} a ${ospite}` : `${shortDate(match.kickoff)}${match.kickoff ? `, ore ${time(match.kickoff)}` : ''}`}`
+        : undefined}
       style={({ pressed }) => [
         styles.card, !accent && styles.cardDark,
         compatta && styles.cardCompatta,
@@ -98,15 +105,6 @@ export function EventCard({ match, tone = 'dark', compatta = false }: {
 
       {accent && !compatta ? (
         <View style={styles.actions}>
-          {/*
-            * Al posto dei biglietti, la chat.
-            *
-            * I biglietti si comprano una volta e restano nelle scorciatoie in
-            * home; la chat invece va presa nel momento in cui esiste, ed e il
-            * motivo per cui uno riapre l'app la domenica sera. Verde e che si
-            * puo scrivere, rosso che si legge e basta -- e cosi la voce non
-            * sparisce dopo la partita lasciando il dubbio di averla sognata.
-            */}
           {/*
             * Il tasto piu evidente e sempre una cosa che si puo fare adesso.
             *
@@ -175,7 +173,7 @@ export function EventCard({ match, tone = 'dark', compatta = false }: {
 function Pastiglia({ acceso }: { acceso: boolean }) {
   const v = useRef(new Animated.Value(1)).current;
   useEffect(() => {
-    if (!acceso) return;
+    if (!acceso || menoMovimento()) return;
     const ciclo = Animated.loop(Animated.sequence([
       Animated.timing(v, { toValue: 0.25, duration: 750, easing: Easing.inOut(Easing.quad), useNativeDriver: true }),
       Animated.timing(v, { toValue: 1, duration: 750, easing: Easing.inOut(Easing.quad), useNativeDriver: true }),

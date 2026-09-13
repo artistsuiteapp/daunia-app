@@ -102,9 +102,9 @@ export default function Live() {
       </View>
 
       <View style={[styles.barra, gutter]}>
-        <PallinoLive chiusa={!aperta} etichetta={aperta ? 'LIVE CHAT' : 'CHAT CHIUSA'} />
+        <PallinoLive chiusa={!aperta} etichetta={aperta ? 'Chat aperta' : 'Chat chiusa'} />
         <Text style={styles.quanti}>
-          {messaggi.length === 0 ? 'ancora nessuno' : `${messaggi.length} messaggi`}
+          {messaggi.length === 0 ? 'Nessun messaggio' : messaggi.length === 1 ? '1 messaggio' : `${messaggi.length} messaggi`}
         </Text>
       </View>
 
@@ -185,10 +185,10 @@ const styles = StyleSheet.create({
   testa: { flexDirection: 'row', alignItems: 'center', gap: space.md, paddingTop: space.sm },
   punteggio: { flex: 1, alignItems: 'center' },
   numeri: { ...type.title2, color: colors.text },
-  fase: { ...type.caption, color: colors.textDim },
+  fase: { ...type.footnote, color: colors.textDim },
 
   barra: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: space.sm },
-  quanti: { ...type.caption, color: colors.textDim },
+  quanti: { ...type.footnote, color: colors.textDim },
 
   lista: { flex: 1 },
   vuoto: { ...type.subhead, color: colors.textDim, textAlign: 'center', marginTop: space.xl },

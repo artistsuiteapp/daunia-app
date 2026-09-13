@@ -287,6 +287,7 @@ export function Segmented<T extends string>({ items, value, onChange }: {
               numberOfLines={1}
               adjustsFontSizeToFit
               minimumFontScale={0.85}
+              maxFontSizeMultiplier={1.3}
             >
               {it.label}
             </Text>

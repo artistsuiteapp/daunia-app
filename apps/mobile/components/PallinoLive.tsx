@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { Animated, Easing, StyleSheet, Text, View } from 'react-native';
 
 import { colors, radius, space, type } from '../theme/tokens';
+import { menoMovimento } from '../theme/motion';
 
 /**
  * Il pallino verde che lampeggia: dice che sta succedendo adesso.
@@ -10,7 +11,7 @@ import { colors, radius, space, type } from '../theme/tokens';
  * allarme e stanca; piu lento non si nota. Il verde e l'unico posto dell'app
  * dove non c'e il rosso del Foggia, ed e voluto: qui non e identita, e stato.
  */
-export function PallinoLive({ etichetta = 'LIVE CHAT', compatto = false, chiusa = false }: {
+export function PallinoLive({ etichetta = 'Chat dal vivo', compatto = false, chiusa = false }: {
   etichetta?: string; compatto?: boolean;
   /** a chat chiusa il pallino diventa rosso e sta fermo: si legge e basta */
   chiusa?: boolean;
@@ -20,7 +21,7 @@ export function PallinoLive({ etichetta = 'LIVE CHAT', compatto = false, chiusa 
   useEffect(() => {
     // fermo quando la chat e chiusa: un pallino che pulsa promette qualcosa
     // che sta succedendo, e non sta succedendo niente
-    if (chiusa) return;
+    if (chiusa || menoMovimento()) return;
     const ciclo = Animated.loop(Animated.sequence([
       Animated.timing(p, { toValue: 1, duration: 700, easing: Easing.inOut(Easing.quad), useNativeDriver: true }),
       Animated.timing(p, { toValue: 0, duration: 700, easing: Easing.inOut(Easing.quad), useNativeDriver: true }),
@@ -68,7 +69,7 @@ const styles = StyleSheet.create({
   pallino: { width: 8, height: 8, alignItems: 'center', justifyContent: 'center' },
   alone: { position: 'absolute', width: 8, height: 8, borderRadius: 4, backgroundColor: VERDE },
   nucleo: { width: 8, height: 8, borderRadius: 4, backgroundColor: VERDE },
-  testo: { ...type.captionBold, color: VERDE, letterSpacing: 0.6 },
+  testo: { ...type.footnoteBold, color: VERDE },
   testoCompatto: { fontSize: 13, lineHeight: 17 },
   rigaChiusa: { backgroundColor: 'rgba(229,52,62,0.14)' },
   nucleoChiuso: { backgroundColor: ROSSO },

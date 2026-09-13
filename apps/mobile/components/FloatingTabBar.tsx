@@ -171,6 +171,9 @@ function Tab({ focused, label, icon, onPress }: {
         adjustsFontSizeToFit
         // si puo stringere un poco su uno schermo stretto, mai sotto gli 11 punti
         minimumFontScale={0.85}
+        // come la barra di sistema: non cresce oltre con il testo grande di iOS,
+        // altrimenti cinque etichette larghe non ci starebbero in una riga
+        maxFontSizeMultiplier={1.2}
       >
         {label}
       </Text>

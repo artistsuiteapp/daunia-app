@@ -366,9 +366,11 @@ const styles = StyleSheet.create({
   settoreTesto: { ...type.footnoteBold, color: colors.textDim },
   settoreTestoOn: { color: colors.onAccent },
 
-  cta: { borderRadius: radius.xl, paddingVertical: 15, alignItems: 'center', backgroundColor: colors.accent, marginTop: space.sm },
+  // alignSelf: il contenitore centra, e senza questo il tasto si stringeva attorno a "Entra"
+  cta: { alignSelf: 'stretch', minHeight: 56, justifyContent: 'center', borderRadius: radius.xl, paddingVertical: 15, alignItems: 'center', backgroundColor: colors.accent, marginTop: space.sm },
   ctaTesto: { ...type.headline, color: colors.onAccent },
   ctaSecondo: {
+    alignSelf: 'stretch', minHeight: 52, justifyContent: 'center',
     borderRadius: radius.xl, paddingVertical: 14, alignItems: 'center',
     borderWidth: StyleSheet.hairlineWidth, borderColor: colors.borderStrong,
   },

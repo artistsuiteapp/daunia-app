@@ -26,7 +26,7 @@ import { tintaNome } from '../lib/identita-core.ts';
  * Il nome si tocca e si apre la scheda della persona. Non quando e il proprio:
  * il proprio profilo sta nel suo posto, e aprirlo da qui confonde.
  */
-export function NomeUtente({ id, nome, stile, apribile = true, spilletta = true, suffisso }: {
+export function NomeUtente({ id, nome, stile, apribile = true, spilletta = true, suffisso, mostraLivello = false }: {
   id: string | null | undefined;
   /** il nome che si ha gia in mano: si mostra subito, senza aspettare i punti */
   nome: string;
@@ -35,6 +35,11 @@ export function NomeUtente({ id, nome, stile, apribile = true, spilletta = true,
   spilletta?: boolean;
   /** ' · tu', un orario, quello che serve: resta grigio e non prende il colore */
   suffisso?: string;
+  /**
+   * Scrive il livello o il ruolo accanto al nome. Il colore da solo non basta:
+   * con il daltonismo o la vista stanca "Ultras" e "Rossonero" si confondono.
+   */
+  mostraLivello?: boolean;
 }) {
   const chi = useIdentita(id);
   const tinta = tintaNome(chi?.ruolo, chi?.punti ?? null);
@@ -47,11 +52,12 @@ export function NomeUtente({ id, nome, stile, apribile = true, spilletta = true,
       {spilletta && tinta.spilletta ? (
         <Ionicons
           name={tinta.spilletta}
-          size={12}
+          size={15}
           color={tinta.colore}
           accessibilityLabel={tinta.etichetta ?? undefined}
         />
       ) : null}
+      {mostraLivello && tinta.etichetta ? <Text style={stili.livello} numberOfLines={1}>{tinta.etichetta}</Text> : null}
       {suffisso ? <Text style={stili.suffisso}>{suffisso}</Text> : null}
     </View>
   );
@@ -61,6 +67,8 @@ export function NomeUtente({ id, nome, stile, apribile = true, spilletta = true,
     <Pressable
       onPress={() => router.push(`/utente/${id}` as never)}
       hitSlop={6}
+      accessibilityRole="button"
+      accessibilityLabel={[chi?.nome ?? nome, tinta.etichetta, suffisso].filter(Boolean).join(', ')}
       style={({ pressed }) => (pressed ? { opacity: 0.6 } : undefined)}
     >
       {testo}
@@ -71,5 +79,6 @@ export function NomeUtente({ id, nome, stile, apribile = true, spilletta = true,
 const stili = StyleSheet.create({
   riga: { flexDirection: 'row', alignItems: 'center', gap: 4, flexShrink: 1 },
   nome: { ...type.subheadBold, color: colors.text, flexShrink: 1 },
-  suffisso: { ...type.caption, color: colors.textFaint },
+  suffisso: { ...type.footnote, color: colors.textDim },
+  livello: { ...type.footnote, color: colors.textDim, flexShrink: 0 },
 });

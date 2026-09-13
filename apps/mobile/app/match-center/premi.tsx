@@ -7,7 +7,7 @@ import { BackBar } from '../../components/BackBar';
 import { Avatar } from '../../components/Avatar';
 import { MvpDelMese } from '../../components/MvpDelMese';
 import { colors, radius, space, type } from '../../theme/tokens';
-import { squad } from '../../lib/data';
+import { playerById, squad } from '../../lib/data';
 import { useUltimaPartita } from '../../lib/partita-corrente';
 import { shortDate } from '../../lib/format';
 import { caricaMvpPartita, classificaMvp, useFanplay } from '../../lib/fanplay';
@@ -76,9 +76,9 @@ export default function Premi() {
       ) : vincitore ? (
         <View style={gutter}>
           <Card style={styles.vincitore}>
-            <Avatar uri={fotoDi(vincitore.giocatore)} name={vincitore.giocatore} size={52} />
+            <Avatar uri={fotoDi(vincitore.giocatore)} name={nomeGiocatore(vincitore.giocatore)} size={52} />
             <View style={{ flex: 1 }}>
-              <Text style={styles.nome}>{vincitore.giocatore}</Text>
+              <Text style={styles.nome}>{nomeGiocatore(vincitore.giocatore)}</Text>
               <Text style={styles.meta}>
                 {vincitore.voti} {vincitore.voti === 1 ? 'preferenza' : 'preferenze'}
                 {totale > vincitore.voti ? ` su ${totale}` : ''} · {shortDate(ultima.kickoff)}
@@ -93,7 +93,7 @@ export default function Premi() {
                 {preferenze.slice(1, 5).map((p, i) => (
                   <ListRow key={p.giocatore} right={<Text style={styles.voti}>{p.voti}</Text>}>
                     <Text style={styles.posizione}>{i + 2}</Text>
-                    <Text style={styles.altro} numberOfLines={1}>{p.giocatore}</Text>
+                    <Text style={styles.altro} numberOfLines={1}>{nomeGiocatore(p.giocatore)}</Text>
                   </ListRow>
                 ))}
               </ListGroup>
@@ -133,6 +133,19 @@ function Riga({ icona, titolo, testo }: {
       </View>
     </View>
   );
+}
+
+/**
+ * Il nome di chi ha preso i voti.
+ *
+ * Il voto salva l'identificativo del giocatore, e qui si stampava quello:
+ * nel riquadro del migliore in campo compariva "wp-michele-bigonzoni". Se il
+ * giocatore non e piu in rosa, l'identificativo si rende almeno leggibile.
+ */
+function nomeGiocatore(id: string): string {
+  const p = playerById(id);
+  if (p) return p.shortName || p.name;
+  return id.replace(/^wp-/, '').split('-').map((x) => x.charAt(0).toUpperCase() + x.slice(1)).join(' ');
 }
 
 const styles = StyleSheet.create({

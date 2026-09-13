@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { colors, radius, space, type } from '../theme/tokens';
 import { usePronostico } from '../lib/pronostici';
+import { menoMovimento } from '../theme/motion';
 
 /**
  * Richiamo al pronostico dentro la scheda della prossima partita.
@@ -22,7 +23,8 @@ export function PredictionCallout({ matchId, onAccent = false }: {
   const pulse = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    if (guess) {
+    // fermo anche con "Riduci movimento" attivo nelle impostazioni del telefono
+    if (guess || menoMovimento()) {
       pulse.stopAnimation();
       pulse.setValue(0);
       return;

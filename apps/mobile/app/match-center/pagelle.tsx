@@ -67,7 +67,7 @@ export default function ArchivioPagelle() {
                     ) : <Text style={styles.niente}>—</Text>}
                   >
                     <View style={{ flex: 1, gap: 2 }}>
-                      <Text style={styles.gara} numberOfLines={1}>
+                      <Text style={styles.gara} numberOfLines={2}>
                         {m.home.shortName} {m.score?.home}–{m.score?.away} {m.away.shortName}
                       </Text>
                       <Text style={styles.dettaglio} numberOfLines={1}>
