@@ -469,7 +469,7 @@
     "venue": "Stadio San Nicola",
     "city": "Bari",
     "attendance": null,
-    "referee": null,
+    "referee": "Diop",
     "goals": [
       {
         "minute": 36,
