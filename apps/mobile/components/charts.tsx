@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import Svg, { Circle, Path, Line as SvgLine, Defs, LinearGradient as SvgGradient, Stop } from 'react-native-svg';
 
 import { colors, radius, space, type } from '../theme/tokens';
+import { maiuscolaIniziale } from './ui';
 
 /* ------------------------------------------------------- barra di confronto */
 
@@ -21,7 +22,7 @@ export function CompareBar({ label, left, right, leftColor = colors.accent, righ
     <View style={styles.cmpWrap}>
       <View style={styles.cmpHead}>
         <Text style={styles.cmpValue}>{left}{unit}</Text>
-        <Text style={styles.cmpLabel}>{label.toUpperCase()}</Text>
+        <Text style={styles.cmpLabel}>{maiuscolaIniziale(label)}</Text>
         <Text style={styles.cmpValue}>{right}{unit}</Text>
       </View>
       <View style={styles.cmpTrack}>
@@ -63,7 +64,7 @@ export function Ring({ value, size = 116, stroke = 10, label, caption, color = c
         />
       </Svg>
       <Text style={[styles.ringValue, { fontSize: size * 0.26 }]}>{label ?? `${Math.round(clamped * 100)}%`}</Text>
-      {caption ? <Text style={styles.ringCaption}>{caption.toUpperCase()}</Text> : null}
+      {caption ? <Text style={styles.ringCaption}>{maiuscolaIniziale(caption)}</Text> : null}
     </View>
   );
 }
@@ -175,5 +176,5 @@ const styles = StyleSheet.create({
   winTop: { flex: 1, width: '100%', justifyContent: 'flex-end' },
   winBottom: { flex: 1, width: '100%' },
   winBar: { width: '100%', borderRadius: radius.sm, minHeight: 2 },
-  winLabel: { ...type.caption, color: colors.textFaint, fontSize: 10, marginVertical: 4 },
+  winLabel: { ...type.caption, color: colors.textDim, fontSize: 13, lineHeight: 17, marginVertical: 4 },
 });

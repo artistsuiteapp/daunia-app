@@ -54,8 +54,8 @@ export function Greeting({ name, crest, avatar, onBell }: {
 
 
 
-      <Pressable onPress={onBell} hitSlop={10} style={styles.bell}>
-        <Ionicons name="notifications-outline" size={20} color={colors.text} />
+      <Pressable onPress={onBell} hitSlop={10} style={styles.bell} accessibilityRole="button" accessibilityLabel="Notifiche">
+        <Ionicons name="notifications-outline" size={24} color={colors.text} />
         <View style={styles.dot} />
       </Pressable>
     </View>
@@ -73,11 +73,11 @@ const styles = StyleSheet.create({
   name: { ...type.title3, color: colors.text },
   crest: { width: 36, height: 36 },
   bell: {
-    width: 38, height: 38, borderRadius: 19, backgroundColor: colors.surfaceHi,
+    width: 44, height: 44, borderRadius: 22, backgroundColor: colors.surfaceHi,
     alignItems: 'center', justifyContent: 'center',
   },
   dot: {
-    position: 'absolute', top: 9, right: 10,
+    position: 'absolute', top: 10, right: 11,
     width: 7, height: 7, borderRadius: 4, backgroundColor: colors.accentBright,
     borderWidth: 1.5, borderColor: colors.surfaceHi,
   },

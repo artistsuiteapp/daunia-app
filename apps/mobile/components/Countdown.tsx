@@ -73,5 +73,5 @@ const styles = StyleSheet.create({
   label: { ...type.caption, color: colors.textFaint, marginTop: -2 },
   onColour: { color: '#fff' },
   labelOnColour: { color: 'rgba(255,255,255,0.72)' },
-  sepOnColour: { color: 'rgba(255,255,255,0.5)' },
+  sepOnColour: { color: 'rgba(255,255,255,0.75)' },
 });

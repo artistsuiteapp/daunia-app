@@ -4,6 +4,7 @@ import Svg, { Defs, Ellipse, LinearGradient as SvgGradient, Path, Polygon, Polyl
 
 import type { Slot } from '../lib/lineup';
 import { colors, radius, space, type } from '../theme/tokens';
+import { nomeSulCampo } from '../lib/nomi-core';
 
 /* ------------------------------------------------------- proiezione del campo */
 
@@ -70,7 +71,7 @@ export function Lineup({
     <View style={styles.wrap}>
       <View style={styles.head}>
         <Side crest={homeCrest} name={homeName} formation={foggiaHome ? formation : awayFormation} active={foggiaHome} />
-        <Text style={styles.colon}>:</Text>
+        <View style={{ width: space.md }} />
         <Side crest={awayCrest} name={awayName} formation={foggiaHome ? awayFormation : formation} active={!foggiaHome} align="right" />
       </View>
 
@@ -127,7 +128,9 @@ export function Lineup({
           const t = 0.05 + (1 - s.y / 100) * 0.9;
           const y = yAt(t);
           const x = xAt(s.x / 100, y);
-          const scale = 0.62 + wAt(y) * 0.46;
+          // la prospettiva rimpicciolisce le file lontane, ma non sotto l'80%:
+          // al 62% il nome di un attaccante scendeva sotto gli otto punti
+          const scale = 0.8 + wAt(y) * 0.28;
           const keeper = i === 0;
           return (
             <View
@@ -139,7 +142,9 @@ export function Lineup({
               ]}
             >
               <Shirt number={s.player?.number ?? null} keeper={keeper} />
-              <Text style={styles.name} numberOfLines={1}>{s.player?.shortName ?? '—'}</Text>
+              <Text style={styles.name} numberOfLines={2} adjustsFontSizeToFit minimumFontScale={0.85}>
+                {nomeSulCampo(s.player?.shortName)}
+              </Text>
             </View>
           );
         })}
@@ -196,22 +201,22 @@ const styles = StyleSheet.create({
   dim: { opacity: 0.35 },
   headFormation: { ...type.subheadBold, color: colors.textFaint, letterSpacing: 1 },
   headFormationOn: { color: colors.text },
-  colon: { ...type.title2, color: colors.textFaint },
 
   stage: {
     width: '100%', aspectRatio: VB.w / VB.h,
     borderRadius: radius.lg, overflow: 'hidden', backgroundColor: '#15391F',
   },
 
-  slot: { position: 'absolute', width: 72, marginLeft: -36, marginTop: -22, alignItems: 'center', gap: 1 },
+  // stretta abbastanza da non toccare il vicino: un nome lungo va a capo invece di sovrapporsi
+  slot: { position: 'absolute', width: 66, marginLeft: -33, marginTop: -22, alignItems: 'center', gap: 1 },
   shirtBox: { width: 34, height: 32, alignItems: 'center', justifyContent: 'center' },
   shirtNumber: {
     position: 'absolute', top: 11,
-    ...type.captionBold, fontSize: 12, color: '#fff',
+    ...type.captionBold, fontSize: 13, lineHeight: 16, color: '#fff',
     textShadowColor: 'rgba(0,0,0,0.55)', textShadowRadius: 2,
   },
   name: {
-    ...type.caption, color: '#fff', fontSize: 10,
+    ...type.captionBold, color: '#fff', fontSize: 12, lineHeight: 14, textAlign: 'center',
     textShadowColor: 'rgba(0,0,0,0.95)', textShadowRadius: 4, textShadowOffset: { width: 0, height: 1 },
   },
 });

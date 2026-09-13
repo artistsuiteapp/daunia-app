@@ -92,7 +92,7 @@ export default function NuovaPassword() {
             <Text style={styles.testo}>Almeno 8 caratteri. Scrivila due volte, così un errore di battitura non ti chiude fuori.</Text>
 
             <View style={styles.campo}>
-              <Text style={styles.etichetta}>PASSWORD NUOVA</Text>
+              <Text style={styles.etichetta}>Password nuova</Text>
               <View style={styles.passwordRiga}>
                 <TextInput
                   value={password} onChangeText={setPassword}
@@ -101,14 +101,17 @@ export default function NuovaPassword() {
                   secureTextEntry={!mostra} autoCapitalize="none"
                   autoComplete="new-password" textContentType="newPassword"
                 />
-                <Pressable onPress={() => setMostra((v) => !v)} hitSlop={10} style={styles.occhio}>
-                  <Ionicons name={mostra ? 'eye-off-outline' : 'eye-outline'} size={19} color={colors.textDim} />
+                <Pressable
+                  onPress={() => setMostra((v) => !v)} hitSlop={10} style={styles.occhio}
+                  accessibilityRole="button" accessibilityLabel={mostra ? 'Nascondi la password' : 'Mostra la password'}
+                >
+                  <Ionicons name={mostra ? 'eye-off-outline' : 'eye-outline'} size={22} color={colors.textDim} />
                 </Pressable>
               </View>
             </View>
 
             <View style={styles.campo}>
-              <Text style={styles.etichetta}>DI NUOVO</Text>
+              <Text style={styles.etichetta}>Scrivila di nuovo</Text>
               <TextInput
                 value={conferma} onChangeText={setConferma}
                 placeholder="••••••••" placeholderTextColor={colors.textFaint}
@@ -144,19 +147,19 @@ export default function NuovaPassword() {
 const styles = StyleSheet.create({
   wrap: { gap: space.lg, marginTop: space.lg, alignItems: 'stretch' },
   titolo: { ...type.displayTitle, color: colors.text },
-  testo: { ...type.subhead, color: colors.textDim, lineHeight: 21, marginTop: -space.sm },
+  testo: { ...type.subhead, color: colors.textDim, marginTop: -space.sm },
 
   campo: { gap: space.sm },
-  etichetta: { ...type.caption, color: colors.textFaint, letterSpacing: 0.5 },
+  etichetta: { ...type.footnoteBold, color: colors.textDim },
   input: {
     backgroundColor: 'rgba(18,18,22,0.86)', borderRadius: radius.lg,
-    paddingHorizontal: space.lg, paddingVertical: 13,
+    paddingHorizontal: space.lg, paddingVertical: 14, minHeight: 52,
     ...type.body, color: colors.text,
     borderWidth: StyleSheet.hairlineWidth, borderColor: 'rgba(255,255,255,0.08)',
   },
   passwordRiga: { flexDirection: 'row', alignItems: 'center', gap: space.sm },
   occhio: {
-    width: 46, height: 46, borderRadius: radius.lg, backgroundColor: 'rgba(18,18,22,0.86)',
+    width: 52, height: 52, borderRadius: radius.lg, backgroundColor: 'rgba(18,18,22,0.86)',
     alignItems: 'center', justifyContent: 'center',
   },
 

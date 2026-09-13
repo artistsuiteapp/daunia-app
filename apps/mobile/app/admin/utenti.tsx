@@ -64,8 +64,8 @@ export default function Utenti() {
           style={stili.campoCerca}
         />
         {cerca ? (
-          <Pressable onPress={() => setCerca('')} hitSlop={10}>
-            <Ionicons name="close-circle" size={17} color={colors.textFaint} />
+          <Pressable onPress={() => setCerca('')} hitSlop={12} accessibilityRole="button" accessibilityLabel="Cancella la ricerca">
+            <Ionicons name="close-circle" size={22} color={colors.textDim} />
           </Pressable>
         ) : null}
       </View>

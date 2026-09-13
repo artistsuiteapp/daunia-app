@@ -25,10 +25,17 @@ type TabBarProps = {
 };
 
 /** Altezza occupata dalla barra: serve alle pagine per non finirci sotto. */
-export const TAB_BAR_SPACE = 92;
+export const TAB_BAR_SPACE = 100;
 
-/** Le voci della barra, in ordine. Fuori da qui non compare niente. */
-const VISIBILI = ['index', 'matches', 'trasferte', 'curva', 'stadium', 'news'];
+/**
+ * Le voci della barra, in ordine. Fuori da qui non compare niente.
+ *
+ * Cinque, come chiedono le linee guida Apple per l'iPhone. Erano sei, e ci
+ * stavano solo con etichette da 10 punti che si rimpicciolivano ancora da sole:
+ * illeggibili proprio per chi ha piu bisogno di leggerle. Le Trasferte sono
+ * passate fra le scorciatoie della home; la pagina e il suo indirizzo restano.
+ */
+const VISIBILI = ['index', 'matches', 'curva', 'stadium', 'news'];
 
 const ICONS: Record<string, [keyof typeof Ionicons.glyphMap, keyof typeof Ionicons.glyphMap]> = {
   index: ['home', 'home-outline'],
@@ -48,11 +55,8 @@ const ICONS: Record<string, [keyof typeof Ionicons.glyphMap, keyof typeof Ionico
  * Prima il nome compariva solo sulla voce attiva e le altre restavano icone
  * mute. Sembra pulito e invece e la cosa piu difficile da capire che si possa
  * mettere in un'app: chi apre per la prima volta deve indovinare cosa sono un
- * megafono e una macchinina. Adesso ogni voce ha il suo nome sotto, piccolo, e
- * la pillola rossa dice solo dove sei.
- *
- * Sei voci a circa cinquantacinque punti l'una ci stanno anche su uno schermo
- * da 360. La settima no: e per questo che la Rosa e finita nelle scorciatoie.
+ * megafono e una macchinina. Adesso ogni voce ha il suo nome sotto, e la
+ * pillola rossa dice solo dove sei.
  */
 export function FloatingTabBar({ state, descriptors, navigation }: TabBarProps) {
   const insets = useSafeInsets();
@@ -77,12 +81,13 @@ export function FloatingTabBar({ state, descriptors, navigation }: TabBarProps) 
       {salaAperta(nextMatch()?.kickoff) ? (
         <Pressable
           onPress={() => router.push('/live' as never)}
+          accessibilityRole="button" accessibilityLabel="Chat dal vivo, aperta adesso"
           style={({ pressed }) => [styles.live, pressed && { opacity: 0.85 }]}
         >
           <PallinoLive />
         </Pressable>
       ) : null}
-      <View style={styles.bar}>
+      <View style={styles.bar} accessibilityRole="tablist">
         {/*
           * L'elenco delle voci sta qui, esplicito.
           *
@@ -144,7 +149,7 @@ function Tab({ focused, label, icon, onPress }: {
   return (
     <Pressable
       onPress={onPress}
-      accessibilityRole="button"
+      accessibilityRole="tab"
       accessibilityState={{ selected: focused }}
       accessibilityLabel={label}
       style={({ pressed }) => [styles.tab, pressed && !focused && { opacity: 0.6 }]}
@@ -158,12 +163,14 @@ function Tab({ focused, label, icon, onPress }: {
           },
         ]}
       >
-        <Ionicons name={icon} size={20} color={focused ? colors.onAccent : colors.textDim} />
+        <Ionicons name={icon} size={24} color={focused ? colors.onAccent : colors.textDim} />
       </Animated.View>
       <Text
         style={[styles.label, focused && styles.labelOn]}
         numberOfLines={1}
         adjustsFontSizeToFit
+        // si puo stringere un poco su uno schermo stretto, mai sotto gli 11 punti
+        minimumFontScale={0.85}
       >
         {label}
       </Text>
@@ -179,7 +186,7 @@ const styles = StyleSheet.create({
   live: {
     backgroundColor: '#141416', borderRadius: radius.pill,
     borderWidth: StyleSheet.hairlineWidth, borderColor: 'rgba(50,215,75,0.4)',
-    paddingHorizontal: 4, paddingVertical: 4,
+    paddingHorizontal: 4, paddingVertical: 4, minHeight: 44, justifyContent: 'center'
   },
   bar: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
@@ -198,11 +205,11 @@ const styles = StyleSheet.create({
   },
   // ogni voce prende la stessa fetta: cosi la barra resta simmetrica e le
   // etichette lunghe non schiacciano quelle corte
-  tab: { flex: 1, alignItems: 'center', gap: 3, paddingVertical: 4, paddingHorizontal: 2 },
+  tab: { flex: 1, alignItems: 'center', gap: 4, paddingVertical: 4, paddingHorizontal: 2, minHeight: 56 },
   pill: {
     alignItems: 'center', justifyContent: 'center',
-    width: 44, height: 32, borderRadius: radius.pill,
+    width: 54, height: 34, borderRadius: radius.pill,
   },
-  label: { ...type.caption, color: colors.textDim, fontSize: 10, letterSpacing: 0.1 },
-  labelOn: { color: colors.text, fontWeight: '700' },
+  label: { ...type.captionBold, fontSize: 13, lineHeight: 17, color: colors.textDim },
+  labelOn: { color: colors.text, fontFamily: type.headline.fontFamily },
 });

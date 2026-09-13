@@ -50,7 +50,7 @@ export default function Stats() {
             <BigStat label="Giocate" value={rec.games} />
             <BigStat label="Punti" value={row?.points ?? '-'} sub={row ? `${row.position}° posto` : undefined} />
             <View style={{ gap: 5 }}>
-              <Text style={styles.miniLabel}>ANDAMENTO</Text>
+              <Text style={styles.miniLabel}>Andamento</Text>
               <FormStrip form={recentForm(5, partite)} size={18} />
             </View>
           </View>

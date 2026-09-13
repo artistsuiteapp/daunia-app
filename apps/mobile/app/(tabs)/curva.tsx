@@ -49,8 +49,8 @@ export default function Curva() {
             onPress={() => router.push('/curva/nuovo' as never)}
             style={({ pressed }) => [styles.write, pressed && { opacity: 0.85 }]}
           >
-            <Ionicons name="create-outline" size={16} color={colors.onAccent} />
-            <Text style={styles.writeText}>Apri</Text>
+            <Ionicons name="create-outline" size={20} color={colors.onAccent} />
+            <Text style={styles.writeText}>Scrivi</Text>
           </Pressable>
         ) : null}
       </View>
@@ -62,20 +62,11 @@ export default function Curva() {
       ) : null}
 
       {/*
-        * L'avviso vale solo per chi guarda senza account. Con un account le
-        * discussioni finiscono nel database e le leggono tutti: lasciarlo
-        * sempre acceso raccontava una cosa non piu vera.
+        * Qui c'era un secondo avviso per chi guarda senza account ("quello che
+        * scrivi resta in questo browser"), subito sotto quello che dice che per
+        * scrivere serve un account: due riquadri di fila che si contraddicevano,
+        * e il secondo arrivava fino al bordo dello schermo. Ne resta uno.
         */}
-      {ospite ? (
-        <View style={[styles.notice, gutter]}>
-          <View style={styles.noticeDot} />
-          <Text style={styles.noticeText}>
-            <Text style={styles.noticeStrong}>Stai guardando senza account.</Text> Quello che
-            scrivi resta in questo browser e non lo vede nessun altro. Con un account entra nella
-            Curva e lo leggono tutti.
-          </Text>
-        </View>
-      ) : null}
 
       <ScrollView
         horizontal
@@ -102,7 +93,11 @@ export default function Curva() {
       ) : null}
 
       {list.length === 0 ? (
-        <Empty text="Nessuna discussione con questa etichetta." />
+        <Empty
+          text={topic === ALL
+            ? 'Ancora nessuna discussione. Le apre chi ha un account, e qui le leggono tutti.'
+            : `Ancora nessuna discussione su «${topic}».`}
+        />
       ) : (
         <View style={[styles.feed, gutter]}>
           {list.map((d, i) => (
@@ -181,24 +176,15 @@ const styles = StyleSheet.create({
   title: { ...type.displayTitle, color: colors.text },
   sub: { ...type.subhead, color: colors.textDim },
   write: {
-    flexDirection: 'row', alignItems: 'center', gap: 5,
+    flexDirection: 'row', alignItems: 'center', gap: 6, minHeight: 44,
     backgroundColor: colors.accent, borderRadius: radius.pill,
-    paddingHorizontal: space.md, paddingVertical: 8,
+    paddingHorizontal: space.lg, paddingVertical: space.sm,
   },
-  writeText: { ...type.footnoteBold, color: colors.onAccent },
-
-  notice: {
-    flexDirection: 'row', gap: space.sm, alignItems: 'flex-start',
-    backgroundColor: 'rgba(204,17,17,0.10)', borderRadius: radius.lg, padding: space.md,
-    borderWidth: StyleSheet.hairlineWidth, borderColor: 'rgba(204,17,17,0.35)',
-  },
-  noticeDot: { width: 7, height: 7, borderRadius: 4, backgroundColor: colors.accentBright, marginTop: 5 },
-  noticeText: { ...type.caption, color: colors.textDim, flex: 1, lineHeight: 17 },
-  noticeStrong: { ...type.captionBold, color: colors.text },
+  writeText: { ...type.subheadBold, color: colors.onAccent },
 
   chips: { gap: space.sm, paddingTop: space.lg, paddingBottom: space.xs },
   chip: {
-    flexDirection: 'row', alignItems: 'center', gap: 6,
+    flexDirection: 'row', alignItems: 'center', gap: 6, minHeight: 44,
     paddingHorizontal: space.md, paddingVertical: 8, borderRadius: radius.pill,
     backgroundColor: colors.surface,
     borderWidth: StyleSheet.hairlineWidth, borderColor: 'rgba(255,255,255,0.08)',
@@ -206,8 +192,8 @@ const styles = StyleSheet.create({
   chipOn: { backgroundColor: colors.accent, borderColor: 'transparent' },
   chipText: { ...type.footnoteBold, color: colors.text },
   chipTextOn: { color: colors.onAccent },
-  chipCount: { ...type.caption, fontSize: 11, color: colors.textFaint },
-  chipCountOn: { color: 'rgba(255,255,255,0.75)' },
+  chipCount: { ...type.footnote, color: colors.textFaint },
+  chipCountOn: { color: 'rgba(255,255,255,0.9)' },
 
   mineNote: { ...type.caption, color: colors.textFaint, marginTop: space.md },
 
@@ -224,10 +210,10 @@ const styles = StyleSheet.create({
     backgroundColor: colors.accentSoft, borderRadius: radius.sm,
     paddingHorizontal: 7, paddingVertical: 3,
   },
-  topicText: { ...type.captionBold, fontSize: 10, color: colors.accentBright },
+  topicText: { ...type.captionBold, color: colors.accentBright },
 
   cardTitle: { ...type.title3, color: colors.text },
-  body: { ...type.subhead, color: colors.textDim, lineHeight: 20 },
+  body: { ...type.subhead, color: colors.textDim, lineHeight: 23 },
 
   lastReply: {
     flexDirection: 'row', alignItems: 'center', gap: 6,
@@ -245,5 +231,5 @@ const styles = StyleSheet.create({
     position: 'absolute', top: space.md, right: space.md,
     backgroundColor: colors.accent, borderRadius: radius.sm, paddingHorizontal: 6, paddingVertical: 2,
   },
-  mineFlagText: { ...type.captionBold, fontSize: 9, color: colors.onAccent },
+  mineFlagText: { ...type.captionBold, fontSize: 12, lineHeight: 16, color: colors.onAccent },
 });

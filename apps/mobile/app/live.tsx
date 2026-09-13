@@ -129,8 +129,8 @@ export default function Live() {
                 <Text style={styles.testoMessaggio}>{m.testo}</Text>
               </View>
               {m.utente === io ? (
-                <Premi onPress={() => cancella(match.id, m.id)} scala={1}>
-                  <Ionicons name="trash-outline" size={15} color={colors.textFaint} />
+                <Premi onPress={() => cancella(match.id, m.id)} scala={1} etichetta="Cancella il messaggio" style={styles.tastoIcona}>
+                  <Ionicons name="trash-outline" size={20} color={colors.textDim} />
                 </Premi>
               ) : (
                 <AzioniContenuto
@@ -169,7 +169,7 @@ export default function Live() {
               onSubmitEditing={invia}
               returnKeyType="send"
             />
-            <Premi onPress={invia} disabled={!testo.trim() || inCorso || !aperta}>
+            <Premi onPress={invia} disabled={!testo.trim() || inCorso || !aperta} etichetta="Invia il messaggio">
               <View style={[styles.invia, (!testo.trim() || !aperta) && styles.inviaSpento]}>
                 <Ionicons name="arrow-up" size={18} color={colors.onAccent} />
               </View>
@@ -209,6 +209,7 @@ const styles = StyleSheet.create({
     flex: 1, backgroundColor: colors.surfaceHi, borderRadius: radius.pill,
     paddingHorizontal: space.md, paddingVertical: 11, ...type.body, color: colors.text,
   },
-  invia: { width: 42, height: 42, borderRadius: 21, backgroundColor: colors.accent, alignItems: 'center', justifyContent: 'center' },
+  tastoIcona: { minWidth: 44, minHeight: 44, alignItems: 'center', justifyContent: 'center' },
+  invia: { width: 46, height: 46, borderRadius: 23, backgroundColor: colors.accent, alignItems: 'center', justifyContent: 'center' },
   inviaSpento: { backgroundColor: colors.surfaceHi },
 });

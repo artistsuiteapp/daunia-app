@@ -1,6 +1,6 @@
 import { router } from 'expo-router';
 import { useEffect, useRef } from 'react';
-import { Animated, ScrollView, StyleSheet, Text } from 'react-native';
+import { Animated, StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { colors, radius, space, type } from '../theme/tokens';
 import { curva, menoMovimento } from '../theme/motion';
@@ -11,8 +11,9 @@ type Item = { icon: keyof typeof Ionicons.glyphMap; label: string; href: string;
 
 const ITEMS: Item[] = [
   { icon: 'game-controller', label: 'Match Center', href: '/match-center' },
-  { icon: 'shirt', label: 'Rosa', href: '/squad' },
   { icon: 'ticket', label: 'Biglietti', href: '/tickets' },
+  { icon: 'shirt', label: 'Rosa', href: '/squad' },
+  { icon: 'car-sport', label: 'Trasferte', href: '/trasferte' },
   { icon: 'podium', label: 'Classifiche', href: '/classifica' },
   { icon: 'stats-chart', label: 'Statistiche', href: '/stats' },
 ];
@@ -33,6 +34,14 @@ const ITEMS: Item[] = [
  * danno a caldo o non si danno piu, mentre un biglietto lo si compra anche
  * domani. Passata la finestra, torna tutto com'era.
  */
+/*
+ * UNA GRIGLIA, NON UNA FILA CHE SCORRE
+ *
+ * Erano pastiglie in una fila orizzontale, e sul telefono se ne vedevano tre:
+ * le altre stavano fuori dal bordo, e niente diceva che la fila si potesse
+ * trascinare di lato. La Rosa, spostata qui dalla barra, era diventata di fatto
+ * introvabile. In due colonne si vedono tutte, grandi, senza gesti da scoprire.
+ */
 export function QuickNav({ pagelle }: { pagelle?: string | null } = {}) {
   const { gutter } = useLayout();
   const voci: Item[] = pagelle
@@ -40,15 +49,11 @@ export function QuickNav({ pagelle }: { pagelle?: string | null } = {}) {
        ...ITEMS.filter((x) => x.label !== 'Match Center')]
     : ITEMS;
   return (
-    <ScrollView
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      contentContainerStyle={[styles.row, { paddingHorizontal: space.lg + gutter }]}
-    >
+    <View style={[styles.griglia, { paddingHorizontal: space.lg + gutter }]}>
       {voci.map((it, i) => (
         <Pastiglia key={it.label} item={it} prima={i === 0} />
       ))}
-    </ScrollView>
+    </View>
   );
 }
 
@@ -72,28 +77,32 @@ function Pastiglia({ item, prima }: { item: Item; prima: boolean }) {
   }, [item.pulsa, v]);
 
   return (
-    <Animated.View style={item.pulsa ? { opacity: v } : undefined}>
+    <Animated.View style={[styles.cella, item.pulsa ? { opacity: v } : null]}>
       <Premi
         onPress={() => router.push(item.href as never)}
         etichetta={item.label}
         style={[styles.chip, prima && styles.chipLead]}
       >
-        <Ionicons name={item.icon} size={17} color={prima ? colors.onAccent : colors.accentBright} />
-        <Text style={[styles.label, prima && styles.labelLead]} numberOfLines={1}>{item.label}</Text>
+        <Ionicons name={item.icon} size={20} color={prima ? colors.onAccent : colors.accentBright} />
+        <Text style={[styles.label, prima && styles.labelLead]} numberOfLines={2}>{item.label}</Text>
       </Premi>
     </Animated.View>
   );
 }
 
 const styles = StyleSheet.create({
-  row: { gap: 10, paddingVertical: space.sm },
+  griglia: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, paddingVertical: space.sm },
+  // due colonne: meta larghezza meno meta dello spazio fra le due
+  cella: { flexBasis: '47%', flexGrow: 1 },
+  // basse e con l'icona accanto: alte il giusto per il dito (52 punti), non di piu
   chip: {
-    flexDirection: 'row', alignItems: 'center', gap: 7,
-    paddingHorizontal: space.lg, paddingVertical: 12, borderRadius: radius.pill,
+    flexDirection: 'row', alignItems: 'center', gap: space.sm, minHeight: 52,
+    paddingHorizontal: 14, paddingVertical: space.sm, borderRadius: radius.lg,
     backgroundColor: colors.surface,
     borderWidth: StyleSheet.hairlineWidth, borderColor: 'rgba(255,255,255,0.08)',
   },
   chipLead: { backgroundColor: colors.accent, borderColor: 'transparent' },
-  label: { ...type.subheadBold, color: colors.text },
+  // 16 punti: "Match Center" ci sta su una riga accanto all'icona anche a 360
+  label: { ...type.subheadBold, fontSize: 16, lineHeight: 21, color: colors.text, flexShrink: 1 },
   labelLead: { color: colors.onAccent },
 });

@@ -35,6 +35,6 @@ const styles = StyleSheet.create({
   compatto: { padding: space.sm },
   testo: { ...type.footnote, color: colors.text, flex: 1, lineHeight: 18 },
   testoCompatto: { ...type.caption },
-  bottone: { backgroundColor: colors.accent, borderRadius: radius.pill, paddingHorizontal: space.md, paddingVertical: 7 },
+  bottone: { backgroundColor: colors.accent, borderRadius: radius.pill, paddingHorizontal: space.md, paddingVertical: 7, minHeight: 44, justifyContent: 'center' },
   bottoneTesto: { ...type.captionBold, color: colors.onAccent },
 });

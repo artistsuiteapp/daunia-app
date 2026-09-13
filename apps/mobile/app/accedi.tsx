@@ -147,8 +147,11 @@ export default function Accedi() {
                 autoComplete={modo === 'registrazione' ? 'new-password' : 'current-password'}
                 textContentType={modo === 'registrazione' ? 'newPassword' : 'password'}
               />
-              <Pressable onPress={() => setMostraPassword((v) => !v)} hitSlop={10} style={styles.occhio}>
-                <Ionicons name={mostraPassword ? 'eye-off-outline' : 'eye-outline'} size={19} color={colors.textDim} />
+              <Pressable
+                onPress={() => setMostraPassword((v) => !v)} hitSlop={10} style={styles.occhio}
+                accessibilityRole="button" accessibilityLabel={mostraPassword ? 'Nascondi la password' : 'Mostra la password'}
+              >
+                <Ionicons name={mostraPassword ? 'eye-off-outline' : 'eye-outline'} size={22} color={colors.textDim} />
               </Pressable>
             </View>
           </Campo>
@@ -182,9 +185,12 @@ export default function Accedi() {
         </Pressable>
 
         {modo !== 'recupero' ? (
-          <Pressable onPress={() => setResta((v) => !v)} style={styles.resta} hitSlop={6}>
+          <Pressable
+            onPress={() => setResta((v) => !v)} style={styles.resta} hitSlop={6}
+            accessibilityRole="checkbox" accessibilityState={{ checked: resta }}
+          >
             <View style={[styles.spunta, resta && styles.spuntaOn]}>
-              {resta ? <Ionicons name="checkmark" size={13} color={colors.onAccent} /> : null}
+              {resta ? <Ionicons name="checkmark" size={18} color={colors.onAccent} /> : null}
             </View>
             <Text style={styles.restaTesto}>Resta connesso su questo dispositivo</Text>
           </Pressable>
@@ -225,7 +231,7 @@ export default function Accedi() {
 function Campo({ etichetta, children }: { etichetta: string; children: React.ReactNode }) {
   return (
     <View style={styles.campo}>
-      <Text style={styles.etichetta}>{etichetta.toUpperCase()}</Text>
+      <Text style={styles.etichetta}>{etichetta}</Text>
       {children}
     </View>
   );
@@ -234,19 +240,19 @@ function Campo({ etichetta, children }: { etichetta: string; children: React.Rea
 const styles = StyleSheet.create({
   wrap: { gap: space.lg, marginTop: space.lg, alignItems: 'stretch' },
   titolo: { ...type.displayTitle, color: colors.text },
-  testo: { ...type.subhead, color: colors.textDim, lineHeight: 21, marginTop: -space.sm },
+  testo: { ...type.subhead, color: colors.textDim, marginTop: -space.sm },
 
   campo: { gap: space.sm },
-  etichetta: { ...type.caption, color: colors.textFaint, letterSpacing: 0.5 },
+  etichetta: { ...type.footnoteBold, color: colors.textDim },
   input: {
     backgroundColor: 'rgba(18,18,22,0.86)', borderRadius: radius.lg,
-    paddingHorizontal: space.lg, paddingVertical: 13,
+    paddingHorizontal: space.lg, paddingVertical: 14, minHeight: 52,
     ...type.body, color: colors.text,
     borderWidth: StyleSheet.hairlineWidth, borderColor: 'rgba(255,255,255,0.08)',
   },
   passwordRiga: { flexDirection: 'row', alignItems: 'center', gap: space.sm },
   occhio: {
-    width: 46, height: 46, borderRadius: radius.lg, backgroundColor: 'rgba(18,18,22,0.86)',
+    width: 52, height: 52, borderRadius: radius.lg, backgroundColor: 'rgba(18,18,22,0.86)',
     alignItems: 'center', justifyContent: 'center',
   },
 
@@ -266,17 +272,18 @@ const styles = StyleSheet.create({
   ctaTesto: { ...type.headline, color: colors.onAccent },
   ctaTestoOff: { color: colors.textFaint },
 
-  resta: { flexDirection: 'row', alignItems: 'center', gap: space.sm },
+  resta: { flexDirection: 'row', alignItems: 'center', gap: space.md, minHeight: 44 },
   spunta: {
-    width: 21, height: 21, borderRadius: 6,
+    width: 26, height: 26, borderRadius: 7,
     borderWidth: 1.5, borderColor: colors.borderStrong,
     alignItems: 'center', justifyContent: 'center',
   },
   spuntaOn: { backgroundColor: colors.accent, borderColor: colors.accent },
-  restaTesto: { ...type.footnote, color: colors.textDim },
+  restaTesto: { ...type.subhead, color: colors.textDim, flex: 1 },
   legale: { ...type.caption, color: colors.textFaint, lineHeight: 17 },
   link: { color: colors.accentBright },
 
-  scelte: { gap: space.md, marginTop: space.sm },
-  scelta: { ...type.subheadBold, color: colors.accentBright },
+  // ogni collegamento alto 44: erano righe di testo da 23 punti una sotto l'altra
+  scelte: { gap: space.xs, marginTop: space.sm },
+  scelta: { ...type.subheadBold, color: colors.accentBright, paddingVertical: 11 },
 });

@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import { indietro } from './BackBar';
 import { Ionicons } from '@expo/vector-icons';
-import { colors, radius, ROW_HEIGHT, space, type } from '../theme/tokens';
+import { colors, radius, ROW_HEIGHT, space, TOCCO_MINIMO, type } from '../theme/tokens';
 import { curva, durata, quanto } from '../theme/motion';
 import { Premi } from './anima';
 import { useLayout } from '../theme/responsive';
@@ -108,6 +108,18 @@ export function useGutter() {
   return { paddingHorizontal: space.lg + gutter };
 }
 
+/**
+ * Lo stesso margine, ma fuori dal riquadro.
+ *
+ * Il gutter e un padding: messo su un riquadro con lo sfondo, il colore arriva
+ * fino al bordo dello schermo e il margine finisce dentro. In Curva e nelle
+ * Notifiche gli avvisi toccavano il bordo proprio per questo.
+ */
+export function useMargine() {
+  const { gutter } = useLayout();
+  return { marginHorizontal: space.lg + gutter };
+}
+
 /* ------------------------------------------------------------------- titoli */
 
 /**
@@ -131,15 +143,32 @@ export function LargeTitle({ title, subtitle, action, crest }: {
   );
 }
 
-/** Etichetta di gruppo sopra una lista: minuscola, maiuscoletto, poco contrasto. */
+/**
+ * Etichetta di gruppo sopra una lista.
+ *
+ * Era tutta maiuscola, piccola e spaziata: il maiuscolo toglie la forma alle
+ * parole e rallenta la lettura, ed e la prima cosa che si perde con la vista
+ * che cala. iOS dal 16 scrive queste etichette in minuscolo normale, piu grandi.
+ * `accessibilityRole="header"` fa saltare VoiceOver da un gruppo all'altro.
+ */
 export function GroupLabel({ children, action }: { children: string; action?: ReactNode }) {
   const gutter = useGutter();
   return (
     <View style={[styles.groupLabelRow, gutter]}>
-      <Text style={styles.groupLabel}>{children.toUpperCase()}</Text>
+      <Text style={styles.groupLabel} accessibilityRole="header">{maiuscolaIniziale(children)}</Text>
       {action}
     </View>
   );
+}
+
+/** "PROSSIMA PARTITA" e "prossima partita" diventano "Prossima partita". */
+export function maiuscolaIniziale(testo: string): string {
+  const t = testo.trim();
+  if (!t) return t;
+  // una sigla o un nome gia scritti con cura restano come sono
+  const tuttoMaiuscolo = t === t.toUpperCase() && /[A-ZÀ-Ý]{4,}/.test(t);
+  const base = tuttoMaiuscolo ? t.toLowerCase() : t;
+  return base.charAt(0).toUpperCase() + base.slice(1);
 }
 
 /* --------------------------------------------------------------------- liste */
@@ -171,12 +200,16 @@ export function ListRow({ children, onPress, chevron = false, right, height }: {
     <View style={[styles.row, height ? { minHeight: height } : null]}>
       <View style={styles.rowMain}>{children}</View>
       {right}
-      {chevron ? <Ionicons name="chevron-forward" size={17} color={colors.textFaint} /> : null}
+      {chevron ? <Ionicons name="chevron-forward" size={20} color={colors.textFaint} /> : null}
     </View>
   );
   if (!onPress) return body;
   return (
-    <Pressable onPress={onPress} style={({ pressed }) => (pressed ? styles.rowPressed : undefined)}>
+    <Pressable
+      onPress={onPress}
+      accessibilityRole="button"
+      style={({ pressed }) => (pressed ? styles.rowPressed : undefined)}
+    >
       {body}
     </Pressable>
   );
@@ -243,7 +276,20 @@ export function Segmented<T extends string>({ items, value, onChange }: {
             accessibilityState={{ selected: on }}
             style={styles.segment}
           >
-            <Text style={[styles.segmentText, on && styles.segmentTextOn]} numberOfLines={1}>{it.label}</Text>
+            {/*
+              * Con quattro voci su un telefono ogni fetta e larga meno di 90
+              * punti, e "Formazione" a 17 diventava "Formaz...". Da quattro in su
+              * il testo scende a 15, e se ancora non ci sta si stringe un poco
+              * invece di perdere lettere.
+              */}
+            <Text
+              style={[styles.segmentText, items.length >= 4 && styles.segmentTextStretto, on && styles.segmentTextOn]}
+              numberOfLines={1}
+              adjustsFontSizeToFit
+              minimumFontScale={0.85}
+            >
+              {it.label}
+            </Text>
           </Pressable>
         );
       })}
@@ -267,7 +313,12 @@ export function FilterChips<T extends string>({ items, value, onChange }: {
       {items.map((it) => {
         const on = it.key === value;
         return (
-          <Premi key={it.key} onPress={() => onChange(it.key)} style={[styles.chip, on && styles.chipOn]}>
+          <Premi
+            key={it.key}
+            onPress={() => onChange(it.key)}
+            etichetta={it.badge != null ? `${it.label}, ${it.badge}` : it.label}
+            style={[styles.chip, on && styles.chipOn]}
+          >
             <Text style={[styles.chipText, on && styles.chipTextOn]}>{it.label}</Text>
             {it.badge != null ? <Text style={[styles.chipBadge, on && styles.chipBadgeOn]}>{it.badge}</Text> : null}
           </Premi>
@@ -289,7 +340,7 @@ export function Button({ label, onPress, icon, tone = 'accent' }: {
       scala={0.985}
       style={[styles.button, accent ? styles.buttonAccent : styles.buttonPlain]}
     >
-      {icon ? <Ionicons name={icon} size={17} color={accent ? colors.onAccent : colors.accentBright} /> : null}
+      {icon ? <Ionicons name={icon} size={20} color={accent ? colors.onAccent : colors.accentBright} /> : null}
       <Text style={[styles.buttonText, !accent && { color: colors.accentBright }]}>{label}</Text>
     </Premi>
   );
@@ -306,18 +357,22 @@ export function Badge({ label, tone = 'neutral' }: { label: string; tone?: 'neut
   const fg = { neutral: colors.textDim, accent: colors.accentBright, live: '#fff', ok: '#04150A' }[tone];
   return (
     <View style={[styles.badge, { backgroundColor: bg }]}>
-      <Text style={[styles.badgeText, { color: fg }]}>{label.toUpperCase()}</Text>
+      <Text style={[styles.badgeText, { color: fg }]}>{maiuscolaIniziale(label)}</Text>
     </View>
   );
 }
 
-/** Etichetta piccola sopra, numero grande sotto. */
+/** Etichetta sopra, numero grande sotto. */
 export function BigStat({ label, value, sub, align = 'left' }: {
   label: string; value: string | number; sub?: string; align?: 'left' | 'center';
 }) {
   return (
-    <View style={{ alignItems: align === 'center' ? 'center' : 'flex-start', gap: 2 }}>
-      <Text style={styles.bigLabel}>{label.toUpperCase()}</Text>
+    <View
+      accessible
+      accessibilityLabel={[label, String(value), sub].filter(Boolean).join(', ')}
+      style={{ alignItems: align === 'center' ? 'center' : 'flex-start', gap: 2 }}
+    >
+      <Text style={styles.bigLabel}>{maiuscolaIniziale(label)}</Text>
       <Text style={styles.bigValue}>{value}</Text>
       {sub ? <Text style={styles.bigSub}>{sub}</Text> : null}
     </View>
@@ -347,7 +402,7 @@ const styles = StyleSheet.create({
     marginTop: space.xl, marginBottom: space.md,
   },
   groupLabel: { ...type.groupLabel, color: colors.textDim },
-  groupNote: { ...type.footnote, color: colors.textFaint, marginTop: space.md, lineHeight: 19 },
+  groupNote: { ...type.footnote, color: colors.textDim, marginTop: space.md },
 
   group: { backgroundColor: colors.surface, borderRadius: radius.lg, overflow: 'hidden' },
   separator: { height: StyleSheet.hairlineWidth, backgroundColor: colors.separator, marginLeft: space.lg },
@@ -362,29 +417,33 @@ const styles = StyleSheet.create({
     flexDirection: 'row', backgroundColor: colors.surfaceHi,
     borderRadius: 10, padding: 3, position: 'relative',
   },
-  segment: { flex: 1, paddingVertical: 9, borderRadius: 8, alignItems: 'center', zIndex: 1 },
+  segment: {
+    flex: 1, minHeight: TOCCO_MINIMO, paddingVertical: space.sm, paddingHorizontal: space.xs,
+    borderRadius: 8, alignItems: 'center', justifyContent: 'center', zIndex: 1,
+  },
   segmentoAttivo: {
     position: 'absolute', top: 3, bottom: 3, left: 3,
     borderRadius: 8, backgroundColor: colors.accent,
   },
-  segmentText: { ...type.footnoteBold, color: colors.textDim },
+  segmentText: { ...type.subheadBold, color: colors.textDim },
+  segmentTextStretto: { ...type.footnoteBold },
   segmentTextOn: { color: colors.onAccent },
 
   chipRow: { gap: 10, paddingVertical: space.sm },
   chip: {
-    flexDirection: 'row', alignItems: 'center', gap: 6,
-    paddingHorizontal: space.lg, paddingVertical: 10, borderRadius: radius.pill,
+    flexDirection: 'row', alignItems: 'center', gap: 6, minHeight: TOCCO_MINIMO,
+    paddingHorizontal: space.lg, paddingVertical: space.sm, borderRadius: radius.pill,
     backgroundColor: colors.surface,
   },
   chipOn: { backgroundColor: colors.accent },
   chipText: { ...type.subheadBold, color: colors.textDim },
   chipTextOn: { color: colors.onAccent },
-  chipBadge: { ...type.caption, color: colors.textFaint },
-  chipBadgeOn: { color: 'rgba(255,255,255,0.7)' },
+  chipBadge: { ...type.footnote, color: colors.textFaint },
+  chipBadgeOn: { color: 'rgba(255,255,255,0.85)' },
 
   button: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: space.sm,
-    borderRadius: radius.lg, paddingVertical: 16,
+    borderRadius: radius.lg, paddingVertical: 17, minHeight: 56,
   },
   buttonAccent: { backgroundColor: colors.accent },
   buttonPlain: { backgroundColor: colors.surface },
@@ -392,13 +451,13 @@ const styles = StyleSheet.create({
 
   card: { backgroundColor: colors.surface, borderRadius: radius.lg, overflow: 'hidden' },
 
-  badge: { paddingHorizontal: 8, paddingVertical: 3, borderRadius: radius.sm, alignSelf: 'flex-start' },
-  badgeText: { ...type.captionBold, fontSize: 11, letterSpacing: 0.3 },
+  badge: { paddingHorizontal: 10, paddingVertical: 4, borderRadius: radius.sm, alignSelf: 'flex-start' },
+  badgeText: { ...type.captionBold },
 
-  bigLabel: { ...type.caption, color: colors.textDim },
+  bigLabel: { ...type.footnote, color: colors.textDim },
   bigValue: { ...type.number, color: colors.text },
-  bigSub: { ...type.footnote, color: colors.textFaint },
+  bigSub: { ...type.footnote, color: colors.textDim },
 
   empty: { paddingVertical: space.xxl, paddingHorizontal: space.xl, alignItems: 'center' },
-  emptyText: { ...type.subhead, color: colors.textFaint, textAlign: 'center', lineHeight: 22 },
+  emptyText: { ...type.subhead, color: colors.textDim, textAlign: 'center' },
 });

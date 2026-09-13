@@ -49,7 +49,7 @@ export default function MatchDetail() {
    */
   const cronaca = useMemo(() => {
     if (!match) return [];
-    type Voce = { minuto: number; inCasa: boolean; testo: string; icona: keyof typeof Ionicons.glyphMap };
+    type Voce = { minuto: number; inCasa: boolean; testo: string; sotto: string; icona: keyof typeof Ionicons.glyphMap };
     const voci: Voce[] = [];
 
     for (const g of match.goals ?? []) {
@@ -57,7 +57,8 @@ export default function MatchDetail() {
         // il minuto puo mancare nei dati di Wikipedia: in fondo, non in cima
         minuto: (g.minute ?? 999) + (g.extra ?? 0),
         inCasa: g.side === 'home',
-        testo: `${g.scorer}${g.penalty ? ' (rig.)' : ''}${g.ownGoal ? ' (aut.)' : ''}`,
+        testo: g.scorer,
+        sotto: g.penalty ? 'gol su rigore' : g.ownGoal ? 'autogol' : 'gol',
         icona: 'football',
       });
     }
@@ -65,7 +66,8 @@ export default function MatchDetail() {
       voci.push({
         minuto: c.minute,
         inCasa: c.side === 'home',
-        testo: c.player ?? 'espulso',
+        testo: c.player ?? (c.rosso ? 'Espulsione' : 'Ammonizione'),
+        sotto: c.rosso ? 'espulso' : 'ammonito',
         // il rosso ha un'icona sua: in un elenco lungo il colore da solo non basta
         icona: c.rosso ? 'close-circle' : 'square',
       });
@@ -74,7 +76,9 @@ export default function MatchDetail() {
       voci.push({
         minuto: sc.minute,
         inCasa: sc.side === 'home',
-        testo: sc.entra && sc.esce ? `${sc.entra} ← ${sc.esce}` : (sc.entra ?? sc.esce ?? 'cambio'),
+        // "Zuccon ← Rossi" non diceva chi entrava: le parole si
+        testo: sc.entra ?? sc.esce ?? 'Cambio',
+        sotto: sc.entra && sc.esce ? `entra al posto di ${sc.esce}` : sc.entra ? 'entra' : 'esce',
         icona: 'swap-horizontal',
       });
     }
@@ -184,16 +188,21 @@ export default function MatchDetail() {
               foggiaHome={match.foggiaHome}
             />
           </View>
-          <GroupLabel>Panchina</GroupLabel>
-          <View style={[styles.bench, gutter]}>
-            {lineup.bench.map((p) => (
-              <View key={p.id} style={styles.benchItem}>
-                <Avatar uri={p.photo} name={p.name} size={40} />
-                <Text style={styles.benchNum}>{p.number ?? '–'}</Text>
-                <Text style={styles.benchName} numberOfLines={1}>{p.shortName}</Text>
+          {/* un titolo senza niente sotto sembra un caricamento rimasto a meta */}
+          {lineup.bench.length ? (
+            <>
+              <GroupLabel>Panchina</GroupLabel>
+              <View style={[styles.bench, gutter]}>
+                {lineup.bench.map((p) => (
+                  <View key={p.id} style={styles.benchItem}>
+                    <Avatar uri={p.photo} name={p.name} size={44} />
+                    <Text style={styles.benchNum}>{p.number ?? '–'}</Text>
+                    <Text style={styles.benchName} numberOfLines={2}>{p.shortName}</Text>
+                  </View>
+                ))}
               </View>
-            ))}
-          </View>
+            </>
+          ) : null}
           <GroupNote>
             {lineup.fonte === 'ufficiale'
               // il modulo adesso e quello vero, pubblicato dalla Lega: la nota
@@ -217,6 +226,7 @@ export default function MatchDetail() {
                   inCasa={e.inCasa}
                   minuto={`${e.minuto}'`}
                   testo={e.testo}
+                  sotto={e.sotto}
                   icona={e.icona}
                 />
               ))}
@@ -238,6 +248,7 @@ export default function MatchDetail() {
                   nostro: g.nostro,
                   minuto: g.minuto ? `${g.fonte === 'stimato' ? '~' : ''}${g.minuto}'` : '–',
                   testo: g.chi ?? `${g.casa ?? 0}–${g.ospiti ?? 0}`,
+                  sotto: 'gol',
                   icona: 'football' as const,
                 })),
                 ...cartellini.map((c, i) => ({
@@ -245,7 +256,8 @@ export default function MatchDetail() {
                   ordine: c.minuto ?? 0,
                   nostro: c.nostro,
                   minuto: c.minuto ? `${c.minuto}'` : '–',
-                  testo: c.chi ?? (c.rosso ? 'espulso' : 'ammonito'),
+                  testo: c.chi ?? (c.rosso ? 'Espulsione' : 'Ammonizione'),
+                  sotto: c.rosso ? 'espulso' : 'ammonito',
                   icona: c.rosso ? ('close-circle' as const) : ('square' as const),
                 })),
                 ...cambi.map((c, i) => ({
@@ -253,7 +265,8 @@ export default function MatchDetail() {
                   ordine: c.minuto ?? 0,
                   nostro: c.nostro,
                   minuto: c.minuto ? `${c.minuto}'` : '–',
-                  testo: c.entra ? `${c.entra} per ${c.esce ?? '—'}` : `esce ${c.esce ?? '—'}`,
+                  testo: c.entra ?? c.esce ?? 'Cambio',
+                  sotto: c.entra ? `entra al posto di ${c.esce ?? '—'}` : 'esce',
                   icona: 'swap-horizontal' as const,
                 })),
               ]
@@ -264,6 +277,7 @@ export default function MatchDetail() {
                     inCasa={match.foggiaHome ? e.nostro : !e.nostro}
                     minuto={e.minuto}
                     testo={e.testo}
+                    sotto={e.sotto}
                     icona={e.icona}
                   />
                 ))}
@@ -356,15 +370,15 @@ function Side({ team }: { team: { crest: string | null; shortName: string } }) {
  * `inCasa` e il lato della scheda, non "il Foggia": la colonna di sinistra e
  * sempre la squadra di casa di quella partita, come il punteggio sopra.
  */
-function RigaEvento({ inCasa, minuto, testo, icona = 'football' }: {
-  inCasa: boolean; minuto: string; testo: string;
+function RigaEvento({ inCasa, minuto, testo, sotto, icona = 'football' }: {
+  inCasa: boolean; minuto: string; testo: string; sotto?: string;
   icona?: keyof typeof Ionicons.glyphMap;
 }) {
   const bolla = (
     <View style={styles.eventBubble}>
       <Ionicons
         name={icona}
-        size={13}
+        size={18}
         /*
          * Il colore dice il tipo prima che si legga il nome. Il cambio resta
          * smorto di proposito: in un elenco dove passa un gol ogni mezz'ora e
@@ -378,11 +392,18 @@ function RigaEvento({ inCasa, minuto, testo, icona = 'football' }: {
                 : colors.text
         }
       />
-      <Text style={styles.eventName} numberOfLines={1}>{testo}</Text>
+      <View style={{ flexShrink: 1 }}>
+        <Text style={styles.eventName} numberOfLines={2}>{testo}</Text>
+        {sotto ? <Text style={styles.eventSotto} numberOfLines={3}>{sotto}</Text> : null}
+      </View>
     </View>
   );
   return (
-    <View style={styles.event}>
+    <View
+      style={styles.event}
+      accessible
+      accessibilityLabel={`Minuto ${minuto.replace(/'/g, '')}, ${testo}${sotto ? `, ${sotto}` : ''}, ${inCasa ? 'squadra di casa' : 'squadra ospite'}`}
+    >
       <View style={styles.eventSide}>{inCasa ? bolla : null}</View>
       <View style={styles.eventLine}>
         <View style={styles.eventDot} />
@@ -408,22 +429,24 @@ const styles = StyleSheet.create({
   side: { ...type.caption, color: colors.textFaint },
 
   bench: { flexDirection: 'row', flexWrap: 'wrap', gap: space.md },
-  benchItem: { alignItems: 'center', gap: 2, width: 58 },
+  benchItem: { alignItems: 'center', gap: 2, width: 72 },
   benchNum: { ...type.captionBold, color: colors.accentBright },
   benchName: { ...type.caption, color: colors.textDim, textAlign: 'center' },
 
-  event: { flexDirection: 'row', alignItems: 'center', minHeight: 46 },
+  event: { flexDirection: 'row', alignItems: 'center', minHeight: 56, paddingVertical: 3 },
   eventSide: { flex: 1, alignItems: 'flex-end' },
   eventSideRight: { alignItems: 'flex-start' },
   eventBubble: {
-    flexDirection: 'row', alignItems: 'center', gap: 6,
+    // larga al massimo quanto la sua colonna: con 170 punti fissi usciva dallo schermo
+    flexDirection: 'row', alignItems: 'center', gap: space.sm,
     backgroundColor: colors.surface, borderRadius: radius.md,
-    paddingHorizontal: space.md, paddingVertical: 8, maxWidth: 170,
+    paddingHorizontal: space.md, paddingVertical: space.sm, maxWidth: '100%',
   },
-  eventName: { ...type.footnote, color: colors.text, flexShrink: 1 },
-  eventLine: { width: 58, alignItems: 'center', gap: 2 },
+  eventName: { ...type.footnoteBold, color: colors.text },
+  eventSotto: { ...type.caption, color: colors.textDim },
+  eventLine: { width: 48, alignItems: 'center', gap: 2 },
   eventDot: { width: 7, height: 7, borderRadius: 4, backgroundColor: colors.accent },
-  eventMinute: { ...type.caption, color: colors.textFaint },
+  eventMinute: { ...type.footnoteBold, color: colors.textDim },
 
   key: { ...type.subhead, color: colors.text },
   value: { ...type.subhead, color: colors.textDim, maxWidth: 190, textAlign: 'right' },

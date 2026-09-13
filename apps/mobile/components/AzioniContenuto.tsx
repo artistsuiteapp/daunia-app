@@ -99,8 +99,8 @@ export function AzioniContenuto({ tipo, id, autore, autoreNome, onFatto }: {
 
   return (
     <>
-      <Premi onPress={() => setAperto(true)} style={styles.puntini}>
-        <Ionicons name="ellipsis-horizontal" size={18} color={colors.textFaint} />
+      <Premi onPress={() => setAperto(true)} style={styles.puntini} etichetta="Altre azioni: segnala o blocca">
+        <Ionicons name="ellipsis-horizontal" size={22} color={colors.textDim} />
       </Premi>
 
       <Modal visible={aperto} transparent animationType="fade" onRequestClose={chiude}>
@@ -234,7 +234,7 @@ function Bottone({ label, onPress, tono }: {
 }
 
 const styles = StyleSheet.create({
-  puntini: { paddingHorizontal: space.sm, paddingVertical: 4 },
+  puntini: { minWidth: 44, minHeight: 44, alignItems: 'center', justifyContent: 'center' },
 
   velo: { flex: 1, backgroundColor: 'rgba(0,0,0,0.6)', justifyContent: 'flex-end' },
   foglio: {

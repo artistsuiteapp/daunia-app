@@ -19,7 +19,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import { Screen, LargeTitle, Empty, GroupLabel, GroupNote, ListGroup, ListRow, useGutter } from '../components/ui';
+import { Screen, LargeTitle, Empty, GroupLabel, GroupNote, ListGroup, ListRow, useGutter, useMargine } from '../components/ui';
 import { BackBar } from '../components/BackBar';
 import { Premi } from '../components/anima';
 import { NomeUtente } from '../components/NomeUtente';
@@ -41,6 +41,7 @@ const NOME_TIPO: Record<string, string> = {
 export default function Segnalazioni() {
   const ruolo = useRuolo();
   const gutter = useGutter();
+  const margine = useMargine();
   const modera = puoModerare(ruolo);
 
   const [mie, setMie] = useState<MiaSegnalazione[]>([]);
@@ -131,6 +132,7 @@ export default function Segnalazioni() {
 
 function Voce({ voce, onFatto }: { voce: VoceCoda; onFatto: () => void }) {
   const gutter = useGutter();
+  const margine = useMargine();
   const [testo, setTesto] = useState<Segnalato | null>(null);
   const [inCorso, setInCorso] = useState(false);
 
@@ -149,7 +151,7 @@ function Voce({ voce, onFatto }: { voce: VoceCoda; onFatto: () => void }) {
   }
 
   return (
-    <View style={[styles.scheda, gutter]}>
+    <View style={[styles.scheda, margine]}>
       <Text style={styles.schedaCapo}>
         {NOME_TIPO[voce.tipo] ?? voce.tipo} · {voce.quante} {voce.quante === 1 ? 'segnalazione' : 'segnalazioni'}
         {testo?.nascosto ? ' · già nascosto' : ''}

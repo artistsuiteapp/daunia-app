@@ -29,6 +29,7 @@ import { BannerTestata } from '../../components/BannerTestata';
 import { riepilogo, testateConArticoli } from '../../lib/stampa';
 import { apriArticolo } from '../../lib/apri';
 import { relative } from '../../lib/format';
+import { titoloLeggibile } from '../../lib/titoli-core';
 
 /** Quanti comunicati si mostrano. Oltre e archivio, e l'archivio sta sul loro sito. */
 const QUANTI = 8;
@@ -91,7 +92,7 @@ export default function News() {
               {comunicati.map((c) => (
                 <ListRow key={c.id} chevron onPress={() => c.url && apriArticolo(c.url)}>
                   <View style={styles.riga}>
-                    <Text style={styles.titolo} numberOfLines={2}>{c.title}</Text>
+                    <Text style={styles.titolo} numberOfLines={3}>{titoloLeggibile(c.title)}</Text>
                     {c.excerpt ? (
                       <Text style={styles.assaggio} numberOfLines={2}>{assaggio(c.excerpt)}</Text>
                     ) : null}
@@ -112,7 +113,7 @@ export default function News() {
 
 const styles = StyleSheet.create({
   riga: { flex: 1, gap: 3 },
-  titolo: { ...type.subheadBold, color: colors.text, lineHeight: 20 },
+  titolo: { ...type.subheadBold, color: colors.text, lineHeight: 23 },
   assaggio: { ...type.footnote, color: colors.textDim, lineHeight: 18 },
   quando: { ...type.caption, color: colors.textFaint },
 });

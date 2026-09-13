@@ -298,6 +298,6 @@ const stili = StyleSheet.create({
   rigaNumero: {
     ...type.numberSm, color: colors.accentBright, minWidth: 38, textAlign: 'right',
   },
-  rigaTesto: { ...type.subhead, color: colors.textDim, flex: 1, lineHeight: 20 },
+  rigaTesto: { ...type.subhead, color: colors.textDim, flex: 1, lineHeight: 23 },
   nota: { ...type.caption, color: colors.textFaint, lineHeight: 17, marginTop: 2 },
 });

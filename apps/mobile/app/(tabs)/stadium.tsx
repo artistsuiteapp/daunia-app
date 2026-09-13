@@ -30,6 +30,18 @@ import {
  *
  * Resta se il settore e coperto, che e vero e serve quando piove.
  */
+/** "Nessuno ha ancora detto che ci va" invece di "0 hanno detto che ci sono". */
+function chiCiVa(n: number): string {
+  if (n <= 0) return 'Nessuno ha ancora detto che ci va';
+  if (n === 1) return 'Una persona ha detto che ci va';
+  return `${thousands(n)} persone hanno detto che ci vanno`;
+}
+
+function quantiVanno(n: number): string {
+  if (n <= 0) return 'nessuno ancora';
+  return n === 1 ? '1 ci va' : `${thousands(n)} ci vanno`;
+}
+
 function dettaglioDi(s: StadiumSector): string {
   if (s.soldOut) return 'esaurito';
   return s.covered ? 'coperto' : 'scoperto';
@@ -103,8 +115,12 @@ export default function StadiumScreen() {
             <View style={styles.controls}>
               <View style={styles.modeSwitch}>
                 {([['realistic', 'Seggiolini'], ['occupancy', 'Tifosi']] as Array<[SeatMode, string]>).map(([k, l]) => (
-                  <Pressable key={k} onPress={() => setMode(k)} style={[styles.modeBtn, mode === k && styles.modeBtnOn]}>
-                    <Text style={[styles.modeText, mode === k && styles.modeTextOn]}>{l.toUpperCase()}</Text>
+                  <Pressable
+                    key={k} onPress={() => setMode(k)} hitSlop={4}
+                    accessibilityRole="button" accessibilityState={{ selected: mode === k }}
+                    style={[styles.modeBtn, mode === k && styles.modeBtnOn]}
+                  >
+                    <Text style={[styles.modeText, mode === k && styles.modeTextOn]}>{l}</Text>
                   </Pressable>
                 ))}
               </View>
@@ -138,7 +154,7 @@ export default function StadiumScreen() {
             <View style={styles.presenceHead}>
               <Ionicons name="people" size={17} color={colors.accentBright} />
               <Text style={styles.presenceTitle}>
-                {thousands(totalDeclared)} hanno detto che ci sono
+                {chiCiVa(totalDeclared)}
               </Text>
             </View>
             <Text style={styles.presenceNote}>
@@ -170,7 +186,7 @@ export default function StadiumScreen() {
           </View>
         ) : null}
 
-        <Text style={[styles.listTitle, pad]}>SETTORI</Text>
+        <Text style={[styles.listTitle, pad]} accessibilityRole="header">Settori</Text>
         <View style={pad}>
           {stadium.sectors.map((s) => {
             const on = selected?.id === s.id;
@@ -178,19 +194,21 @@ export default function StadiumScreen() {
               <Pressable
                 key={s.id}
                 onPress={() => setSelected((cur) => (cur?.id === s.id ? null : s))}
+                accessibilityRole="button"
+                accessibilityState={{ selected: on }}
                 style={({ pressed }) => [styles.row, on && styles.rowOn, pressed && { opacity: 0.75 }]}
               >
                 <View style={styles.rowText}>
                   <Text style={[styles.rowName, on && styles.rowNameOn]}>{s.name}</Text>
                   <Text style={styles.rowMeta}>
-                    {thousands(s.capacity)} posti · {s.covered ? 'coperto' : 'scoperto'}
+                    {thousands(s.capacity)} posti
                   </Text>
                 </View>
                 <View style={styles.rowRight}>
                   <Text style={[styles.rowPrice, s.soldOut && styles.rowPriceOut]}>{dettaglioDi(s)}</Text>
                   {match ? (
                     <Text style={[styles.rowGoing, mySector === s.id && styles.rowGoingMine]}>
-                      {thousands(presenceOf(match.id, s.id, s.capacity).total)} vanno
+                      {quantiVanno(presenceOf(match.id, s.id, s.capacity).total)}
                     </Text>
                   ) : null}
                 </View>
@@ -252,7 +270,7 @@ function SectorCard({ sector, matchId, onDeclare, mine }: {
       {sector.soldOut ? (
         <View style={[styles.cta, styles.ctaSpenta]}>
           <Ionicons name="close-circle-outline" size={16} color={colors.textDim} />
-          <Text style={[styles.ctaText, { color: colors.textDim }]}>BIGLIETTI ESAURITI</Text>
+          <Text style={[styles.ctaText, { color: colors.textDim }]}>Biglietti esauriti</Text>
         </View>
       ) : (
         <Pressable
@@ -260,7 +278,7 @@ function SectorCard({ sector, matchId, onDeclare, mine }: {
           onPress={() => sector.ticketUrl && apriFuori(sector.ticketUrl)}
         >
           <Ionicons name="ticket-outline" size={16} color={colors.onAccent} />
-          <Text style={styles.ctaText}>BIGLIETTI PER QUESTO SETTORE</Text>
+          <Text style={styles.ctaText}>Biglietti per questo settore</Text>
         </Pressable>
       )}
     </View>
@@ -274,11 +292,11 @@ const styles = StyleSheet.create({
   presenceHead: { flexDirection: 'row', alignItems: 'center', gap: space.sm },
   presenceTitle: { ...type.headline, color: colors.text, flex: 1 },
   sampleTag: { backgroundColor: colors.surfaceHi, borderRadius: radius.sm, paddingHorizontal: 6, paddingVertical: 2 },
-  sampleText: { ...type.captionBold, fontSize: 9, color: colors.textDim },
-  presenceNote: { ...type.caption, color: colors.textDim, lineHeight: 17 },
+  sampleText: { ...type.captionBold, fontSize: 12, lineHeight: 16, color: colors.textDim },
+  presenceNote: { ...type.footnote, color: colors.textDim },
   presenceUndo: { ...type.captionBold, color: colors.accentBright, marginTop: 2 },
 
-  rowGoing: { ...type.caption, color: colors.textFaint },
+  rowGoing: { ...type.footnote, color: colors.textDim },
   rowGoingMine: { color: colors.win },
 
   going: {
@@ -295,19 +313,19 @@ const styles = StyleSheet.create({
   titleRow: { flexDirection: 'row', alignItems: 'flex-start', gap: space.sm },
   controls: { alignItems: 'flex-end', gap: 6 },
   title: { ...type.title1, color: colors.text },
-  sub: { ...type.footnote, color: 'rgba(255,255,255,0.62)' },
+  sub: { ...type.footnote, color: 'rgba(255,255,255,0.82)' },
 
   modeSwitch: {
     flexDirection: 'row', gap: 2, padding: 2, marginTop: 2,
     backgroundColor: 'rgba(44,44,46,0.82)', borderRadius: 9,
   },
-  modeBtn: { paddingHorizontal: 12, paddingVertical: 6, borderRadius: 7 },
+  modeBtn: { paddingHorizontal: 14, paddingVertical: 8, minHeight: 40, justifyContent: 'center', borderRadius: 7 },
   modeBtnOn: { backgroundColor: colors.accent },
-  modeText: { ...type.captionBold, color: 'rgba(255,255,255,0.6)' },
+  modeText: { ...type.footnoteBold, color: 'rgba(255,255,255,0.88)' },
   modeTextOn: { color: colors.onAccent },
 
   hint: { flexDirection: 'row', alignItems: 'center', gap: 5, marginTop: space.sm },
-  hintText: { ...type.caption, color: 'rgba(255,255,255,0.42)' },
+  hintText: { ...type.footnote, color: 'rgba(255,255,255,0.85)' },
 
   sheet: {
     flex: 1, backgroundColor: colors.bg,
@@ -355,7 +373,7 @@ const styles = StyleSheet.create({
   rowText: { flex: 1 },
   rowName: { ...type.subhead, color: colors.text },
   rowNameOn: { ...type.subheadBold, color: colors.accentBright },
-  rowMeta: { ...type.caption, color: colors.textFaint },
+  rowMeta: { ...type.footnote, color: colors.textDim },
   rowRight: { alignItems: 'flex-end' },
   rowPrice: { ...type.headline, color: colors.text },
   rowOcc: { ...type.caption, color: colors.textFaint },

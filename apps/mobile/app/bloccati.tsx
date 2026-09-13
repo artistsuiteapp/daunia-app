@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surfaceHi,
     borderRadius: radius.pill,
     paddingHorizontal: space.md,
-    paddingVertical: 6,
+    paddingVertical: 6, minHeight: 44, justifyContent: 'center'
   },
   sbloccaTesto: { ...type.footnoteBold, color: colors.text },
 });

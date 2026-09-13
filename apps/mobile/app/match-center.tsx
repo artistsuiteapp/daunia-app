@@ -241,5 +241,5 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
   portaTitolo: { ...type.subheadBold, color: colors.text },
-  portaSotto: { ...type.caption, color: colors.textDim, lineHeight: 16 },
+  portaSotto: { ...type.caption, color: colors.textDim, lineHeight: 19 },
 });

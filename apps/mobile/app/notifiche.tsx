@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { Platform, StyleSheet, Switch, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-import { Screen, LargeTitle, GroupLabel, GroupNote, ListGroup, ListRow, useGutter } from '../components/ui';
+import { Screen, LargeTitle, GroupLabel, GroupNote, ListGroup, ListRow, useGutter, useMargine } from '../components/ui';
 import { BackBar } from '../components/BackBar';
 import { Premi } from '../components/anima';
 import { colors, radius, space, type } from '../theme/tokens';
@@ -26,6 +26,7 @@ import {
  */
 export default function Notifiche() {
   const gutter = useGutter();
+  const margine = useMargine();
   const [stato, setStato] = useState<Stato | null>(null);
   const [preferenze, setPreferenze] = useState<Preferenze>(PREFERENZE_INIZIALI);
   const [inCorso, setInCorso] = useState(false);
@@ -64,7 +65,7 @@ export default function Notifiche() {
       />
 
       {stato === null ? null : stato.modo === 'aggiungi-alla-home' ? (
-        <View style={[styles.spiega, gutter]}>
+        <View style={[styles.spiega, margine]}>
           <Ionicons name="phone-portrait-outline" size={22} color={colors.accentBright} />
           <Text style={styles.spiegaTitolo}>Prima aggiungi l'app alla schermata Home</Text>
           <Text style={styles.spiegaTesto}>
@@ -78,7 +79,7 @@ export default function Notifiche() {
           </View>
         </View>
       ) : stato.modo === 'negato' ? (
-        <View style={[styles.spiega, gutter]}>
+        <View style={[styles.spiega, margine]}>
           <Ionicons name="notifications-off-outline" size={22} color={colors.textDim} />
           <Text style={styles.spiegaTitolo}>Le notifiche sono bloccate</Text>
           <Text style={styles.spiegaTesto}>
@@ -87,7 +88,7 @@ export default function Notifiche() {
           </Text>
         </View>
       ) : stato.modo === 'non-supportate' ? (
-        <View style={[styles.spiega, gutter]}>
+        <View style={[styles.spiega, margine]}>
           <Ionicons name="alert-circle-outline" size={22} color={colors.textDim} />
           <Text style={styles.spiegaTitolo}>Qui non arrivano</Text>
           <Text style={styles.spiegaTesto}>
@@ -114,7 +115,7 @@ export default function Notifiche() {
           </View>
 
           {stato.modo === 'attive-non-salvate' ? (
-            <View style={[styles.guasto, gutter]}>
+            <View style={[styles.guasto, margine]}>
               <Ionicons name="warning-outline" size={18} color="#FFB020" />
               <Text style={styles.guastoTesto}>
                 Il telefono è pronto, ma il server non ha registrato l'iscrizione, quindi le

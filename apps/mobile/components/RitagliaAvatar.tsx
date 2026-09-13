@@ -134,13 +134,13 @@ export function RitagliaAvatar({ uri, onFatto, onAnnulla }: {
           </View>
 
           <View style={styles.zoom}>
-            <Premi onPress={() => zooma(-0.25)}>
+            <Premi onPress={() => zooma(-0.25)} etichetta="Rimpicciolisci">
               <View style={styles.tastoZoom}><Ionicons name="remove" size={20} color={colors.text} /></View>
             </Premi>
             <View style={styles.barra}>
               <View style={[styles.barraPiena, { width: `${((vista.zoom - 1) / 5) * 100}%` }]} />
             </View>
-            <Premi onPress={() => zooma(0.25)}>
+            <Premi onPress={() => zooma(0.25)} etichetta="Ingrandisci">
               <View style={styles.tastoZoom}><Ionicons name="add" size={20} color={colors.text} /></View>
             </Premi>
           </View>
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
     borderWidth: 999, borderColor: 'rgba(0,0,0,0.55)',
   },
   zoom: { flexDirection: 'row', alignItems: 'center', gap: space.md, width: '100%' },
-  tastoZoom: { width: 38, height: 38, borderRadius: 19, backgroundColor: colors.surfaceHi, alignItems: 'center', justifyContent: 'center' },
+  tastoZoom: { width: 46, height: 46, borderRadius: 23, backgroundColor: colors.surfaceHi, alignItems: 'center', justifyContent: 'center' },
   barra: { flex: 1, height: 4, borderRadius: 2, backgroundColor: colors.surfaceHi, overflow: 'hidden' },
   barraPiena: { height: 4, backgroundColor: colors.accentBright },
   azioni: { flexDirection: 'row', gap: space.sm, width: '100%' },

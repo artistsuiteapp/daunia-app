@@ -137,15 +137,11 @@ export default function Home() {
         icona: 'football', rotta: `/match/${oggi.id}`,
       });
     }
-    if (next && !oggi) {
-      a.push({
-        chiave: 'pronostico',
-        occhiello: 'pronostico',
-        titolo: 'Fai il tuo pronostico',
-        sotto: `${next.home.shortName}–${next.away.shortName}, prima del fischio.`,
-        icona: 'trophy', rotta: `/match/${next.id}?tab=gioco`,
-      });
-    }
+    /*
+     * Il richiamo "Fai il tuo pronostico" non sta piu qui: la scheda della
+     * prossima partita, che ora apre la home, ha gia la sua riga per il
+     * pronostico. Erano due inviti uguali uno sotto l'altro.
+     */
     if (next && !next.foggiaHome) {
       a.push({
         chiave: 'trasferta',
@@ -203,10 +199,7 @@ export default function Home() {
         points={row?.points ?? null}
       />
 
-      <Reveal delay={60}><QuickNav pagelle={pagelle} /></Reveal>
-
-      <Reveal delay={80}><BanneriAzione azioni={azioni} /></Reveal>
-
+      {/* la partita viene prima delle scorciatoie: e il motivo per cui si apre l'app */}
       {next ? (
         <>
           <GroupLabel action={<Action label="Calendario" onPress={() => router.push('/matches')} />}>
@@ -216,20 +209,25 @@ export default function Home() {
               : vivo?.finita && adessoFinito?.id === next.id ? 'Appena finita'
               : next.foggiaHome ? 'Prossima in casa' : 'Prossima trasferta'}
           </GroupLabel>
-          <Reveal delay={120}><View style={gutter}><EventCard match={next} tone="accent" /></View></Reveal>
+          <Reveal delay={60}><View style={gutter}><EventCard match={next} tone="accent" /></View></Reveal>
         </>
       ) : null}
 
-      {/* le partite successive impilate sotto quella di riferimento, come nella
-          reference: stessa scheda, ma scura, così si legge subito quale conta */}
+      <Reveal delay={100}><View style={{ marginTop: space.md }}><QuickNav pagelle={pagelle} /></View></Reveal>
+
+      <Reveal delay={120}><BanneriAzione azioni={azioni} /></Reveal>
+
+      {/* le partite successive: stessa scheda ma scura e compatta, cosi si legge
+          subito quale conta. Servono a sapere che ci sono, non a essere guardate */}
       {upcoming.length > 1 ? (
-        <View style={[gutter, styles.stack]}>
-          {/* quella di riferimento resta grande, le successive compatte:
-              servono a sapere che ci sono, non a essere guardate */}
-          {upcoming.slice(1, 5).map((m, i) => (
-            <Reveal key={m.id} delay={180 + i * 60}><EventCard match={m} compatta /></Reveal>
-          ))}
-        </View>
+        <>
+          <GroupLabel>Le partite dopo</GroupLabel>
+          <View style={[gutter, styles.stack]}>
+            {upcoming.slice(1, 5).map((m, i) => (
+              <Reveal key={m.id} delay={180 + i * 60}><EventCard match={m} compatta /></Reveal>
+            ))}
+          </View>
+        </>
       ) : null}
 
       <GroupLabel action={<Action label="Tutte" onPress={() => router.push('/stats')} />}>

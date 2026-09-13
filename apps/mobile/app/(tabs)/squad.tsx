@@ -1,6 +1,7 @@
 import { router } from 'expo-router';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { BackBar } from '../../components/BackBar';
 import { Screen, LargeTitle, GroupLabel, useGutter } from '../../components/ui';
 import { Avatar } from '../../components/Avatar';
 import { colors, radius, space, type } from '../../theme/tokens';
@@ -15,6 +16,8 @@ export default function Squad() {
 
   return (
     <Screen>
+      {/* si arriva dalle scorciatoie della home, non dalla barra: serve la strada per tornare */}
+      <BackBar label="Indietro" />
       <LargeTitle
 crest={FOGGIA?.crest ?? null}         title="Rosa"
         subtitle={`${squad.length} giocatori${staff.length ? ` · ${staff[0].name}` : ''}`}

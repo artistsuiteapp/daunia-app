@@ -153,7 +153,7 @@ export default function NuovoPost() {
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <View style={styles.field}>
-      <Text style={styles.label}>{label.toUpperCase()}</Text>
+      <Text style={styles.label}>{label}</Text>
       {children}
     </View>
   );
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
   noticeText: { ...type.caption, color: colors.textDim, flex: 1, lineHeight: 17 },
 
   field: { gap: space.sm },
-  label: { ...type.caption, color: colors.textFaint, letterSpacing: 0.5 },
+  label: { ...type.footnoteBold, color: colors.textDim },
   input: {
     backgroundColor: colors.surface, borderRadius: radius.lg,
     paddingHorizontal: space.lg, paddingVertical: 13,
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
   topics: { flexDirection: 'row', flexWrap: 'wrap', gap: space.sm },
   topic: {
     paddingHorizontal: space.lg, paddingVertical: 9, borderRadius: radius.pill,
-    backgroundColor: colors.surface,
+    backgroundColor: colors.surface, minHeight: 44, justifyContent: 'center'
   },
   topicOn: { backgroundColor: colors.accent },
   topicText: { ...type.subheadBold, color: colors.textDim },

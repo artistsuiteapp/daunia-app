@@ -192,14 +192,17 @@ export default function ProfiloSchermata() {
       ) : null}
 
       <View style={[styles.testa, gutter]}>
-        <Pressable onPress={scegliImmagine} disabled={inCorso}>
+        <Pressable
+          onPress={scegliImmagine} disabled={inCorso}
+          accessibilityRole="button" accessibilityLabel="Cambia la foto del profilo"
+        >
           {profilo?.avatar ? (
             <Image source={{ uri: profilo.avatar }} style={styles.foto} contentFit="cover" transition={220} />
           ) : (
             <Avatar uri={null} name={nome || 'Tu'} size={92} />
           )}
           <View style={styles.matita}>
-            <Ionicons name="camera" size={15} color={colors.onAccent} />
+            <Ionicons name="camera" size={18} color={colors.onAccent} />
           </View>
         </Pressable>
 
@@ -310,7 +313,7 @@ export default function ProfiloSchermata() {
 function Campo({ etichetta, children }: { etichetta: string; children: React.ReactNode }) {
   return (
     <View style={{ gap: space.sm }}>
-      <Text style={styles.etichetta}>{etichetta.toUpperCase()}</Text>
+      <Text style={styles.etichetta}>{etichetta}</Text>
       {children}
     </View>
   );
@@ -348,7 +351,7 @@ const styles = StyleSheet.create({
   riquadroTesto: { ...type.footnote, color: colors.text, flex: 1 },
 
   campi: { gap: space.lg, marginTop: space.xl },
-  etichetta: { ...type.caption, color: colors.textFaint, letterSpacing: 0.5 },
+  etichetta: { ...type.footnoteBold, color: colors.textDim },
   input: {
     backgroundColor: colors.surface, borderRadius: radius.lg,
     paddingHorizontal: space.lg, paddingVertical: 13,
@@ -358,7 +361,7 @@ const styles = StyleSheet.create({
   area: { minHeight: 92, paddingTop: 13 },
 
   settori: { flexDirection: 'row', flexWrap: 'wrap', gap: space.sm },
-  settore: { paddingHorizontal: space.md, paddingVertical: 9, borderRadius: radius.pill, backgroundColor: colors.surface },
+  settore: { paddingHorizontal: space.md, paddingVertical: 9, borderRadius: radius.pill, backgroundColor: colors.surface, minHeight: 44, justifyContent: 'center' },
   settoreOn: { backgroundColor: colors.accent },
   settoreTesto: { ...type.footnoteBold, color: colors.textDim },
   settoreTestoOn: { color: colors.onAccent },

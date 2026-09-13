@@ -102,5 +102,5 @@ const styles = StyleSheet.create({
   },
   badgeRight: { left: undefined, right: space.lg },
   badgeValue: { ...type.title3, color: '#fff' },
-  badgeLabel: { ...type.caption, color: 'rgba(255,255,255,0.62)' },
+  badgeLabel: { ...type.caption, color: 'rgba(255,255,255,0.82)' },
 });

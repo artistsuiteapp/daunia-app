@@ -44,7 +44,8 @@ export default function Tickets() {
       {match ? (
         <>
           <GroupLabel>Prossima in casa</GroupLabel>
-          <View style={gutter}><EventCard match={match} tone="accent" /></View>
+          {/* compatta: qui si viene per il biglietto, non per pronostico e chat */}
+          <View style={gutter}><EventCard match={match} compatta /></View>
         </>
       ) : null}
 

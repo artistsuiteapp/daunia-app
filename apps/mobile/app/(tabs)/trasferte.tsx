@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
+import { BackBar } from '../../components/BackBar';
 import { Screen, LargeTitle, GroupLabel, GroupNote, Empty, useGutter } from '../../components/ui';
 import { Crest } from '../../components/Crest';
 import { Reveal } from '../../components/Reveal';
@@ -43,6 +44,8 @@ export default function Trasferte() {
 
   return (
     <Screen>
+      {/* si arriva dalle scorciatoie della home, non dalla barra: serve la strada per tornare */}
+      <BackBar label="Indietro" />
       <LargeTitle
         crest={FOGGIA?.crest ?? null}
         title="Trasferte"

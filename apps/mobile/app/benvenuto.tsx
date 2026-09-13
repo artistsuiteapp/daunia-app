@@ -70,7 +70,7 @@ export default function Benvenuto() {
 
         {next ? (
           <Animated.View style={{ opacity: entra }}>
-            <Text style={styles.etichetta}>PROSSIMA PARTITA</Text>
+            <Text style={styles.etichetta}>Prossima partita</Text>
             <EventCard match={next} tone="accent" compatta />
           </Animated.View>
         ) : null}
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
   titolo: { ...type.displayTitle, color: colors.text, textAlign: 'center' },
   sotto: { ...type.subhead, color: colors.textDim, marginTop: -space.sm },
 
-  etichetta: { ...type.caption, color: 'rgba(255,255,255,0.6)', letterSpacing: 1, marginBottom: 6 },
+  etichetta: { ...type.caption, color: colors.textDim, letterSpacing: 0, marginBottom: 6 },
 
   numeri: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
   },
   numero: { flex: 1, alignItems: 'center', gap: 1 },
   numeroValore: { ...type.number, fontSize: 22, color: colors.text },
-  numeroEtichetta: { ...type.caption, fontSize: 11, color: colors.textFaint },
+  numeroEtichetta: { ...type.footnote, color: colors.textDim },
   sep: { width: StyleSheet.hairlineWidth, height: 26, backgroundColor: colors.separator },
 
   azioni: { gap: space.sm },

@@ -155,7 +155,7 @@ const stili = StyleSheet.create({
   },
   grandeValore: { ...type.score, fontSize: 38, lineHeight: 44, color: colors.accentBright },
   grandeTitolo: { ...type.subheadBold, color: colors.text, marginTop: 2 },
-  grandeSotto: { ...type.caption, color: colors.textFaint, lineHeight: 16 },
+  grandeSotto: { ...type.caption, color: colors.textFaint, lineHeight: 19 },
 
   blocco: {
     flexDirection: 'row', alignItems: 'center',

@@ -7,6 +7,10 @@ import { Crest } from '../components/Crest';
 import { colors, space, type } from '../theme/tokens';
 import { FOGGIA, meta, standings } from '../lib/data';
 
+const ZONA_NOME: Record<string, string> = {
+  promotion: 'promozione', playoff: 'playoff', playout: 'playout', relegation: 'retrocessione',
+};
+
 const ZONE: Record<string, string> = {
   promotion: colors.zonePromotion,
   playoff: colors.zonePlayoff,
@@ -16,6 +20,8 @@ const ZONE: Record<string, string> = {
 
 export default function Standings() {
   const gutter = useGutter();
+  // le partite giocate valgono per tutte le squadre: stanno nel sottotitolo, non in una colonna
+  const giornate = Math.max(0, ...standings.map((r) => r.played));
 
   return (
     <Screen>
@@ -26,39 +32,45 @@ export default function Standings() {
         </Pressable>
       </View>
 
-      <LargeTitle crest={FOGGIA?.crest ?? null} title="Classifica" subtitle={`${meta.competition} girone C · ${meta.season.replace('-', '/')}`} />
+      <LargeTitle
+        crest={FOGGIA?.crest ?? null}
+        title="Classifica"
+        subtitle={`${meta.competition} girone C · ${giornate ? `dopo ${giornate} ${giornate === 1 ? 'giornata' : 'giornate'}` : meta.season.replace('-', '/')}`}
+      />
 
       <View style={[styles.head, gutter]}>
         <Text style={[styles.h, styles.cPos]}>#</Text>
         <Text style={[styles.h, styles.cName]}>Squadra</Text>
-        <Text style={[styles.h, styles.cNum]}>G</Text>
-        <Text style={[styles.h, styles.cNum]}>V</Text>
-        <Text style={[styles.h, styles.cNum]}>N</Text>
-        <Text style={[styles.h, styles.cNum]}>P</Text>
-        <Text style={[styles.h, styles.cDiff]}>DR</Text>
-        <Text style={[styles.h, styles.cPts]}>Pt</Text>
+        <Text style={[styles.h, styles.cDiff]}>Diff.</Text>
+        <Text style={[styles.h, styles.cPts]}>Punti</Text>
       </View>
 
       <View style={gutter}>
         <ListGroup>
           {standings.map((r) => (
-            <ListRow key={r.teamId} height={46}>
+            <View
+              key={r.teamId}
+              accessible
+              accessibilityLabel={`${r.position}°, ${r.teamName}, ${r.points} punti, ${r.played} giocate, ${r.won} vinte, ${r.drawn} pareggiate, ${r.lost} perse${r.zone ? `, zona ${ZONA_NOME[r.zone]}` : ''}`}
+            >
+            <ListRow height={60}>
               <View style={[styles.zone, { backgroundColor: r.zone ? ZONE[r.zone] : 'transparent' }]} />
               <Text style={[styles.cell, styles.cPos, r.isFoggia && styles.own]}>{r.position}</Text>
               <View style={styles.nameCell}>
-                <Crest uri={r.crest} name={r.teamName} size={20} />
-                <Text style={[styles.name, r.isFoggia && styles.ownName]} numberOfLines={1}>
-                  {r.teamName}
-                  {r.penalty ? <Text style={styles.penalty}> {r.penalty}</Text> : null}
-                </Text>
+                <Crest uri={r.crest} name={r.teamName} size={24} />
+                <View style={{ flex: 1 }}>
+                  {/* il nome va a capo invece di finire in "Sorre..." */}
+                  <Text style={[styles.name, r.isFoggia && styles.ownName]} numberOfLines={2}>
+                    {r.teamName}
+                    {r.penalty ? <Text style={styles.penalty}> {r.penalty}</Text> : null}
+                  </Text>
+                  <Text style={styles.vnp} numberOfLines={1}>{r.won}V {r.drawn}N {r.lost}P</Text>
+                </View>
               </View>
-              <Text style={[styles.cell, styles.cNum, styles.dim]}>{r.played}</Text>
-              <Text style={[styles.cell, styles.cNum, styles.dim]}>{r.won}</Text>
-              <Text style={[styles.cell, styles.cNum, styles.dim]}>{r.drawn}</Text>
-              <Text style={[styles.cell, styles.cNum, styles.dim]}>{r.lost}</Text>
               <Text style={[styles.cell, styles.cDiff, styles.dim]}>{r.goalDiff > 0 ? `+${r.goalDiff}` : r.goalDiff}</Text>
               <Text style={[styles.ptsCell, r.isFoggia && styles.own]}>{r.points}</Text>
             </ListRow>
+            </View>
           ))}
         </ListGroup>
       </View>
@@ -72,7 +84,10 @@ export default function Standings() {
         ))}
       </View>
 
-      <GroupNote>Classifica da Wikipedia. Le penalizzazioni sono indicate accanto al nome.</GroupNote>
+      <GroupNote>
+        V vinte, N pareggiate, P perse. Diff. e la differenza fra gol fatti e subiti. Le penalizzazioni
+        sono indicate accanto al nome. Classifica da Wikipedia.
+      </GroupNote>
     </Screen>
   );
 }
@@ -83,25 +98,25 @@ const styles = StyleSheet.create({
   backText: { ...type.body, color: colors.accentBright },
 
   head: { flexDirection: 'row', alignItems: 'center', gap: space.md, paddingHorizontal: space.lg + 16, paddingBottom: space.sm },
-  h: { ...type.caption, color: colors.textFaint },
+  h: { ...type.footnote, color: colors.textDim },
 
   cell: { ...type.subhead, color: colors.text },
   dim: { color: colors.textDim },
-  cPos: { width: 20, textAlign: 'center' },
-  cName: { flex: 1, paddingLeft: 26 },
-  nameCell: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: 7 },
-  name: { ...type.subhead, color: colors.text, flex: 1 },
+  cPos: { width: 26, textAlign: 'center' },
+  cName: { flex: 1, paddingLeft: 32 },
+  nameCell: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: space.sm },
+  name: { ...type.subhead, color: colors.text },
+  vnp: { ...type.caption, color: colors.textDim },
   ownName: { ...type.subheadBold, color: colors.accentBright },
-  penalty: { ...type.caption, color: colors.loss },
-  cNum: { width: 18, textAlign: 'center' },
-  cDiff: { width: 26, textAlign: 'center' },
-  cPts: { width: 26, textAlign: 'right' },
-  ptsCell: { ...type.headline, color: colors.text, width: 26, textAlign: 'right' },
+  penalty: { ...type.footnoteBold, color: colors.loss },
+  cDiff: { width: 40, textAlign: 'center' },
+  cPts: { width: 48, textAlign: 'right' },
+  ptsCell: { ...type.headline, color: colors.text, width: 48, textAlign: 'right' },
   own: { color: colors.accentBright },
-  zone: { width: 3, height: 22, borderRadius: 2, marginLeft: -6 },
+  zone: { width: 4, height: 30, borderRadius: 2, marginLeft: -6 },
 
   legend: { flexDirection: 'row', flexWrap: 'wrap', gap: space.md, marginTop: space.lg },
   legendItem: { flexDirection: 'row', alignItems: 'center', gap: 6 },
-  legendDot: { width: 8, height: 8, borderRadius: 4 },
-  legendText: { ...type.caption, color: colors.textFaint },
+  legendDot: { width: 12, height: 12, borderRadius: 6 },
+  legendText: { ...type.footnote, color: colors.textDim },
 });

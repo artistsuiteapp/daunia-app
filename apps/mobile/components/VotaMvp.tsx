@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.accent, borderRadius: radius.pill,
     paddingHorizontal: 9, paddingVertical: 4,
   },
-  sceltoTesto: { ...type.captionBold, color: colors.onAccent, fontSize: 10 },
+  sceltoTesto: { ...type.captionBold, color: colors.onAccent, fontSize: 13, lineHeight: 17 },
   vinto: {
     flexDirection: 'row', alignItems: 'center', gap: 8,
     backgroundColor: 'rgba(232,197,71,0.13)', borderRadius: radius.md,

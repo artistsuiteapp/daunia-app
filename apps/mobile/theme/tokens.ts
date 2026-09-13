@@ -57,9 +57,18 @@ export const colors = {
   border: 'rgba(84,84,88,0.4)',
   borderStrong: 'rgba(84,84,88,0.7)',
 
+  /*
+   * Contrasto misurato, non a occhio: l'app la usa soprattutto chi ha piu di
+   * 45 anni. Il vecchio textFaint (opacita 0,32) stava a 2,4:1 sul nero, sotto
+   * il 4,5:1 che le linee guida Apple chiedono per il testo fino a 17 punti, ed
+   * era il colore di note, messaggi vuoti e sottotitoli. Ora il piu tenue sta
+   * sopra 5,2:1 anche sulla superficie piu chiara.
+   */
   text: '#FFFFFF',
-  textDim: 'rgba(235,235,245,0.62)',
-  textFaint: 'rgba(235,235,245,0.32)',
+  /** secondario: da 8:1 in su su tutti gli sfondi */
+  textDim: 'rgba(235,235,245,0.80)',
+  /** terziario: da 5,2:1 in su su tutti gli sfondi */
+  textFaint: 'rgba(235,235,245,0.62)',
 
   accent: brand.colors.red,
   accentBright: '#FF3B3B',
@@ -95,33 +104,42 @@ const sys = (size: number, weight: '400' | '500' | '600' | '700', lineHeight: nu
 });
 
 /**
- * Scala tipografica di iOS. I nomi seguono quelli di sistema cosi e chiaro
- * quale ruolo ha ogni stile invece di doverlo dedurre dalla dimensione.
+ * Scala tipografica di iOS, alla taglia xLarge.
+ *
+ * I nomi seguono quelli di sistema, cosi e chiaro il ruolo di ogni stile. Le
+ * misure sono quelle che Apple usa un gradino sopra la taglia standard (corpo
+ * 19 invece di 17): l'app la apriranno soprattutto persone sopra i 45 anni, e
+ * con la taglia standard lo stile piu usato in tutta l'app era una didascalia
+ * da 12 punti. Sopra questa base il testo cresce ancora con l'impostazione di
+ * sistema, che non e bloccata da nessuna parte.
+ *
+ * Il piu piccolo e 14, sopra gli 11 minimi delle linee guida. Niente pesi
+ * sottili: Montserrat parte dal Regular.
  */
 export const type = {
-  largeTitle: sys(34, '700', 41, 0.37),
-  title1: sys(28, '700', 34, 0.36),
-  title2: sys(22, '700', 28, 0.35),
-  title3: sys(20, '600', 25, 0.38),
-  headline: sys(17, '600', 22, -0.41),
-  body: sys(17, '400', 22, -0.41),
-  callout: sys(16, '400', 21, -0.32),
-  subhead: sys(15, '400', 20, -0.24),
-  subheadBold: sys(15, '600', 20, -0.24),
-  footnote: sys(13, '400', 18, -0.08),
-  footnoteBold: sys(13, '600', 18, -0.08),
-  caption: sys(12, '400', 16, 0),
-  captionBold: sys(12, '600', 16, 0),
-  /** etichetta minuscola tutta maiuscola sopra un gruppo di lista */
-  groupLabel: { ...sys(13, '400', 18, 0.5) },
+  largeTitle: sys(36, '700', 43, 0.37),
+  title1: sys(30, '700', 37, 0.36),
+  title2: sys(24, '700', 30, 0.35),
+  title3: sys(22, '600', 28, 0.38),
+  headline: sys(19, '600', 24, -0.41),
+  body: sys(19, '400', 25, -0.41),
+  callout: sys(18, '400', 23, -0.32),
+  subhead: sys(17, '400', 23, -0.24),
+  subheadBold: sys(17, '600', 23, -0.24),
+  footnote: sys(15, '400', 21, -0.08),
+  footnoteBold: sys(15, '600', 21, -0.08),
+  caption: sys(14, '400', 19, 0),
+  captionBold: sys(14, '600', 19, 0),
+  /** etichetta sopra un gruppo di lista: in minuscolo normale, come in iOS 16+ */
+  groupLabel: { ...sys(17, '600', 23, 0) },
 
   /** numeri sportivi e cifre d'impatto: corsivo pesante, come la scritta del logo */
-  score: { fontFamily: font.displayItalic, fontSize: 40, lineHeight: 46, letterSpacing: -0.5 },
-  scoreSm: { fontFamily: font.displayItalic, fontSize: 22, lineHeight: 26 },
-  number: { fontFamily: font.displayItalic, fontSize: 27, lineHeight: 32 },
-  numberSm: { fontFamily: font.boldItalic, fontSize: 18, lineHeight: 22 },
+  score: { fontFamily: font.displayItalic, fontSize: 42, lineHeight: 48, letterSpacing: -0.5 },
+  scoreSm: { fontFamily: font.displayItalic, fontSize: 24, lineHeight: 29 },
+  number: { fontFamily: font.displayItalic, fontSize: 29, lineHeight: 35 },
+  numberSm: { fontFamily: font.boldItalic, fontSize: 20, lineHeight: 25 },
   /** titolo d'apertura di una schermata: corsivo, per staccare dal corpo */
-  displayTitle: { fontFamily: font.displayItalic, fontSize: 34, lineHeight: 40, letterSpacing: -0.4 },
+  displayTitle: { fontFamily: font.displayItalic, fontSize: 34, lineHeight: 41, letterSpacing: -0.4 },
 } as const;
 
 /** Le ombre in modalita scura non si vedono: la profondita la fa il colore della superficie. */
@@ -132,8 +150,17 @@ export const shadow = {
   }) as object,
 } as const;
 
-/** Altezza standard di una riga di lista iOS. */
-export const ROW_HEIGHT = 44;
+/**
+ * Altezza minima di una riga di lista.
+ *
+ * Il valore di iOS e 44, che e anche il bersaglio minimo per un dito. Con il
+ * testo piu grande e un pubblico che tocca con meno precisione, 52 lascia
+ * margine senza allungare troppo le liste.
+ */
+export const ROW_HEIGHT = 52;
+
+/** Il bersaglio tattile minimo delle linee guida Apple: 44 x 44 punti. */
+export const TOCCO_MINIMO = 44;
 
 /**
  * Sfumature per i blocchi d'impatto: schede partita, ritratti giocatore, prodotti.

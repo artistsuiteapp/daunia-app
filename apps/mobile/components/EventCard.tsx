@@ -40,7 +40,8 @@ export function EventCard({ match, tone = 'dark', compatta = false }: {
   const ospite = vivo ? vivo.ospite ?? 0 : match.score?.away ?? 0;
   const chatViva = salaAperta(match.kickoff);
   const fg = accent ? '#FFFFFF' : colors.text;
-  const dim = accent ? 'rgba(255,255,255,0.72)' : colors.textDim;
+  // sul rosso il bianco al 72% scendeva sotto il contrasto minimo
+  const dim = accent ? 'rgba(255,255,255,0.92)' : colors.textDim;
 
   return (
     <Pressable
@@ -106,21 +107,58 @@ export function EventCard({ match, tone = 'dark', compatta = false }: {
             * puo scrivere, rosso che si legge e basta -- e cosi la voce non
             * sparisce dopo la partita lasciando il dubbio di averla sognata.
             */}
-          <Pressable
-            style={({ pressed }) => [styles.ctaFilled, pressed && { opacity: 0.75 }]}
-            onPress={() => router.push('/live' as never)}
-          >
-            <Pastiglia acceso={chatViva} />
-            <Text style={styles.ctaFilledText}>{chatViva ? 'Live chat' : 'Chat chiusa'}</Text>
-          </Pressable>
-          <Pressable
-            style={({ pressed }) => [styles.ctaPlain, pressed && { opacity: 0.75 }]}
-            onPress={() => router.push(`/match/${match.id}` as never)}
-          >
-            <Text style={styles.ctaPlainText}>Dettagli</Text>
-            <Ionicons name="chevron-forward" size={14} color="#fff" />
-          </Pressable>
+          {/*
+            * Il tasto piu evidente e sempre una cosa che si puo fare adesso.
+            *
+            * Prima il bottone bianco pieno diceva "Chat chiusa": la cosa piu in
+            * vista della scheda era un'azione che non c'era, e prima della
+            * partita portava a una stanza vuota. Chi guarda preme la cosa piu
+            * evidente; se non succede niente pensa che l'app sia rotta.
+            */}
+          {chatViva ? (
+            <>
+              <Pressable
+                style={({ pressed }) => [styles.ctaFilled, pressed && { opacity: 0.75 }]}
+                onPress={() => router.push('/live' as never)}
+                accessibilityRole="button"
+              >
+                <Pastiglia acceso />
+                <Text style={styles.ctaFilledText}>Chat dal vivo</Text>
+              </Pressable>
+              <Pressable
+                style={({ pressed }) => [styles.ctaPlain, pressed && { opacity: 0.75 }]}
+                onPress={() => router.push(`/match/${match.id}` as never)}
+                accessibilityRole="button"
+              >
+                <Text style={styles.ctaPlainText}>Dettagli</Text>
+                <Ionicons name="chevron-forward" size={18} color="#fff" />
+              </Pressable>
+            </>
+          ) : (
+            <>
+              <Pressable
+                style={({ pressed }) => [styles.ctaFilled, pressed && { opacity: 0.75 }]}
+                onPress={() => router.push(`/match/${match.id}` as never)}
+                accessibilityRole="button"
+              >
+                <Text style={styles.ctaFilledText}>{played ? 'Dettagli' : 'Dettagli partita'}</Text>
+                <Ionicons name="chevron-forward" size={18} color="#B10E16" />
+              </Pressable>
+              {played ? (
+                <Pressable
+                  style={({ pressed }) => [styles.ctaPlain, pressed && { opacity: 0.75 }]}
+                  onPress={() => router.push('/live' as never)}
+                  accessibilityRole="button"
+                >
+                  <Text style={styles.ctaPlainText}>Rileggi la chat</Text>
+                </Pressable>
+              ) : null}
+            </>
+          )}
         </View>
+      ) : null}
+      {accent && !compatta && !chatViva && !played && !live ? (
+        <Text style={[styles.notaChat, { color: dim }]}>La chat dal vivo apre dieci minuti prima del fischio.</Text>
       ) : null}
     </Pressable>
   );
@@ -177,14 +215,14 @@ const styles = StyleSheet.create({
   },
   statusOnAccent: { backgroundColor: 'rgba(0,0,0,0.26)' },
   statusOnDark: { backgroundColor: colors.surfaceHi },
-  statusText: { ...type.captionBold, fontSize: 11 },
+  statusText: { ...type.captionBold, fontSize: 13, lineHeight: 17 },
   liveDot: { width: 6, height: 6, borderRadius: 3, backgroundColor: colors.live },
 
   body: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: space.sm },
   centre: { flex: 1, alignItems: 'center', gap: 1 },
   score: { ...type.score, fontSize: 38, lineHeight: 40 },
   scoreCompatto: { fontSize: 28, lineHeight: 32 },
-  sub: { ...type.caption, fontSize: 11 },
+  sub: { ...type.footnote },
 
   names: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: space.sm },
   team: { ...type.footnoteBold, flex: 1 },
@@ -193,12 +231,13 @@ const styles = StyleSheet.create({
   actions: { flexDirection: 'row', gap: space.sm, marginTop: space.xs },
   ctaFilled: {
     flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6,
-    backgroundColor: '#fff', borderRadius: radius.pill, paddingVertical: 11,
+    backgroundColor: '#fff', borderRadius: radius.pill, paddingVertical: 12, minHeight: 50,
   },
   ctaFilledText: { ...type.subheadBold, color: '#B10E16' },
   ctaPlain: {
     flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 2,
-    backgroundColor: 'rgba(0,0,0,0.26)', borderRadius: radius.pill, paddingVertical: 11,
+    backgroundColor: 'rgba(0,0,0,0.3)', borderRadius: radius.pill, paddingVertical: 12, minHeight: 50,
   },
   ctaPlainText: { ...type.subheadBold, color: '#fff' },
+  notaChat: { ...type.footnote, textAlign: 'center', marginTop: -space.xs },
 });

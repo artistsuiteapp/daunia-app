@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   alone: { position: 'absolute', width: 8, height: 8, borderRadius: 4, backgroundColor: VERDE },
   nucleo: { width: 8, height: 8, borderRadius: 4, backgroundColor: VERDE },
   testo: { ...type.captionBold, color: VERDE, letterSpacing: 0.6 },
-  testoCompatto: { fontSize: 10 },
+  testoCompatto: { fontSize: 13, lineHeight: 17 },
   rigaChiusa: { backgroundColor: 'rgba(229,52,62,0.14)' },
   nucleoChiuso: { backgroundColor: ROSSO },
   testoChiuso: { color: ROSSO },

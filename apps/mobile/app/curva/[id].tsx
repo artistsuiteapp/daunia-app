@@ -225,13 +225,14 @@ export default function DiscussionPage() {
               {mia && !inModifica ? (
                 <View style={styles.comandi}>
                   <Pressable
-                    hitSlop={8}
+                    hitSlop={12}
+                    accessibilityRole="button" accessibilityLabel="Correggi la risposta"
                     onPress={() => { setCorreggo(rep.id); setBozza(rep.body); setErroreMod(null); }}
                   >
-                    <Ionicons name="pencil" size={15} color={colors.textFaint} />
+                    <Ionicons name="pencil" size={20} color={colors.textDim} />
                   </Pressable>
-                  <Pressable hitSlop={8} onPress={() => elimina(rep.id)}>
-                    <Ionicons name="trash-outline" size={15} color={colors.textFaint} />
+                  <Pressable hitSlop={12} onPress={() => elimina(rep.id)} accessibilityRole="button" accessibilityLabel="Cancella la risposta">
+                    <Ionicons name="trash-outline" size={20} color={colors.textDim} />
                   </Pressable>
                 </View>
               ) : !mia && !rep.sample ? (
@@ -287,6 +288,7 @@ export default function DiscussionPage() {
           <Pressable
             onPress={send}
             disabled={!draft.trim()}
+            accessibilityRole="button" accessibilityLabel="Invia la risposta"
             style={({ pressed }) => [styles.send, !draft.trim() && styles.sendOff, pressed && { opacity: 0.8 }]}
           >
             <Ionicons name="arrow-up" size={18} color={draft.trim() ? colors.onAccent : colors.textFaint} />
@@ -324,7 +326,7 @@ const styles = StyleSheet.create({
     position: 'absolute', right: space.lg, bottom: 92,
     flexDirection: 'row', alignItems: 'center', gap: 6,
     backgroundColor: colors.accent, borderRadius: radius.pill,
-    paddingHorizontal: 14, paddingVertical: 9,
+    paddingHorizontal: 14, paddingVertical: 9, minHeight: 44, justifyContent: 'center'
   },
   giuTesto: { ...type.footnoteBold, color: colors.onAccent },
   head: { flexDirection: 'row', alignItems: 'center', gap: space.sm, marginTop: space.md },
@@ -335,7 +337,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.accentSoft, borderRadius: radius.sm,
     paddingHorizontal: 8, paddingVertical: 4,
   },
-  topicText: { ...type.captionBold, fontSize: 11, color: colors.accentBright },
+  topicText: { ...type.captionBold, color: colors.accentBright },
 
   body: { marginTop: space.lg, gap: space.md },
   title: { ...type.title1, color: colors.text },
@@ -345,7 +347,7 @@ const styles = StyleSheet.create({
   action: {
     flexDirection: 'row', alignItems: 'center', gap: 6,
     backgroundColor: colors.surface, borderRadius: radius.pill,
-    paddingHorizontal: space.lg, paddingVertical: 9,
+    paddingHorizontal: space.lg, paddingVertical: 9, minHeight: 44, justifyContent: 'center'
   },
   actionOn: { backgroundColor: colors.accent },
   actionText: { ...type.subheadBold, color: colors.textDim },
@@ -361,12 +363,12 @@ const styles = StyleSheet.create({
   replyHead: { flexDirection: 'row', alignItems: 'center', gap: 4, flexWrap: 'wrap' },
   replyAuthor: { ...type.footnoteBold, color: colors.text },
   replyDate: { ...type.caption, color: colors.textFaint },
-  comandi: { flexDirection: 'row', gap: space.md, paddingTop: 2 },
+  comandi: { flexDirection: 'row', gap: space.lg, paddingTop: 2 },
   azioniMod: { flexDirection: 'row', gap: space.lg, justifyContent: 'flex-end' },
   azioneTesto: { ...type.footnoteBold, color: colors.textDim },
   azioneForte: { color: colors.accentBright },
   erroreMod: { ...type.caption, color: colors.accentBright },
-  replyBody: { ...type.subhead, color: colors.textDim, lineHeight: 20 },
+  replyBody: { ...type.subhead, color: colors.textDim, lineHeight: 23 },
 
   composer: { flexDirection: 'row', alignItems: 'flex-end', gap: space.sm, marginTop: space.sm },
   input: {

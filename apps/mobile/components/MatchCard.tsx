@@ -125,8 +125,14 @@ export function MatchListRow({ match }: { match: Match }) {
     <ListRow onPress={() => router.push(`/match/${match.id}` as never)} chevron height={62}>
       <View style={[styles.outcomeDot, { backgroundColor: dot }]} />
       <View style={styles.rowDate}>
-        <Text style={styles.rowDateText}>{shortDate(match.kickoff)}</Text>
-        <Text style={styles.rowTimeText}>{played ? 'finita' : time(match.kickoff)}</Text>
+        {match.kickoff ? (
+          <>
+            <Text style={styles.rowDateText}>{shortDate(match.kickoff)}</Text>
+            <Text style={styles.rowTimeText}>{played ? 'finita' : time(match.kickoff)}</Text>
+          </>
+        ) : (
+          <Text style={styles.rowDateText}>Da definire</Text>
+        )}
       </View>
       <View style={styles.rowTeams}>
         <TeamLine team={match.home} score={match.score?.home} played={played} winner={isWinner(match, 'home')} />
@@ -147,7 +153,7 @@ function TeamLine({ team, score, played, winner }: {
   const dim = played && !winner;
   return (
     <View style={styles.teamLine}>
-      <Crest uri={team.crest} name={team.shortName} size={20} />
+      <Crest uri={team.crest} name={team.shortName} size={24} />
       <Text numberOfLines={1} style={[styles.teamName, team.id === 'foggia' && styles.teamNameOwn, dim && styles.dim]}>
         {team.shortName}
       </Text>
@@ -191,11 +197,12 @@ const styles = StyleSheet.create({
   miniMid: { ...type.numberSm, color: colors.text },
   miniWhen: { ...type.caption, color: colors.textFaint },
 
-  outcomeDot: { width: 6, height: 6, borderRadius: 3 },
-  rowDate: { width: 76 },
+  outcomeDot: { width: 8, height: 8, borderRadius: 4 },
+  // larga quanto "dom 20 set" col testo grande: a 76 punti la data andava a capo
+  rowDate: { width: 100 },
   rowDateText: { ...type.footnoteBold, color: colors.text },
-  rowTimeText: { ...type.caption, color: colors.textFaint },
-  rowTeams: { flex: 1, gap: 5 },
+  rowTimeText: { ...type.footnote, color: colors.textDim },
+  rowTeams: { flex: 1, gap: 6 },
   teamLine: { flexDirection: 'row', alignItems: 'center', gap: space.sm },
   teamName: { ...type.subhead, color: colors.text, flex: 1 },
   teamNameOwn: { ...type.subheadBold, color: colors.text },
