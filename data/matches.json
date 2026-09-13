@@ -458,19 +458,31 @@
   {
     "id": "wp-2026-2027-004",
     "kickoff": "2026-09-12T16:00:00.000Z",
-    "status": "scheduled",
+    "status": "finished",
     "matchday": 4,
     "competition": "Serie C",
     "season": "2026-2027",
-    "score": null,
+    "score": {
+      "home": 1,
+      "away": 0
+    },
     "venue": "Stadio San Nicola",
     "city": "Bari",
     "attendance": null,
     "referee": null,
-    "goals": [],
+    "goals": [
+      {
+        "minute": 36,
+        "extra": null,
+        "scorer": "A. Capone",
+        "side": "home",
+        "ownGoal": false,
+        "penalty": false
+      }
+    ],
     "foggiaHome": false,
-    "foggiaResult": null,
-    "reportUrl": null,
+    "foggiaResult": "L",
+    "reportUrl": "https://www.transfermarkt.it/spielbericht/index/spielbericht/4979197",
     "source": "wikipedia",
     "campoSpostato": {
       "eraPrevisto": "Stadio Vito Simone Veneziani",
@@ -480,6 +492,106 @@
         "https://foggiacalciomania.com/"
       ]
     },
+    "cards": [
+      {
+        "minute": 5,
+        "player": "G. Todisco",
+        "side": "away",
+        "rosso": false
+      },
+      {
+        "minute": 29,
+        "player": "F. Tosi",
+        "side": "home",
+        "rosso": false
+      },
+      {
+        "minute": 58,
+        "player": "J. Greco",
+        "side": "home",
+        "rosso": false
+      },
+      {
+        "minute": 61,
+        "player": "E. Olivieri",
+        "side": "home",
+        "rosso": false
+      },
+      {
+        "minute": 79,
+        "player": "F. Zuccon",
+        "side": "away",
+        "rosso": false
+      },
+      {
+        "minute": 90,
+        "player": "F. Berra",
+        "side": "away",
+        "rosso": false
+      },
+      {
+        "minute": 90,
+        "player": "G. Auteri",
+        "side": "away",
+        "rosso": false
+      }
+    ],
+    "subs": [
+      {
+        "minute": 55,
+        "esce": "G. Bernardotto",
+        "entra": "M. Fall",
+        "side": "home"
+      },
+      {
+        "minute": 55,
+        "esce": "F. Tosi",
+        "entra": "E. Olivieri",
+        "side": "home"
+      },
+      {
+        "minute": 58,
+        "esce": "M. Coulibaly",
+        "entra": "F. Zuccon",
+        "side": "away"
+      },
+      {
+        "minute": 58,
+        "esce": "M. Bigonzoni",
+        "entra": "G. Panico",
+        "side": "away"
+      },
+      {
+        "minute": 58,
+        "esce": "M. Rinaldo",
+        "entra": "A. Smeraldi",
+        "side": "away"
+      },
+      {
+        "minute": 64,
+        "esce": "J. Greco",
+        "entra": "R. Calcagni",
+        "side": "home"
+      },
+      {
+        "minute": 64,
+        "esce": "L. Garritano",
+        "entra": "F. Gioielli",
+        "side": "home"
+      },
+      {
+        "minute": 71,
+        "esce": "A. Gallo",
+        "entra": "Y. Merdji",
+        "side": "away"
+      },
+      {
+        "minute": 83,
+        "esce": "A. Capone",
+        "entra": "E. Scipioni",
+        "side": "home"
+      }
+    ],
     "home": {
       "id": "monopoli",
       "name": "SS MONOPOLI 1966",
@@ -509,7 +621,7 @@
     "goals": [],
     "foggiaHome": true,
     "foggiaResult": null,
-    "reportUrl": null,
+    "reportUrl": "https://www.transfermarkt.it/spielbericht/index/spielbericht/4979204",
     "source": "wikipedia",
     "home": {
       "id": "foggia",
@@ -540,7 +652,7 @@
     "goals": [],
     "foggiaHome": false,
     "foggiaResult": null,
-    "reportUrl": null,
+    "reportUrl": "https://www.transfermarkt.it/spielbericht/index/spielbericht/4979219",
     "source": "wikipedia",
     "home": {
       "id": "inter-u23",

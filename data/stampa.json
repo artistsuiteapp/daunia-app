@@ -27,6 +27,17 @@
   ],
   "articoli": [
     {
+      "id": "calciofoggia-0dac970f64",
+      "testata": "calciofoggia",
+      "titolo": "il punto sulla 4° giornata",
+      "sommario": "Incredibile ma vero in vetta valla classifica veleggia a punteggio pieno il Sorrento che nel big match della quarta giornata batte l’altra capolista il Picerno che si ferma a 9…",
+      "url": "https://www.calciofoggia.it/il-punto-sulla-4-giornata-2/",
+      "data": "2026-09-13T07:51:29.000Z",
+      "autore": "Mario Schena",
+      "categoria": "SERIE C",
+      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/ddee7a87-3d44-4313-b1e8-6cc34ae311cc.jpeg"
+    },
+    {
       "id": "calciofoggia-c66a0ef9f4",
       "testata": "calciofoggia",
       "titolo": "Gallo: “Ci è mancato qualcosa negli ultimi sedici metri. La squadra non manca mai la prestazione, è solo un momento”",
@@ -225,17 +236,6 @@
       "immagine": "https://www.calciofoggia.it/wp-content/uploads/2023/12/Zaccheria1-1068x600-1.jpg"
     },
     {
-      "id": "calciofoggia-179e68d6a6",
-      "testata": "calciofoggia",
-      "titolo": "La 4° di andata",
-      "sommario": "Quarta giornata di andata divisa tra venerdì e sabato. Quattro le gare del venerdì e tutte alle 21.00. Spicca Salernitana-Potenza che dovrà chiarire l’effettiva valenza sia dei…",
-      "url": "https://www.calciofoggia.it/la-4-di-andata/",
-      "data": "2026-09-10T10:25:00.000Z",
-      "autore": "Mario Schena",
-      "categoria": "SERIE C",
-      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/picerno-calcio.jpg"
-    },
-    {
       "id": "foggiacalciomania-1f09b136c6",
       "testata": "foggiacalciomania",
       "titolo": "Nonostante il digiuno quello di Monopoli è ancora un campo amico",
@@ -335,5 +335,5 @@
       "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0088-scaled.jpg"
     }
   ],
-  "aggiornatoIl": "2026-09-13T07:40:36.586Z"
+  "aggiornatoIl": "2026-09-13T08:01:14.178Z"
 }

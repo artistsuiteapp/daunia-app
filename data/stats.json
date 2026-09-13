@@ -268,13 +268,13 @@
     }
   ],
   "derived": {
-    "played": 4,
+    "played": 5,
     "cleanSheets": 1,
-    "failedToScore": 1,
+    "failedToScore": 2,
     "goalsFor": 3,
-    "goalsAgainst": 5,
-    "avgGoalsFor": 0.75,
-    "avgGoalsAgainst": 1.25,
+    "goalsAgainst": 6,
+    "avgGoalsFor": 0.6,
+    "avgGoalsAgainst": 1.2,
     "biggestWin": "Crotone 0-1 Foggia",
     "worstLoss": "Foggia 0-2 Audace Cerignola",
     "bestPosition": 6,
@@ -293,7 +293,7 @@
       {
         "label": "31-45'",
         "scored": 0,
-        "conceded": 0
+        "conceded": 1
       },
       {
         "label": "46-60'",
