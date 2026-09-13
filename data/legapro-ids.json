@@ -14,14 +14,14 @@
       "ospiti": "AC Carpi"
     },
     {
-      "id": "59t5mcvw9w6r5m1xr1uxcjlzo",
-      "casa": "ACD Ospitaletto",
-      "ospiti": "AC Lumezzane"
-    },
-    {
       "id": "592wbfymwyj18dplz07wwyplg",
       "casa": "Juventus Next Gen",
       "ospiti": "Novara FC"
+    },
+    {
+      "id": "59t5mcvw9w6r5m1xr1uxcjlzo",
+      "casa": "ACD Ospitaletto",
+      "ospiti": "AC Lumezzane"
     },
     {
       "id": "57zj3tma4ws73ilxvu9wuvdw4",
@@ -29,14 +29,14 @@
       "ospiti": "US Pergolettese Crema"
     },
     {
-      "id": "59fx90ax6jrvjoec8ayzr3uvo",
-      "casa": "Calcio Lecco 1912",
-      "ospiti": "FC Arzignano Valchiampo"
-    },
-    {
       "id": "58pp4u76dr4520btfabxl1qms",
       "casa": "AS Giana Erminio",
       "ospiti": "US Albinoleffe"
+    },
+    {
+      "id": "59fx90ax6jrvjoec8ayzr3uvo",
+      "casa": "Calcio Lecco 1912",
+      "ospiti": "FC Arzignano Valchiampo"
     },
     {
       "id": "5a6q31viixtm961kwhcplvod0",
@@ -54,14 +54,14 @@
       "ospiti": "Dolomiti Bellunesi"
     },
     {
-      "id": "5cel7wyrh9yualzebu2hyyxw4",
-      "casa": "Dolomiti Bellunesi",
-      "ospiti": "Alcione Milano"
-    },
-    {
       "id": "5btec5531sai7eqa3n6zq893o",
       "casa": "AC Carpi",
       "ospiti": "Juventus Next Gen"
+    },
+    {
+      "id": "5cel7wyrh9yualzebu2hyyxw4",
+      "casa": "Dolomiti Bellunesi",
+      "ospiti": "Alcione Milano"
     },
     {
       "id": "5biot0dxrl9ctuft696bz9yj8",
@@ -69,24 +69,19 @@
       "ospiti": "Pro Vercelli 1892"
     },
     {
-      "id": "5cpck2dqns5pgostcpgxkhzis",
-      "casa": "AC Lumezzane",
-      "ospiti": "AS Giana Erminio"
-    },
-    {
       "id": "5daq4qtfc0alh2ztrzkfz30us",
       "casa": "US Pergolettese Crema",
       "ospiti": "Union Brescia"
     },
     {
+      "id": "5cpck2dqns5pgostcpgxkhzis",
+      "casa": "AC Lumezzane",
+      "ospiti": "AS Giana Erminio"
+    },
+    {
       "id": "5d01anrfvtmwlhsltwd8iq0b8",
       "casa": "Novara FC",
       "ospiti": "US Folgore Caratese"
-    },
-    {
-      "id": "5b7scwu7xfnnvkgvlzhs89tlg",
-      "casa": "US Albinoleffe",
-      "ospiti": "ACD Ospitaletto"
     },
     {
       "id": "5dlsoakurdexe07gs528uem8k",
@@ -104,6 +99,11 @@
       "ospiti": "AC Trento"
     },
     {
+      "id": "5b7scwu7xfnnvkgvlzhs89tlg",
+      "casa": "US Albinoleffe",
+      "ospiti": "ACD Ospitaletto"
+    },
+    {
       "id": "5e71fgevrngi8633xvbynjsic",
       "casa": "US Albinoleffe",
       "ospiti": "AC Carpi"
@@ -119,11 +119,6 @@
       "ospiti": "US Pergolettese Crema"
     },
     {
-      "id": "5esf9qal61vyw8xys8pp8h34k",
-      "casa": "AS Cittadella",
-      "ospiti": "AC Lumezzane"
-    },
-    {
       "id": "5gv9mnuexa8vukvjwsbhjtudw",
       "casa": "Union Brescia",
       "ospiti": "Desenzano FC"
@@ -134,14 +129,9 @@
       "ospiti": "FC Arzignano Valchiampo"
     },
     {
-      "id": "5gknvqyis8hgp3488ew4sxus4",
-      "casa": "AC Trento",
-      "ospiti": "Calcio Lecco 1912"
-    },
-    {
-      "id": "5fz3nmeffq8e1ivrhhkixxp1w",
-      "casa": "Pro Vercelli 1892",
-      "ospiti": "US Folgore Caratese"
+      "id": "5esf9qal61vyw8xys8pp8h34k",
+      "casa": "AS Cittadella",
+      "ospiti": "AC Lumezzane"
     },
     {
       "id": "5ehtb3ln9izo3js42im8ujj84",
@@ -154,14 +144,14 @@
       "ospiti": "Novara FC"
     },
     {
-      "id": "5hgq42axuv6unuq095fqsiplg",
-      "casa": "AC Carpi",
-      "ospiti": "AS Cittadella"
+      "id": "5fz3nmeffq8e1ivrhhkixxp1w",
+      "casa": "Pro Vercelli 1892",
+      "ospiti": "US Folgore Caratese"
     },
     {
-      "id": "5hrdyp7345640mp2r9ovsj1g4",
-      "casa": "Dolomiti Bellunesi",
-      "ospiti": "US Albinoleffe"
+      "id": "5gknvqyis8hgp3488ew4sxus4",
+      "casa": "AC Trento",
+      "ospiti": "Calcio Lecco 1912"
     },
     {
       "id": "5jtzl0gm299x8qm7t3aidf0no",
@@ -169,14 +159,19 @@
       "ospiti": "Pro Vercelli 1892"
     },
     {
+      "id": "5hrdyp7345640mp2r9ovsj1g4",
+      "casa": "Dolomiti Bellunesi",
+      "ospiti": "US Albinoleffe"
+    },
+    {
       "id": "5icrhmwgxs0lwy23j0o432k9g",
       "casa": "Calcio Lecco 1912",
       "ospiti": "AS Giana Erminio"
     },
     {
-      "id": "5i1zouk3b753fcrhiwq8idmok",
-      "casa": "US Folgore Caratese",
-      "ospiti": "Alcione Milano"
+      "id": "5hgq42axuv6unuq095fqsiplg",
+      "casa": "AC Carpi",
+      "ospiti": "AS Cittadella"
     },
     {
       "id": "5j8o5z5x5oqj2hoeq53apmrkk",
@@ -184,19 +179,24 @@
       "ospiti": "Juventus Next Gen"
     },
     {
+      "id": "5i1zouk3b753fcrhiwq8idmok",
+      "casa": "US Folgore Caratese",
+      "ospiti": "Alcione Milano"
+    },
+    {
       "id": "5ine3tb7f4q1b7mm7r4q3sf10",
       "casa": "AC Lumezzane",
       "ospiti": "AC Renate"
     },
     {
-      "id": "5jjcsye13edcld4cbwbjakjkk",
-      "casa": "AC Trento",
-      "ospiti": "Union Brescia"
-    },
-    {
       "id": "5iy3mb8gch8cbs41ss6vywiz8",
       "casa": "Novara FC",
       "ospiti": "US Pergolettese Crema"
+    },
+    {
+      "id": "5jjcsye13edcld4cbwbjakjkk",
+      "casa": "AC Trento",
+      "ospiti": "Union Brescia"
     },
     {
       "id": "5h62cgfxqrcsp0tcksewie5n8",
@@ -219,24 +219,24 @@
       "ospiti": "Vis Pesaro 1898"
     },
     {
-      "id": "br9a14f26pfmwul6xlrnlxkb8",
-      "casa": "Campobasso FC",
-      "ospiti": "US Pianese"
-    },
-    {
       "id": "bsm7lc5lngj40mdk3nb22ccus",
       "casa": "Latina Calcio",
       "ospiti": "ASD Pineto Calcio"
     },
     {
-      "id": "brren6cj5ue0mlt0vetxie1p0",
-      "casa": "Grosseto",
-      "ospiti": "Spezia Calcio"
+      "id": "br9a14f26pfmwul6xlrnlxkb8",
+      "casa": "Campobasso FC",
+      "ospiti": "US Pianese"
     },
     {
       "id": "burpupd22tllwp2p132mtq2vo",
       "casa": "US Sambenedettese",
       "ospiti": "Forli FC"
+    },
+    {
+      "id": "brren6cj5ue0mlt0vetxie1p0",
+      "casa": "Grosseto",
+      "ospiti": "Spezia Calcio"
     },
     {
       "id": "btgz2tbmb0ejb2oejbq7z9p1w",
@@ -274,6 +274,11 @@
       "ospiti": "US Sambenedettese"
     },
     {
+      "id": "bxyqliisctxcemos9e26a48ic",
+      "casa": "Spezia Calcio",
+      "ospiti": "Campobasso FC"
+    },
+    {
       "id": "bvw3skhouua0kurdbep2qqsr8",
       "casa": "Forli FC",
       "ospiti": "Delfino Pescara"
@@ -282,11 +287,6 @@
       "id": "bx9v7ug0ax8vdo2eu3tp4gems",
       "casa": "ASD Pineto Calcio",
       "ospiti": "US Livorno 1915"
-    },
-    {
-      "id": "bxyqliisctxcemos9e26a48ic",
-      "casa": "Spezia Calcio",
-      "ospiti": "Campobasso FC"
     },
     {
       "id": "bvjk984848lldb40pgup7rd3o",
@@ -334,11 +334,6 @@
       "ospiti": "Spezia Calcio"
     },
     {
-      "id": "c1ev6qkz4rz5sij75zaconcb8",
-      "casa": "AC Reggiana",
-      "ospiti": "Vado FC 1913"
-    },
-    {
       "id": "c127boztzkw4ouk0ix3i48u1g",
       "casa": "Delfino Pescara",
       "ospiti": "Ravenna FC 1913"
@@ -349,14 +344,14 @@
       "ospiti": "Atalanta BC"
     },
     {
+      "id": "c1ev6qkz4rz5sij75zaconcb8",
+      "casa": "AC Reggiana",
+      "ospiti": "Vado FC 1913"
+    },
+    {
       "id": "c0pubun153ptjh54af621c9w4",
       "casa": "Perugia Calcio Spa",
       "ospiti": "ASD Pineto Calcio"
-    },
-    {
-      "id": "c5jqzc3lwn9a69dladplx6oes",
-      "casa": "Vado FC 1913",
-      "ospiti": "Campobasso FC"
     },
     {
       "id": "c2fzu8iqtkvw7p0bvf1utg5qs",
@@ -364,9 +359,14 @@
       "ospiti": "Delfino Pescara"
     },
     {
-      "id": "c3h4h8qyslqsown74jf1rpxqs",
-      "casa": "Guidonia Montecelio 1937 FC",
-      "ospiti": "AC Reggiana"
+      "id": "c5jqzc3lwn9a69dladplx6oes",
+      "casa": "Vado FC 1913",
+      "ospiti": "Campobasso FC"
+    },
+    {
+      "id": "c45z1fbaikdwoxj2604lfx79w",
+      "casa": "ASD Pineto Calcio",
+      "ospiti": "US Sambenedettese"
     },
     {
       "id": "c4uxyaxr4lqpi9i6gw3x2pjpw",
@@ -374,9 +374,9 @@
       "ospiti": "US Livorno 1915"
     },
     {
-      "id": "c45z1fbaikdwoxj2604lfx79w",
-      "casa": "ASD Pineto Calcio",
-      "ospiti": "US Sambenedettese"
+      "id": "c3h4h8qyslqsown74jf1rpxqs",
+      "casa": "Guidonia Montecelio 1937 FC",
+      "ospiti": "AC Reggiana"
     },
     {
       "id": "c34t0syxjdmi4hh22xe4ivz84",
