@@ -10,6 +10,7 @@ import { BackBar } from '../components/BackBar';
 import { Avatar } from '../components/Avatar';
 import { RitagliaAvatar } from '../components/RitagliaAvatar';
 import { MioProfiloGioco } from '../components/MioProfiloGioco';
+import { StatoDati } from '../components/StatoDati';
 import { puoModerare, useRuolo } from '../lib/moderazione';
 import { colors, radius, space, type } from '../theme/tokens';
 import { stadium } from '../lib/data';
@@ -301,6 +302,7 @@ export default function ProfiloSchermata() {
           </ListRow>
         </ListGroup>
       </View>
+      <View style={[gutter, { marginTop: space.lg }]}><StatoDati /></View>
     </Screen>
   );
 }
