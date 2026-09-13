@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-13T02:40:38.307Z",
+  "generatedAt": "2026-09-13T03:00:45.897Z",
   "season": "2026-2027",
   "competition": "Serie C",
   "sources": {
@@ -20,7 +20,6 @@
     "Il negozio non ha restituito prodotti: la sezione shop resta vuota.",
     "Campo spostato 2026-09-12 Monopoli-Foggia: da \"Stadio Vito Simone Veneziani\" a \"Stadio San Nicola\".",
     "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
-    "API-Football rosa: Your account is suspended, check on https://dashboard.api-football.com.",
-    "Divieti, FoggiaToday: HTTP 403 su https://www.foggiatoday.it/rss"
+    "API-Football rosa: Your account is suspended, check on https://dashboard.api-football.com."
   ]
 }
