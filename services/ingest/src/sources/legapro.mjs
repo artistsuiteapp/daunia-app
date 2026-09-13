@@ -150,6 +150,8 @@ export async function fetchFormazioni(partite, cache = {}) {
   };
 
   let ids = cache.partite ?? null;
+  /** La lista si ricarica al massimo una volta per giro, non una per partita. */
+  let ricaricata = false;
   const fuori = {};
 
   for (const m of daFare) {
@@ -162,7 +164,38 @@ export async function fetchFormazioni(partite, cache = {}) {
         warnings.push(...c.warnings);
         ids = c.partite;
       }
-      const trovata = ids.find((x) => combacia(x.casa, nome(m, 'casa')) && combacia(x.ospiti, nome(m, 'ospiti')));
+      const cerca = () => ids.find(
+        (x) => combacia(x.casa, nome(m, 'casa')) && combacia(x.ospiti, nome(m, 'ospiti')),
+      );
+      let trovata = cerca();
+
+      /*
+       * Se non c'e', la lista si ricarica una volta e si riprova.
+       *
+       * IL GUASTO CHE HA CAUSATO
+       *
+       * La lista degli id cresce durante la stagione: la Lega apre la partita a
+       * ridosso del fischio. Prima si prendeva dalla cache e `fetchIdPartite()`
+       * girava solo quando la cache era vuota -- cioe' mai piu', dopo la prima
+       * volta. Il file era fermo al 7 settembre con 84 partite mentre la Lega ne
+       * elencava 105, e ogni gara aperta da allora era invisibile all'ingest.
+       *
+       * In app si vedeva cosi': la formazione dell'ultima giocata era quella di
+       * due giornate prima. Ed era destinato a peggiorare a ogni giornata, in
+       * silenzio, perche' nessun avviso copre questo caso.
+       *
+       * Una richiesta in piu' solo quando serve davvero, non a ogni giro.
+       */
+      if (!trovata && !ricaricata) {
+        ricaricata = true;
+        const c = await fetchIdPartite();
+        warnings.push(...c.warnings);
+        if (c.partite?.length) {
+          ids = c.partite;
+          trovata = cerca();
+        }
+      }
+
       if (!trovata) {
         /*
          * Nel calendario il bottone dei dettagli compare solo quando la Lega
@@ -177,6 +210,16 @@ export async function fetchFormazioni(partite, cache = {}) {
         const mancano = Date.parse(m.kickoff) - Date.now();
         if (mancano > 0 && mancano < 20 * MINUTI) {
           warnings.push(`Lega Pro: ${nome(m, 'casa')}-${nome(m, 'ospiti')} fra venti minuti e nel calendario non ha ancora un id: le formazioni non arriveranno`);
+        } else if (mancano < -3 * ORE) {
+          /*
+           * Partita finita da un pezzo e ancora senza id.
+           *
+           * Prima questo caso non avvisava nessuno: la finestra copriva solo i
+           * venti minuti prima del fischio, quindi un fallimento dopo la partita
+           * era muto. E' il motivo per cui la lista congelata e' rimasta rotta
+           * per giorni senza che niente lo dicesse.
+           */
+          warnings.push(`Lega Pro: ${nome(m, 'casa')}-${nome(m, 'ospiti')} e' finita da ore e non ha un id nel calendario della Lega: la formazione non entrera' mai nell'archivio`);
         }
         continue;
       }

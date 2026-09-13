@@ -1,4 +1,5 @@
-import { Linking, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import { apriFuori } from '../lib/apri';
 import type { TicketOffer } from '@satanelli/core';
 
 import {
@@ -51,7 +52,7 @@ export default function Tickets() {
         <Button
           label={`Apri ${brand.ticketProvider.name}`}
           icon="open-outline"
-          onPress={() => Linking.openURL(brand.ticketProvider.url)}
+          onPress={() => apriFuori(brand.ticketProvider.url)}
         />
       </View>
 
@@ -73,7 +74,7 @@ export default function Tickets() {
 
 function SectorRow({ offer }: { offer: TicketOffer }) {
   return (
-    <ListRow onPress={() => Linking.openURL(offer.ticketUrl)} chevron height={58}>
+    <ListRow onPress={() => apriFuori(offer.ticketUrl)} chevron height={58}>
       <View style={{ flex: 1, gap: 4 }}>
         <Text style={styles.nome}>{offer.sectorName}</Text>
         <Text style={styles.meta}>

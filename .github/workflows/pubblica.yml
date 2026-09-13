@@ -10,14 +10,16 @@ name: Pubblica il sito
 #
 # Qui non si scarica niente e non si costruisce niente: Vercel costruisce lato
 # suo. Un giro dura meno di un minuto.
+# 13 settembre 2026: il sito non e piu il prodotto.
+#
+# L app si installa sul telefono e prende i dati da GitHub, quindi daunia.vercel.app
+# non sta nella strada di niente. Pubblicare a ogni push serviva quando il sito
+# ERA l applicazione; adesso brucia il tetto di cento pubblicazioni al giorno e
+# manda una email di guasto per ogni giro che lo trova esaurito.
+#
+# Resta la chiamata a mano: il giorno che il sito serve di nuovo -- una demo da
+# mostrare, la raccolta fondi -- si lancia da GitHub e si pubblica.
 on:
-  push:
-    branches: [main]
-    # I dati li pubblica gia "Aggiorna dati" nel suo stesso giro: rifarlo qui
-    # significherebbe due pubblicazioni per ogni commit del bot.
-    paths-ignore:
-      - 'data/**'
-      - '**/*.md'
   workflow_dispatch:
 
 concurrency:

@@ -1,4 +1,10 @@
 /**
+ * Aprire una pagina fuori dall'app.
+ *
+ * Tutto passa da qui e da `apriFuori`: `Linking.openURL` sparso per le
+ * schermate era il modo per dimenticarsi il controllo su un indirizzo che
+ * arriva dal bundle scaricato o da Supabase.
+ *
  * Aprire un articolo di una testata.
  *
  * Non e una WebView nostra: `openBrowserAsync` usa SFSafariViewController su
@@ -16,8 +22,17 @@ import * as WebBrowser from 'expo-web-browser';
 import { Linking } from 'react-native';
 
 import { colors } from '../theme/tokens';
+import { apribile } from './apri-core.ts';
 
 export async function apriArticolo(url: string): Promise<void> {
+  /*
+   * Il controllo sta prima di tutto, ripiego compreso.
+   *
+   * `openBrowserAsync` rifiuta da solo gli schemi non web, ma il catch qui
+   * sotto cadeva su `Linking.openURL`, che invece li consegna a chi li ha
+   * registrati: il ramo d'emergenza era piu permissivo di quello normale.
+   */
+  if (!apribile(url)) return;
   try {
     await WebBrowser.openBrowserAsync(url, {
       presentationStyle: WebBrowser.WebBrowserPresentationStyle.FULL_SCREEN,
@@ -30,4 +45,17 @@ export async function apriArticolo(url: string): Promise<void> {
     // se il browser interno non parte, meglio uscire che non aprire niente
     await Linking.openURL(url).catch(() => {});
   }
+}
+
+/**
+ * Apre una pagina fuori dall’app: biglietti, referto, fonte di una notizia.
+ *
+ * Come apriArticolo ma senza il browser interno, per i casi in cui uscire e'
+ * quello che serve. Un indirizzo che non e' una pagina web non viene aperto e
+ * non da errore: non c’e niente di utile da dire a chi tocca il tasto, e un
+ * avviso lo spingerebbe solo a riprovare.
+ */
+export async function apriFuori(url: unknown): Promise<void> {
+  if (!apribile(url)) return;
+  await Linking.openURL(url).catch(() => {});
 }

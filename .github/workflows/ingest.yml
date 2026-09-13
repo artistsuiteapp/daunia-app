@@ -132,9 +132,25 @@ jobs:
         # Il freno: al massimo una pubblicazione ogni quarantacinque minuti per i
         # dati. Le modifiche al codice e le chiamate a mano passano sempre --
         # quelle le fa una persona che sta guardando, e sono poche.
-        if: |
-          github.event_name == 'push' || github.event_name == 'workflow_dispatch'
-          || (steps.commit.outputs.cambiato == 'si' && fromJSON(steps.freno.outputs.minuti) >= 45)
+        #
+        # SOLO A MANO, DA QUI IN POI.
+        #
+        # I dati non fanno piu pubblicare il sito. Da quando l'app e il sito
+        # scaricano data/bundle.json direttamente dal repository a ogni apertura
+        # (apps/mobile/lib/bundle-remoto.ts), ricostruire il sito per un dato
+        # cambiato non serve a niente: il commit e gia il file che leggono.
+        #
+        # Costava, e parecchio. La notte fra il 12 e il 13 settembre ogni giro
+        # ha provato a pubblicare, Vercel ha risposto "api-deployments-free-per-day:
+        # more than 100" e il giro e finito rosso: venticinque email di guasto in
+        # una notte, per un sito che non aveva bisogno di essere ripubblicato.
+        # Il tetto e di cento pubblicazioni al giorno e ogni giro ne bruciava una.
+        #
+        # I push di codice li pubblica gia pubblica.yml. Qui resta solo la
+        # chiamata a mano, cioe quando una persona vuole il sito ricostruito
+        # subito -- e allora un fallimento deve essere rumoroso, perche c'e
+        # qualcuno che sta guardando.
+        if: github.event_name == 'workflow_dispatch'
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           # `.vercel/` e gitignorato, quindi qui il CLI non sa a quale progetto

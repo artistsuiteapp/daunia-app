@@ -9,6 +9,10 @@ const buono = (quando: string) => ({
   matches: [{ id: 'm1' }],
   standings: [{ pos: 1 }],
   squad: [{ id: 'p1' }],
+  // applicaBundle legge anche questi: se mancano lancia a sostituzione iniziata
+  news: [],
+  stadium: { name: 'Zaccheria' },
+  stats: { trend: [], competitions: [] },
 });
 
 test('un bundle completo e valido', () => {
@@ -57,4 +61,24 @@ test('un bundle non valido non sostituisce niente, anche se dice di essere nuovo
   // il caso pericoloso: risposta fresca ma vuota. Deve perdere contro dati vecchi e buoni.
   const finto = { meta: { generatedAt: '2030-01-01T00:00:00Z' }, matches: [], teams: [], standings: [], squad: [] };
   assert.equal(daSostituire(Date.parse('2026-01-01T00:00:00Z'), finto), false);
+});
+
+test('un bundle datato nel futuro si rifiuta: bloccherebbe per sempre ogni aggiornamento', () => {
+  // si accetta solo cio che e piu fresco, quindi un orologio impazzito in avanti
+  // verrebbe salvato nel telefono e nessun bundle vero sarebbe mai piu abbastanza nuovo
+  const fraDueGiorni = new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString();
+  assert.equal(valido(buono(fraDueGiorni)), false);
+});
+
+test('un piccolo scarto di orologio si tollera', () => {
+  const fraUnOra = new Date(Date.now() + 60 * 60 * 1000).toISOString();
+  assert.equal(valido(buono(fraUnOra)), true);
+});
+
+test('senza news, stadio o statistiche il bundle non passa', () => {
+  for (const campo of ['news', 'stadium', 'stats']) {
+    const rotto = buono('2026-09-12T00:00:00Z') as Record<string, unknown>;
+    delete rotto[campo];
+    assert.equal(valido(rotto), false, `manca ${campo}`);
+  }
 });

@@ -155,26 +155,56 @@ export let FOGGIA = teams.find((t) => t.isFoggia) ?? null;
  * qualcosa e cambiato.
  */
 export function applicaBundle(nuovo: DataBundle): void {
-  base = nuovo;
-  meta = base.meta;
-  teams = base.teams as Team[];
-  matches = base.matches as Match[];
-  standings = base.standings as StandingRow[];
-  squad = (base.squad as Player[]).filter((p) => !DEPARTED.includes(p.shortName));
-  staff = base.staff as StaffMember[];
-  clubReleases = (base.news as NewsItem[])
-    .filter((n) => n.kind === "club")
-    .sort((a, b) => String(b.date).localeCompare(String(a.date)));
-  stampa = (base as unknown as { stampa?: Rassegna }).stampa ?? { testate: [], articoli: [] };
-  stadium = base.stadium as Stadium;
-  tickets = base.tickets as TicketOffer[];
-  stats = base.stats as TeamStats;
-  lineups = (base as unknown as { lineups?: MatchLineup[] }).lineups ?? [];
-  prossima = (base as unknown as { prossima?: Prossima | null }).prossima ?? null;
-  formazioniUfficiali = (
-    base as unknown as { formazioniUfficiali?: Record<string, { casa: ColonnaLega; ospiti: ColonnaLega }> }
+  /*
+   * Prima si calcola tutto, poi si scrive.
+   *
+   * Scrivendo mano a mano, un campo mancante spaccava la sostituzione a meta':
+   * `base.news.filter()` lancia, e a quel punto meta, teams, matches, standings
+   * e squad erano gia’ quelli nuovi mentre il resto era rimasto vecchio. Peggio
+   * ancora, `versioneDati` non arrivava a incrementarsi, quindi non si
+   * ridisegnava niente: schermate con dati di due giri diversi e nessun segnale.
+   *
+   * Con i valori calcolati prima, un'eccezione lascia tutto com'era e il giro
+   * dopo riprova. Meglio dati vecchi e coerenti che nuovi e mescolati.
+   */
+  const b = nuovo;
+  const nMeta = b.meta;
+  const nTeams = b.teams as Team[];
+  const nMatches = b.matches as Match[];
+  const nStandings = b.standings as StandingRow[];
+  const nSquad = (b.squad as Player[]).filter((p) => !DEPARTED.includes(p.shortName));
+  const nStaff = (b.staff ?? []) as StaffMember[];
+  const nClub = ((b.news ?? []) as NewsItem[])
+    .filter((x) => x.kind === "club")
+    .sort((x, y) => String(y.date).localeCompare(String(x.date)));
+  const nStampa = (b as unknown as { stampa?: Rassegna }).stampa ?? { testate: [], articoli: [] };
+  const nStadium = b.stadium as Stadium;
+  const nTickets = (b.tickets ?? []) as TicketOffer[];
+  const nStats = b.stats as TeamStats;
+  const nLineups = (b as unknown as { lineups?: MatchLineup[] }).lineups ?? [];
+  const nProssima = (b as unknown as { prossima?: Prossima | null }).prossima ?? null;
+  const nFormazioni = (
+    b as unknown as { formazioniUfficiali?: Record<string, { casa: ColonnaLega; ospiti: ColonnaLega }> }
   ).formazioniUfficiali ?? {};
-  FOGGIA = teams.find((t) => t.isFoggia) ?? null;
+  const nFoggia = nTeams.find((t) => t.isFoggia) ?? null;
+
+  // da qui in poi non puo piu fallire niente
+  base = b;
+  meta = nMeta;
+  teams = nTeams;
+  matches = nMatches;
+  standings = nStandings;
+  squad = nSquad;
+  staff = nStaff;
+  clubReleases = nClub;
+  stampa = nStampa;
+  stadium = nStadium;
+  tickets = nTickets;
+  stats = nStats;
+  lineups = nLineups;
+  prossima = nProssima;
+  formazioniUfficiali = nFormazioni;
+  FOGGIA = nFoggia;
   versioneDati += 1;
 }
 

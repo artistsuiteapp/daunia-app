@@ -27,6 +27,9 @@ export type BundleMinimo = {
  * Le partite devono essere piu di zero: un bundle con la lista vuota e sintatticamente
  * corretto ma non e mai un bundle buono -- il Foggia un calendario ce l'ha sempre.
  */
+/** Quanto avanti puo stare un orologio prima che il bundle sia da buttare. */
+const GRAZIA_FUTURO = 24 * 60 * 60 * 1000;
+
 export function valido(x: unknown): x is BundleMinimo & { meta: { generatedAt: string } } {
   if (!x || typeof x !== 'object') return false;
   const b = x as BundleMinimo;
@@ -36,6 +39,24 @@ export function valido(x: unknown): x is BundleMinimo & { meta: { generatedAt: s
   if (!Array.isArray(b.teams) || b.teams.length === 0) return false;
   if (!Array.isArray(b.standings)) return false;
   if (!Array.isArray(b.squad)) return false;
+  /*
+   * Anche i campi che applicaBundle legge senza chiedere permesso. Uno che
+   * manca faceva passare la validazione e poi lanciava a sostituzione iniziata.
+   */
+  if (!Array.isArray((b as { news?: unknown }).news)) return false;
+  if (!(b as { stadium?: unknown }).stadium) return false;
+  if (!(b as { stats?: unknown }).stats) return false;
+
+  /*
+   * Una data nel futuro e' un bundle che non si potra' piu' sostituire.
+   *
+   * Si accetta solo cio' che e' piu' fresco, quindi un `generatedAt` sbagliato in
+   * avanti -- un orologio impazzito sul server dell'ingest -- verrebbe salvato nel
+   * telefono, riapplicato a ogni avvio, e da li in poi nessun bundle vero
+   * sarebbe mai piu' abbastanza nuovo. L'app resterebbe congelata per sempre,
+   * senza dare segno di niente.
+   */
+  if (Date.parse(quando) > Date.now() + GRAZIA_FUTURO) return false;
   return true;
 }
 

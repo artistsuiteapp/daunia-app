@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Linking, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { apriFuori } from '../../lib/apri';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import type { StadiumSector } from '@satanelli/core';
@@ -256,7 +257,7 @@ function SectorCard({ sector, matchId, onDeclare, mine }: {
       ) : (
         <Pressable
           style={({ pressed }) => [styles.cta, pressed && { opacity: 0.85 }]}
-          onPress={() => sector.ticketUrl && Linking.openURL(sector.ticketUrl)}
+          onPress={() => sector.ticketUrl && apriFuori(sector.ticketUrl)}
         >
           <Ionicons name="ticket-outline" size={16} color={colors.onAccent} />
           <Text style={styles.ctaText}>BIGLIETTI PER QUESTO SETTORE</Text>

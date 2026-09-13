@@ -44,6 +44,9 @@ const CASSETTO = 'daunia.bundle.v1';
 /** Oltre questo, si rinuncia: allo stadio la rete o va o non va, e non si aspetta. */
 const PAZIENZA = 12_000;
 
+/** Il bundle sta sotto il mezzo mega: oltre i cinque non e piu lui. */
+const TETTO = 5 * 1024 * 1024;
+
 let inCorso: Promise<boolean> | null = null;
 const ascoltatori = new Set<() => void>();
 
@@ -94,10 +97,33 @@ export async function scarica(): Promise<boolean> {
     try {
       const r = await fetch(`${SORGENTE}?t=${Date.now()}`, { signal: taglia.signal });
       if (!r.ok) return false;
+
+      /*
+       * Si guarda cosa e arrivato prima di leggerlo tutto.
+       *
+       * Il portale di una rete wifi risponde 200 con una pagina HTML, e senza
+       * questo controllo la si scaricherebbe intera per poi buttarla. Il tetto
+       * sulla dimensione serve al caso peggiore: il corpo viene tenuto in
+       * memoria una volta per leggerlo e una seconda per salvarlo nel telefono.
+       */
+      const tipo = r.headers.get("content-type") ?? "";
+      if (!tipo.includes("json")) return false;
+      const quanto = Number(r.headers.get("content-length") ?? 0);
+      if (quanto > TETTO) return false;
+
       const arrivato = (await r.json()) as unknown;
       if (!valido(arrivato)) return false;
-      await AsyncStorage.setItem(CASSETTO, JSON.stringify(arrivato)).catch(() => {});
-      return forse(arrivato);
+
+      /*
+       * Si applica prima e si salva dopo.
+       *
+       * Salvando per primo, un bundle che poi non si applica resterebbe nel
+       * telefono e verrebbe riprovato a ogni avvio: il guasto durerebbe piu
+       * della causa che lo ha prodotto.
+       */
+      const messo = forse(arrivato);
+      if (messo) await AsyncStorage.setItem(CASSETTO, JSON.stringify(arrivato)).catch(() => {});
+      return messo;
     } catch {
       /* senza rete si resta su quello che si ha: e il caso normale allo stadio */
       return false;

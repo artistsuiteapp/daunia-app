@@ -220,6 +220,19 @@ export function immagineDa(html) {
 export function articolo(testata, voce, immagine = null) {
   const data = quando(voce.data);
   if (!data) return null;
+  /*
+   * L'indirizzo deve essere una pagina web.
+   *
+   * Lo scrive il feed di qualcun altro e finisce dritto nel bundle che l'app
+   * scarica a ogni apertura. Da li' lo apre `Linking.openURL`, che consegna
+   * l'indirizzo a chi ha registrato quello schema -- `tel:`, `intent://`, lo
+   * schema di un'altra app. immagineDa() qui sopra questo controllo lo faceva
+   * gia' per le immagini; il link dell'articolo era rimasto scoperto.
+   *
+   * L'app ha la sua rete (lib/apri-core.ts), ma un dato sporco e' meglio
+   * fermarlo prima di scriverlo che dopo averlo distribuito.
+   */
+  if (!/^https?:\/\//i.test(String(voce.link ?? ''))) return null;
   if (testata.filtro && !testata.filtro.test(`${voce.titolo} ${voce.sommario}`)) return null;
 
   return {

@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
-import { Linking, StyleSheet, Text, View } from 'react-native';
+import { apriFuori } from '../../lib/apri';
+import { StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -104,7 +105,7 @@ function Scheda({ match, indice }: { match: (typeof matches)[number]; indice: nu
             <Text style={styles.statoTitolo}>{s.titolo}</Text>
             <Text style={styles.statoTesto}>{s.chiPuo}</Text>
             {d.fonte_nome ? (
-              <Premi onPress={() => d.fonte_url && Linking.openURL(d.fonte_url)} scala={1}>
+              <Premi onPress={() => d.fonte_url && apriFuori(d.fonte_url)} scala={1}>
                 <Text style={styles.fonte}>Fonte: {d.fonte_nome} ›</Text>
               </Premi>
             ) : null}

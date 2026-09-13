@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Linking, StyleSheet, Text, TextInput, View } from 'react-native';
+import { apriFuori } from '../../lib/apri';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -116,7 +117,7 @@ export default function Trasferta() {
         <Text style={styles.statoTitolo}>{s.titolo}</Text>
         <Text style={styles.statoTesto}>{s.chiPuo}</Text>
         {d.fonte_nome ? (
-          <Premi onPress={() => d.fonte_url && Linking.openURL(d.fonte_url)} scala={1}>
+          <Premi onPress={() => d.fonte_url && apriFuori(d.fonte_url)} scala={1}>
             <Text style={styles.fonte}>Fonte: {d.fonte_nome} ›</Text>
           </Premi>
         ) : null}
@@ -265,7 +266,7 @@ export default function Trasferta() {
                     {p.nota ? <Text style={styles.personaNota}>{p.nota}</Text> : null}
                   </View>
                   {link ? (
-                    <Premi onPress={() => Linking.openURL(link)}>
+                    <Premi onPress={() => apriFuori(link)}>
                       <View style={styles.scrivi}>
                         <Ionicons name="open-outline" size={13} color={colors.onAccent} />
                         <Text style={styles.scriviTesto}>{etichetta(c!.canale, c!.riferimento)}</Text>

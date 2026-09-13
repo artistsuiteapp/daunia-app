@@ -1,4 +1,5 @@
-import { Linking, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import { apriFuori } from '../lib/apri';
 import { Ionicons } from '@expo/vector-icons';
 import type { Match } from '@satanelli/core';
 
@@ -47,7 +48,7 @@ export function CampoSpostato({ match, chiaro = false }: { match: Match; chiaro?
         {c.perche ? ` ${c.perche}` : ''}
       </Text>
       {c.fonti.length ? (
-        <Premi onPress={() => Linking.openURL(c.fonti[0])} scala={1}>
+        <Premi onPress={() => apriFuori(c.fonti[0])} scala={1}>
           <Text style={styles.fonte}>Da dove viene la notizia ›</Text>
         </Premi>
       ) : null}

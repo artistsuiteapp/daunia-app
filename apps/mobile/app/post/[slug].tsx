@@ -1,4 +1,5 @@
-import { Linking, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import { apriFuori } from '../../lib/apri';
 import { useLocalSearchParams } from 'expo-router';
 import { Image } from 'expo-image';
 
@@ -44,7 +45,7 @@ export default function Post() {
 
       {link ? (
         <View style={[gutter, { marginTop: space.xl, gap: space.sm }]}>
-          <Button label="Leggi l'articolo sul sito ufficiale" onPress={() => Linking.openURL(link)} />
+          <Button label="Leggi l'articolo sul sito ufficiale" onPress={() => apriFuori(link)} />
           <Text style={styles.source}>
             Fonte: {new URL(link).hostname.replace(/^www\./, '')} · {longDate(post.date)}
           </Text>

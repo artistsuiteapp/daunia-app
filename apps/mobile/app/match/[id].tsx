@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
-import { Linking, StyleSheet, Text, View } from 'react-native';
+import { apriFuori } from '../../lib/apri';
+import { StyleSheet, Text, View } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -140,7 +141,7 @@ export default function MatchDetail() {
           comprare per una gara che non esiste piu */}
       {match.ticketUrl && !played ? (
         <View style={[gutter, { marginTop: space.xl }]}>
-          <Button label="Acquista i biglietti" icon="ticket" onPress={() => Linking.openURL(match.ticketUrl!)} />
+          <Button label="Acquista i biglietti" icon="ticket" onPress={() => apriFuori(match.ticketUrl)} />
         </View>
       ) : null}
 
@@ -328,7 +329,7 @@ export default function MatchDetail() {
 
       {match.reportUrl ? (
         <View style={[gutter, { marginTop: space.xl }]}>
-          <Button label="Referto della partita" tone="plain" onPress={() => Linking.openURL(match.reportUrl!)} />
+          <Button label="Referto della partita" tone="plain" onPress={() => apriFuori(match.reportUrl)} />
         </View>
       ) : null}
     </Screen>

@@ -1,5 +1,6 @@
 import { Link, router } from 'expo-router';
-import { Linking, Pressable, StyleSheet, Text, View } from 'react-native';
+import { apriFuori } from '../lib/apri';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import type { Match } from '@satanelli/core';
@@ -59,7 +60,7 @@ export function MatchHeroCard({ match }: { match: Match }) {
         {match.ticketUrl ? (
           <Pressable
             style={({ pressed }) => [styles.ctaFilled, pressed && { opacity: 0.75 }]}
-            onPress={() => Linking.openURL(match.ticketUrl!)}
+            onPress={() => apriFuori(match.ticketUrl)}
           >
             <Ionicons name="ticket" size={16} color="#B10E16" />
             <Text style={styles.ctaFilledText}>Biglietti</Text>
