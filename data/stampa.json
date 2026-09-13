@@ -27,6 +27,17 @@
   ],
   "articoli": [
     {
+      "id": "foggiacalciomania-292572d596",
+      "testata": "foggiacalciomania",
+      "titolo": "Le pagelle di Monopoli-Foggia. Impegno sicuramente più che sufficiente, ma si raccoglie poco",
+      "sommario": "Impegno sicuramente più che sufficiente, ma si raccoglie poco in campo con una manovra che penalizza il rendimento di tutta la squadra. Saro: Nel primo tempo non viene mai…",
+      "url": "https://foggiacalciomania.com/news-foggia-calcio/pagelle/le-pagelle-di-monopoli-foggia-impegno-sicuramente-piu-che-sufficiente-ma-si-raccoglie-poco/",
+      "data": "2026-09-13T15:16:01.000Z",
+      "autore": "Redazione FCM 24 ore",
+      "categoria": "Pagelle",
+      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/08/Foggia-2026-7.jpeg"
+    },
+    {
       "id": "foggiacalciomania-d68ff65c08",
       "testata": "foggiacalciomania",
       "titolo": "Lo Zac su Monopoli-Foggia, sfoglia il giornale gratuitamente.",
@@ -225,17 +236,6 @@
       "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/5c8eb7bc-d074-49b3-948b-95467f75fa52.jpeg"
     },
     {
-      "id": "foggiacalciomania-492790d36e",
-      "testata": "foggiacalciomania",
-      "titolo": "Auteri: “Gruppo forte, possiamo puntare in alto”",
-      "sommario": "Conferenza stampa di mister Auteri in vista della gara del Foggia domani al San Nicola di Bari contro il Monopoli. L’allenatore rossonero si è soffermato sullo stato fisico e…",
-      "url": "https://foggiacalciomania.com/news-foggia-calcio/sala-stampa/auteri-gruppo-forte-possiamo-puntare-in-alto/",
-      "data": "2026-09-11T10:46:08.000Z",
-      "autore": "Roberto Parisi",
-      "categoria": "Sala stampa",
-      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/20260911_123209-scaled.jpg"
-    },
-    {
       "id": "calciofoggia-5b7aa29929",
       "testata": "calciofoggia",
       "titolo": "Foggia, è già tempo del riscatto. I dubbi di Auteri per la sfida al Monopoli",
@@ -335,5 +335,5 @@
       "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0088-scaled.jpg"
     }
   ],
-  "aggiornatoIl": "2026-09-13T14:40:48.660Z"
+  "aggiornatoIl": "2026-09-13T15:20:51.795Z"
 }
