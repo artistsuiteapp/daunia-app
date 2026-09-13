@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-13T08:20:49.288Z",
+    "generatedAt": "2026-09-13T08:40:51.978Z",
     "season": "2026-2027",
     "competition": "Serie C",
     "sources": {
@@ -4856,6 +4856,17 @@
     ],
     "articoli": [
       {
+        "id": "foggiacalciomania-d68ff65c08",
+        "testata": "foggiacalciomania",
+        "titolo": "Lo Zac su Monopoli-Foggia, sfoglia il giornale gratuitamente.",
+        "sommario": "Puoi sfogliare gratuitamente il giornale cliccando QUI Oppure clicca qui sotto per scaricare il Pdf del giornale: LO ZAC 12 SETTEMBRE 2026 L'articolo Lo Zac su Monopoli-Foggia…",
+        "url": "https://foggiacalciomania.com/news-foggia-calcio/ultimissime/lo-zac-su-monopoli-foggia-sfoglia-il-giornale-gratuitamente/",
+        "data": "2026-09-13T08:21:14.000Z",
+        "autore": "Roberto Parisi",
+        "categoria": "News Calcio Foggia 1920",
+        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/page_1-1.png"
+      },
+      {
         "id": "calciofoggia-0dac970f64",
         "testata": "calciofoggia",
         "titolo": "il punto sulla 4° giornata",
@@ -5065,17 +5076,6 @@
         "immagine": "https://www.calciofoggia.it/wp-content/uploads/2023/12/Zaccheria1-1068x600-1.jpg"
       },
       {
-        "id": "foggiacalciomania-1f09b136c6",
-        "testata": "foggiacalciomania",
-        "titolo": "Nonostante il digiuno quello di Monopoli è ancora un campo amico",
-        "sommario": "Ventisettesimo faccia a faccia fra Satanelli e Gabbiano nel terzo livello del calcio italiano. Rossoneri e biancoverdi arriverannoall’appuntamento divisi da un solo punto in…",
-        "url": "https://foggiacalciomania.com/news-foggia-calcio/statistiche/nonostante-il-digiuno-quello-di-monopoli-e-ancora-un-campo-amico/",
-        "data": "2026-09-09T07:24:57.000Z",
-        "autore": "Redazione FCM 24 ore",
-        "categoria": "Statistiche",
-        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/04/Monopoli-Foggia-2026-1.jpeg"
-      },
-      {
         "id": "ilfoggia-9f741afccf",
         "testata": "ilfoggia",
         "titolo": "Cosmano Sport Soccer Trani – Risultato parziale",
@@ -5164,6 +5164,6 @@
         "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0088-scaled.jpg"
       }
     ],
-    "aggiornatoIl": "2026-09-13T08:20:46.684Z"
+    "aggiornatoIl": "2026-09-13T08:40:48.889Z"
   }
 }
