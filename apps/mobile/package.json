@@ -12,7 +12,8 @@
     "typecheck": "tsc --noEmit",
     "export": "expo export --platform web",
     "prebuild:ios": "expo prebuild --platform ios --clean && node scripts/ios-senza-push.mjs",
-    "ios:device": "npm run prebuild:ios && open ios/IlTifodellaDaunia.xcworkspace"
+    "ios:device": "npm run prebuild:ios && open ios/IlTifodellaDaunia.xcworkspace",
+    "telefono": "expo run:ios --device --configuration Release"
   },
   "dependencies": {
     "@expo-google-fonts/barlow-condensed": "^0.4.1",
