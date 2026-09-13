@@ -24,7 +24,9 @@ type Modo = 'accesso' | 'registrazione' | 'recupero';
 export default function Accedi() {
   const gutter = useGutter();
   const { modo: modoIniziale } = useLocalSearchParams<{ modo?: string }>();
-  const [modo, setModo] = useState<Modo>(modoIniziale === 'registrazione' ? 'registrazione' : 'accesso');
+  const [modo, setModo] = useState<Modo>(
+    modoIniziale === 'registrazione' || modoIniziale === 'recupero' ? modoIniziale : 'accesso',
+  );
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -52,7 +54,7 @@ export default function Accedi() {
         }
         router.replace('/profilo' as never);
       } else if (modo === 'recupero') {
-        const r = await recuperaPassword(email, 'https://daunia.vercel.app/accedi');
+        const r = await recuperaPassword(email);
         if (r.errore) return setErrore(r.errore);
         // non si dice mai se l'indirizzo esiste: sarebbe un modo per scoprire
         // chi e iscritto

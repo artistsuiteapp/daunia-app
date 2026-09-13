@@ -46,11 +46,32 @@ export function photo(uri: string | null | undefined): string | null {
  * messa lei. Il motivo per cui `photos` resta spento -- le opere fotografiche
  * di chi le ha scattate -- qui non c'entra.
  */
-const ARCHIVIO_NOSTRO = '/storage/v1/object/public/avatar/';
+/*
+ * Conta chi serve l'immagine, non come finisce l'indirizzo.
+ *
+ * La prima versione guardava solo se l'indirizzo conteneva il percorso
+ * dell'archivio, e `https://server-qualsiasi/storage/v1/object/public/avatar/x`
+ * passava: chiunque poteva mettere in classifica e in chat un'immagine servita
+ * da un server suo, compreso un pixel che annota chi la guarda. Il database ora
+ * rifiuta quegli indirizzi, ma quelli gia salvati li rifiuta anche l'app.
+ *
+ * Con un'espressione e non con `new URL()`: su React Native `URL` e parziale e
+ * alcune proprieta lanciano un'eccezione invece di rispondere.
+ */
+const ARCHIVIO_NOSTRO = /^https:\/\/([a-z0-9-]+)\.supabase\.co\/storage\/v1\/object\/public\/avatar\/[A-Za-z0-9._\-/]+$/;
+
+/** Il progetto Supabase dell'app, se si sa: `abcd` da `https://abcd.supabase.co`. */
+function progettoNostro(): string | null {
+  const base = process.env.EXPO_PUBLIC_SUPABASE_URL ?? '';
+  return /^https:\/\/([a-z0-9-]+)\.supabase\.co/.exec(base.trim())?.[1] ?? null;
+}
 
 /** Vero se l'immagine sta sul nostro archivio, non su un server altrui. */
-export function nostra(uri: string | null | undefined): boolean {
-  return typeof uri === 'string' && uri.includes(ARCHIVIO_NOSTRO);
+export function nostra(uri: string | null | undefined, progetto: string | null = progettoNostro()): boolean {
+  if (typeof uri !== 'string') return false;
+  const trovato = ARCHIVIO_NOSTRO.exec(uri.trim());
+  if (!trovato) return false;
+  return progetto === null || trovato[1] === progetto;
 }
 
 /**

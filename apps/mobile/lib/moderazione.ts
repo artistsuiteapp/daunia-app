@@ -220,13 +220,6 @@ export async function nascondi(
 }
 
 /**
- * Sospende un account per N giorni. Solo admin.
- *
- * Non cancella niente di quello che ha gia scritto: gli toglie la parola fino
- * alla data. Apple chiede di poter cacciare chi abusa, non solo di nascondere
- * il singolo messaggio.
- */
-/**
  * Cancella per davvero. Solo admin: lo decide il database.
  *
  * Nascondere si disfa, cancellare no, ed e per questo che sta dietro una
@@ -240,19 +233,6 @@ export async function elimina(
   if (!supabase) return false;
   const tabella = tipo === 'messaggio' ? 'messaggi_live' : tipo === 'risposta' ? 'risposte' : 'discussioni';
   const { error } = await supabase.from(tabella).delete().eq('id', id);
-  return !error;
-}
-
-export async function sospendi(chi: string, giorni: number): Promise<boolean> {
-  if (!supabase) return false;
-  const fino = new Date(Date.now() + giorni * 24 * 60 * 60 * 1000).toISOString();
-  const { error } = await supabase.from('profiles').update({ sospeso_fino: fino }).eq('id', chi);
-  return !error;
-}
-
-export async function revocaSospensione(chi: string): Promise<boolean> {
-  if (!supabase) return false;
-  const { error } = await supabase.from('profiles').update({ sospeso_fino: null }).eq('id', chi);
   return !error;
 }
 

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Stack } from 'expo-router';
+import { Stack, router } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -14,6 +14,7 @@ import { colors } from '../theme/tokens';
 import { durata } from '../theme/motion';
 import { AppShell } from '../components/AppShell';
 import { useDatiFreschi } from '../lib/bundle-remoto';
+import { quandoRecupero } from '../lib/auth';
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
@@ -27,6 +28,9 @@ export default function RootLayout() {
    * i navigatori memorizzano le scene apposta.
    */
   useDatiFreschi();
+
+  // chi entra da un collegamento di recupero finisce dove si sceglie la password
+  useEffect(() => quandoRecupero(() => router.replace('/nuova-password' as never)), []);
 
   // Montserrat regge tutta l'interfaccia: i pesi bassi per il corpo, i corsivi
   // pesanti per numeri e titoli, come nella scritta del logo

@@ -190,7 +190,9 @@ export async function spegni(): Promise<Stato> {
 
   const endpoint = iscrizione.endpoint;
   await iscrizione.unsubscribe();
-  if (supabase) await supabase.from('push_iscrizioni').delete().eq('endpoint', endpoint);
+  // dalla funzione e non dalla tabella: un'iscrizione senza account non si
+  // cancella piu direttamente, altrimenti chiunque le cancellava tutte
+  if (supabase) await supabase.rpc('disiscrivi_notifiche', { p_endpoint: endpoint });
   dimentica();
   return { modo: 'spente' };
 }

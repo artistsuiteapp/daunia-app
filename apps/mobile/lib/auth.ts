@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
+import { Platform } from 'react-native';
+import * as Linking from 'expo-linking';
 import type { Session, User } from '@supabase/supabase-js';
 
 import { supabase, backendAttivo, messaggioErrore } from './supabase';
 import { registra } from './misure';
+import { erroreRecupero, parametriRecupero } from './recupero-core';
 
 /**
  * Accesso, registrazione e profilo.
@@ -32,9 +35,26 @@ function aggiorna(s: Session | null) {
   ascoltatori.forEach((l) => l());
 }
 
+const perRecupero = new Set<() => void>();
+
 if (supabase) {
   supabase.auth.getSession().then(({ data }) => aggiorna(data.session));
-  supabase.auth.onAuthStateChange((_evento, s) => aggiorna(s));
+  supabase.auth.onAuthStateChange((evento, s) => {
+    aggiorna(s);
+    if (evento === 'PASSWORD_RECOVERY') perRecupero.forEach((f) => f());
+  });
+}
+
+/**
+ * Avvisa quando si entra da un collegamento di recupero.
+ *
+ * Sul web supabase-js legge il collegamento da solo e apre la sessione, ma poi
+ * non succede niente: si resta sulla pagina dove si e arrivati, gia dentro,
+ * senza che nessuno chieda la password nuova.
+ */
+export function quandoRecupero(f: () => void): () => void {
+  perRecupero.add(f);
+  return () => { perRecupero.delete(f); };
 }
 
 export function useSessione(): Stato {
@@ -113,11 +133,49 @@ export async function esci() {
  * Non si dice mai se l'indirizzo esiste: risponderebbe a chi vuole scoprire chi
  * e iscritto. Il messaggio e sempre lo stesso.
  */
-export async function recuperaPassword(email: string, ritorno: string) {
+export async function recuperaPassword(email: string) {
   if (!supabase) return { errore: 'Le iscrizioni non sono ancora aperte.' };
   if (!EMAIL.test(email.trim())) return { errore: "L'indirizzo email non sembra valido." };
-  await supabase.auth.resetPasswordForEmail(email.trim(), { redirectTo: ritorno });
+  await supabase.auth.resetPasswordForEmail(email.trim(), { redirectTo: ritornoRecupero() });
   return { errore: null };
+}
+
+/**
+ * Dove riporta l'email di recupero.
+ *
+ * Prima era scritto a mano l'indirizzo del sito, e la pagina d'arrivo era
+ * quella di accesso: nessuna schermata chiedeva la password nuova, e chi aveva
+ * installato l'app finiva su un sito che non si pubblica piu. Dal telefono si
+ * torna nell'app, dal browser alla stessa origine.
+ */
+function ritornoRecupero(): string {
+  if (Platform.OS === 'web' && typeof window !== 'undefined') {
+    return `${window.location.origin}/nuova-password`;
+  }
+  return Linking.createURL('/nuova-password');
+}
+
+/**
+ * Apre la sessione dal collegamento dell'email, sul telefono.
+ *
+ * Sul web lo fa gia supabase-js; qui serve perche il client del telefono non
+ * legge gli indirizzi da solo (`detectSessionInUrl` e spento apposta).
+ */
+export async function entraDaCollegamento(url: string | null): Promise<{ errore: string | null; entrato: boolean }> {
+  if (!supabase) return { errore: 'Le iscrizioni non sono ancora aperte.', entrato: false };
+  const p = parametriRecupero(url);
+  const problema = erroreRecupero(p);
+  if (problema) return { errore: problema, entrato: false };
+
+  if (p.codice) {
+    const { error } = await supabase.auth.exchangeCodeForSession(p.codice);
+    return { errore: error ? erroreRecupero({ ...p, errore: error.message }) : null, entrato: !error };
+  }
+  if (p.accesso && p.rinnovo) {
+    const { error } = await supabase.auth.setSession({ access_token: p.accesso, refresh_token: p.rinnovo });
+    return { errore: error ? erroreRecupero({ ...p, errore: error.message }) : null, entrato: !error };
+  }
+  return { errore: null, entrato: false };
 }
 
 export async function cambiaPassword(nuova: string) {
