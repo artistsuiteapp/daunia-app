@@ -376,5 +376,131 @@
         }
       ]
     }
+  },
+  "wp-2026-2027-004": {
+    "casa": {
+      "squadra": "MONOPOLI",
+      "modulo": "3-5-2",
+      "allenatore": "Colombo Alberto",
+      "giocatori": [
+        {
+          "numero": 22,
+          "nome": "Tommasi Michele",
+          "ruolo": "Portiere"
+        },
+        {
+          "numero": 5,
+          "nome": "Angileri Antony",
+          "ruolo": "Difensore"
+        },
+        {
+          "numero": 6,
+          "nome": "Piccinini Stefano",
+          "ruolo": "Difensore"
+        },
+        {
+          "numero": 13,
+          "nome": "Colombara Matteo",
+          "ruolo": "Difensore"
+        },
+        {
+          "numero": 16,
+          "nome": "Valenti Bruno",
+          "ruolo": "Centrocampista"
+        },
+        {
+          "numero": 14,
+          "nome": "Tosi Filippo",
+          "ruolo": "Centrocampista"
+        },
+        {
+          "numero": 15,
+          "nome": "Pascal Greco Jean Freddi",
+          "ruolo": "Centrocampista"
+        },
+        {
+          "numero": 61,
+          "nome": "Garritano Luca",
+          "ruolo": "Centrocampista"
+        },
+        {
+          "numero": 8,
+          "nome": "Battocchio Cristian Damián",
+          "ruolo": "Centrocampista"
+        },
+        {
+          "numero": 7,
+          "nome": "Capone Andrea",
+          "ruolo": "Attaccante"
+        },
+        {
+          "numero": 9,
+          "nome": "Bernardotto Gabriele",
+          "ruolo": "Attaccante"
+        }
+      ]
+    },
+    "ospiti": {
+      "squadra": "FOGGIA",
+      "modulo": "4-3-3",
+      "allenatore": "Auteri Gaetano",
+      "giocatori": [
+        {
+          "numero": 22,
+          "nome": "Saro Gianluca",
+          "ruolo": "Portiere"
+        },
+        {
+          "numero": 19,
+          "nome": "Maestrelli Rinaldo",
+          "ruolo": "Difensore"
+        },
+        {
+          "numero": 2,
+          "nome": "Todisco Gianmarco",
+          "ruolo": "Difensore"
+        },
+        {
+          "numero": 21,
+          "nome": "Berra Filippo",
+          "ruolo": "Difensore"
+        },
+        {
+          "numero": 3,
+          "nome": "Seck Mohamed",
+          "ruolo": "Difensore"
+        },
+        {
+          "numero": 4,
+          "nome": "Gallo Andrea",
+          "ruolo": "Centrocampista"
+        },
+        {
+          "numero": 8,
+          "nome": "Coulibaly Mamadou",
+          "ruolo": "Centrocampista"
+        },
+        {
+          "numero": 16,
+          "nome": "Haoudi Hamza",
+          "ruolo": "Centrocampista"
+        },
+        {
+          "numero": 11,
+          "nome": "Petito Francesco Pio",
+          "ruolo": "Attaccante"
+        },
+        {
+          "numero": 27,
+          "nome": "Bigonzoni Del Giovane Michele",
+          "ruolo": "Attaccante"
+        },
+        {
+          "numero": 28,
+          "nome": "Touré Isyakha",
+          "ruolo": "Attaccante"
+        }
+      ]
+    }
   }
 }

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-13T05:00:39.342Z",
+  "generatedAt": "2026-09-13T05:19:06.204Z",
   "season": "2026-2027",
   "competition": "Serie C",
   "sources": {
@@ -19,6 +19,7 @@
     "Solo 2 giocatori su 23 hanno la foto: la rosa sul sito del club e ferma alla stagione precedente.",
     "Campo spostato 2026-09-12 Monopoli-Foggia: da \"Stadio Vito Simone Veneziani\" a \"Stadio San Nicola\".",
     "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
-    "API-Football rosa: Your account is suspended, check on https://dashboard.api-football.com."
+    "API-Football rosa: Your account is suspended, check on https://dashboard.api-football.com.",
+    "Lega Pro: Foggia-Altamura e' finita da ore e non ha un id nel calendario della Lega: la formazione non entrera' mai nell'archivio"
   ]
 }
