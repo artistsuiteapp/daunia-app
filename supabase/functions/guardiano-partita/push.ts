@@ -107,6 +107,20 @@ async function cifra(testo: string, p256dh: string, auth: string): Promise<Uint8
 export type Iscrizione = { endpoint: string; p256dh: string; auth: string };
 
 /**
+ * Solo i servizi di notifica veri.
+ *
+ * L'indirizzo di consegna lo sceglie il browser, ma arriva al database da un
+ * telefono qualsiasi: senza questo controllo il guardiano, che gira con la
+ * chiave di servizio, si faceva mandare a bussare a indirizzi scelti da altri.
+ * La stessa regola sta nel database; qui e la seconda serratura.
+ */
+const SERVIZI_PUSH = /^https:\/\/(fcm\.googleapis\.com|android\.googleapis\.com|updates\.push\.services\.mozilla\.com|[a-z0-9-]+(\.[a-z0-9-]+)*\.push\.apple\.com|[a-z0-9-]+(\.[a-z0-9-]+)*\.notify\.windows\.com)\/\S+$/;
+
+export function endpointAmmesso(endpoint: unknown): boolean {
+  return typeof endpoint === 'string' && endpoint.length <= 1024 && SERVIZI_PUSH.test(endpoint);
+}
+
+/**
  * Manda una notifica. Torna lo stato HTTP, che al chiamante serve per capire
  * se l'iscrizione e morta: 404 e 410 vogliono dire che quel telefono non c'e
  * piu e la riga va cancellata.
@@ -118,6 +132,8 @@ export async function manda(
   chiavePubblica: string,
   contatto: string,
 ): Promise<number> {
+  // 410 come un telefono sparito: il chiamante toglie la riga
+  if (!endpointAmmesso(iscrizione.endpoint)) return 410;
   const origine = new URL(iscrizione.endpoint).origin;
   const jwt = await firmaVapid(origine, jwk, contatto);
   const corpo = await cifra(JSON.stringify(contenuto), iscrizione.p256dh, iscrizione.auth);

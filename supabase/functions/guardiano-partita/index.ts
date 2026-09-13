@@ -16,6 +16,7 @@ import { createClient } from 'jsr:@supabase/supabase-js@2';
 import { manda, type Iscrizione } from './push.ts';
 import { trovaId, formazioniDi } from './legapro.ts';
 import { trovaPartita, eventiDi, CASA as LSA_CASA, OSPITI as LSA_OSPITI } from './livescore.ts';
+import { ancoraDaGiocare, calendarioDa, daAllineare } from './calendario.ts';
 import {
   contaGol, concorda, titoloGol, golVero, golDalTabellone, minutoStimato, cronologia,
   cartelliniECambi, oraItaliana, proteggi,
@@ -209,24 +210,79 @@ async function daLivescore(eventId: number) {
   } as Record<string, unknown>;
 }
 
-/** La prossima partita del Foggia, chiesta a TheSportsDB e messa da parte. */
+/**
+ * La prossima partita del Foggia, chiesta a TheSportsDB e messa da parte.
+ *
+ * Una partita gia salvata non si riscrive. Prima c'era un upsert con il
+ * punteggio vuoto, e nelle ore dopo il fischio TheSportsDB restituisce ancora
+ * come "prossima" la partita appena giocata: Monopoli-Foggia, chiusa 1-0, e
+ * rimasta senza risultato. E la riga restituita non era quella del database,
+ * quindi il guardiano dimenticava anche cosa aveva gia notificato.
+ */
 async function trovaProssima() {
   const d = await json(`${TSDB}/eventsnext.php?id=${FOGGIA_TSDB}`);
   const e = d?.events?.[0];
   if (!e?.idEvent || !e?.strTimestamp) return null;
 
+  const kickoff = `${e.strTimestamp}Z`;
+  if (!ancoraDaGiocare(kickoff, Date.now(), DOPO)) return null;
+
+  const partita = String(e.idEvent);
+  const { data: esistente } = await db.from('stato_partita').select('*').eq('partita', partita).maybeSingle();
+  if (esistente) {
+    // un rinvio sposta l'orario; il resto di quello che si sa resta com'e
+    if (!esistente.finita_il && Date.parse(esistente.kickoff) !== Date.parse(kickoff)) {
+      await db.from('stato_partita').update({ kickoff }).eq('partita', partita);
+      return { ...esistente, kickoff };
+    }
+    return esistente;
+  }
+
   const riga = {
-    partita: String(e.idEvent),
+    partita,
     event_id: Number(e.idEvent),
     fixture_id: e.idAPIfootball ? Number(e.idAPIfootball) : null,
-    kickoff: `${e.strTimestamp}Z`,
+    kickoff,
     etichetta: e.strEvent ?? null,
     casa: null,
     ospiti: null,
     stato: e.strStatus ?? 'NS',
   };
-  await db.from('stato_partita').upsert(riga, { onConflict: 'partita' });
+  const { error } = await db.from('stato_partita').insert(riga);
+  if (error) return null;
   return riga;
+}
+
+const CALENDARIO = 'https://raw.githubusercontent.com/artistsuiteapp/daunia-app/main/data/matches.json';
+const PAUSA_CALENDARIO = 30 * MINUTO;
+
+/**
+ * Passa il calendario al database, al massimo ogni mezz'ora.
+ *
+ * Sta prima del controllo sulla finestra della partita, quindi gira anche nei
+ * giorni in cui non si gioca: il ponte fra gli id deve esserci prima del
+ * fischio, non dopo. Un giro andato male non ferma il guardiano; si riprova al
+ * minuto dopo.
+ */
+async function allineaCalendario(adesso: number) {
+  try {
+    const { data } = await db.from('calendario').select('aggiornato_il')
+      .order('aggiornato_il', { ascending: false }).limit(1);
+    if (!daAllineare(data?.[0]?.aggiornato_il ?? null, adesso, PAUSA_CALENDARIO)) return;
+
+    const r = await fetch(CALENDARIO, { signal: AbortSignal.timeout(8_000) });
+    if (!r.ok) return;
+    const righe = calendarioDa(await r.json());
+    if (righe.length) await db.rpc('allinea_calendario', { p_partite: righe });
+  } catch {
+    // il calendario puo aspettare il giro dopo; la partita no
+  }
+}
+
+/** Gli id sotto cui un pronostico puo stare: quello del guardiano e quello dell'app. */
+async function idPronostici(partita: string): Promise<string[]> {
+  const { data } = await db.from('calendario').select('partita').eq('event_id', partita).maybeSingle();
+  return data?.partita ? [partita, data.partita as string] : [partita];
 }
 
 /**
@@ -285,7 +341,7 @@ async function chiNonHaPronosticato(partita: string): Promise<string[]> {
     db.from('push_iscrizioni').select('utente')
       .not('utente', 'is', null)
       .eq('preferenze->>pronostico', 'true'),
-    db.from('pronostici').select('utente').eq('partita', partita),
+    db.from('pronostici').select('utente').in('partita', await idPronostici(partita)),
   ]);
 
   const hannoGiocato = new Set(((gia.data ?? []) as Array<{ utente: string }>).map((r) => r.utente));
@@ -295,7 +351,7 @@ async function chiNonHaPronosticato(partita: string): Promise<string[]> {
 
 /** Chi aveva pronosticato questa partita. */
 async function chiHaPronosticato(partita: string): Promise<string[]> {
-  const { data } = await db.from('pronostici').select('utente').eq('partita', partita);
+  const { data } = await db.from('pronostici').select('utente').in('partita', await idPronostici(partita));
   return [...new Set(((data ?? []) as Array<{ utente: string }>).map((r) => r.utente))];
 }
 
@@ -349,6 +405,7 @@ Deno.serve(async (req) => {
   }
 
   const adesso = Date.now();
+  await allineaCalendario(adesso);
 
   // la partita di riferimento: quella salvata, se ancora attuale
   const { data: righe } = await db

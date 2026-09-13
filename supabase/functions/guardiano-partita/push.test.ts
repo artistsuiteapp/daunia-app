@@ -101,7 +101,7 @@ async function pacchettoDi(contenuto: unknown, telefono: Awaited<ReturnType<type
 
   try {
     await manda(
-      { endpoint: 'https://esempio.push/abc', p256dh: telefono.p256dh, auth: telefono.authB64 },
+      { endpoint: 'https://fcm.googleapis.com/fcm/send/abc', p256dh: telefono.p256dh, auth: telefono.authB64 },
       contenuto, jwk, b64url(pubVapid), 'https://daunia.vercel.app',
     );
   } finally {
@@ -164,6 +164,32 @@ test('la firma VAPID e valida e dice a chi e destinata', async () => {
   assert.equal(ok, true, 'la firma deve verificare con la chiave pubblica VAPID');
 
   const corpo = JSON.parse(dec.decode(daB64(payload)));
-  assert.equal(corpo.aud, 'https://esempio.push', 'aud deve essere l origine del servizio push');
+  assert.equal(corpo.aud, 'https://fcm.googleapis.com', 'aud deve essere l origine del servizio push');
   assert.ok(corpo.exp > Math.floor(Date.now() / 1000), 'il token non deve nascere scaduto');
+});
+
+test('le notifiche partono solo verso i servizi push veri', async () => {
+  const { endpointAmmesso, manda } = await import('./push.ts');
+  assert.equal(endpointAmmesso('https://web.push.apple.com/QGxkZmdsa2Rm'), true);
+  assert.equal(endpointAmmesso('https://fcm.googleapis.com/fcm/send/abc:def'), true);
+  assert.equal(endpointAmmesso('https://updates.push.services.mozilla.com/wpush/v2/gAAA'), true);
+  assert.equal(endpointAmmesso('https://db5p.notify.windows.com/w/?token=AwYA'), true);
+
+  assert.equal(endpointAmmesso('http://169.254.169.254/latest/meta-data'), false);
+  assert.equal(endpointAmmesso('https://esempio.org/push'), false);
+  assert.equal(endpointAmmesso('https://web.push.apple.com.esempio.org/x'), false);
+  assert.equal(endpointAmmesso('https://fcm.googleapis.com@esempio.org/x'), false);
+  assert.equal(endpointAmmesso(null), false);
+
+  // e un indirizzo non ammesso non viene nemmeno contattato
+  const vero = globalThis.fetch;
+  let chiamato = false;
+  globalThis.fetch = (async () => { chiamato = true; return new Response(null, { status: 201 }); }) as typeof fetch;
+  try {
+    const stato = await manda({ endpoint: 'https://esempio.org/push', p256dh: 'x', auth: 'y' }, {}, {} as JsonWebKey, 'k', 'mailto:x');
+    assert.equal(stato, 410);
+    assert.equal(chiamato, false);
+  } finally {
+    globalThis.fetch = vero;
+  }
 });
