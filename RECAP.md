@@ -15,7 +15,7 @@ perché, che è la parte che non si ricostruisce leggendo il codice.
 - **Dove gira**: app nativa sull'iPhone, installata con Xcode. Il sito <https://daunia.vercel.app> esiste ancora ma non è più il prodotto: si pubblica solo a mano
 - **Dominio**: `iltifodelladaunia.it`, comprato su IONOS. Vetrina pronta in `sito/index.html`, non ancora pubblicata
 - **Stack**: Expo SDK 57 / React Native 0.86 (iOS, Android e web dallo stesso codice), Supabase, GitHub Actions
-- **Stato**: 395 commit (176 senza gli aggiornamenti automatici dei dati), 46 migrazioni, 38 schermate, **506 test**, guardiano alla versione 39
+- **Stato**: 395 commit (176 senza gli aggiornamenti automatici dei dati), 46 migrazioni, 38 schermate, **509 test**, guardiano alla versione 39
 
 Il repository è pubblico dall'8 settembre, e non è una svista: sui repo pubblici
 i minuti di GitHub Actions sono gratis e illimitati. Sono attivi secret scanning
@@ -28,7 +28,7 @@ personali.**
 
 ```bash
 cd ~/dev/daunia-app
-npm test                           # 506 test, compresi gli attacchi al database e la partita simulata
+npm test                           # 509 test, compresi gli attacchi al database e la partita simulata
 npx tsc --noEmit -p apps/mobile    # zero errori
 ```
 
@@ -85,6 +85,9 @@ formazioni e rassegna senza ricompilare (`lib/bundle-remoto.ts`).
   un controllo che voleva "json" ha fatto buttare ogni download, senza errori.
   Decide `leggiRisposta()` in `bundle-remoto-core.ts`, sotto test con le
   intestazioni vere e col bundle committato
+- **Ogni `useMemo` che legge i dati del bundle ha `versione` fra le dipendenze**
+  (`const versione = useDati()`). Erano sette senza, fra cui Trasferte con `[]` e
+  `usePartite`, da cui passano Partite, Home e Statistiche. Lo controlla lo stesso test
 
 Se i dati sono fermi da più di un'ora, il profilo **e la schermata Notizie** lo
 dicono, col motivo quando l'ultimo download è stato scartato.
@@ -449,6 +452,15 @@ connessioni contemporanee e 2 milioni di messaggi al mese. Durante la partita il
 guardiano scrive la riga tre volte al minuto, e ogni scrittura è un messaggio per
 ogni telefono collegato: con mille tifosi collegati sono circa 360.000 messaggi a
 partita. Oltre, il piano Pro (25 $/mese).
+
+**Trovati nel giro del 14 sera, da sistemare** (non toccano la partita):
+
+- **Recupero password rotto nell'app.** Nelle Redirect URLs di Supabase (Authentication → URL Configuration) mancano gli indirizzi dell'app: ci sono solo `daunia.vercel.app` e `localhost`. Supabase allora ignora `daunia://nuova-password` e manda al sito vecchio. Va aggiunto `daunia://**`. La conferma dell'iscrizione funziona lo stesso, ma apre il sito invece dell'app
+- **Informativa privacy ancora in bozza con le iscrizioni già aperte** (4 account). Il testo stesso dice che la revisione arriverà "prima dell'apertura delle iscrizioni"
+- **Avvisi dell'ingest che nessuno legge**, in `meta.warnings` del bundle: API-Football sospeso ma chiamato a ogni giro, "campo spostato da Stadio San Nicola a Stadio San Nicola" (il confronto segnala un campo uguale), la formazione di Foggia–Altamura mai archiviata, il divieto per Inter U23 da controllare a mano
+- **`/post/[slug]` non apre più niente** ("Articolo non trovato"): nessuna schermata ci porta, va tolta o ricollegata
+
+Verificati e a posto: tutte le chiamate dell'app al database (nomi, parametri, tabelle), la classifica (identica a live-score-api per le 16 squadre che conoscono), il caricamento di tutte le schermate da ospite senza errori.
 
 **Rischi bassi aperti**: le zone della classifica si distinguono a colpo d'occhio
 solo dal colore.
