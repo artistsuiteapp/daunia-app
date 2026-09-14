@@ -27,6 +27,17 @@
   ],
   "articoli": [
     {
+      "id": "calciofoggia-6ceee0c1c5",
+      "testata": "calciofoggia",
+      "titolo": "Giovanni Castellano di Nichelino dirige Foggia-Savoia",
+      "sommario": "Sarà il Sig. Giovanni Castellano della sezione di Nichelino a dirigere l'incontro Foggia-Savoia, in programma martedì 15 settembre alle ore 21:00, allo Stadio Pino Zaccheria di…",
+      "url": "https://www.calciofoggia.it/giovanni-castellano-di-nichelino-dirige-foggia-savoia/",
+      "data": "2026-09-14T11:42:57.000Z",
+      "autore": "Fabio Bertazzoli",
+      "categoria": "FOGGIA CALCIO",
+      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Castellano.jpg"
+    },
+    {
       "id": "foggiacalciomania-709ade4ef6",
       "testata": "foggiacalciomania",
       "titolo": "Foggia servirà un nuovo Iemmello contro il Savoia",
@@ -236,17 +247,6 @@
       "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/stadio-san-nicola.jpg"
     },
     {
-      "id": "calciofoggia-6097ba0894",
-      "testata": "calciofoggia",
-      "titolo": "L’avversario il Monopoli",
-      "sommario": "Il Monopoli Calcio si è costituito nel 2010 mediante il cambio di denominazione del Liberty Molfetta dopo la mancata iscrizione ai campionati professionistici. Il Monopoli ha…",
-      "url": "https://www.calciofoggia.it/lavversario-il-monopoli-3/",
-      "data": "2026-09-11T14:34:25.000Z",
-      "autore": "Mario Schena",
-      "categoria": "FOGGIA CALCIO",
-      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/08/790591116_2597719804000634_6972100694971202793_n.jpg"
-    },
-    {
       "id": "ilfoggia-9f741afccf",
       "testata": "ilfoggia",
       "titolo": "Cosmano Sport Soccer Trani – Risultato parziale",
@@ -335,5 +335,5 @@
       "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0088-scaled.jpg"
     }
   ],
-  "aggiornatoIl": "2026-09-14T11:40:47.566Z"
+  "aggiornatoIl": "2026-09-14T12:01:01.285Z"
 }
