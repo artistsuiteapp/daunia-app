@@ -128,6 +128,18 @@ test('calcio d inizio in ritardo di un quarto d ora: il dal vivo parte lo stesso
   assert.ok(chiusa && chiusa.casa === 1 && chiusa.ospiti === 1);
 });
 
+test('TheSportsDB torna a 0-0 per sbaglio mentre live-score-api e giu: il gol non si cancella e non suona due volte', async () => {
+  const s = {
+    ritardoTsdb: 150_000, ritardoLsa: 40_000, legaApre: 0.5 * MIN,
+    lsaGuastaDa: 29 * MIN, lsaGuastaFinoA: 33 * MIN, tsdbAZero: { da: 30 * MIN, a: 31 * MIN },
+  };
+  const { foto, suonate } = await gioca(s);
+  const dopoIlGol = foto.filter((f) => f.t > K + 24 * MIN && f.t < K + 90 * MIN);
+  assert.ok(dopoIlGol.every((f) => f.casa === 1), 'il punteggio e tornato a 0-0 per una lettura sbagliata');
+  const gol = suonate.filter((x) => x.tipo === 'gol' && !x.muta);
+  assert.equal(gol.length, 2, `notifiche di gol: ${gol.map((g) => g.titolo).join(' | ')}`);
+});
+
 test('i giri di un minuto non entrano mai nel minuto dopo', async () => {
   const { sovrapposizioni } = await gioca(SCENARI[0][1]);
   assert.equal(sovrapposizioni, 0);

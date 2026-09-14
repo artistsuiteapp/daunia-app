@@ -236,6 +236,6 @@ export function statoDaLsa(status: unknown, time: unknown): string | null {
  * "45" nel recupero ("45+1", "45+2"), mentre "45+" non saprebbe leggerlo.
  */
 export function minutoDaLsa(time: unknown): string | null {
-  const m = /^\s*(\d{1,3})\s*\+?\s*$/.exec(String(time ?? ''));
+  const m = /^\s*(\d{1,3})\s*\+?\s*'?\s*$/.exec(String(time ?? ''));
   return m ? m[1] : null;
 }

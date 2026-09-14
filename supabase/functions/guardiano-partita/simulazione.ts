@@ -90,6 +90,10 @@ export type Scenario = {
   senzaLsa?: boolean;
   /** live-score-api risponde con un errore fino a questo istante, dal fischio */
   lsaGuastaFinoA?: number;
+  /** ...a partire da questo istante (senza, dal principio) */
+  lsaGuastaDa?: number;
+  /** TheSportsDB torna a 0-0 per sbaglio in questo intervallo, dal fischio */
+  tsdbAZero?: { da: number; a: number };
   /** il calcio d'inizio vero arriva dopo quello in calendario */
   ritardoInizio?: number;
 };
@@ -124,7 +128,13 @@ function fonti(s: Scenario, orologio: { t: number }, chiamate: Record<string, nu
     [/thesportsdb\.com\/.*livescore\.php/, () => {
       const x = orologio.t - K - s.ritardoTsdb - (s.ritardoInizio ?? 0);
       const dentro = !s.tsdbSenzaLista && fase(x) !== 'NS' && x < REALTA.fine + 3 * MIN;
-      return { costo: 900, corpo: { livescore: dentro ? [rigaTsdb(x)] : [] } };
+      const riga = rigaTsdb(x);
+      const dopo = orologio.t - K;
+      if (s.tsdbAZero && dopo >= s.tsdbAZero.da && dopo < s.tsdbAZero.a) {
+        riga.intHomeScore = '0';
+        riga.intAwayScore = '0';
+      }
+      return { costo: 900, corpo: { livescore: dentro ? [riga] : [] } };
     }],
     [/thesportsdb\.com\/.*lookupevent\.php/, () => {
       const x = orologio.t - K - RITARDO_SCHEDA - (s.ritardoInizio ?? 0);
@@ -137,7 +147,7 @@ function fonti(s: Scenario, orologio: { t: number }, chiamate: Record<string, nu
     })],
     [/raw\.githubusercontent\.com/, () => ({ costo: 200, corpo: [] })],
     [/livescore-api\.com\/api-client\/matches\/live\.json/, (u) => {
-      if (s.lsaGuastaFinoA !== undefined && orologio.t - K < s.lsaGuastaFinoA) {
+      if (s.lsaGuastaFinoA !== undefined && orologio.t - K < s.lsaGuastaFinoA && orologio.t - K >= (s.lsaGuastaDa ?? -Infinity)) {
         return { costo: 350, corpo: { success: false, error: 'guasto' } };
       }
       const x = orologio.t - K - s.ritardoLsa - (s.ritardoInizio ?? 0);
@@ -145,7 +155,7 @@ function fonti(s: Scenario, orologio: { t: number }, chiamate: Record<string, nu
       return { costo: 350, corpo: { success: true, data: { match: nostra ? [partitaLsa(x)] : [] } } };
     }],
     [/livescore-api\.com\/api-client\/matches\/events\.json/, () => {
-      if (s.lsaGuastaFinoA !== undefined && orologio.t - K < s.lsaGuastaFinoA) {
+      if (s.lsaGuastaFinoA !== undefined && orologio.t - K < s.lsaGuastaFinoA && orologio.t - K >= (s.lsaGuastaDa ?? -Infinity)) {
         return { costo: 350, corpo: { success: false, error: 'guasto' } };
       }
       const x = orologio.t - K - s.ritardoLsa - (s.ritardoInizio ?? 0);
