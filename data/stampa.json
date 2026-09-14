@@ -38,6 +38,17 @@
       "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Screenshot-2026-09-14-alle-18.13.26.png"
     },
     {
+      "id": "foggiacalciomania-36d18340c1",
+      "testata": "foggiacalciomania",
+      "titolo": "Casella e Di Pasquale spiegano il momento Foggia. “Siamo solo all’inizio”",
+      "sommario": "Alla vigilia della prossima gara, il direttore sportivo Alex Casella e il capitano Davide Di Pasquale hanno fatto il punto sul momento del Foggia, dopo le due sconfitte…",
+      "url": "https://foggiacalciomania.com/news-foggia-calcio/casella-e-di-pasquale-spiegano-il-momento-foggia-siamo-solo-allinizio/",
+      "data": "2026-09-14T16:25:59.000Z",
+      "autore": "Roberto Parisi",
+      "categoria": "News Calcio Foggia 1920",
+      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/20260914_174251-scaled.jpg"
+    },
+    {
       "id": "calciofoggia-37e9e2f3d1",
       "testata": "calciofoggia",
       "titolo": "Foggia, presentata la nuova maglia home 2026/27: ritorno alle bande larghe",
@@ -236,17 +247,6 @@
       "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Auteri-43.jpeg"
     },
     {
-      "id": "foggiacalciomania-90baad6cd2",
-      "testata": "foggiacalciomania",
-      "titolo": "Serie C Girone C: risultati e marcatori della 4a giornata",
-      "sommario": "Foggia sconfitto a Monopoli, dal San Nicola di Bari i rossoneri escono sconfitti, vince ancora il Cerignola che in casa strapazza il Giugliano. Il Potenza esce sconfitto da…",
-      "url": "https://foggiacalciomania.com/news-foggia-calcio/serie-c-girone-c-risultati-e-marcatori-della-4a-giornata-2/",
-      "data": "2026-09-12T18:22:12.000Z",
-      "autore": "Redazione FCM 24 ore",
-      "categoria": "News Calcio Foggia 1920",
-      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2025/08/palla334567.jpg"
-    },
-    {
       "id": "ilfoggia-9f741afccf",
       "testata": "ilfoggia",
       "titolo": "Cosmano Sport Soccer Trani – Risultato parziale",
@@ -335,5 +335,5 @@
       "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0088-scaled.jpg"
     }
   ],
-  "aggiornatoIl": "2026-09-14T16:40:57.608Z"
+  "aggiornatoIl": "2026-09-14T17:00:48.348Z"
 }
