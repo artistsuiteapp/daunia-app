@@ -27,6 +27,28 @@
   ],
   "articoli": [
     {
+      "id": "calciofoggia-37e9e2f3d1",
+      "testata": "calciofoggia",
+      "titolo": "Foggia, presentata la nuova maglia home 2026/27: ritorno alle bande larghe",
+      "sommario": "Prima della consueta conferenza stampa pre-gara contro il Savoia, il Calcio Foggia 1920 ha presentato ufficialmente la nuova maglia home per la stagione 2026/27. A indossarla in…",
+      "url": "https://www.calciofoggia.it/foggia-presentata-la-nuova-maglia-home-2026-27-ritorno-alle-bande-larghe/",
+      "data": "2026-09-14T16:04:25.000Z",
+      "autore": "Armando Borrelli",
+      "categoria": "FOGGIA CALCIO",
+      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Nuova-Maglia-Home-Foggia-2026-27.png"
+    },
+    {
+      "id": "foggiacalciomania-163175004a",
+      "testata": "foggiacalciomania",
+      "titolo": "Ecco la nuova maglia del Foggia",
+      "sommario": "Il Foggia ha presentato la nuova prima maglia che sarà indossata da domani sera. L'articolo Ecco la nuova maglia del Foggia proviene da Foggiacalciomania.",
+      "url": "https://foggiacalciomania.com/news-foggia-calcio/ultimissime/ecco-la-nuova-maglia-del-foggia/",
+      "data": "2026-09-14T15:49:11.000Z",
+      "autore": "Roberto Parisi",
+      "categoria": "News Calcio Foggia 1920",
+      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/20260914_174406-scaled.jpg"
+    },
+    {
       "id": "calciofoggia-b0c7570090",
       "testata": "calciofoggia",
       "titolo": "Giudice Sportivo: le decisioni relative alla quarta giornata",
@@ -225,28 +247,6 @@
       "immagine": "https://www.calciofoggia.it/wp-content/uploads/2025/06/Pallone-Lega-Pro-Decathlon.jpg"
     },
     {
-      "id": "foggiacalciomania-953aff412f",
-      "testata": "foggiacalciomania",
-      "titolo": "Top & Flop di Monopoli-Foggia",
-      "sommario": "Tre punti sofferti e pesanti per il Monopoli che grazie ad una rete di Capone e ad un secondo tempo tutto cuore e grinta riesce ad avere la meglio su L'articolo Top & Flop di…",
-      "url": "https://foggiacalciomania.com/news-foggia-calcio/top-flop/top-flop-di-monopoli-foggia-4/",
-      "data": "2026-09-12T18:12:19.000Z",
-      "autore": "Redazione FCM 24 ore",
-      "categoria": "Top & Flop",
-      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Monopoli-Foggia-2.jpg"
-    },
-    {
-      "id": "calciofoggia-5eca8d5c30",
-      "testata": "calciofoggia",
-      "titolo": "Monopoli-Foggia 1-0 (risultato finale)",
-      "sommario": "Secondo tempo 90’+9 – Termina 1-0 tra Monopoli e Foggia: decide il gol di Capone al 36′. 90’+8 – Decisione finale: niente calcio di rigore. 90’+7 – Altra carta FVS giocata dal…",
-      "url": "https://www.calciofoggia.it/monopoli-foggia-campionato-2026-2027/",
-      "data": "2026-09-12T15:00:46.000Z",
-      "autore": "Armando Borrelli",
-      "categoria": "FOGGIA CALCIO",
-      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Monopoli-Foggia.png"
-    },
-    {
       "id": "ilfoggia-9f741afccf",
       "testata": "ilfoggia",
       "titolo": "Cosmano Sport Soccer Trani – Risultato parziale",
@@ -335,5 +335,5 @@
       "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0088-scaled.jpg"
     }
   ],
-  "aggiornatoIl": "2026-09-14T16:00:57.575Z"
+  "aggiornatoIl": "2026-09-14T16:20:59.720Z"
 }
