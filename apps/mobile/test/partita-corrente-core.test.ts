@@ -228,3 +228,22 @@ test('la posizione in classifica non si inventa', () => {
   assert.deepEqual(dopo.trend, stats().trend);
   assert.equal(dopo.derived.bestPosition, 6);
 });
+
+import { inOrdineDiCalendario } from '../lib/partita-corrente-core.ts';
+
+test('una partita senza data sta al posto della sua giornata, non in cima alle prossime', () => {
+  // il caso vero del 14 settembre: Casarano-Foggia della dodicesima era sopra Foggia-Savoia
+  const partite = [
+    { id: 'g12', matchday: 12, kickoff: null },
+    { id: 'g5', matchday: 5, kickoff: '2026-09-15T19:00:00Z' },
+    { id: 'g6', matchday: 6, kickoff: '2026-09-20T13:00:00Z' },
+    { id: 'g11', matchday: 11, kickoff: '2026-11-01T14:00:00Z' },
+    { id: 'g13', matchday: 13, kickoff: '2026-11-15T14:00:00Z' },
+  ];
+  assert.deepEqual(inOrdineDiCalendario(partite).map((p) => p.id), ['g5', 'g6', 'g11', 'g12', 'g13']);
+});
+
+test('senza nessuna data le partite restano in ordine di giornata', () => {
+  const partite = [{ id: 'b', matchday: 8, kickoff: null }, { id: 'a', matchday: 7, kickoff: null }];
+  assert.deepEqual(inOrdineDiCalendario(partite).map((p) => p.id), ['a', 'b']);
+});

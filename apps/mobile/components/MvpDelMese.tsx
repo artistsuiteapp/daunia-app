@@ -13,6 +13,7 @@ import { lineupPerPartita } from '../lib/lineup';
 import { useOspite } from '../lib/ospite';
 import { Pressable } from 'react-native';
 import { colors, radius, space, type } from '../theme/tokens';
+import { useDati } from '../lib/bundle-remoto';
 
 const MESI = [
   'gennaio', 'febbraio', 'marzo', 'aprile', 'maggio', 'giugno',
@@ -36,6 +37,7 @@ export function MvpDelMese() {
   const gutter = useGutter();
   const ospite = useOspite();
   useFanplay();
+  const versione = useDati();
 
   const { mese, chiuso } = statoMese();
 
@@ -57,7 +59,7 @@ export function MvpDelMese() {
       }
     }
     return squad.filter((p) => visti.has(p.id));
-  }, [mese]);
+  }, [mese, versione]);
 
   useEffect(() => { void caricaMvpMese(mese); }, [mese]);
 

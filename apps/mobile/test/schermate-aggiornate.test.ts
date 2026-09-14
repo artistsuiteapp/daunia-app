@@ -57,3 +57,61 @@ test('useDati() sta in cima alla schermata, prima di ogni uscita anticipata', ()
   // un hook dopo un return condizionale rompe le regole di React e fa crashare la schermata
   assert.deepEqual(fuoriPosto, []);
 });
+
+/*
+ * La seconda meta dello stesso difetto: le memorie.
+ *
+ * Una schermata che si ridisegna non basta se i dati li tiene un useMemo che
+ * non sa quando cambiano. Il 14 settembre ce n'erano sette: le Trasferte con
+ * dipendenze vuote (l'elenco del primo disegno per sempre), le formazioni della
+ * scheda partita e del Match Center, i giocatori da votare nelle pagelle, il
+ * migliore del mese e il calendario di usePartite, da cui passano Partite, Home
+ * e Statistiche. Qui si cercano con la stessa regola con cui sono stati trovati:
+ * un useMemo o useCallback che usa un valore dei moduli dei dati deve avere la
+ * versione dei dati fra le dipendenze.
+ */
+const RADICE = fileURLToPath(new URL('..', import.meta.url));
+const MODULI_DATI = /\/(data|stampa|lineup|carriere|archivio)$/;
+
+function sorgenti(cartella: string): string[] {
+  const fuori: string[] = [];
+  for (const nome of readdirSync(cartella)) {
+    if (['node_modules', 'ios', 'android', 'dist'].includes(nome)) continue;
+    const percorso = join(cartella, nome);
+    if (statSync(percorso).isDirectory()) fuori.push(...sorgenti(percorso));
+    else if (/\.tsx?$/.test(nome) && !/-core\.ts$/.test(nome) && nome !== 'data.ts') fuori.push(percorso);
+  }
+  return fuori;
+}
+
+test('ogni memoria che legge i dati del bundle ha la versione dei dati fra le dipendenze', () => {
+  const ferme: string[] = [];
+  for (const f of ['app', 'components', 'lib'].flatMap((c) => sorgenti(join(RADICE, c)))) {
+    const s = readFileSync(f, 'utf8');
+    const importati = new Set<string>();
+    for (const m of s.matchAll(/import\s*\{([^}]+)\}\s*from\s*'([^']+)'/g)) {
+      if (!MODULI_DATI.test(m[2])) continue;
+      for (const n of m[1].split(',')) {
+        const nome = n.trim().replace(/^type\s+/, '').split(/\s+as\s+/).pop();
+        if (nome) importati.add(nome);
+      }
+    }
+    if (!importati.size) continue;
+    for (const m of s.matchAll(/use(Memo|Callback)\(/g)) {
+      let i = m.index! + m[0].length;
+      let profondita = 1;
+      for (; i < s.length && profondita > 0; i += 1) {
+        if (s[i] === '(') profondita += 1;
+        else if (s[i] === ')') profondita -= 1;
+      }
+      const chiamata = s.slice(m.index!, i);
+      const dipendenze = /\[([^[\]]*)\]\s*,?\s*\)$/.exec(chiamata)?.[1] ?? '';
+      const corpo = chiamata.replace(/\[([^[\]]*)\]\s*,?\s*\)$/, '');
+      const usati = [...importati].filter((n) => new RegExp(`\\b${n}\\b`).test(corpo));
+      if (usati.length && !/\bversione\b/.test(dipendenze)) {
+        ferme.push(`${relative(RADICE, f)}: use${m[1]} legge ${usati.join(', ')} con dipendenze [${dipendenze.trim()}]`);
+      }
+    }
+  }
+  assert.deepEqual(ferme, [], 'queste memorie restano ai dati del primo disegno: aggiungere `const versione = useDati()` alle dipendenze');
+});

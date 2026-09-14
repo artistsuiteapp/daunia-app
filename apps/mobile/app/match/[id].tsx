@@ -26,7 +26,7 @@ import { useDati } from '../../lib/bundle-remoto';
 type Tab = 'formazione' | 'gioco' | 'eventi' | 'dati';
 
 export default function MatchDetail() {
-  useDati();
+  const versione = useDati();
   // `tab` permette di aprire la scheda gia sulla sezione giusta: il richiamo
   // delle pagelle in home portava qui ma sulla formazione, e bisognava
   // cercarla a mano proprio nel momento in cui uno vuole solo votare
@@ -89,7 +89,7 @@ export default function MatchDetail() {
   const lineup = useMemo(
     // `vivo` dice che questa e la partita che il guardiano sta seguendo
     () => lineupPerPartita(match?.kickoff ? match.kickoff.slice(0, 10) : undefined, match?.id, Boolean(vivo)),
-    [match?.kickoff, match?.id, vivo],
+    [match?.kickoff, match?.id, vivo, versione],
   );
   useDatiPartita(match?.id ?? null, true);
 

@@ -41,7 +41,7 @@ import { useDati } from '../lib/bundle-remoto';
  * gia il calendario della prossima.
  */
 export default function MatchCenterSchermata() {
-  useDati();
+  const versione = useDati();
   const gutter = useGutter();
   const live = useLive();
 
@@ -59,7 +59,7 @@ export default function MatchCenterSchermata() {
   const vivo = liveDi(match, live);
   const lineup = useMemo(
     () => lineupPerPartita(match?.kickoff ? match.kickoff.slice(0, 10) : undefined, match?.id, Boolean(vivo)),
-    [match?.kickoff, match?.id, vivo],
+    [match?.kickoff, match?.id, vivo, versione],
   );
   useDatiPartita(match?.id ?? null, true);
 

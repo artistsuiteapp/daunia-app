@@ -10,6 +10,7 @@ import { statoMigliore } from '../lib/premi-core';
 import { fineVera } from '../lib/live';
 import { colors, radius, space, type } from '../theme/tokens';
 import type { Match } from '@satanelli/core';
+import { useDati } from '../lib/bundle-remoto';
 
 /**
  * Le pagelle della Curva, in home, il giorno dopo.
@@ -29,11 +30,13 @@ export function PagelleInHome({ match, prossimoKickoff }: {
 }) {
   const gutter = useGutter();
   useDatiPartita(match.id, true);
+  // la formazione arriva col bundle dopo la partita: senza la versione restava quella del primo disegno
+  const versione = useDati();
 
 
   const formazione = useMemo(
     () => lineupPerPartita(match.kickoff ? match.kickoff.slice(0, 10) : undefined, match.id),
-    [match.kickoff, match.id],
+    [match.kickoff, match.id, versione],
   );
 
   const classifica = useMemo(() => {

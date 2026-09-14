@@ -246,3 +246,32 @@ export function conLaPartitaNuova(stats: TeamStats, match: Match): TeamStats {
     },
   };
 }
+
+/**
+ * Le partite da giocare nell'ordine in cui arrivano davvero.
+ *
+ * Una partita senza data (la Lega non l'ha ancora fissata) valeva zero
+ * nell'ordinamento per orario, e finiva in cima alle "prossime": il 14
+ * settembre la prima partita in elenco era Casarano-Foggia, dodicesima
+ * giornata, sopra Foggia-Savoia che si giocava il giorno dopo.
+ *
+ * Senza data si prende il posto della giornata: dopo l'ultima partita datata
+ * di una giornata precedente o uguale, prima di quelle successive.
+ */
+export function inOrdineDiCalendario<T extends { kickoff?: string | null; matchday?: number | null }>(partite: readonly T[]): T[] {
+  const ora = (p: T) => (p.kickoff ? Date.parse(p.kickoff) : NaN);
+  const datate = partite.filter((p) => Number.isFinite(ora(p)));
+  const stima = (p: T): number => {
+    const t = ora(p);
+    if (Number.isFinite(t)) return t;
+    const giornata = p.matchday ?? Infinity;
+    // l'ultima partita datata di una giornata precedente o uguale, piu un soffio
+    const prima = datate.filter((d) => (d.matchday ?? Infinity) <= giornata).map(ora);
+    return prima.length ? Math.max(...prima) + 1 : -Infinity;
+  };
+  return [...partite].sort((a, b) => {
+    const [ka, kb] = [stima(a), stima(b)];
+    if (ka !== kb) return ka < kb ? -1 : 1;
+    return (a.matchday ?? 0) - (b.matchday ?? 0);
+  });
+}
