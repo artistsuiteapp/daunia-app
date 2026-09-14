@@ -27,6 +27,17 @@
   ],
   "articoli": [
     {
+      "id": "foggiacalciomania-272a9f85b2",
+      "testata": "foggiacalciomania",
+      "titolo": "Foggia-Savoia: le ultimissime",
+      "sommario": "Domani sera rossoneri in campo contro il Savoia. Auteri dovrebbe presentare la stessa formazione contro il Monopoli, forse Ravasio potrebbe giocare. Queste le formazioni che…",
+      "url": "https://foggiacalciomania.com/news-foggia-calcio/ultimissime/foggia-savoia-le-ultimissime/",
+      "data": "2026-09-14T18:32:09.000Z",
+      "autore": "Redazione FCM 24 ore",
+      "categoria": "Ultimissime",
+      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/08/789653998_10239616419060783_1138873880567371313_n.jpg"
+    },
+    {
       "id": "calciofoggia-9e7b078ef9",
       "testata": "calciofoggia",
       "titolo": "Casella e Di Pasquale: “Gruppo con ampi margini. Dobbiamo crescere con pazienza e lucidità”",
@@ -236,17 +247,6 @@
       "immagine": "https://www.calciofoggia.it/wp-content/uploads/2024/09/Mister-Colombo-foto-Antonello-Forcelli.jpeg"
     },
     {
-      "id": "foggiacalciomania-d6e6cc40c8",
-      "testata": "foggiacalciomania",
-      "titolo": "Auteri: “Tanto gioco, ma concretizziamo poco”",
-      "sommario": "A fine gara Auteri commenta una partita sicuramente non facile. “Abbiamo creato tanto senza concretizzare, concedendo poco. Buona partita ma poi abbiamo perso. In area di rigore…",
-      "url": "https://foggiacalciomania.com/news-foggia-calcio/sala-stampa/auteri-tanto-gioco-ma-concretizziamo-poco/",
-      "data": "2026-09-12T18:23:18.000Z",
-      "autore": "Roberto Parisi",
-      "categoria": "Sala stampa",
-      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Auteri-43.jpeg"
-    },
-    {
       "id": "ilfoggia-9f741afccf",
       "testata": "ilfoggia",
       "titolo": "Cosmano Sport Soccer Trani – Risultato parziale",
@@ -335,5 +335,5 @@
       "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0088-scaled.jpg"
     }
   ],
-  "aggiornatoIl": "2026-09-14T18:40:58.495Z"
+  "aggiornatoIl": "2026-09-14T19:20:51.541Z"
 }
