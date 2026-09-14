@@ -1,50 +1,183 @@
 # Il Tifo della Daunia — recap completo
 
 App per i tifosi del Calcio Foggia 1920. **Progetto indipendente**, non affiliato
-al club. Aggiornato al 10 settembre 2026.
+al club. Aggiornato al 14 settembre 2026.
 
 Questo file esiste per riprendere il lavoro in una chat nuova senza perdere
 niente: cosa c'è, come funziona, cosa manca, e le decisioni prese con il
-perché — che è la parte che non si ricostruisce leggendo il codice.
+perché, che è la parte che non si ricostruisce leggendo il codice.
 
 ---
 
 ## In due righe
 
-- **Codice**: `~/dev/daunia-app`, repository **pubblico** `artistsuiteapp/daunia-app`
-- **Online**: <https://daunia.vercel.app> (PWA, da aggiungere alla schermata Home)
+- **Codice**: `~/dev/daunia-app` (percorso completo `/Users/salvatorepapa/dev/daunia-app`), repository **pubblico** `artistsuiteapp/daunia-app`
+- **Dove gira**: app nativa sull'iPhone, installata con Xcode. Il sito <https://daunia.vercel.app> esiste ancora ma non è più il prodotto: si pubblica solo a mano
 - **Dominio**: `iltifodelladaunia.it`, comprato su IONOS. Vetrina pronta in `sito/index.html`, non ancora pubblicata
-- **Stack**: Expo / React Native (iOS, Android e web dallo stesso codice), Supabase, GitHub Actions
-- **Stato**: 134 commit, 30 migrazioni, 24 schermate, **221 test**
+- **Stack**: Expo SDK 57 / React Native 0.86 (iOS, Android e web dallo stesso codice), Supabase, GitHub Actions
+- **Stato**: 375 commit (169 senza gli aggiornamenti automatici dei dati), 46 migrazioni, 38 schermate, **467 test**
 
-Il repository è pubblico dal 8 settembre, e non è una svista: sui repo pubblici
-i minuti di GitHub Actions sono gratis e illimitati. Verificato prima di
-aprirlo che in tutta la storia non ci fosse mai stato committato un segreto.
-Sono attivi secret scanning e push protection: se una chiave finisce per errore
-in un commit, il push viene bloccato.
+Il repository è pubblico dall'8 settembre, e non è una svista: sui repo pubblici
+i minuti di GitHub Actions sono gratis e illimitati. Sono attivi secret scanning
+e push protection. **Mai scrivere in un file committato email, chiavi o dati
+personali.**
 
 ---
 
-## Come si consegna
+## Come si lavora
 
 ```bash
 cd ~/dev/daunia-app
-npm test                    # 221 test
-npx tsc --noEmit -p apps/mobile
-npm run build:web
-npx vercel --prod --yes
+npm test                           # 467 test, compresi gli attacchi al database
+npx tsc --noEmit -p apps/mobile    # zero errori
 ```
 
-**Non serve `vercel alias set`.** C'era, e per due giorni ha fatto fallire ogni
-giro con `Error: User not found`, mandando quattro o cinque email di errore al
-giorno per un deploy che era andato benissimo. `deploy --prod` assegna già i
-domini di produzione del progetto: `alias set` è un'operazione a livello di
-account e gli id del progetto non bastano ad autorizzarla.
+### Sul telefono
 
-Da GitHub Actions il deploy parte quando cambiano i dati **oppure** su ogni
-push. Prima solo sui dati, e il difetto era invisibile: una modifica al codice
-del sito arrivava in produzione soltanto se per combinazione, nello stesso
-giro, cambiava anche un dato.
+```bash
+cd ~/dev/daunia-app/apps/mobile && npm run telefono
+```
+
+È `expo run:ios --device --configuration Release`. Release è obbligatorio: in
+Debug il JavaScript lo serve il Mac e l'app funziona solo accanto al computer.
+iPhone collegato col cavo e sbloccato.
+
+- Firma con Apple ID gratuito (Personal Team `494J598S2V`, bundle `io.daunia.app`): **dura 7 giorni**, poi si rilancia lo stesso comando
+- Servono **~8 GB liberi** sul Mac. Per fare spazio si cancellano `~/Library/Developer/Xcode/DerivedData/*` e le cache, **mai il runtime del simulatore**: in Xcode 26 è lo stesso componente che serve per compilare sul telefono vero, e riscaricarlo costa 8,5 GB
+- Se il progetto nativo va rigenerato: `npm run prebuild:ios`. Toglie da solo l'entitlement delle notifiche push, che con l'account gratuito fa fallire la firma con un errore che non nomina mai le notifiche
+
+### Database e guardiano
+
+```bash
+npx supabase db push --linked                   # le migrazioni: le lancia Salvatore
+npx supabase functions deploy guardiano-partita
+```
+
+Al 14 settembre il database vero è allineato a tutte le migrazioni.
+
+### Il sito
+
+Non si pubblica più da solo. `pubblica.yml` parte solo a mano da GitHub. L'ingest
+non pubblica più niente su Vercel: il tetto gratuito di 100 pubblicazioni al
+giorno si esauriva e una notte ha prodotto 25 email di errore.
+
+---
+
+## Da dove l'app prende i dati
+
+L'app installata **non aspetta un aggiornamento per avere dati freschi**. A ogni
+apertura scarica `data/bundle.json` direttamente dal repository
+(`raw.githubusercontent.com`) e sostituisce calendario, classifica, rosa,
+formazioni e rassegna senza ricompilare (`lib/bundle-remoto.ts`). Le schermate si
+ridisegnano perché `Screen` si iscrive all'arrivo del bundle nuovo.
+
+Il dal vivo (punteggio, minuto, cronaca) arriva da Supabase in tempo reale.
+
+Nel profilo, `StatoDati` dice da quanto sono fermi i dati: niente sotto l'ora, un
+avviso tra 1 e 6 ore, un avviso più forte sopra.
+
+| Dato | Fonte | Costo |
+|---|---|---|
+| Calendario, classifica, rosa | Wikipedia, via ingest | 0 |
+| Punteggio e minuto dal vivo | TheSportsDB `livescore.php` (chiave pubblica `123`) | 0 |
+| Marcatori, cartellini, sostituzioni | **live-score-api** (Serie C = competizione **181**) | prova fino al **~21 settembre** |
+| Formazioni ufficiali e modulo | sito della Lega, endpoint AJAX | 0 |
+| Rassegna stampa | RSS delle tre testate autorizzate | 0 |
+| Stemmi e comunicati | sito del club (WordPress REST) | 0 |
+
+### Le cose da sapere sulle fonti
+
+**TheSportsDB: `livescore.php`, non `lookupevent.php`.** Il secondo arriva minuti
+in ritardo. Il primo porta `strProgress`, il minuto vero col recupero.
+
+**live-score-api: i nomi degli eventi si copiano dai loro documenti.** Il primo
+giro li aveva indovinati e un gol su rigore spariva dal tabellino senza errore.
+Sono `GOAL · GOAL_PENALTY · OWN_GOAL · YELLOW_CARD · RED_CARD · YELLOW_RED_CARD ·
+SUBSTITUTION · MISSED_PENALTY`. La `253` è la Serie C **brasiliana**. Dopo la prova
+serve lo Starter a **11 €/mese**, altrimenti spariscono marcatori e cartellini.
+
+**La Lega apre la partita al calcio d'inizio.** A 20, 10 e 0 minuti dal fischio
+non c'è id. Gli id stanno in cache in `data/legapro-ids.json`: fino al 13
+settembre la cache non si rileggeva mai, e ogni partita aperta dopo il 7 era
+invisibile. Ora, se una partita manca, la lista si ricarica.
+
+### Le fonti scartate, con la prova
+
+Non rifare questa ricerca:
+
+- **API-Football**: sospeso **tre volte** (6 e 12 settembre). Cento chiamate al giorno non bastano. Il codice ha ancora la strada come ripiego, ma non è una fonte viva
+- **live-score-api per le formazioni**: `matches/lineups` risponde vuoto anche su Serie A e B
+- **TheSportsDB** `lookuptimeline` / `lookuplineup` → `null` anche per la Serie A: è il limite della chiave gratuita
+- **Highlightly**: la sua "Serie C" è brasiliana
+- **Sportmonks free**: solo Danimarca e Scozia
+- **SoccerData API**: Italia solo Serie A/B/Coppa, a pagamento
+- **Diretta.it / Flashscore** e **Apify**: vietato dai termini, anti-bot, diritto sulle banche dati
+- **Sito del club per le foto della rosa**: fermo al 26 aprile 2026
+
+---
+
+## Come sta in piedi
+
+### Gli orologi
+
+Il cron di GitHub **non è affidabile**: sabato 6 settembre doveva fare ~60 giri e
+ne ha fatti 5. Su un repo pubblico gratuito la coda è sempre piena.
+
+L'orologio vero è **pg_cron su Supabase**, che non ha mai saltato un giro:
+
+| Lavoro | Ogni | Cosa fa |
+|---|---|---|
+| `guardiano-partita` | minuto | segue la partita |
+| `sveglia-ingest` | 20 minuti | chiama GitHub per far partire l'ingest (`workflow_dispatch`) |
+
+I cron di GitHub restano come rete di sicurezza. Attenzione: i giri automatici
+dell'ingest **sono** `workflow_dispatch`, non `schedule`, perché li lancia pg_cron.
+Una condizione scritta pensando il contrario ha già fatto danni una volta.
+
+Il token GitHub sta in Supabase Vault come `github_gettone` (solo `Actions: read
+and write` su questo repository).
+
+Da togliere quando capita: `select cron.unschedule('prova-formazioni-catania');`,
+un residuo di una prova del 7 settembre.
+
+### Il guardiano (Supabase Edge Function)
+
+`supabase/functions/guardiano-partita/`. Fuori dalla finestra di una partita esce
+senza chiamare niente.
+
+Dentro la finestra:
+
+1. legge punteggio e minuto da `livescore.php`
+2. rilegge gol, cartellini e cambi da live-score-api **ogni minuto**
+3. dal calcio d'inizio cerca le formazioni sul sito della Lega ogni 3 minuti
+4. scrive tutto in `stato_partita`, e l'app lo riceve in tempo reale
+5. manda le notifiche: formazioni, inizio, gol, espulsioni, intervallo, fine, e un'ora prima il promemoria del pronostico (con l'orario, non "manca un'ora")
+
+Ogni mezz'ora passa anche il calendario al database (`allinea_calendario`).
+
+Tre regole scritte dopo averle sbagliate:
+
+- **Quello che si sa non si perde.** Una lettura vuota non cancella gol, cartellini e cambi già scritti (`proteggi()` in `punteggio.ts`)
+- **Una partita già salvata non si riscrive.** Nelle ore dopo il fischio TheSportsDB indica ancora come "prossima" la partita appena giocata, e il guardiano la riscriveva con il punteggio vuoto
+- **Il punteggio si stampa solo se due fonti concordano.** Altrimenti la notifica dice "GOL DEL FOGGIA!" col minuto e tace il numero
+
+### Il ponte fra i due numeri di una partita
+
+L'app chiama le partite `wp-2026-2027-004`, il guardiano `2555023`. Fino al 13
+settembre nessuno dei due trovava i pronostici dell'altro: il pronostico non si
+chiudeva al fischio lato server, e **nessuno ha mai preso i punti per esito o
+risultato**.
+
+Ora c'è la tabella `calendario`, riempita dal guardiano, e il ponte si fa
+sull'orario del calcio d'inizio. `allinea_calendario` rimette i punteggi
+cancellati, chiude le partite rimaste aperte e paga i punti arretrati. È
+ripetibile: non paga mai due volte.
+
+### L'ingest (GitHub Actions)
+
+`services/ingest/run.mjs`. Scarica, normalizza, committa `data/`. Quattro passi, e
+nessuno pubblica il sito. La rassegna stampa si rilegge se è più vecchia di un
+quarto d'ora.
 
 ---
 
@@ -52,39 +185,60 @@ giro, cambiava anche un dato.
 
 ### Partite
 
-- **Punteggio dal vivo** col minuto vero, recupero compreso (`45+5`)
-- **Cronaca completa**: gol, cartellini e sostituzioni con chi entra e chi esce
-- **Formazioni ufficiali** con il modulo vero e l'allenatore
-- **Notifiche push**: formazioni, inizio, gol, espulsioni, fine primo tempo, fine
-- Il minuto **scorre da solo** fra un aggiornamento e l'altro, non salta
+- **Punteggio dal vivo** col minuto vero, recupero compreso
+- **Cronaca** a parole: "Zuccon, entra al posto di Coulibaly", "ammonito", "gol su rigore". Solo sulla partita che si sta giocando
+- **Formazioni ufficiali** col modulo, e nomi sul campo che non si sovrappongono
+- **Statistiche** che contano anche la partita appena finita, senza aspettare l'ingest
+
+### Match Center
+
+L'ingresso della sezione di gioco, con quattro porte: pagelle, premi,
+pronostici, classifica dei tifosi.
+
+- **Pronostico**: uno per partita, si chiude al fischio d'inizio (lo impone il database)
+- **Pagelle**: voto da 4 a 10 per ogni giocatore della formazione vera
+- **Migliore in campo**: si vota nelle 24 ore dopo il fischio, servono 3 voti
+- **Migliore del mese**: si vota tutto il mese, servono 10 voti
+- **Sondaggi** scritti dall'admin. I quiz sono stati tolti
+
+I voti singoli restano privati: le medie le calcola il database.
+
+### Punti, livelli, badge
+
+| Azione | Punti |
+|---|---|
+| Pronostico fatto | 10 |
+| Esito indovinato | 50 |
+| Risultato esatto | 100 |
+| Pagelle, migliore in campo, sondaggio, condivisione | 5 |
+
+I punti li scrive **solo il database**, con trigger. Si danno solo per partite che
+esistono nel calendario: prima 500 pronostici su partite inventate valevano 5.000
+punti. Livelli: Occasionale (da 0), Rossonero (250), Ultras (1.000), Leggenda (3.000).
+Classifiche per settimana, mese e stagione.
 
 ### Community
 
-- **Curva**: discussioni per argomento, con modifica e cancellazione dei propri
-  messaggi, salto all'ultima risposta e caricamento a 30 per volta
-- **Chat dal vivo**: apre 10 minuti prima del fischio, chiude 20 dopo il triplice
-  vero. Legge chiunque, scrive chi ha un account
-- **Filtro parolacce e bestemmie**: gira nel database, non nel telefono
-- **Segnalazione e blocco** su ogni contenuto altrui, con la coda per chi modera
-  in `Profilo → Segnalazioni`
+- **Curva**: discussioni per argomento, con modifica e cancellazione dei propri messaggi
+- **Chat dal vivo**: apre 10 minuti prima del fischio. Legge chiunque, scrive chi ha un account
+- **Filtro parolacce e bestemmie** nel database: copre la parola, non rifiuta il messaggio
+- **Segnalazione e blocco** su ogni contenuto altrui. Alla terza persona diversa che segnala, il contenuto si nasconde da solo; respingere la segnalazione lo rimette in chiaro
+- **Profilo pubblico** di ogni persona, con livello e badge
 
-### Gioco
+### Pannello admin (dentro l'app)
 
-- **Pronostici** con classifica
-- **Pagelle**: voto da 4 a 10 per ogni giocatore della formazione vera
-- **Migliore in campo**: si vota 24 ore dopo il fischio, poi resta il verdetto,
-  sparisce il giorno prima della gara successiva
-- **Migliore del mese**: chiude l'ultimo giorno del mese, il verdetto resta fino
-  alla chiusura di quello dopo
+Utenti (promuovi, sospendi, revoca), segnalazioni, contenuti nascosti, chi è
+online, numeri dell'app. Il primo account registrato è diventato admin da solo
+(`20260912110000_primo_admin.sql`). Ruoli e sospensioni passano **solo** dalle
+funzioni del pannello: dalla tabella non li può toccare nessuno, nemmeno un admin.
 
 ### Altro
 
-- **Trasferte**: stato del divieto, chi ci va, da dove si parte. Chi ha
-  dichiarato può correggere o togliersi (il modulo si riempie da solo)
+- **Trasferte**: stato del divieto, chi ci va, contatti visibili solo a chi va alla stessa trasferta e non tra chi si è bloccato
 - **Stadio in 3D** con i settori e chi ha detto che c'è
-- **Biglietti**: solo link a Vivaticket, mai vendita diretta
-- **Notizie**: la rassegna delle testate che hanno dato il permesso. I pezzi
-  scritti da noi sono usciti di scena
+- **Biglietti**: solo link a Vivaticket
+- **Notizie**: rassegna delle tre testate autorizzate, e i comunicati del club come titolo e link
+- **Account**: registrazione, accesso, recupero password con la schermata per sceglierla (le email riportano a `daunia://`), cancellazione dell'account dall'app
 
 ---
 
@@ -99,226 +253,89 @@ Tre testate hanno autorizzato per iscritto la presenza dei loro articoli:
 | ilFoggia.com | `ilfoggiainfo@gmail.com` | `/feed/` |
 
 **La regola a cui hanno detto di sì, e che non si tocca**: entrano titolo, link,
-data e il sommario tagliato a 180 caratteri. Il corpo no, nemmeno quando il feed
-lo porta intero — e lo porta quasi sempre. C'è un test che fallisce se qualcuno
-aggiunge il campo. L'anteprima è l'`og:image` scelta dalla loro redazione,
-collegata dal loro server, mai copiata.
+data e il sommario tagliato a 180 caratteri. Il corpo mai, nemmeno quando il feed
+lo porta. Un test fallisce se qualcuno aggiunge il campo. L'anteprima è la loro
+`og:image`, collegata e non copiata.
 
-Chi tocca un articolo finisce sulla loro pagina, aperta col browser di sistema
-(`lib/apri.ts`): SFSafariViewController su iPhone, Custom Tabs su Android. I
-loro banner e i loro cookie girano come sul sito, quindi per la testata resta una
-visita normale. Una WebView che ripulisce la pagina sarebbe un problema con le
-redazioni prima ancora che con Apple.
+L'articolo si apre col browser di sistema (`lib/apri.ts`), così per la testata
+resta una visita normale. Solo indirizzi `http` e `https`.
 
-Si guarda **due volte al giorno**, e il freno sta nel dato e non nel cron:
-`data/stampa.json` porta l'ora dell'ultimo giro. Il workflow batte ogni sei ore
-per altri motivi e in CI la cache su disco è spenta, quindi non poteva stare né
-lì né lì.
+Per aggiungere una testata: sei righe in `TESTATE` dentro
+`services/ingest/src/sources/stampa.mjs`. Per toglierla: `attiva: false`.
 
-Per aggiungere una testata: sei righe in `TESTATE`, dentro
-`services/ingest/src/sources/stampa.mjs`. Per toglierne una: `attiva: false`,
-una riga sola, perché nella mail c'era scritto "vi tolgo in giornata".
-`logoSuChiaro` dice se il loro logo ha inchiostro scuro e vuole una piastra
-chiara: è per testata perché ognuno disegna il proprio marchio a modo suo.
-
-Le generaliste (FoggiaToday, l'Immediato) hanno bisogno di `FILTRO_FOGGIA`,
-altrimenti la sezione si riempie di cronaca e incidenti stradali.
+ilFoggia.com non pubblica dal 7 settembre: è muta di suo, non è un guasto nostro.
 
 ---
 
-## Ruoli e moderazione
+## Sicurezza
 
-Tre ruoli in `profiles.ruolo`: `utente` (chi si registra), `moderatore` (nasconde
-contenuti, vede la coda), `admin` (assegna i ruoli, sospende). Moderatore e admin
-**si danno solo dal pannello Supabase**, mai dall'app.
+Audit del 13 settembre: tutte le migrazioni caricate su un Postgres vero (PGlite)
+e attaccate da un utente qualsiasi e da un anonimo. Gli attacchi riusciti ora
+sono test che girano a ogni `npm test`:
 
-```sql
-update profiles set ruolo = 'admin'
-where id = (select id from auth.users where email = 'tua-email@esempio.it');
-```
+- `supabase/test/tutte-le-migrazioni.mjs` carica il database completo, con auth, storage, cron e vault finti
+- `supabase/test/sicurezza-sql.test.mjs` contiene gli attacchi
 
-**La trappola che c'era**: `profiles` ha una policy che lascia a ognuno
-modificare il proprio profilo. Aggiungere una colonna `ruolo` e basta avrebbe
-significato che chiunque poteva scriversi `admin` da solo — la chiave anonima sta
-dentro l'app ed è pubblica per progetto. Un trigger rifiuta ogni modifica di
-ruolo e sospensione che non arrivi da un admin già tale.
+Cosa riusciva e ora no: rendere visibile un post nascosto dai moderatori, fissarlo
+in cima, farsi punti con partite inventate, cancellare o dirottare le iscrizioni
+alle notifiche, inserire segnalazioni già "accolte", allagare la chat, far
+riscrivere a un moderatore i testi altrui, togliere il ruolo a un altro admin,
+caricare una foto profilo da un server qualsiasi, comparire nel pannello come
+un'altra persona, mandare migliaia di eventi anonimi.
 
-**Il blocco vive nelle politiche di lettura, non nel telefono.** Chi hai bloccato
-non ti viene consegnato nemmeno chiamando l'API a mano. Attenzione: le policy in
-Postgres **si sommano con OR**, quindi la vecchia policy permissiva della chat è
-stata tolta per nome. Una lasciata viva avrebbe annullato il blocco in silenzio.
+Nell'app: un collegamento `daunia://` costruito apposta non blocca più
+l'app (`lib/decodifica-uri.js`, caricato da Metro al posto di
+`decode-uri-component`).
 
-**Alla terza persona diversa** che segnala lo stesso contenuto, quello si nasconde
-da solo in attesa di revisione (`soglia_segnalazioni()`, una funzione da sola
-perché il numero andrà rivisto sui dati veri). Tre persone d'accordo possono
-zittire chiunque, e in una tifoseria succederà: per questo *respingere* rimette
-in chiaro il contenuto. Se assolvere non riportasse indietro, la sparizione
-automatica sarebbe una condanna senza appello.
+Regola dei trigger: `current_user in ('anon', 'authenticated')` vuol dire "l'ha
+chiesto un telefono". Dentro una funzione `security definer` è il proprietario.
 
-Apple (linea guida 1.2) e Google chiedono tre cose a chi pubblica un'app dove la
-gente scrive: filtro, segnalazione, blocco. Ci sono tutte e tre.
+**Il segreto Supabase non deve mai avere il prefisso `EXPO_PUBLIC_`** né stare in
+`apps/mobile`: scavalca tutte le regole.
 
 ---
 
-## Da dove arrivano i dati
+## Leggibilità (utenti sopra i 45 anni)
 
-| Dato | Fonte | Costo |
-|---|---|---|
-| Calendario, classifica, rosa | Wikipedia | 0 |
-| Punteggio e minuto dal vivo | TheSportsDB `livescore.php` (chiave pubblica `123`) | 0 |
-| Marcatori, cartellini, sostituzioni | live-score-api (competizione **181**) | trial fino al 21 settembre |
-| **Formazioni ufficiali e modulo** | **seriec.com** (endpoint AJAX del calendario) | **0** |
-| Stemmi e comunicati | sito del club (WordPress REST) | 0 |
+Rifatta il 13 settembre seguendo le linee guida Apple. Audit completo:
+<https://claude.ai/code/artifact/65c5e7ec-ebb9-491b-a2af-868c918844f2>
 
-### Le tre cose da sapere sulle fonti
+Regole ora nel codice, da non disfare:
 
-**TheSportsDB: `livescore.php`, non `lookupevent.php`.** Il secondo è la scheda
-dell'evento e arriva minuti in ritardo: durante Foggia‑Cerignola diceva ancora
-"HT" mentre si giocava il 48°. Il primo porta anche `strProgress`, cioè il
-minuto vero. Il filtro per lega viene ignorato, quindi la risposta è ~64 KB con
-tutte le partite del mondo: la scarica il guardiano sul server, non il telefono.
+- Scala tipografica alla taglia iOS **xLarge** (`theme/tokens.ts`): corpo 19, minimo 14. Niente `fontSize` scritti sotto 13
+- Contrasto misurato: il testo più tenue sta sopra 5,5:1
+- Pulsanti alti almeno 44 punti (`TOCCO_MINIMO`), righe di lista 52
+- **Cinque voci** nella barra in basso: Home, Partite, Curva, Stadio, News. Rosa e Trasferte stanno nelle scorciatoie della home
+- Home: prossima partita in cima, poi le sei scorciatoie in griglia (Match Center, Biglietti, Rosa, Trasferte, Classifica del girone, Statistiche)
+- Niente contenuti che cambiano da soli, e ogni animazione continua si ferma con "Riduci movimento"
+- Etichette in minuscolo normale, mai TUTTO MAIUSCOLO
+- Ogni pulsante fatto solo di icona ha un nome per VoiceOver
 
-**seriec.com: non è scraping di una pagina.** Il calendario ha un endpoint AJAX
-(October CMS) con un id opaco per partita:
-
-```
-POST https://www.seriec.com/calendario
-  X-OCTOBER-REQUEST-HANDLER: onLoadMatchDetails
-  match_id=<id>
-```
-
-Un id non cambia quando cambia il layout, quindi è molto più stabile di un
-selettore CSS. Il loro `robots.txt` consente tutti i bot: le uniche esclusioni
-sono i crawler di addestramento AI.
-
-**La partita compare nel calendario al calcio d'inizio**, non prima e non a fine
-gara. Verificato: a 20, 10 e 0 minuti dal fischio non c'era id; alle 21:00 con
-la gara al 10' c'erano id, formazioni e cronaca. Il guardiano cerca da lì.
-
-### Le fonti scartate, con la prova
-
-Non rifare questa ricerca:
-
-- **API-Football** — copre tutto, ma **due account sospesi in 24 ore**. Il
-  secondo con **una sola chiamata fatta**: non è la quota, è che la stessa
-  chiave arriva da IP diversi (Mac, Supabase, GitHub Actions)
-- **live-score-api**: le formazioni sono **barrate** fino al piano da €26. Nel
-  trial e nello Starter da €11 ci sono solo eventi e punteggi
-- **TheSportsDB** `lookuptimeline` / `lookuplineup` → `null` **anche per la
-  Serie A**: è il limite della chiave gratuita, non la copertura
-- **Highlightly** — 14 partite italiane in catalogo, tutte Serie A/B/Women. La
-  sua "Serie C" è **brasiliana**
-- **Sportmonks free** — solo Danimarca e Scozia
-- **SoccerData API** — Italia solo Serie A/B/Coppa, a pagamento
-- **Diretta.it / Flashscore** — vietato dai termini, e hanno anti-bot
-- **Apify su FlashScore** — stesso problema, più il diritto *sui generis* sulle
-  banche dati in Europa
-
----
-
-## Come sta in piedi
-
-### Il guardiano (Supabase Edge Function)
-
-`supabase/functions/guardiano-partita/` — svegliato da pg_cron **ogni minuto**.
-
-Fuori dalla finestra di una partita esce senza chiamare niente: è la regola che
-tiene i consumi a zero nei giorni in cui non si gioca.
-
-Dentro la finestra:
-
-1. legge punteggio e minuto da `livescore.php`
-2. quando il punteggio cambia, chiede i marcatori
-3. dal calcio d'inizio cerca le formazioni sul sito della Lega, ogni 3 minuti,
-   e smette appena le trova
-4. scrive tutto in `stato_partita`; l'app legge in tempo reale, **senza deploy**
-
-### Il punteggio ha tre fonti che si controllano
-
-Il tabellone di TheSportsDB, i gol contati dagli eventi di API-Football, e
-`fixtures?id=` come arbitro quando i primi due litigano.
-
-**Il numero si stampa solo se due fonti concordano.** Se litigano, la notifica
-dice "GOL DEL FOGGIA!" con minuto e marcatore e tace il punteggio: prima
-prendeva il gol da una fonte e il numero dall'altra, e annunciava "GOL DEL
-FOGGIA! 0-0" proprio quando serviva.
-
-### Il freno sulla quota
-
-`quota_af` più `chiedi_quota(quante, tetto)`: incrementa e decide nella stessa
-transazione. **Se il database non risponde, la risposta è no** — perdere il nome
-di un marcatore costa meno che perdere l'account.
-
-Il conto sta in Postgres e non in memoria perché la funzione muore a ogni giro:
-un contatore locale ripartirebbe da zero ogni minuto.
-
-### L'ingest (GitHub Actions)
-
-`services/ingest/run.mjs`, ogni 30 minuti, e **ogni 10 nelle ore delle partite**
-(sab-dom 12–22, mar-mer 16–22). Committa i dati e ripubblica il sito.
-
----
-
-## Come si vota (la domanda che è venuta fuori)
-
-**Serve un account.** Senza, la scala dei voti non compare: si vede solo la
-media, e un riquadro che dice perché.
-
-Ci sono **due voti diversi**, e non vanno confusi:
-
-**Il migliore in campo** — scheda partita → Pagelle, in cima. Si sceglie **un
-nome solo** fra chi è sceso in campo: si tocca la riga del giocatore. Vince chi
-prende più preferenze, come un'elezione.
-
-**Le pagelle** — sotto, una fila di numeri **da 4 a 10** per ogni giocatore.
-
-Sono due domande diverse: uno può dare 7 a tutta la squadra e pensare comunque
-che il migliore sia stato il portiere, e nella media quel pensiero non si vede.
-Il migliore viene prima perché è la domanda più facile: si risponde d'istinto,
-mentre mettere undici voti è un lavoro.
-
-**Il migliore del mese** è ancora un'altra cosa: si vota in home, fra chi ha
-giocato almeno una partita del mese, e si può cambiare idea fino all'ultimo
-giorno.
-
-Tutti e tre si cambiano finché la finestra è aperta.
-
-I voti singoli **restano privati**: le medie le calcola il database con funzioni
-dedicate (`medie_voti`, `migliore_partita`, `migliore_mese`), e l'app riceve solo
-il risultato.
-
-Minimi perché un premio compaia: **3 voti** per il migliore in campo, **10** per
-il migliore del mese. Senza, il primo che vota decide da solo.
+**Non ancora provato sul telefono**: testo grande di iOS e VoiceOver.
 
 ---
 
 ## Regole che non si toccano
 
-**Niente fotografie di terzi.** In tutta l'app non c'è una foto che non sia
-nostra: gli stemmi si collegano, non si copiano, e gli sfondi sono disegnati
-(`SfondoCurva`, `SfondoCitta`). `apps/mobile/lib/media.ts` ha `photos: false`.
+**Niente fotografie di terzi.** Gli stemmi si collegano, non si copiano, e gli
+sfondi sono disegnati. `apps/mobile/lib/media.ts` ha `photos: false`. Passano
+solo le foto profilo caricate sul nostro archivio.
 
-**Biglietti solo come link a Vivaticket.** Mai vendita, mai rivendita: L. 232/2016,
-sanzioni AGCOM fino a 180.000 € per evento. E **non si salvano codici a barre**:
-sono credenziali al portatore su biglietti nominativi.
+**Biglietti solo come link a Vivaticket.** Mai vendita, mai rivendita (L. 232/2016),
+e **non si salvano codici a barre**.
+
+**Transfermarkt** solo come lettura a mano una tantum, mai come fonte automatica,
+mai le loro immagini.
 
 **I divieti di trasferta si propongono, non si pubblicano.** Un divieto sbagliato
-fa perdere un viaggio a qualcuno. Il riconoscimento legge la stampa locale e,
-quando tace per una trasferta imminente, **lo segnala** invece di far finta che
-sia tutto aperto.
+fa perdere un viaggio a qualcuno.
 
-**Il divieto colpisce i residenti in provincia di Foggia**, non chiunque. Chi
-risiede altrove di solito può comprare: è la frase per cui la sezione Trasferte
-esiste, perché 69.689 foggiani iscritti all'AIRE non lo sanno.
+**Niente dati inventati.** Discussioni finte, presenze generate, medie derivate dal
+nome, avversari inventati: tutto tolto, e i test verificano che non torni.
 
-**Niente dati inventati.** Sono stati tolti tutti: discussioni finte, presenze
-allo stadio generate, medie delle pagelle derivate dal nome del giocatore,
-classifica pronostici con avversari inventati, "Mario Rossi", prezzi dei
-biglietti scritti a mano. I test che verificavano il riempimento simulato adesso
-verificano che **non esista**.
-
-**Il segreto Supabase non deve mai avere il prefisso `EXPO_PUBLIC_`** né stare
-in `apps/mobile`: bypassa tutte le regole di riga.
+**Quando si aggiunge una fonte o una cache, si aggiunge insieme il modo di
+accorgersi che ha smesso.** Il difetto ricorrente di questo progetto non sono stati
+i bug ma i guasti che non si annunciavano.
 
 ---
 
@@ -326,38 +343,57 @@ in `apps/mobile`: bypassa tutte le regole di riga.
 
 | Nome | Dove | A cosa serve |
 |---|---|---|
-| `LSA_KEY`, `LSA_SECRET` | GitHub + `.env.livescore` | live-score-api |
-| `API_FOOTBALL_KEY`, `API_FOOTBALL_VIA` | GitHub + Supabase | API-Football (sospeso) |
-| `VERCEL_TOKEN` | GitHub | deploy automatico |
-| `VAPID_JWK`, `VAPID_PUBLIC` | Supabase | notifiche push |
-| `guardiano_segreto` | **Supabase Vault** | autentica il cron |
+| `LSA_KEY`, `LSA_SECRET` | GitHub + Supabase | live-score-api |
+| `API_FOOTBALL_KEY`, `API_FOOTBALL_VIA` | GitHub + Supabase | API-Football (ripiego, sospeso) |
+| `VERCEL_TOKEN` | GitHub | pubblicazione manuale del sito |
+| `VAPID_JWK`, `VAPID_PUBLIC` | Supabase | notifiche web push |
+| `guardiano_segreto` | **Supabase Vault** | autentica il cron del guardiano |
+| `github_gettone` | **Supabase Vault** | pg_cron sveglia l'ingest |
 
-Il segreto del guardiano sta in Vault e **non nelle migrazioni**: una migrazione
-finisce nel repository, e un segreto in un repository è un segreto perso.
+I segreti in Vault **non stanno nelle migrazioni**: una migrazione finisce nel
+repository pubblico.
 
 ---
 
 ## Cosa manca
 
-**Le email di registrazione non partono.** Supabase consegna solo al proprietario
-del progetto, 2 all'ora. Serve un SMTP proprio (Resend è già studiato, vedi
-`docs/EMAIL.md`): serve un dominio verificato. Finché non è risolto **non
-esiste un secondo account**, quindi chat, contatti reciproci e pagelle non sono
-mai stati provati in due.
+**Entro il 21 settembre: live-score-api Starter, 11 €/mese.** Senza, dopo la
+prova spariscono marcatori, cartellini e cambi.
 
-**Vercel Hobby vieta l'uso commerciale.** Prima della raccolta fondi l'hosting va
-spostato — Cloudflare Pages è l'alternativa studiata.
+**Account Apple Developer, 99 €/anno.** Senza non si pubblica sull'App Store, non
+c'è TestFlight, l'app installata scade ogni 7 giorni e **non riceve notifiche
+push** (le web push arrivano solo dalla PWA aggiunta alla Home).
 
-**Il commercialista** prima di aprire la raccolta: le donazioni a una persona
-fisica non sono automaticamente esenti. Obiettivo 500 €, testi in
-`docs/RACCOLTA-FONDI.md`.
+**Google Play Console, 25 $ una volta.** Un account personale nuovo deve fare un
+test chiuso con almeno 12 persone per 14 giorni prima di pubblicare. Android non è
+mai stato compilato, e senza Firebase le push su Android non partono.
 
-**Google Data Safety e le privacy label di Apple** vanno compilate a mano.
+**Prima di pubblicare sugli store:**
 
-**Le notifiche restano web push** finché l'Apple ID è gratuito: l'entitlement
-APNs non viene concesso, e servirebbe l'account sviluppatore a 99 €/anno. Su
-Android funzionano anche senza aggiungere alla Home; su iPhone **solo** se l'app
-è stata aggiunta alla schermata Home.
+- EAS Update, per mandare aggiornamenti senza revisione. Va messo prima della prima versione pubblica
+- Un secondo progetto Supabase di prova, perché oggi ogni prova tocca il database vero
+- I test che girano da soli su GitHub a ogni push
+- Un account di prova per i revisori Apple
+- Privacy label di Apple e Data Safety di Google, da compilare a mano
+- Informativa privacy e condizioni su un indirizzo pubblico (il dominio c'è)
+- L'informativa è una bozza: va rivista da un professionista
+
+**Hosting**: Vercel Hobby vieta l'uso commerciale. Il sito non serve all'app, ma
+se resta va spostato (Cloudflare Pages o GitHub Pages).
+
+**Email**: verificare che conferma e recupero arrivino anche a indirizzi diversi
+da quello del proprietario. Supabase senza SMTP proprio ne consegna poche l'ora
+(Resend studiato in `docs/EMAIL.md`).
+
+**Il commercialista** prima della raccolta fondi: le donazioni a una persona
+fisica non sono automaticamente esenti. Testi in `docs/RACCOLTA-FONDI.md`.
+
+**Il battito del guardiano**: fuori partita non scrive niente, quindi non si sa se
+pg_cron è vivo finché non comincia una gara. Basterebbe una colonna `visto_il`
+scritta a ogni giro. Intanto: `select jobname, schedule, active from cron.job;`
+
+**Rischi bassi aperti**: le zone della classifica si distinguono a colpo d'occhio
+solo dal colore.
 
 ---
 
@@ -368,24 +404,31 @@ Android funzionano anche senza aggiungere alla Home; su iPhone **solo** se l'app
 | `docs/DATI-PARTITA.md` | le fonti, i limiti, il budget delle chiamate |
 | `services/ingest/run.mjs` | l'ordine in cui i dati vengono raccolti |
 | `supabase/functions/guardiano-partita/index.ts` | tutto quello che succede durante una partita |
+| `supabase/migrations/20260913120000_sicurezza_e_calendario.sql` | calendario, ponte fra gli id, protezioni |
+| `apps/mobile/lib/bundle-remoto.ts` | come l'app installata prende i dati freschi |
 | `apps/mobile/lib/live.ts` | come l'app riceve il dal vivo |
+| `apps/mobile/theme/tokens.ts` | caratteri, colori e misure di tutta l'interfaccia |
 | `apps/mobile/lib/*-core.ts` | i conti che possono sbagliare, tutti sotto test |
 
-I file `*-core.ts` sono senza React e senza dati apposta: `filtro-core`,
-`live-core`, `modulo-core`, `premi-core`, `ritaglio-core`, `punteggio.ts`. Se
-cambi qualcosa lì, i test lo dicono subito.
+I file `*-core.ts` sono senza React e senza rete apposta. Se cambi qualcosa lì, i
+test lo dicono subito.
 
 ---
 
 ## La prossima prova
 
-**Sabato 12 settembre, Monopoli–Foggia, 18:00.** È la prima partita con tutto
-insieme: formazioni, cronaca, chat, notifiche, pagelle e premi.
+**Martedì 15 settembre, Foggia–Savoia, 21:00.** È la prima partita con il ponte fra
+gli id, il calendario nel database e la nuova interfaccia.
+
+Prima, sul telefono: ricompilare l'app (`npm run telefono`), perché la versione
+installata è di prima delle modifiche del 13.
 
 Cosa guardare, in ordine:
 
-1. la chat apre alle 17:50
-2. al fischio compaiono le formazioni con il modulo
-3. i gol arrivano come notifica entro un minuto o due
-4. a fine partita la finestra dei voti si apre per 24 ore
-5. il giorno dopo il migliore in campo compare in home
+1. alle 20:00 il promemoria del pronostico, solo a chi non l'ha fatto
+2. alle 20:50 apre la chat
+3. alle 21:00 il pronostico non si può più cambiare
+4. dopo il fischio compaiono le formazioni col modulo
+5. gol, cartellini e cambi compaiono in cronaca entro un minuto o due
+6. a fine partita i punti per esito e risultato arrivano in classifica
+7. il giorno dopo il risultato è ancora lì, e non torna vuoto
