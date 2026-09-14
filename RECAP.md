@@ -15,7 +15,7 @@ perché, che è la parte che non si ricostruisce leggendo il codice.
 - **Dove gira**: app nativa sull'iPhone, installata con Xcode. Il sito <https://daunia.vercel.app> esiste ancora ma non è più il prodotto: si pubblica solo a mano
 - **Dominio**: `iltifodelladaunia.it`, comprato su IONOS. Vetrina pronta in `sito/index.html`, non ancora pubblicata
 - **Stack**: Expo SDK 57 / React Native 0.86 (iOS, Android e web dallo stesso codice), Supabase, GitHub Actions
-- **Stato**: 395 commit (176 senza gli aggiornamenti automatici dei dati), 46 migrazioni, 38 schermate, **500 test**, guardiano alla versione 39
+- **Stato**: 395 commit (176 senza gli aggiornamenti automatici dei dati), 46 migrazioni, 38 schermate, **506 test**, guardiano alla versione 39
 
 Il repository è pubblico dall'8 settembre, e non è una svista: sui repo pubblici
 i minuti di GitHub Actions sono gratis e illimitati. Sono attivi secret scanning
@@ -28,7 +28,7 @@ personali.**
 
 ```bash
 cd ~/dev/daunia-app
-npm test                           # 500 test, compresi gli attacchi al database e la partita simulata
+npm test                           # 506 test, compresi gli attacchi al database e la partita simulata
 npx tsc --noEmit -p apps/mobile    # zero errori
 ```
 
@@ -71,8 +71,23 @@ giorno si esauriva e una notte ha prodotto 25 email di errore.
 L'app installata **non aspetta un aggiornamento per avere dati freschi**. A ogni
 apertura scarica `data/bundle.json` direttamente dal repository
 (`raw.githubusercontent.com`) e sostituisce calendario, classifica, rosa,
-formazioni e rassegna senza ricompilare (`lib/bundle-remoto.ts`). Le schermate si
-ridisegnano perché `Screen` si iscrive all'arrivo del bundle nuovo.
+formazioni e rassegna senza ricompilare (`lib/bundle-remoto.ts`).
+
+**Due regole che hanno fatto ripetere "le notizie non si aggiornano" sei volte**:
+
+- **Ogni schermata in `app/` chiama `useDati()` da sé.** Fino al 14 settembre stava
+  solo dentro `Screen`, che riceve i figli già calcolati: all'arrivo dei dati si
+  ridisegnava lui con gli articoli vecchi. Si vedeva aggiornato solo uscendo e
+  rientrando, cioè come si controllava; le schede in basso restavano ferme.
+  `test/schermate-aggiornate.test.ts` fallisce se una schermata se ne dimentica
+- **Il bundle scaricato lo giudica il contenuto, non il tipo della risposta.**
+  raw.githubusercontent.com serve i .json come `text/plain`: dal 13 al 14 settembre
+  un controllo che voleva "json" ha fatto buttare ogni download, senza errori.
+  Decide `leggiRisposta()` in `bundle-remoto-core.ts`, sotto test con le
+  intestazioni vere e col bundle committato
+
+Se i dati sono fermi da più di un'ora, il profilo **e la schermata Notizie** lo
+dicono, col motivo quando l'ultimo download è stato scartato.
 
 Il dal vivo (punteggio, minuto, cronaca) arriva da Supabase in tempo reale. Se il
 canale Realtime si pianta senza dirlo (è successo in prova il 14 settembre:
