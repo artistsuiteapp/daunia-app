@@ -45,6 +45,50 @@ function numero(v: unknown): number | null {
   return Number.isFinite(n) ? n : null;
 }
 
+/** Con Realtime collegato la riga si rilegge ogni minuto: e solo una rete di sicurezza. */
+export const RILEGGI_COLLEGATO = 60_000;
+/** Senza Realtime la lettura periodica e l'unica strada, e va stretta. */
+export const RILEGGI_SCOLLEGATO = 15_000;
+
+/**
+ * Se e ora di rileggere la riga della partita.
+ *
+ * Prima si rileggeva ogni quarantacinque secondi sempre, e quando Realtime
+ * cadeva senza dirlo quei quarantacinque secondi si sommavano al giro del
+ * guardiano. Il secondo di margine assorbe il timer che scatta un attimo prima.
+ */
+export function daChiedere(collegato: boolean, ultima: number, adesso = Date.now()): boolean {
+  const pausa = collegato ? RILEGGI_COLLEGATO : RILEGGI_SCOLLEGATO;
+  return adesso - ultima >= pausa - 1_000;
+}
+
+/** Durante la partita il guardiano scrive la riga ogni venti secondi: tre giri muti sono troppi. */
+export const SILENZIO_MASSIMO = 45_000;
+
+/**
+ * Se ci si puo fidare di Realtime, adesso.
+ *
+ * "Collegato" non basta. Provato il 14 settembre contro il database vero: il
+ * canale risultava iscritto, la connessione si era gia piantata, e l'errore
+ * ("heartbeat timeout") e arrivato trenta secondi dopo. Nel frattempo una
+ * scrittura e rimasta in viaggio per trentanove secondi.
+ *
+ * Mentre si gioca il guardiano scrive a ogni giro, quindi il silenzio stesso e
+ * il segnale: oltre quarantacinque secondi senza un evento si torna alla
+ * lettura stretta. A partita finita gli eventi diventano rari per natura, e
+ * resta buono il solo "collegato".
+ */
+export function realtimeAffidabile(
+  collegato: boolean,
+  ultimoEvento: number,
+  finita: boolean,
+  adesso = Date.now(),
+): boolean {
+  if (!collegato) return false;
+  if (finita) return true;
+  return adesso - ultimoEvento < SILENZIO_MASSIMO;
+}
+
 /** Vero se adesso ha senso interrogare la fonte per questa partita. */
 export function finestraAperta(kickoff: string | null | undefined, adesso = Date.now()): boolean {
   const t = kickoff ? Date.parse(kickoff) : NaN;

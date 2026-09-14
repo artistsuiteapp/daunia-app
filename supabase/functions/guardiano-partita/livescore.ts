@@ -132,7 +132,7 @@ async function chiedi(percorso: string, params: Record<string, string>, c: Chiav
  *
  * Il campionato prima, la coppa solo se li' non c'e' niente.
  */
-export async function trovaPartita(c: Chiavi): Promise<{ id: string; stato: string; punteggio: string | null } | null> {
+export async function trovaPartita(c: Chiavi, noi = 'foggia'): Promise<{ id: string; stato: string; punteggio: string | null } | null> {
   for (const competition_id of [SERIE_C_ITALIA, COPPA_ITALIA_C]) {
     const d = await chiedi('matches/live', { competition_id }, c);
     // `find(eLaNostra)` NO: `Array.find` passa anche l'indice, che finiva in
@@ -140,7 +140,7 @@ export async function trovaPartita(c: Chiavi): Promise<{ id: string; stato: stri
     // `includes('')` e' sempre vero: il guardiano avrebbe preso la prima
     // partita di Serie C del feed e annunciato i gol di un'altra squadra
     // come nostri.
-    const nostra = (d?.match ?? []).find((m: { home?: { name?: string }; away?: { name?: string } }) => eLaNostra(m));
+    const nostra = (d?.match ?? []).find((m: { home?: { name?: string }; away?: { name?: string } }) => eLaNostra(m, noi));
     if (nostra) {
       return { id: String(nostra.id), stato: String(nostra.status ?? ''), punteggio: nostra.scores?.score ?? null };
     }
@@ -165,4 +165,77 @@ export async function trovaPartita(c: Chiavi): Promise<{ id: string; stato: stri
 export async function eventiDi(matchId: string, c: Chiavi): Promise<EventoAF[]> {
   const d = await chiedi('matches/events', { match_id: matchId }, c);
   return travestiTutti(d?.event);
+}
+
+/** Quello che una lettura di live-score-api dice della partita, oltre agli eventi. */
+export type LetturaLSA = {
+  eventi: EventoAF[];
+  /** nell'ordine loro: prima la squadra di casa secondo live-score-api */
+  punteggio: { casa: number; ospiti: number } | null;
+  /** lo stato tradotto nei codici di TheSportsDB: NS, 1H, HT, 2H, FT */
+  stato: string | null;
+  minuto: string | null;
+  foggiaInCasa: boolean | null;
+};
+
+/**
+ * Eventi, punteggio, stato e minuto in una chiamata sola.
+ *
+ * `matches/events` porta dentro anche la scheda della partita. Prima se ne
+ * leggevano solo gli eventi, e punteggio e stato si chiedevano a TheSportsDB:
+ * tutto il dal vivo restava legato alla fonte piu lenta delle due. Con questo
+ * il guardiano ha due tabelloni indipendenti e usa quello che arriva prima.
+ *
+ * Null vuol dire che la chiamata e fallita. Una partita senza eventi torna
+ * con la lista vuota: nei primi minuti e il caso normale, non un guasto.
+ */
+export async function leggiPartita(matchId: string, c: Chiavi): Promise<LetturaLSA | null> {
+  const d = await chiedi('matches/events', { match_id: matchId }, c);
+  if (!d) return null;
+  return {
+    eventi: travestiTutti(d.event),
+    punteggio: punteggioDaLsa(d.match?.scores?.score),
+    stato: statoDaLsa(d.match?.status, d.match?.time),
+    minuto: minutoDaLsa(d.match?.time),
+    foggiaInCasa: d.match?.home?.name ? pulisci(d.match.home.name).includes('foggia') : null,
+  };
+}
+
+/** "1 - 0" in numeri. Qualsiasi altra cosa non e un punteggio. */
+export function punteggioDaLsa(s: unknown): { casa: number; ospiti: number } | null {
+  const m = /^\s*(\d{1,2})\s*-\s*(\d{1,2})\s*$/.exec(String(s ?? ''));
+  return m ? { casa: Number(m[1]), ospiti: Number(m[2]) } : null;
+}
+
+/**
+ * Lo stato di live-score-api con i codici che il resto del guardiano conosce.
+ *
+ * Loro dicono "IN PLAY" per tutti e due i tempi: quale tempo sia lo dice il
+ * minuto. Uno stato che non si riconosce torna null, cosi non si mescola a
+ * quello di TheSportsDB.
+ */
+export function statoDaLsa(status: unknown, time: unknown): string | null {
+  const s = String(status ?? '').toUpperCase().trim();
+  const t = String(time ?? '').toUpperCase().trim();
+  if (s === 'FINISHED' || t === 'FT' || t === 'AET' || t === 'AP') return 'FT';
+  if (s === 'HALF TIME BREAK' || t === 'HT') return 'HT';
+  if (s === 'NOT STARTED') return 'NS';
+  if (s === 'IN PLAY' || s === 'ADDED TIME') {
+    // "45+" e il recupero del primo tempo: il numero davanti basta a dirlo
+    const minuto = Number.parseInt(t, 10);
+    if (!Number.isFinite(minuto)) return null;
+    return minuto <= 45 ? '1H' : '2H';
+  }
+  return null;
+}
+
+/**
+ * Il minuto come lo scrive l'app: "34", oppure "45" nel recupero.
+ *
+ * live-score-api scrive "45+" senza dire quanto: l'app sa gia far avanzare un
+ * "45" nel recupero ("45+1", "45+2"), mentre "45+" non saprebbe leggerlo.
+ */
+export function minutoDaLsa(time: unknown): string | null {
+  const m = /^\s*(\d{1,3})\s*\+?\s*$/.exec(String(time ?? ''));
+  return m ? m[1] : null;
 }

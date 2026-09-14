@@ -1,23 +1,18 @@
 /**
  * Punteggio dal vivo.
  *
- * Durante la partita il telefono interroga TheSportsDB ogni quarantacinque
- * secondi: `lookupevent.php?id=<idEvent>` pesa un chilo e mezzo e porta
- * punteggio e stato aggiornati. Gratis, senza quota giornaliera, con CORS
- * aperto, quindi funziona anche dal web.
+ * Il guardiano scrive la partita in `stato_partita` tre volte al minuto, e
+ * l'app la riceve con Realtime appena cambia. Una lettura della riga ogni tanto
+ * resta come rete: ogni minuto con Realtime collegato, ogni quindici secondi
+ * senza.
  *
- * Perche non API-Football: la sua quota e cento chiamate al giorno e serve
- * intera per formazioni ed eventi. E soprattutto la sua chiave e segreta,
- * mentre quella di TheSportsDB e pubblica per definizione, quindi puo stare
- * dentro l'app senza esporre niente.
+ * L'id della partita arriva dall'ingest in data/prossima.json, dentro il bundle:
+ * cosi il telefono non deve cercarselo a ogni apertura.
  *
- * L'id della partita arriva dall'ingest in data/prossima.json: cosi il telefono
- * non deve cercarselo a ogni apertura.
- *
- * Il polling parte da dieci minuti prima del calcio d'inizio, si ferma appena
- * la partita e finita o dopo tre ore, e si sospende quando l'app va in secondo
- * piano. Se una chiamata fallisce si tiene l'ultimo punteggio buono: meglio un
- * dato di un minuto fa che una schermata vuota.
+ * Il dal vivo si accende da dieci minuti prima del calcio d'inizio a tre ore
+ * dopo, e si spegne quando l'app va in secondo piano. Se una lettura fallisce
+ * si tiene l'ultimo punteggio buono: meglio un dato di un minuto fa che una
+ * schermata vuota.
  *
  * I conti stanno in live-core.ts, che e senza React e sotto test.
  */
@@ -26,13 +21,22 @@ import { AppState } from 'react-native';
 import type { Match } from '@satanelli/core';
 
 import { prossima } from './data';
+import { useDati } from './bundle-remoto';
 import { supabase } from './supabase';
-import { cronacaDi, finestraAperta, leggiEvento, orienta, type Live } from './live-core';
+import {
+  cronacaDi, daChiedere, finestraAperta, leggiEvento, orienta, realtimeAffidabile, type Live,
+} from './live-core';
 
 export type { Live } from './live-core';
 
 const BASE = 'https://www.thesportsdb.com/api/v1/json/123';
-const OGNI = 45_000;
+/** il passo della rete di sicurezza: quanto spesso ci si chiede se rileggere la riga */
+const OGNI = 15_000;
+/** ogni quanto si guarda se la finestra della partita si e aperta */
+const CONTROLLO = 60_000;
+/** dopo quanto si riprova un canale Realtime caduto: raddoppia a ogni caduta, fino a un minuto */
+const RIPROVA = 5_000;
+const RIPROVA_MASSIMA = 60_000;
 /** ogni quanto si ridisegna il minuto fra un aggiornamento e l'altro */
 const BATTITO = 15_000;
 
@@ -55,6 +59,17 @@ let formazioneVivo: FormazioneVivo | null = null;
 let ascoltatori: Array<() => void> = [];
 let timer: ReturnType<typeof setInterval> | null = null;
 let battito: ReturnType<typeof setInterval> | null = null;
+let controllo: ReturnType<typeof setInterval> | null = null;
+let riprova: ReturnType<typeof setTimeout> | null = null;
+/** la partita che si sta seguendo: se il bundle nuovo ne porta un'altra, si ricomincia */
+let seguita: string | null = null;
+/** vero quando Realtime ha confermato l'iscrizione alla riga */
+let collegato = false;
+/** l'ultimo evento arrivato da Realtime: il silenzio dice che il canale si e piantato */
+let ultimoEvento = 0;
+/** cadute di fila del canale: un Realtime che rifiuta sempre non va martellato ogni cinque secondi */
+let cadute = 0;
+let ultimaDomanda = 0;
 
 function annuncia() {
   for (const f of ascoltatori) f();
@@ -134,6 +149,15 @@ function daRiga(r: Riga | null): Live | null {
   }, Number.isFinite(scritto) ? scritto : Date.now());
 }
 
+/*
+ * Al triplice fischio non si smette piu di ascoltare.
+ *
+ * Prima qui si chiudeva tutto appena la partita risultava finita. Ma il
+ * guardiano mostra la fine subito e chiude il risultato qualche minuto dopo,
+ * quando le fonti lo confermano: un gol al novantacinquesimo arrivato in
+ * ritardo, o il nome di un marcatore, sarebbero rimasti fuori fino alla
+ * riapertura dell'app. Si continua fino alla fine della finestra.
+ */
 function applica(letto: Live | null, cronologia?: GolVivo[] | null, r?: Riga) {
   if (Array.isArray(cronologia)) gol = cronologia;
   if (Array.isArray(r?.cartellini)) cartellini = r.cartellini;
@@ -141,7 +165,6 @@ function applica(letto: Live | null, cronologia?: GolVivo[] | null, r?: Riga) {
   if (!letto) { if (Array.isArray(cronologia)) annuncia(); return; }
   stato = letto;
   annuncia();
-  if (letto.finita) ferma();
 }
 
 /**
@@ -190,6 +213,7 @@ async function chiediAllaFonte() {
 }
 
 async function chiedi() {
+  ultimaDomanda = Date.now();
   if (await chiediAlDatabase()) return;
   await chiediAllaFonte();
 }
@@ -197,32 +221,93 @@ async function chiedi() {
 /** l'abbonamento alle modifiche della riga: uno solo per tutta l'app */
 let canale: ReturnType<NonNullable<typeof supabase>['channel']> | null = null;
 
+/*
+ * Un canale nuovo a ogni iscrizione, e uno caduto si rifa.
+ *
+ * Prima il canale si chiudeva con `unsubscribe()` e si riapriva con lo stesso
+ * nome. Il client Supabase, trovando un canale con quel nome ancora in uscita,
+ * restituiva quello: la nuova iscrizione non partiva, e appena l'uscita finiva
+ * l'app restava senza Realtime fino al riavvio, con la sola lettura periodica.
+ * Succedeva tornando all'app subito dopo averla lasciata.
+ *
+ * E se il canale cade da solo -- rete che cambia, telefono che dorme -- prima
+ * nessuno lo rifaceva.
+ */
 function ascoltaIlDatabase() {
   const id = prossima?.eventId;
   if (!supabase || !id || canale) return;
-  canale = supabase
-    .channel(`partita-${id}`)
+  const client = supabase;
+  const c = client
+    .channel(`partita-${id}-${Date.now()}`)
     .on(
       'postgres_changes',
       { event: 'UPDATE', schema: 'public', table: 'stato_partita', filter: `partita=eq.${id}` },
       (m) => {
+        ultimoEvento = Date.now();
         const r = m.new as Riga;
         finitaIl = r.finita_il ?? null;
         formazioneVivo = r.formazione ?? null;
         applica(daRiga(r), r.gol ?? [], r);
       },
     )
-    .subscribe();
+    .subscribe((s) => {
+      // un canale gia sostituito non decide piu niente
+      if (canale !== c) return;
+      collegato = s === 'SUBSCRIBED';
+      // appena collegati si rilegge la riga: quello che e cambiato mentre ci si
+      // collegava non arriva da Realtime
+      if (s === 'SUBSCRIBED') { cadute = 0; ultimoEvento = Date.now(); void chiedi(); return; }
+      if (s === 'CHANNEL_ERROR' || s === 'TIMED_OUT' || s === 'CLOSED') {
+        canale = null;
+        void client.removeChannel(c);
+        const attesa = Math.min(RIPROVA * 2 ** cadute, RIPROVA_MASSIMA);
+        cadute += 1;
+        if (!riprova) riprova = setTimeout(() => { riprova = null; avvia(); }, attesa);
+      }
+    });
+  canale = c;
 }
 
+/**
+ * Accende quello che serve, se la finestra della partita e aperta.
+ *
+ * Si puo chiamare quante volte si vuole: accende solo quello che manca. E si
+ * chiama da sola ogni minuto (`controllo`), perche prima partiva solo
+ * all'apertura dell'app: chi la apriva alle 20:40 per una partita delle 21:00 e
+ * la teneva davanti non riceveva mai niente, perche alle 20:40 la finestra era
+ * ancora chiusa e nessuno ricontrollava.
+ */
 function avvia() {
-  if (!finestraAperta(prossima?.kickoff)) return;
+  const id = prossima?.eventId ? String(prossima.eventId) : null;
+  /*
+   * Il bundle nuovo porta un'altra partita: si lascia quella vecchia, e con lei
+   * tutto quello che se ne sapeva.
+   *
+   * L'app installata resta in memoria per giorni. Senza questo la fine della
+   * partita di sabato restava in `finitaIl`, e la chat di martedi si
+   * considerava chiusa venti minuti dopo sabato fino alla prima lettura.
+   */
+  if (id !== seguita) {
+    ferma();
+    seguita = id;
+    const cera = stato || gol.length || cartellini.length || cambi.length || finitaIl || formazioneVivo;
+    stato = null;
+    gol = [];
+    cartellini = [];
+    cambi = [];
+    finitaIl = null;
+    formazioneVivo = null;
+    cadute = 0;
+    if (cera) annuncia();
+  }
+  if (!finestraAperta(prossima?.kickoff)) { ferma(); return; }
+
   ascoltaIlDatabase();
 
   /*
    * Il battito del cronometro.
    *
-   * Il dato dal server arriva una volta al minuto; senza questo il minuto sullo
+   * Il dato dal server arriva a ogni cambio; senza questo il minuto sullo
    * schermo resterebbe fermo e poi salterebbe di uno. Qui non si chiede niente
    * a nessuno: si rifa il disegno, e `minutoCorrente` calcola dove siamo. Il
    * conto sta in live-core, quindi non c'e nessun contatore da tenere allineato.
@@ -235,16 +320,14 @@ function avvia() {
     }, BATTITO);
   }
 
-  // un colpo si fa comunque: se lo stato dell'app arrivasse sbagliato, meglio
-  // un punteggio fermo che nessun punteggio
-  void chiedi();
-
-  // il ciclo invece parte solo in primo piano, per non consumare batteria
   if (timer) return;
-  if (AppState.currentState === 'background') return;
+  // un colpo subito: la riga puo essere cambiata mentre l'app era chiusa
+  void chiedi();
   timer = setInterval(() => {
     if (!finestraAperta(prossima?.kickoff)) { ferma(); return; }
-    void chiedi();
+    const adesso = Date.now();
+    const affidabile = realtimeAffidabile(collegato, ultimoEvento, Boolean(stato?.finita), adesso);
+    if (daChiedere(affidabile, ultimaDomanda, adesso)) void chiedi();
   }, OGNI);
 }
 
@@ -253,7 +336,27 @@ function ferma() {
   timer = null;
   if (battito) clearInterval(battito);
   battito = null;
-  if (canale) { void canale.unsubscribe(); canale = null; }
+  if (riprova) clearTimeout(riprova);
+  riprova = null;
+  collegato = false;
+  if (canale) {
+    const c = canale;
+    canale = null;
+    void supabase?.removeChannel(c);
+  }
+}
+
+/** L'app torna in primo piano o si apre: il controllo della finestra riparte. */
+function accendi() {
+  if (!controllo) controllo = setInterval(avvia, CONTROLLO);
+  avvia();
+}
+
+/** L'app va in secondo piano: si spegne tutto, batteria e connessioni comprese. */
+function spegni() {
+  if (controllo) clearInterval(controllo);
+  controllo = null;
+  ferma();
 }
 
 /**
@@ -261,13 +364,15 @@ function ferma() {
  * la scheda partita compare in piu schermate insieme.
  */
 export function useLive(): Live | null {
+  // cambia a ogni bundle scaricato: la partita da seguire puo essere un'altra
+  const versione = useDati();
   useEffect(() => {
-    avvia();
+    if (AppState.currentState !== 'background') accendi();
     const sub = AppState.addEventListener('change', (s) => {
-      if (s === 'active') avvia(); else ferma();
+      if (s === 'active') accendi(); else spegni();
     });
     return () => { sub.remove(); };
-  }, []);
+  }, [versione]);
 
   return useSyncExternalStore(
     (f) => {

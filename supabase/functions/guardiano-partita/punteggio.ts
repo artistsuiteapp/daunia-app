@@ -215,6 +215,73 @@ export function cronologia(eventi: EventoAF[], nostroId: number, inCasa: boolean
 }
 
 
+/**
+ * La cronaca dei gol con i nomi, piu i gol che solo il tabellone ha visto.
+ *
+ * Gli eventi riscrivevano la lista intera. Se il tabellone aveva visto un gol
+ * che la fonte degli eventi non aveva ancora, quel gol spariva dalla cronaca
+ * al primo cartellino letto, mentre il punteggio in alto lo mostrava.
+ *
+ * Una voce del tabellone resta finche gli eventi non spiegano altrettanti gol.
+ */
+export function unisciCronaca(
+  daEventi: VoceGol[],
+  vecchia: ReadonlyArray<Record<string, unknown>>,
+): Array<VoceGol | Record<string, unknown>> {
+  const spiegati = daEventi.length;
+  const soloTabellone = vecchia.filter((v) => v?.fonte !== 'eventi'
+    && Number(v?.casa ?? 0) + Number(v?.ospiti ?? 0) > spiegati);
+  return [...daEventi, ...soloTabellone];
+}
+
+/** Le fasi di una partita in ordine, per confrontare due letture. */
+const FASI = ['NS', '1H', 'HT', '2H', 'ET', 'BT', 'P', 'FT', 'AET', 'PEN'];
+
+/**
+ * Di due stati letti, quello piu avanti nella partita.
+ *
+ * Le fonti vedono la stessa partita con ritardi diversi: una dice ancora
+ * "intervallo" quando l'altra dice "secondo tempo". Vale la piu avanti,
+ * perche una partita non torna indietro. Rinviata, sospesa o annullata non
+ * stanno nell'ordine: si dicono come sono, dalla prima fonte.
+ */
+export function piuAvanti(a: string | null | undefined, b: string | null | undefined): string | null {
+  const x = a ?? null;
+  const y = b ?? null;
+  if (x === null) return y;
+  if (y === null) return x;
+  const ix = FASI.indexOf(x);
+  const iy = FASI.indexOf(y);
+  if (ix < 0 || iy < 0) return x;
+  return iy > ix ? y : x;
+}
+
+/**
+ * Il minuto piu fresco fra quelli letti, coerente con il tempo che si gioca.
+ *
+ * TheSportsDB scrive il recupero ("45+3") ma puo arrivare in ritardo;
+ * live-score-api e piu svelto ma scrive "45" nel recupero. Vince il minuto piu
+ * avanti, a parita la prima fonte. Un "45+3" letto quando il secondo tempo e
+ * gia cominciato e un avanzo del primo, e non si prende.
+ */
+export function minutoMigliore(stato: string, ...candidati: Array<string | null | undefined>): string | null {
+  let migliore: string | null = null;
+  let valore = -1;
+  for (const c of candidati) {
+    const m = /^(\d{1,3})(?:\+(\d{1,2}))?'?$/.exec(String(c ?? '').trim());
+    if (!m) continue;
+    const tempo = Number(m[1]);
+    if (stato === '1H' && tempo > 45) continue;
+    if (stato === '2H' && tempo <= 45) continue;
+    const quanto = tempo + Number(m[2] ?? 0);
+    if (quanto > valore) {
+      migliore = m[2] ? `${m[1]}+${m[2]}` : m[1];
+      valore = quanto;
+    }
+  }
+  return migliore;
+}
+
 export type VoceCartellino = { minuto: number | null; chi: string | null; nostro: boolean; rosso: boolean };
 export type VoceCambio = { minuto: number | null; esce: string | null; entra: string | null; nostro: boolean };
 
