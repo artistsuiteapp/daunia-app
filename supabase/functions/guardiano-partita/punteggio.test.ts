@@ -248,3 +248,45 @@ test('proteggi non modifica la patch che riceve', () => {
   proteggi(patch, riga);
   assert.deepEqual(patch, { gol: [] });
 });
+
+import { piuAvanti, minutoMigliore, unisciCronaca } from './punteggio.ts';
+
+test('di due stati vale il piu avanti: una partita non torna indietro', () => {
+  assert.equal(piuAvanti('HT', '2H'), '2H');
+  assert.equal(piuAvanti('2H', 'HT'), '2H');
+  assert.equal(piuAvanti('NS', '1H'), '1H');
+  assert.equal(piuAvanti(null, '1H'), '1H');
+  assert.equal(piuAvanti('2H', null), '2H');
+  assert.equal(piuAvanti(null, null), null);
+  assert.equal(piuAvanti('2H', 'FT'), 'FT');
+  // rinviata o sospesa non stanno nell'ordine: si dicono come sono
+  assert.equal(piuAvanti('PST', '1H'), 'PST');
+});
+
+test('il minuto piu fresco vince, ma solo se e del tempo che si gioca', () => {
+  assert.equal(minutoMigliore('2H', '67', '69'), '69');
+  assert.equal(minutoMigliore('1H', '45+3', '45'), '45+3');
+  // a parita resta la prima fonte
+  assert.equal(minutoMigliore('1H', '30', '30'), '30');
+  // un avanzo del primo tempo non entra nel secondo
+  assert.equal(minutoMigliore('2H', '45+3', '46'), '46');
+  assert.equal(minutoMigliore('2H', '45+3', null), null);
+  assert.equal(minutoMigliore('1H', "23'", undefined), '23');
+  assert.equal(minutoMigliore('1H', '', 'HT'), null);
+});
+
+test('la cronaca coi nomi tiene i gol che solo il tabellone ha visto', () => {
+  const daEventi = [{ minuto: '23', chi: 'A. Rossi', casa: 1, ospiti: 0, nostro: true, fonte: 'eventi' as const }];
+  const vecchia = [
+    { minuto: '23', chi: null, casa: 1, ospiti: 0, nostro: true, fonte: 'vero' },
+    { minuto: '78', casa: 1, ospiti: 1, nostro: false, fonte: 'vero' },
+  ];
+  const unita = unisciCronaca(daEventi, vecchia);
+  assert.equal(unita.length, 2);
+  assert.equal((unita[0] as { chi: string }).chi, 'A. Rossi');
+  assert.equal((unita[1] as { minuto: string }).minuto, '78');
+
+  // quando gli eventi spiegano anche il secondo gol, la voce del tabellone se ne va
+  const tutti = [...daEventi, { minuto: '78', chi: 'B. Verdi', casa: 1, ospiti: 1, nostro: false, fonte: 'eventi' as const }];
+  assert.deepEqual(unisciCronaca(tutti, vecchia), tutti);
+});

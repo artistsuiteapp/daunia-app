@@ -194,3 +194,78 @@ test('i gol non finiscono fra i cartellini', () => {
   assert.equal(cartellini.length, 0);
   assert.equal(cambi.length, 0);
 });
+
+/*
+ * La scheda della partita dentro `matches/events`: punteggio, stato e minuto.
+ * Il formato e copiato da una risposta vera (Monopoli-Foggia, 12 settembre).
+ */
+import { leggiPartita, punteggioDaLsa, statoDaLsa, minutoDaLsa } from './livescore.ts';
+
+test('il punteggio di live-score-api si legge, e solo quello', () => {
+  assert.deepEqual(punteggioDaLsa('1 - 0'), { casa: 1, ospiti: 0 });
+  assert.deepEqual(punteggioDaLsa('2-3'), { casa: 2, ospiti: 3 });
+  assert.equal(punteggioDaLsa('? - ?'), null);
+  assert.equal(punteggioDaLsa(''), null);
+  assert.equal(punteggioDaLsa(null), null);
+});
+
+test('lo stato di live-score-api diventa quello di TheSportsDB, e il tempo lo dice il minuto', () => {
+  assert.equal(statoDaLsa('IN PLAY', '12'), '1H');
+  assert.equal(statoDaLsa('IN PLAY', '45+'), '1H');
+  assert.equal(statoDaLsa('ADDED TIME', '45+'), '1H');
+  assert.equal(statoDaLsa('IN PLAY', '46'), '2H');
+  assert.equal(statoDaLsa('IN PLAY', '90+'), '2H');
+  assert.equal(statoDaLsa('HALF TIME BREAK', 'HT'), 'HT');
+  assert.equal(statoDaLsa('FINISHED', 'FT'), 'FT');
+  assert.equal(statoDaLsa('NOT STARTED', ''), 'NS');
+  // uno stato che non si conosce non si mescola a quello dell'altra fonte
+  assert.equal(statoDaLsa('INSUFFICIENT DATA', '?'), null);
+  assert.equal(statoDaLsa('IN PLAY', ''), null);
+});
+
+test('il minuto di live-score-api perde il "+" del recupero, che l app sa far avanzare', () => {
+  assert.equal(minutoDaLsa('34'), '34');
+  assert.equal(minutoDaLsa('45+'), '45');
+  assert.equal(minutoDaLsa('90+'), '90');
+  assert.equal(minutoDaLsa('HT'), null);
+  assert.equal(minutoDaLsa(''), null);
+});
+
+test('una lettura porta eventi, punteggio, stato e da che parte gioca il Foggia', async () => {
+  const vecchio = globalThis.fetch;
+  globalThis.fetch = (async () => new Response(JSON.stringify({
+    success: true,
+    data: {
+      match: { status: 'IN PLAY', time: '37', scores: { score: '1 - 0' }, home: { name: 'Monopoli' }, away: { name: 'Foggia' } },
+      event: [{ event: 'YELLOW_CARD', time: 5, is_home: false, player: { name: 'G. Todisco' } }],
+    },
+  }))) as typeof fetch;
+  try {
+    const l = await leggiPartita('731535', { key: 'k', secret: 's' });
+    assert.ok(l);
+    assert.equal(l.eventi.length, 1);
+    assert.deepEqual(l.punteggio, { casa: 1, ospiti: 0 });
+    assert.equal(l.stato, '1H');
+    assert.equal(l.minuto, '37');
+    assert.equal(l.foggiaInCasa, false);
+  } finally {
+    globalThis.fetch = vecchio;
+  }
+});
+
+test('una partita senza eventi e una lettura buona, una chiamata fallita no', async () => {
+  const vecchio = globalThis.fetch;
+  try {
+    globalThis.fetch = (async () => new Response(JSON.stringify({
+      success: true, data: { match: { status: 'IN PLAY', time: '3', scores: { score: '0 - 0' }, home: { name: 'Foggia' } }, event: [] },
+    }))) as typeof fetch;
+    const vuota = await leggiPartita('1', { key: 'k', secret: 's' });
+    assert.ok(vuota, 'nei primi minuti una partita senza eventi e normale: non e un guasto');
+    assert.deepEqual(vuota.eventi, []);
+
+    globalThis.fetch = (async () => new Response(JSON.stringify({ success: false, error: 'x' }))) as typeof fetch;
+    assert.equal(await leggiPartita('1', { key: 'k', secret: 's' }), null);
+  } finally {
+    globalThis.fetch = vecchio;
+  }
+});
