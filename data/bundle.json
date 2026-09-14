@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-14T16:21:14.500Z",
+    "generatedAt": "2026-09-14T16:41:08.298Z",
     "season": "2026-2027",
     "competition": "Serie C",
     "sources": {
@@ -22,7 +22,6 @@
       "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
       "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
       "API-Football rosa: Your account is suspended, check on https://dashboard.api-football.com.",
-      "Divieti, FoggiaToday: HTTP 403 su https://www.foggiatoday.it/rss",
       "Trasferta a Inter U23 fra meno di una settimana e nessuna notizia sul divieto: controlla a mano, potrebbe essersi rotto il riconoscimento.",
       "Lega Pro: Foggia-Altamura e' finita da ore e non ha un id nel calendario della Lega: la formazione non entrera' mai nell'archivio"
     ]
@@ -5432,6 +5431,17 @@
     ],
     "articoli": [
       {
+        "id": "calciofoggia-9e7b078ef9",
+        "testata": "calciofoggia",
+        "titolo": "Casella e Di Pasquale: “Gruppo con ampi margini. Dobbiamo crescere con pazienza e lucidità”",
+        "sommario": "Il direttore sportivo Alex Casella e il capitano Davide Di Pasquale hanno analizzato il momento del Foggia dopo le due sconfitte consecutive, guardando alla prossima sfida…",
+        "url": "https://www.calciofoggia.it/casella-e-di-pasquale-gruppo-con-ampi-margini-dobbiamo-crescere-con-pazienza-e-lucidita/",
+        "data": "2026-09-14T16:32:59.000Z",
+        "autore": "Armando Borrelli",
+        "categoria": "FOGGIA CALCIO",
+        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Screenshot-2026-09-14-alle-18.13.26.png"
+      },
+      {
         "id": "calciofoggia-37e9e2f3d1",
         "testata": "calciofoggia",
         "titolo": "Foggia, presentata la nuova maglia home 2026/27: ritorno alle bande larghe",
@@ -5443,11 +5453,11 @@
         "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Nuova-Maglia-Home-Foggia-2026-27.png"
       },
       {
-        "id": "foggiacalciomania-163175004a",
+        "id": "foggiacalciomania-19f40e3e0f",
         "testata": "foggiacalciomania",
         "titolo": "Ecco la nuova maglia del Foggia",
         "sommario": "Il Foggia ha presentato la nuova prima maglia che sarà indossata da domani sera. L'articolo Ecco la nuova maglia del Foggia proviene da Foggiacalciomania.",
-        "url": "https://foggiacalciomania.com/news-foggia-calcio/ultimissime/ecco-la-nuova-maglia-del-foggia/",
+        "url": "https://foggiacalciomania.com/news-foggia-calcio/ecco-la-nuova-maglia-del-foggia/",
         "data": "2026-09-14T15:49:11.000Z",
         "autore": "Roberto Parisi",
         "categoria": "News Calcio Foggia 1920",
@@ -5641,17 +5651,6 @@
         "immagine": "https://foggiacalciomania.com/wp-content/uploads/2025/08/palla334567.jpg"
       },
       {
-        "id": "calciofoggia-08568fb1af",
-        "testata": "calciofoggia",
-        "titolo": "Risultati, marcatori e classifica 4ª giornata",
-        "sommario": "In vetta continua la marcia del Sorrento, unica squadra ancora a punteggio pieno con 12 punti. Alle spalle della capolista, con 9 punti, c'è un gruppo formato da Audace Cerignola…",
-        "url": "https://www.calciofoggia.it/risultati-marcatori-e-classifica-4a-giornata/",
-        "data": "2026-09-12T18:15:24.000Z",
-        "autore": "Fabio Bertazzoli",
-        "categoria": "SERIE C",
-        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2025/06/Pallone-Lega-Pro-Decathlon.jpg"
-      },
-      {
         "id": "ilfoggia-9f741afccf",
         "testata": "ilfoggia",
         "titolo": "Cosmano Sport Soccer Trani – Risultato parziale",
@@ -5740,6 +5739,6 @@
         "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0088-scaled.jpg"
       }
     ],
-    "aggiornatoIl": "2026-09-14T16:20:59.720Z"
+    "aggiornatoIl": "2026-09-14T16:40:57.608Z"
   }
 }
