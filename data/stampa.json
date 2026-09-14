@@ -27,6 +27,17 @@
   ],
   "articoli": [
     {
+      "id": "calciofoggia-b0c7570090",
+      "testata": "calciofoggia",
+      "titolo": "Giudice Sportivo: le decisioni relative alla quarta giornata",
+      "sommario": "Diramato il comunicato del giudice sportivo relativo le gare della quarta giornata di campionato. Clicca qui per leggere il comunicato completo © 2026, CALCIOFOGGIA.IT. Tutti i…",
+      "url": "https://www.calciofoggia.it/giudice-sportivo-le-decisioni-relative-alla-quarta-giornata-2/",
+      "data": "2026-09-14T13:08:10.000Z",
+      "autore": "Mario",
+      "categoria": "CALCIO",
+      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2020/09/Zgiudice-sportivo.png"
+    },
+    {
       "id": "foggiacalciomania-511343c756",
       "testata": "foggiacalciomania",
       "titolo": "Giudice sportivo: Foggia nessuna ammenda e squalifica",
@@ -47,6 +58,17 @@
       "autore": "Redazione FCM 24 ore",
       "categoria": "Designazioni",
       "immagine": "https://foggiacalciomania.com/wp-content/uploads/2014/09/arbitro-pallone.jpg"
+    },
+    {
+      "id": "calciofoggia-6ceee0c1c5",
+      "testata": "calciofoggia",
+      "titolo": "Giovanni Castellano di Nichelino dirige Foggia-Savoia",
+      "sommario": "Sarà il Sig. Giovanni Castellano della sezione di Nichelino a dirigere l'incontro Foggia-Savoia, in programma martedì 15 settembre alle ore 21:00, allo Stadio Pino Zaccheria di…",
+      "url": "https://www.calciofoggia.it/giovanni-castellano-di-nichelino-dirige-foggia-savoia/",
+      "data": "2026-09-14T11:42:57.000Z",
+      "autore": "Fabio Bertazzoli",
+      "categoria": "FOGGIA CALCIO",
+      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Castellano.jpg"
     },
     {
       "id": "foggiacalciomania-709ade4ef6",
@@ -71,6 +93,28 @@
       "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Auteri-43.jpeg"
     },
     {
+      "id": "calciofoggia-383734c68e",
+      "testata": "calciofoggia",
+      "titolo": "L’avversario il Savoia",
+      "sommario": "Fondato il 21 novembre 1908 da un gruppo di industriali locali legati al settore molitorio, il Savoia è una delle realtà calcistiche più antiche dell’Italia meridionale. Sotto il…",
+      "url": "https://www.calciofoggia.it/lavversario-il-savoia/",
+      "data": "2026-09-14T10:33:29.000Z",
+      "autore": "Mario Schena",
+      "categoria": "FOGGIA CALCIO",
+      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/images.jpg"
+    },
+    {
+      "id": "calciofoggia-18f0e5adc4",
+      "testata": "calciofoggia",
+      "titolo": "il programma della 5° giornata",
+      "sommario": "La classifica del girone C vede il Sorrento capolista solitario seguito da 4 squadre a 3 punti di distanza. Sul fondo sempre critica la posizione del Crotone fermo all’ultimo…",
+      "url": "https://www.calciofoggia.it/il-programma-della-5-giornata/",
+      "data": "2026-09-14T07:33:27.000Z",
+      "autore": "Mario Schena",
+      "categoria": "SERIE C",
+      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Auteri-al-San-Nicola-di-Bari-contro-il-Monopoli-Foto-Antonellis-Calcio-Foggia-1920.jpeg"
+    },
+    {
       "id": "foggiacalciomania-292572d596",
       "testata": "foggiacalciomania",
       "titolo": "Le pagelle di Monopoli-Foggia. Impegno sicuramente più che sufficiente, ma si raccoglie poco",
@@ -93,6 +137,39 @@
       "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/page_1-1.png"
     },
     {
+      "id": "calciofoggia-0dac970f64",
+      "testata": "calciofoggia",
+      "titolo": "il punto sulla 4° giornata",
+      "sommario": "Incredibile ma vero in vetta valla classifica veleggia a punteggio pieno il Sorrento che nel big match della quarta giornata batte l’altra capolista il Picerno che si ferma a 9…",
+      "url": "https://www.calciofoggia.it/il-punto-sulla-4-giornata-2/",
+      "data": "2026-09-13T07:51:29.000Z",
+      "autore": "Mario Schena",
+      "categoria": "SERIE C",
+      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/ddee7a87-3d44-4313-b1e8-6cc34ae311cc.jpeg"
+    },
+    {
+      "id": "calciofoggia-c66a0ef9f4",
+      "testata": "calciofoggia",
+      "titolo": "Gallo: “Ci è mancato qualcosa negli ultimi sedici metri. La squadra non manca mai la prestazione, è solo un momento”",
+      "sommario": "Andrea Gallo, centrocampista del Foggia, ha commentato a caldo la sconfitta di Monopoli, intervistato durante “Direttissima”, in onda su FoggiaTv. «Sicuramente ci è mancato…",
+      "url": "https://www.calciofoggia.it/gallo-ci-e-mancato-qualcosa-negli-ultimi-sedici-metri-la-squadra-non-manca-mai-la-prestazione-e-solo-un-momento/",
+      "data": "2026-09-12T18:56:40.000Z",
+      "autore": "Armando Borrelli",
+      "categoria": "FOGGIA CALCIO",
+      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Gallo.jpg"
+    },
+    {
+      "id": "calciofoggia-9705583e2a",
+      "testata": "calciofoggia",
+      "titolo": "Auteri: “Abbiamo giocato una buona partita, ma non siamo stati risoluti. Peccato, teniamoci la prestazione”",
+      "sommario": "Gaetano Auteri ha analizzato a caldo la sconfitta di Monopoli, riconoscendo il dispiacere ma valorizzando il rendimento complessivo della squadra, nell’intervista durante…",
+      "url": "https://www.calciofoggia.it/auteri-abbiamo-giocato-una-buona-partita-ma-non-siamo-stati-risoluti-peccato-teniamoci-la-prestazione/",
+      "data": "2026-09-12T18:50:06.000Z",
+      "autore": "Armando Borrelli",
+      "categoria": "FOGGIA CALCIO",
+      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Auteri-al-San-Nicola-di-Bari-contro-il-Monopoli-Foto-Antonellis-Calcio-Foggia-1920.jpeg"
+    },
+    {
       "id": "foggiacalciomania-f20b8f090a",
       "testata": "foggiacalciomania",
       "titolo": "Gallo: “Arriveranno anche i risultati”",
@@ -102,6 +179,17 @@
       "autore": "Roberto Parisi",
       "categoria": "Sala stampa",
       "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Gallo.jpeg"
+    },
+    {
+      "id": "calciofoggia-5b4a27f719",
+      "testata": "calciofoggia",
+      "titolo": "Colombo: “Partita di equilibrio, abbiamo capitalizzato l’unica occasione. Foggia ha strutturato una squadra importante”",
+      "sommario": "Alberto Colombo, allenatore del Monopoli, ha commentato a caldo la vittoria contro il Foggia al San Nicola, nell’intervista durante “Direttissima”, in onda su FoggiaTv. «Ormai le…",
+      "url": "https://www.calciofoggia.it/colombo-partita-di-equilibrio-abbiamo-capitalizzato-lunica-occasione-foggia-ha-strutturato-una-squadra-importante/",
+      "data": "2026-09-12T18:44:56.000Z",
+      "autore": "Armando Borrelli",
+      "categoria": "FOGGIA CALCIO",
+      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2024/09/Mister-Colombo-foto-Antonello-Forcelli.jpeg"
     },
     {
       "id": "foggiacalciomania-d6e6cc40c8",
@@ -126,6 +214,17 @@
       "immagine": "https://foggiacalciomania.com/wp-content/uploads/2025/08/palla334567.jpg"
     },
     {
+      "id": "calciofoggia-08568fb1af",
+      "testata": "calciofoggia",
+      "titolo": "Risultati, marcatori e classifica 4ª giornata",
+      "sommario": "In vetta continua la marcia del Sorrento, unica squadra ancora a punteggio pieno con 12 punti. Alle spalle della capolista, con 9 punti, c'è un gruppo formato da Audace Cerignola…",
+      "url": "https://www.calciofoggia.it/risultati-marcatori-e-classifica-4a-giornata/",
+      "data": "2026-09-12T18:15:24.000Z",
+      "autore": "Fabio Bertazzoli",
+      "categoria": "SERIE C",
+      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2025/06/Pallone-Lega-Pro-Decathlon.jpg"
+    },
+    {
       "id": "foggiacalciomania-953aff412f",
       "testata": "foggiacalciomania",
       "titolo": "Top & Flop di Monopoli-Foggia",
@@ -135,6 +234,17 @@
       "autore": "Redazione FCM 24 ore",
       "categoria": "Top & Flop",
       "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Monopoli-Foggia-2.jpg"
+    },
+    {
+      "id": "calciofoggia-5eca8d5c30",
+      "testata": "calciofoggia",
+      "titolo": "Monopoli-Foggia 1-0 (risultato finale)",
+      "sommario": "Secondo tempo 90’+9 – Termina 1-0 tra Monopoli e Foggia: decide il gol di Capone al 36′. 90’+8 – Decisione finale: niente calcio di rigore. 90’+7 – Altra carta FVS giocata dal…",
+      "url": "https://www.calciofoggia.it/monopoli-foggia-campionato-2026-2027/",
+      "data": "2026-09-12T15:00:46.000Z",
+      "autore": "Armando Borrelli",
+      "categoria": "FOGGIA CALCIO",
+      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Monopoli-Foggia.png"
     },
     {
       "id": "ilfoggia-9f741afccf",
@@ -225,5 +335,5 @@
       "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0088-scaled.jpg"
     }
   ],
-  "aggiornatoIl": "2026-09-14T13:21:08.084Z"
+  "aggiornatoIl": "2026-09-14T13:40:48.865Z"
 }
