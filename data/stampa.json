@@ -38,6 +38,17 @@
       "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/08/789653998_10239616419060783_1138873880567371313_n.jpg"
     },
     {
+      "id": "calciofoggia-fe9aa55e48",
+      "testata": "calciofoggia",
+      "titolo": "Ritorna ‘za Fò: appuntamento alle 21 su FoggiaTV",
+      "sommario": "Ritorna l’appuntamento settimanale con la trasmissione sportiva curata e condotta da Lello Scarano, pronto ad aggiornarvi sulle vicende rossonere. In onda a partire dalle ore…",
+      "url": "https://www.calciofoggia.it/ritorna-za-fo-appuntamento-alle-21-su-foggiatv/",
+      "data": "2026-09-14T17:00:30.000Z",
+      "autore": "Armando Borrelli",
+      "categoria": "FOGGIA CALCIO",
+      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/06/Lello-lancio-zaFo-2026.png"
+    },
+    {
       "id": "calciofoggia-9e7b078ef9",
       "testata": "calciofoggia",
       "titolo": "Casella e Di Pasquale: “Gruppo con ampi margini. Dobbiamo crescere con pazienza e lucidità”",
@@ -236,17 +247,6 @@
       "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Gallo.jpeg"
     },
     {
-      "id": "calciofoggia-5b4a27f719",
-      "testata": "calciofoggia",
-      "titolo": "Colombo: “Partita di equilibrio, abbiamo capitalizzato l’unica occasione. Foggia ha strutturato una squadra importante”",
-      "sommario": "Alberto Colombo, allenatore del Monopoli, ha commentato a caldo la vittoria contro il Foggia al San Nicola, nell’intervista durante “Direttissima”, in onda su FoggiaTv. «Ormai le…",
-      "url": "https://www.calciofoggia.it/colombo-partita-di-equilibrio-abbiamo-capitalizzato-lunica-occasione-foggia-ha-strutturato-una-squadra-importante/",
-      "data": "2026-09-12T18:44:56.000Z",
-      "autore": "Armando Borrelli",
-      "categoria": "FOGGIA CALCIO",
-      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2024/09/Mister-Colombo-foto-Antonello-Forcelli.jpeg"
-    },
-    {
       "id": "ilfoggia-9f741afccf",
       "testata": "ilfoggia",
       "titolo": "Cosmano Sport Soccer Trani – Risultato parziale",
@@ -335,5 +335,5 @@
       "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0088-scaled.jpg"
     }
   ],
-  "aggiornatoIl": "2026-09-14T19:20:51.541Z"
+  "aggiornatoIl": "2026-09-14T19:40:52.153Z"
 }
