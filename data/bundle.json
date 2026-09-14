@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-14T07:21:25.974Z",
+    "generatedAt": "2026-09-14T07:41:06.243Z",
     "season": "2026-2027",
     "competition": "Serie C",
     "sources": {
@@ -23,7 +23,6 @@
       "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
       "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
       "API-Football rosa: Your account is suspended, check on https://dashboard.api-football.com.",
-      "Divieti, FoggiaToday: HTTP 403 su https://www.foggiatoday.it/rss",
       "Trasferta a Inter U23 fra meno di una settimana e nessuna notizia sul divieto: controlla a mano, potrebbe essersi rotto il riconoscimento.",
       "Lega Pro: Foggia-Altamura e' finita da ore e non ha un id nel calendario della Lega: la formazione non entrera' mai nell'archivio"
     ]
@@ -4858,6 +4857,17 @@
     ],
     "articoli": [
       {
+        "id": "calciofoggia-18f0e5adc4",
+        "testata": "calciofoggia",
+        "titolo": "il programma della 5° giornata",
+        "sommario": "La classifica del girone C vede il Sorrento capolista solitario seguito da 4 squadre a 3 punti di distanza. Sul fondo sempre critica la posizione del Crotone fermo all’ultimo…",
+        "url": "https://www.calciofoggia.it/il-programma-della-5-giornata/",
+        "data": "2026-09-14T07:33:27.000Z",
+        "autore": "Mario Schena",
+        "categoria": "SERIE C",
+        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Auteri-al-San-Nicola-di-Bari-contro-il-Monopoli-Foto-Antonellis-Calcio-Foggia-1920.jpeg"
+      },
+      {
         "id": "foggiacalciomania-292572d596",
         "testata": "foggiacalciomania",
         "titolo": "Le pagelle di Monopoli-Foggia. Impegno sicuramente più che sufficiente, ma si raccoglie poco",
@@ -5067,17 +5077,6 @@
         "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/5c8eb7bc-d074-49b3-948b-95467f75fa52.jpeg"
       },
       {
-        "id": "calciofoggia-5b7aa29929",
-        "testata": "calciofoggia",
-        "titolo": "Foggia, è già tempo del riscatto. I dubbi di Auteri per la sfida al Monopoli",
-        "sommario": "E’ già il tempo del riscatto. La sconfitta con il Cerignola allo Zaccheria ha lasciato amarezza, interrogativi e soprattutto la sensazione di aver sprecato una grande occasione…",
-        "url": "https://www.calciofoggia.it/foggia-e-gia-tempo-del-riscatto-i-dubbi-di-auteri-per-la-sfida-al-monopoli/",
-        "data": "2026-09-10T12:20:39.000Z",
-        "autore": "Tiziano Errichiello",
-        "categoria": "FOGGIA CALCIO",
-        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2023/12/Zaccheria1-1068x600-1.jpg"
-      },
-      {
         "id": "ilfoggia-9f741afccf",
         "testata": "ilfoggia",
         "titolo": "Cosmano Sport Soccer Trani – Risultato parziale",
@@ -5166,6 +5165,6 @@
         "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0088-scaled.jpg"
       }
     ],
-    "aggiornatoIl": "2026-09-14T07:21:22.145Z"
+    "aggiornatoIl": "2026-09-14T07:40:55.976Z"
   }
 }
