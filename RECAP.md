@@ -1,7 +1,7 @@
 # Il Tifo della Daunia — recap completo
 
 App per i tifosi del Calcio Foggia 1920. **Progetto indipendente**, non affiliato
-al club. Aggiornato al 14 settembre 2026.
+al club. Aggiornato al 14 settembre 2026, dopo la revisione del dal vivo.
 
 Questo file esiste per riprendere il lavoro in una chat nuova senza perdere
 niente: cosa c'è, come funziona, cosa manca, e le decisioni prese con il
@@ -15,7 +15,7 @@ perché, che è la parte che non si ricostruisce leggendo il codice.
 - **Dove gira**: app nativa sull'iPhone, installata con Xcode. Il sito <https://daunia.vercel.app> esiste ancora ma non è più il prodotto: si pubblica solo a mano
 - **Dominio**: `iltifodelladaunia.it`, comprato su IONOS. Vetrina pronta in `sito/index.html`, non ancora pubblicata
 - **Stack**: Expo SDK 57 / React Native 0.86 (iOS, Android e web dallo stesso codice), Supabase, GitHub Actions
-- **Stato**: 375 commit (169 senza gli aggiornamenti automatici dei dati), 46 migrazioni, 38 schermate, **467 test**
+- **Stato**: 395 commit (176 senza gli aggiornamenti automatici dei dati), 46 migrazioni, 38 schermate, **500 test**, guardiano alla versione 39
 
 Il repository è pubblico dall'8 settembre, e non è una svista: sui repo pubblici
 i minuti di GitHub Actions sono gratis e illimitati. Sono attivi secret scanning
@@ -28,7 +28,7 @@ personali.**
 
 ```bash
 cd ~/dev/daunia-app
-npm test                           # 467 test, compresi gli attacchi al database
+npm test                           # 500 test, compresi gli attacchi al database e la partita simulata
 npx tsc --noEmit -p apps/mobile    # zero errori
 ```
 
@@ -50,8 +50,11 @@ iPhone collegato col cavo e sbloccato.
 
 ```bash
 npx supabase db push --linked                   # le migrazioni: le lancia Salvatore
-npx supabase functions deploy guardiano-partita
+npx supabase functions deploy guardiano-partita --no-verify-jwt --use-api
 ```
+
+`--no-verify-jwt` serve: pg_cron chiama il guardiano col segreto, non con un token.
+`--use-api` evita Docker.
 
 Al 14 settembre il database vero è allineato a tutte le migrazioni.
 
@@ -71,7 +74,11 @@ apertura scarica `data/bundle.json` direttamente dal repository
 formazioni e rassegna senza ricompilare (`lib/bundle-remoto.ts`). Le schermate si
 ridisegnano perché `Screen` si iscrive all'arrivo del bundle nuovo.
 
-Il dal vivo (punteggio, minuto, cronaca) arriva da Supabase in tempo reale.
+Il dal vivo (punteggio, minuto, cronaca) arriva da Supabase in tempo reale. Se il
+canale Realtime si pianta senza dirlo (è successo in prova il 14 settembre:
+iscritto, muto, e l'errore arrivato trenta secondi dopo), l'app se ne accorge dal
+silenzio: durante la partita il guardiano scrive ogni venti secondi, e oltre i
+quarantacinque senza eventi l'app rilegge la riga ogni quindici.
 
 Nel profilo, `StatoDati` dice da quanto sono fermi i dati: niente sotto l'ora, un
 avviso tra 1 e 6 ore, un avviso più forte sopra.
@@ -79,7 +86,7 @@ avviso tra 1 e 6 ore, un avviso più forte sopra.
 | Dato | Fonte | Costo |
 |---|---|---|
 | Calendario, classifica, rosa | Wikipedia, via ingest | 0 |
-| Punteggio e minuto dal vivo | TheSportsDB `livescore.php` (chiave pubblica `123`) | 0 |
+| Punteggio, stato e minuto dal vivo | TheSportsDB `livescore.php` (chiave pubblica `123`) **e** live-score-api: nell'app va il più svelto | 0 / prova |
 | Marcatori, cartellini, sostituzioni | **live-score-api** (Serie C = competizione **181**) | prova fino al **~21 settembre** |
 | Formazioni ufficiali e modulo | sito della Lega, endpoint AJAX | 0 |
 | Rassegna stampa | RSS delle tre testate autorizzate | 0 |
@@ -88,7 +95,16 @@ avviso tra 1 e 6 ore, un avviso più forte sopra.
 ### Le cose da sapere sulle fonti
 
 **TheSportsDB: `livescore.php`, non `lookupevent.php`.** Il secondo arriva minuti
-in ritardo. Il primo porta `strProgress`, il minuto vero col recupero.
+in ritardo. Il primo porta `strProgress`, il minuto vero col recupero. Anche la
+lista del dal vivo non è istantanea: la loro pagina dei prezzi vende "2 min
+livescore" persino ai piani a pagamento. È il motivo per cui oggi non è più
+l'unico tabellone.
+
+**live-score-api: `matches/events` porta dentro anche la scheda della partita**
+(`scores.score`, `status`, `time`). Una chiamata dà eventi, punteggio, stato e
+minuto. Stati: `IN PLAY` (il tempo lo dice il minuto), `HALF TIME BREAK`,
+`FINISHED`; il recupero è `45+` senza il numero. Foggia–Savoia è in calendario
+da loro (fixture 1887672, girone 4839).
 
 **live-score-api: i nomi degli eventi si copiano dai loro documenti.** Il primo
 giro li aveva indovinati e un gol su rigore spariva dal tabellino senza errore.
@@ -142,24 +158,40 @@ un residuo di una prova del 7 settembre.
 
 ### Il guardiano (Supabase Edge Function)
 
-`supabase/functions/guardiano-partita/`. Fuori dalla finestra di una partita esce
-senza chiamare niente.
+`supabase/functions/guardiano-partita/`: `index.ts` sono solo i fili, la logica
+sta in `guardiano.ts`. Fuori dalla finestra di una partita esce senza chiamare
+niente.
 
 Dentro la finestra:
 
-1. legge punteggio e minuto da `livescore.php`
-2. rilegge gol, cartellini e cambi da live-score-api **ogni minuto**
-3. dal calcio d'inizio cerca le formazioni sul sito della Lega ogni 3 minuti
+1. da due minuti prima del fischio a un quarto d'ora dopo la chiusura fa **tre giri al minuto**: il primo risponde a pg_cron, gli altri due restano vivi dopo la risposta (`EdgeRuntime.waitUntil`) a 20 e 40 secondi. Verificato in produzione il 14 settembre
+2. a ogni giro legge **due tabelloni**: `livescore.php` di TheSportsDB e `matches/events` di live-score-api (eventi, punteggio, stato, minuto in una chiamata). L'id della partita su live-score-api si ricorda in `eventi_detti` come `lsa-<id>`
+3. dal calcio d'inizio cerca le formazioni sul sito della Lega ogni 3 minuti (solo nel primo giro: il calendario pesa 4 MB)
 4. scrive tutto in `stato_partita`, e l'app lo riceve in tempo reale
 5. manda le notifiche: formazioni, inizio, gol, espulsioni, intervallo, fine, e un'ora prima il promemoria del pronostico (con l'orario, non "manca un'ora")
+6. quando qualcosa cambia scrive una riga `{"diario":"guardiano",...}` nei log della funzione, con quello che vedeva ciascuna fonte in quell'istante
 
 Ogni mezz'ora passa anche il calendario al database (`allinea_calendario`).
 
-Tre regole scritte dopo averle sbagliate:
+Regole scritte dopo averle sbagliate:
 
-- **Quello che si sa non si perde.** Una lettura vuota non cancella gol, cartellini e cambi già scritti (`proteggi()` in `punteggio.ts`)
+- **Quello che si sa non si perde.** Una lettura vuota non cancella gol, cartellini e cambi già scritti (`proteggi()` in `punteggio.ts`). E un giro senza live-score-api non dimentica il suo ultimo conteggio: un 0-0 sbagliato di TheSportsDB cancellava il gol e lo faceva suonare di nuovo
 - **Una partita già salvata non si riscrive.** Nelle ore dopo il fischio TheSportsDB indica ancora come "prossima" la partita appena giocata, e il guardiano la riscriveva con il punteggio vuoto
-- **Il punteggio si stampa solo se due fonti concordano.** Altrimenti la notifica dice "GOL DEL FOGGIA!" col minuto e tace il numero
+- **Una lettura senza eventi non è un guasto.** Fino al 14 settembre tre letture senza eventi di fila spegnevano live-score-api per tutta la gara: nei primi minuti è il caso normale, quindi cartellini, cambi, rossi e nomi non arrivavano. Conta come inutile solo una lettura fallita, e anche allora si rallenta a una ogni 3 minuti, non si smette
+- **"Almeno un minuto" si confronta con un margine** (`TOLLERANZA`, 15 secondi). pg_cron si sveglia con decimi di ritardo variabili e l'istante nella riga si prende a metà giro: senza margine ogni minuto diventava due
+- **Nel tabellone dell'app va la fonte più svelta**, lato per lato. Il numero nel *titolo delle notifiche* invece si stampa solo se due fonti concordano. Prima il tabellone restava fermo fino a tre minuti quando le fonti litigavano, cioè al momento del gol
+- **La fine si mostra subito, la partita si chiude quando il risultato è sicuro.** Scrivere `finita_il` paga i pronostici una volta sola e per sempre. Si chiude quando le due fonti concordano da 2 minuti, o dopo 5 se ne parla una, o dopo 10 comunque. `finita_il` resta l'istante del fischio. Dopo la chiusura il risultato non si sposta più
+- **La sparizione dalla lista vale come fine solo dopo due ore dal fischio**, e solo se live-score-api non dice che si gioca. Con cento minuti (l'ottantacinquesimo) il guardiano chiudeva partite in corso
+
+### La partita simulata
+
+`partita-simulata.test.ts` gioca una partita intera contro fonti finte
+(`simulazione.ts`, `finto-db.ts`): TheSportsDB e live-score-api con ritardi
+diversi, il nome del marcatore che arriva dopo il gol, la Lega che apre dopo il
+fischio, una fonte guasta, un calcio d'inizio in ritardo, una lettura sbagliata.
+Misura quando ogni cosa compare nella riga che l'app legge: soglia 30 secondi
+dalla fonte. **Prima di toccare il guardiano si lancia questa.** Sul codice del
+13 settembre falliva in 12 casi su 16.
 
 ### Il ponte fra i due numeri di una partita
 
@@ -391,6 +423,17 @@ fisica non sono automaticamente esenti. Testi in `docs/RACCOLTA-FONDI.md`.
 **Il battito del guardiano**: fuori partita non scrive niente, quindi non si sa se
 pg_cron è vivo finché non comincia una gara. Basterebbe una colonna `visto_il`
 scritta a ogni giro. Intanto: `select jobname, schedule, active from cron.job;`
+e le risposte delle ultime ore in `net._http_response`.
+
+**TheSportsDB a pagamento, se si vende.** La chiave `123` è quella di prova
+condivisa: la chiave "di produzione" dedicata la danno col Premium (9 $/mese) o
+Business (20 $/mese).
+
+**Supabase gratuito regge un pilota, non un pubblico.** Realtime gratuito: 200
+connessioni contemporanee e 2 milioni di messaggi al mese. Durante la partita il
+guardiano scrive la riga tre volte al minuto, e ogni scrittura è un messaggio per
+ogni telefono collegato: con mille tifosi collegati sono circa 360.000 messaggi a
+partita. Oltre, il piano Pro (25 $/mese).
 
 **Rischi bassi aperti**: le zone della classifica si distinguono a colpo d'occhio
 solo dal colore.
@@ -417,18 +460,53 @@ test lo dicono subito.
 
 ## La prossima prova
 
-**Martedì 15 settembre, Foggia–Savoia, 21:00.** È la prima partita con il ponte fra
-gli id, il calendario nel database e la nuova interfaccia.
+**Martedì 15 settembre, Foggia–Savoia, 21:00.** Prima partita col guardiano a tre
+giri al minuto, i due tabelloni e la chiusura confermata.
 
-Prima, sul telefono: ricompilare l'app (`npm run telefono`), perché la versione
-installata è di prima delle modifiche del 13.
+### Prima, sul telefono
 
-Cosa guardare, in ordine:
+Ricompilare l'app (`npm run telefono`, iPhone col cavo e sbloccato): quella
+installata è di prima delle correzioni del 14 al dal vivo. Servono ~8 GB liberi;
+se mancano si svuota `~/Library/Developer/Xcode/DerivedData` (2,4 GB), **mai il
+runtime del simulatore**.
+
+Se non si riesce a ricompilare, il guardiano nuovo funziona lo stesso, ma l'app
+vecchia ha tre difetti: non accende il dal vivo se è già aperta prima delle 20:50,
+smette di ascoltare al triplice fischio, e dopo un'uscita veloce può perdere
+Realtime. Rimedio: chiuderla e riaprirla dopo le 20:50, e di nuovo a fine partita.
+
+### Alle 18:45, sulle partite del girone delle 18:30
+
+Crotone–Inter U23, Casertana–Altamura e Picerno–Catania si giocano prima di noi.
+La prova dice cosa vedono le due fonti, senza scrivere e senza avvisare:
+
+```sql
+select net.http_post(
+  url := 'https://idofdpaftnaoyvuplksq.supabase.co/functions/v1/guardiano-partita',
+  headers := jsonb_build_object('Content-Type', 'application/json', 'x-guardiano',
+    (select decrypted_secret from vault.decrypted_secrets where name = 'guardiano_segreto')),
+  body := '{"prova_dal_vivo": "Crotone"}'::jsonb, timeout_milliseconds := 20000);
+-- dopo qualche secondo:
+select content from net._http_response order by id desc limit 1;
+```
+
+Tutte e due con punteggio e minuto: bene. `lsa` vuoto: live-score-api non vede
+la Serie C (la prova è scaduta?). `tsdb` vuoto: resta live-score-api da solo, e
+il guardiano regge anche così.
+
+### Durante la partita, in ordine
 
 1. alle 20:00 il promemoria del pronostico, solo a chi non l'ha fatto
 2. alle 20:50 apre la chat
 3. alle 21:00 il pronostico non si può più cambiare
-4. dopo il fischio compaiono le formazioni col modulo
-5. gol, cartellini e cambi compaiono in cronaca entro un minuto o due
-6. a fine partita i punti per esito e risultato arrivano in classifica
+4. dopo il fischio, entro pochi minuti, le formazioni col modulo
+5. gol, cartellini e cambi in cronaca **entro mezzo minuto** da quando li pubblica la fonte più svelta
+6. al triplice fischio l'app dice "finita" subito; i punti arrivano **fra 2 e 10 minuti dopo**, quando il risultato è confermato. Non è un guasto
 7. il giorno dopo il risultato è ancora lì, e non torna vuoto
+
+### Dopo la partita: quanto eravamo in ritardo, con i numeri
+
+Supabase → Edge Functions → guardiano-partita → Logs, cercando `diario`. Ogni
+riga dice l'ora e cosa vedeva ciascuna fonte. Confrontando con i momenti veri
+(una diretta, Google) si sa se il ritardo è della fonte o nostro. I log gratuiti
+restano circa un giorno: vanno letti entro mercoledì sera.
