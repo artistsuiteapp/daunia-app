@@ -350,11 +350,11 @@ const PAUSA_CALENDARIO = 30 * MINUTO;
  * fischio, non dopo. Un giro andato male non ferma il guardiano; si riprova al
  * minuto dopo.
  */
-async function allineaCalendario(adesso: number) {
+async function allineaCalendario(adesso: number, subito = false) {
   try {
     const { data } = await db.from('calendario').select('aggiornato_il')
       .order('aggiornato_il', { ascending: false }).limit(1);
-    if (!daAllineare(data?.[0]?.aggiornato_il ?? null, adesso, PAUSA_CALENDARIO)) return;
+    if (!subito && !daAllineare(data?.[0]?.aggiornato_il ?? null, adesso, PAUSA_CALENDARIO)) return;
 
     const r = await fetch(CALENDARIO, { signal: AbortSignal.timeout(8_000) });
     if (!r.ok) return;
@@ -500,6 +500,29 @@ async function gestisci(req: Request): Promise<Response> {
    */
   if (corpo?.prova_dal_vivo) {
     return Response.json(await provaDalVivo(String(corpo.prova_dal_vivo)));
+  }
+
+  /*
+   * Prova dei giri dopo la risposta.
+   *
+   * La partita simulata dimostra la logica, non il runtime: che Supabase tenga
+   * viva la funzione dopo la risposta si vede solo li. I due giri di prova
+   * riallineano il calendario, che e ripetibile senza danni e lascia l'istante
+   * in `calendario.aggiornato_il`: se dopo quaranta secondi quell'istante e
+   * andato avanti due volte, i giri veloci della partita partiranno anche loro.
+   */
+  if (corpo?.prova_giri) {
+    const partenza = orologio();
+    if (inBackground) {
+      inBackground((async () => {
+        for (const quando of [PASSO, 2 * PASSO]) {
+          const attesa = partenza + quando - orologio();
+          if (attesa > 0) await dormi(attesa);
+          await allineaCalendario(orologio(), true);
+        }
+      })());
+    }
+    return Response.json({ prova: 'giri', partenza: ora(), inBackground: Boolean(inBackground) });
   }
 
   /*
