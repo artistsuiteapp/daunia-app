@@ -3,7 +3,7 @@ import { test } from 'node:test';
 
 import {
   finestraAperta, leggiEvento, orienta, minutoStimato, etichettaFase, minutoCorrente,
-  chatAperta, eOggi, cronacaDi,
+  chatAperta, eOggi, cronacaDi, daChiedere, realtimeAffidabile,
 } from '../lib/live-core.ts';
 
 const KICKOFF = '2026-09-06T19:00:00Z';
@@ -265,4 +265,22 @@ test('le liste vuote sono sempre le stesse, o React ridisegna all infinito', () 
   assert.equal(a.gol, b.gol);
   assert.equal(a.cartellini, b.cartellini);
   assert.equal(a.cambi, b.cambi);
+});
+
+test('con Realtime collegato la riga si rilegge ogni minuto, senza ogni quindici secondi', () => {
+  const ultima = T;
+  assert.equal(daChiedere(true, ultima, T + 15_000), false);
+  assert.equal(daChiedere(true, ultima, T + 59_500), true, 'un timer che scatta mezzo secondo prima vale');
+  assert.equal(daChiedere(false, ultima, T + 14_500), true);
+  assert.equal(daChiedere(false, ultima, T + 5_000), false);
+  // mai letta: si legge subito
+  assert.equal(daChiedere(true, 0, T), true);
+});
+
+test('un canale iscritto ma muto da troppo non e affidabile mentre si gioca', () => {
+  assert.equal(realtimeAffidabile(true, T, false, T + 20_000), true);
+  assert.equal(realtimeAffidabile(true, T, false, T + 50_000), false, 'e il caso del heartbeat timeout: iscritto e piantato');
+  assert.equal(realtimeAffidabile(false, T, false, T + 1_000), false);
+  // a partita finita gli eventi sono rari per natura
+  assert.equal(realtimeAffidabile(true, T, true, T + 10 * 60_000), true);
 });
