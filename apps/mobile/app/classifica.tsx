@@ -10,6 +10,7 @@ import { Apparsa } from '../components/anima';
 import { colors, radius, space, type } from '../theme/tokens';
 import { useSessione } from '../lib/auth';
 import { useClassifica, useMieiPunti, NOME_PERIODO, type Periodo } from '../lib/punti';
+import { useDati } from '../lib/bundle-remoto';
 
 /**
  * La classifica dei tifosi.
@@ -25,6 +26,7 @@ import { useClassifica, useMieiPunti, NOME_PERIODO, type Periodo } from '../lib/
  * non ci si trova e una classifica che si chiude.
  */
 export default function Classifica() {
+  useDati();
   const gutter = useGutter();
   const { utente } = useSessione();
   const [periodo, setPeriodo] = useState<Periodo>('settimana');

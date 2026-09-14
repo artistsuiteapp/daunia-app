@@ -8,6 +8,7 @@ import { BackBar } from '../../components/BackBar';
 import { colors, radius, space, type } from '../../theme/tokens';
 import { TOPICS, addDiscussion, type Topic } from '../../lib/community';
 import { useProfilo } from '../../lib/auth';
+import { useDati } from '../../lib/bundle-remoto';
 
 /**
  * Scrittura di un post nella demo.
@@ -17,6 +18,7 @@ import { useProfilo } from '../../lib/auth';
  * personale deve sapere dove finisce prima di scriverlo, non dopo.
  */
 export default function NuovoPost() {
+  useDati();
   const gutter = useGutter();
   const profilo = useProfilo();
   const conAccount = Boolean(profilo);

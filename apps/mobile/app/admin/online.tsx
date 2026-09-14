@@ -7,6 +7,7 @@ import { NomeUtente } from '../../components/NomeUtente';
 import { colors, radius, space, type } from '../../theme/tokens';
 import { puoModerare, useRuolo } from '../../lib/moderazione';
 import { usePresenza } from '../../lib/presenza';
+import { useDati } from '../../lib/bundle-remoto';
 
 /**
  * Chi c'e adesso.
@@ -17,6 +18,7 @@ import { usePresenza } from '../../lib/presenza';
  * non serve a moderare niente.
  */
 export default function Online() {
+  useDati();
   const ruolo = useRuolo();
   const gutter = useGutter();
   const { presenti, quanti } = usePresenza();

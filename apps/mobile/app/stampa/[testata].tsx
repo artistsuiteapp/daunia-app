@@ -19,8 +19,10 @@ import { colors, radius, space, type } from '../../theme/tokens';
 import { relative } from '../../lib/format';
 import { apriArticolo } from '../../lib/apri';
 import { articoliDi, testataPerId } from '../../lib/stampa';
+import { useDati } from '../../lib/bundle-remoto';
 
 export default function Stampa() {
+  useDati();
   const { testata: id } = useLocalSearchParams<{ testata: string }>();
   const gutter = useGutter();
   const testata = testataPerId(String(id));

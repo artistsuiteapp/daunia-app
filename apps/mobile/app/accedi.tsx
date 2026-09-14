@@ -10,6 +10,7 @@ import { SfondoCitta } from '../components/SfondoCitta';
 import { colors, radius, space, type } from '../theme/tokens';
 import { accedi, nonRicordare, recuperaPassword, registrati, validaRegistrazione } from '../lib/auth';
 import { backendAttivo } from '../lib/supabase';
+import { useDati } from '../lib/bundle-remoto';
 
 type Modo = 'accesso' | 'registrazione' | 'recupero';
 
@@ -22,6 +23,7 @@ type Modo = 'accesso' | 'registrazione' | 'recupero';
  * modalita.
  */
 export default function Accedi() {
+  useDati();
   const gutter = useGutter();
   // `errore` arriva da un collegamento di conferma scaduto, letto in _layout.tsx
   const { modo: modoIniziale, errore: erroreCollegamento } = useLocalSearchParams<{ modo?: string; errore?: string }>();

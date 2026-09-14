@@ -15,6 +15,7 @@ import {
   cambiaRuolo, eBandito, eSospeso, riammetti, sospendiUtente, useElencoUtenti,
   type UtenteInElenco,
 } from '../../lib/pannello';
+import { useDati } from '../../lib/bundle-remoto';
 
 /**
  * Le persone.
@@ -32,6 +33,7 @@ import {
  * segnalazioni aperte, che e la cosa che fa decidere quale riga guardare.
  */
 export default function Utenti() {
+  useDati();
   const ruolo = useRuolo();
   const gutter = useGutter();
   const { utente: io } = useSessione();

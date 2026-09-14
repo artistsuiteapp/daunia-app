@@ -4,6 +4,7 @@ import { ActivityIndicator, View } from 'react-native';
 
 import { Screen } from '../components/ui';
 import { colors } from '../theme/tokens';
+import { useDati } from '../lib/bundle-remoto';
 
 /**
  * Questa schermata non esiste piu: porta al Match Center.
@@ -20,6 +21,7 @@ import { colors } from '../theme/tokens';
  * un vecchio collegamento.
  */
 export default function VecchiPronostici() {
+  useDati();
   useEffect(() => {
     router.replace('/match-center/pronostici' as never);
   }, []);

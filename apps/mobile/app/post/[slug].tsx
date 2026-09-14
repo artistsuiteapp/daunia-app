@@ -11,8 +11,10 @@ import { newsBySlug } from '../../lib/data';
 import { coverOf } from '../../lib/editorial';
 import { ArticleCover } from '../../components/ArticleCover';
 import { photo } from '../../lib/media';
+import { useDati } from '../../lib/bundle-remoto';
 
 export default function Post() {
+  useDati();
   const { slug } = useLocalSearchParams<{ slug: string }>();
   const gutter = useGutter();
   const post = newsBySlug(String(slug));

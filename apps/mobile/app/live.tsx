@@ -19,6 +19,7 @@ import { etichettaFase } from '../lib/live-core';
 import { useSala, manda, cancella, salaAperta, LIMITE } from '../lib/sala';
 import { ioSono } from '../lib/trasferte';
 import { maschera, AVVISO_COPERTO } from '../lib/filtro-core.ts';
+import { useDati } from '../lib/bundle-remoto';
 
 /**
  * La chat della partita.
@@ -33,6 +34,7 @@ import { maschera, AVVISO_COPERTO } from '../lib/filtro-core.ts';
  * non la schermata di apertura.
  */
 export default function Live() {
+  useDati();
   const gutter = useGutter();
   const ospite = useOspite();
   const match = nextMatch();

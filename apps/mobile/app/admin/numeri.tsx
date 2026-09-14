@@ -6,6 +6,7 @@ import { BackBar } from '../../components/BackBar';
 import { colors, radius, space, type } from '../../theme/tokens';
 import { puoModerare, useRuolo } from '../../lib/moderazione';
 import { caricaNumeri, type NumeriApp } from '../../lib/misure';
+import { useDati } from '../../lib/bundle-remoto';
 
 /**
  * I numeri dell'app.
@@ -31,6 +32,7 @@ import { caricaNumeri, type NumeriApp } from '../../lib/misure';
  * l'app peggiore di com'e.
  */
 export default function Numeri() {
+  useDati();
   const ruolo = useRuolo();
   const gutter = useGutter();
   const [n, setN] = useState<NumeriApp | null>(null);

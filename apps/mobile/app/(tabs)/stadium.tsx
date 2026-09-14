@@ -19,6 +19,7 @@ import { useSafeInsets } from '../../lib/viewport';
 import {
   clearPresence, declarePresence, myPresence, presenceOf, presenzeVere, useDatiPartita, useFanplay,
 } from '../../lib/fanplay';
+import { useDati } from '../../lib/bundle-remoto';
 
 /**
  * Cosa si scrive a destra del settore.
@@ -48,6 +49,7 @@ function dettaglioDi(s: StadiumSector): string {
 }
 
 export default function StadiumScreen() {
+  useDati();
   const insets = useSafeInsets();
   const { gutter, height } = useLayout();
   const [selected, setSelected] = useState<StadiumSector | null>(null);

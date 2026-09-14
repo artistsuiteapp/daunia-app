@@ -20,6 +20,7 @@ import {
 } from '../../lib/trasferte';
 import { AzioniContenuto } from '../../components/AzioniContenuto';
 import { CANALI, collegamento, etichetta, valido, type Canale } from '../../lib/contatti-core.ts';
+import { useDati } from '../../lib/bundle-remoto';
 
 /**
  * Una trasferta: se ci puoi andare, chi ci va, e come vi scrivete.
@@ -40,6 +41,7 @@ import { CANALI, collegamento, etichetta, valido, type Canale } from '../../lib/
  * degli altri arrivano gia vuoti se non ne hai diritto.
  */
 export default function Trasferta() {
+  useDati();
   const { id } = useLocalSearchParams<{ id: string }>();
   const gutter = useGutter();
   const ospite = useOspite();

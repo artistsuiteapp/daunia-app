@@ -11,6 +11,7 @@ import {
   statoNotifiche, accendi, spegni, cambiaPreferenze, provaLocale,
   ETICHETTE, PREFERENZE_INIZIALI, type Preferenze, type Stato,
 } from '../lib/notifiche';
+import { useDati } from '../lib/bundle-remoto';
 
 /**
  * Notifiche del match-day.
@@ -25,6 +26,7 @@ import {
  * bruciarlo per sempre.
  */
 export default function Notifiche() {
+  useDati();
   const gutter = useGutter();
   const margine = useMargine();
   const [stato, setStato] = useState<Stato | null>(null);

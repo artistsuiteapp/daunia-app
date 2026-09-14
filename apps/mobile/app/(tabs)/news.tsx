@@ -26,10 +26,12 @@ import {
 import { colors, space, type } from '../../theme/tokens';
 import { FOGGIA, clubReleases } from '../../lib/data';
 import { BannerTestata } from '../../components/BannerTestata';
+import { StatoDati } from '../../components/StatoDati';
 import { riepilogo, testateConArticoli } from '../../lib/stampa';
 import { apriArticolo } from '../../lib/apri';
 import { relative } from '../../lib/format';
 import { titoloLeggibile } from '../../lib/titoli-core';
+import { useDati } from '../../lib/bundle-remoto';
 
 /** Quanti comunicati si mostrano. Oltre e archivio, e l'archivio sta sul loro sito. */
 const QUANTI = 8;
@@ -49,6 +51,7 @@ function assaggio(testo: string | null | undefined, limite = 130): string {
 }
 
 export default function News() {
+  useDati();
   const gutter = useGutter();
   const testate = testateConArticoli();
   const comunicati = clubReleases.slice(0, QUANTI);
@@ -60,6 +63,9 @@ export default function News() {
         title="Notizie"
         subtitle="Le testate che seguono il Foggia"
       />
+
+      {/* invisibile quando i dati sono freschi: parla solo se c'e un guasto */}
+      <View style={[gutter, { marginBottom: space.md }]}><StatoDati /></View>
 
       {testate.length === 0 ? (
         <Empty text="Nessuna testata al momento." />
