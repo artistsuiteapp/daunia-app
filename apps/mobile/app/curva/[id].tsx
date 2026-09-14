@@ -17,6 +17,7 @@ import { SoloConAccount } from '../../components/SoloConAccount';
 import { useKeyboardInset } from '../../lib/viewport';
 import { TOPIC_ICON, addReply, discussionById, like, removeDiscussion, ricarica, useDiscussions, eMio, modificaRisposta, cancellaRisposta } from '../../lib/community';
 import { AzioniContenuto } from '../../components/AzioniContenuto';
+import { useDati } from '../../lib/bundle-remoto';
 
 /**
  * Una discussione: il testo di apertura, poi le risposte in ordine di arrivo e
@@ -24,6 +25,7 @@ import { AzioniContenuto } from '../../components/AzioniContenuto';
  * stessa pagina, cambia solo quanto e lungo il primo blocco.
  */
 export default function DiscussionPage() {
+  useDati();
   const { id } = useLocalSearchParams<{ id: string }>();
   const gutter = useGutter();
   useDiscussions();

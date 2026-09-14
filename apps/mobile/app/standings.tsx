@@ -6,6 +6,7 @@ import { Screen, LargeTitle, ListGroup, ListRow, GroupNote, useGutter } from '..
 import { Crest } from '../components/Crest';
 import { colors, space, type } from '../theme/tokens';
 import { FOGGIA, meta, standings } from '../lib/data';
+import { useDati } from '../lib/bundle-remoto';
 
 const ZONA_NOME: Record<string, string> = {
   promotion: 'promozione', playoff: 'playoff', playout: 'playout', relegation: 'retrocessione',
@@ -19,6 +20,7 @@ const ZONE: Record<string, string> = {
 };
 
 export default function Standings() {
+  useDati();
   const gutter = useGutter();
   // le partite giocate valgono per tutte le squadre: stanno nel sottotitolo, non in una colonna
   const giornate = Math.max(0, ...standings.map((r) => r.played));

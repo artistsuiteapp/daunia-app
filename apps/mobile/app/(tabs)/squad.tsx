@@ -7,8 +7,10 @@ import { Avatar } from '../../components/Avatar';
 import { colors, radius, space, type } from '../../theme/tokens';
 import { useLayout } from '../../theme/responsive';
 import {FOGGIA, squad, squadByRole, staff } from '../../lib/data';
+import { useDati } from '../../lib/bundle-remoto';
 
 export default function Squad() {
+  useDati();
   const groups = squadByRole();
   const gutter = useGutter();
   const { columns } = useLayout();

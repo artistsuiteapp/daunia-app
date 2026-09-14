@@ -16,6 +16,7 @@ import { useLayout } from '../../theme/responsive';
 import {
   TOPICS, TOPIC_ICON, lastActivity, mineCount, useDiscussions, type Discussion, type Topic,
 } from '../../lib/community';
+import { useDati } from '../../lib/bundle-remoto';
 
 const ALL = 'tutti';
 
@@ -24,6 +25,7 @@ const ALL = 'tutti';
  * soli. Gli argomenti filtrano, non separano.
  */
 export default function Curva() {
+  useDati();
   const gutter = useGutter();
   const { gutter: g } = useLayout();
   const all = useDiscussions();

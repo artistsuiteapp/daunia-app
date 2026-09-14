@@ -34,8 +34,10 @@ import {
   FOGGIA, foggiaRow, lastMatch, matchInCorso, meta, nextMatch, recentForm,
   standingsWindow, topScorers, upcomingMatches,
 } from '../../lib/data';
+import { useDati } from '../../lib/bundle-remoto';
 
 export default function Home() {
+  useDati();
   const gutter = useGutter();
   const insets = useSafeInsets();
   // Alla prima apertura si sceglie: account o solo guardare. La scelta si

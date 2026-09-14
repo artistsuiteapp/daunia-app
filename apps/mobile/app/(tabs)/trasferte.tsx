@@ -17,6 +17,7 @@ import { useOspite } from '../../lib/ospite';
 import {
   useTrasferte, divietoDi, perCitta, postiLiberi, chiVa, SPIEGAZIONI, MEZZI,
 } from '../../lib/trasferte';
+import { useDati } from '../../lib/bundle-remoto';
 
 /**
  * Trasferte.
@@ -29,6 +30,7 @@ import {
  * cui due foggiani di Bologna si accorgono l'uno dell'altro.
  */
 export default function Trasferte() {
+  useDati();
   const gutter = useGutter();
   const ospite = useOspite();
 

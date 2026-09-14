@@ -29,6 +29,7 @@ import {
   chiudi, coda, mieSegnalazioni, puoModerare, testoSegnalato, useRuolo,
   type MiaSegnalazione, type Segnalato, type VoceCoda,
 } from '../lib/moderazione';
+import { useDati } from '../lib/bundle-remoto';
 
 const NOME_TIPO: Record<string, string> = {
   discussione: 'Discussione',
@@ -39,6 +40,7 @@ const NOME_TIPO: Record<string, string> = {
 };
 
 export default function Segnalazioni() {
+  useDati();
   const ruolo = useRuolo();
   const gutter = useGutter();
   const margine = useMargine();

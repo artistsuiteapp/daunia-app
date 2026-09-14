@@ -20,10 +20,12 @@ import { Premi } from '../components/anima';
 import { colors, radius, space, type } from '../theme/tokens';
 import { supabase } from '../lib/supabase';
 import { sblocca, useBloccati } from '../lib/moderazione';
+import { useDati } from '../lib/bundle-remoto';
 
 type Persona = { id: string; nome: string };
 
 export default function Bloccati() {
+  useDati();
   const gutter = useGutter();
   const ids = useBloccati();
   const [gente, setGente] = useState<Persona[]>([]);

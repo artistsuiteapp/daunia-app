@@ -12,6 +12,7 @@ import { shortDate } from '../../lib/format';
 import { playerById, squad } from '../../lib/data';
 import { usePartite } from '../../lib/partita-corrente';
 import { anagraficaDi, carrieraDi, minutiAPartita, FONTE } from '../../lib/carriere';
+import { useDati } from '../../lib/bundle-remoto';
 
 /** Transfermarkt scrive il piede in inglese. */
 const PIEDE: Record<string, string> = { right: 'destro', left: 'sinistro', both: 'ambidestro' };
@@ -21,6 +22,7 @@ const PLURALE: Record<string, string> = {
 };
 
 export default function PlayerDetail() {
+  useDati();
   const { id } = useLocalSearchParams<{ id: string }>();
   const gutter = useGutter();
   const player = playerById(String(id));

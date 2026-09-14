@@ -6,10 +6,12 @@ import { MatchListRow } from '../../components/MatchCard';
 import { space } from '../../theme/tokens';
 import { FOGGIA, meta } from '../../lib/data';
 import { usePartite } from '../../lib/partita-corrente';
+import { useDati } from '../../lib/bundle-remoto';
 
 type Tab = 'prossime' | 'giocate' | 'tutte';
 
 export default function Matches() {
+  useDati();
   const [tab, setTab] = useState<Tab>('prossime');
   const gutter = useGutter();
 

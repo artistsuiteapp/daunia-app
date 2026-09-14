@@ -9,6 +9,7 @@ import { BrandMark } from '../components/BrandMark';
 import { SfondoCitta } from '../components/SfondoCitta';
 import { colors, radius, space, type } from '../theme/tokens';
 import { cambiaPassword, useSessione } from '../lib/auth';
+import { useDati } from '../lib/bundle-remoto';
 
 /**
  * La password nuova, dopo il collegamento dell'email.
@@ -18,6 +19,7 @@ import { cambiaPassword, useSessione } from '../lib/auth';
  * restava fuori.
  */
 export default function NuovaPassword() {
+  useDati();
   const gutter = useGutter();
   const sessione = useSessione();
   // il collegamento lo legge _layout.tsx; qui arriva solo l'eventuale errore

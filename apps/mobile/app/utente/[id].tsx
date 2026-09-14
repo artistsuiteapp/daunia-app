@@ -13,6 +13,7 @@ import { useProfiloPubblico } from '../../lib/identita';
 import { tintaNome } from '../../lib/identita-core.ts';
 import { livelloDi, alProssimoLivello } from '../../lib/match-center-core.ts';
 import { useSessione } from '../../lib/auth';
+import { useDati } from '../../lib/bundle-remoto';
 
 /**
  * La scheda di una persona.
@@ -29,6 +30,7 @@ import { useSessione } from '../../lib/auth';
  * che non ha fatto.
  */
 export default function SchedaUtente() {
+  useDati();
   const { id } = useLocalSearchParams<{ id: string }>();
   const gutter = useGutter();
   const { utente } = useSessione();

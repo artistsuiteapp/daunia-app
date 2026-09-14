@@ -24,6 +24,7 @@ import { etichettaFase } from '../lib/live-core';
 import { longDate } from '../lib/format';
 import { faseDi } from '../lib/match-center-core';
 import { useDatiPartita } from '../lib/fanplay';
+import { useDati } from '../lib/bundle-remoto';
 
 /**
  * Il Match Center.
@@ -40,6 +41,7 @@ import { useDatiPartita } from '../lib/fanplay';
  * gia il calendario della prossima.
  */
 export default function MatchCenterSchermata() {
+  useDati();
   const gutter = useGutter();
   const live = useLive();
 

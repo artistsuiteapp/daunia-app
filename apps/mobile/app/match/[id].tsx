@@ -21,10 +21,12 @@ import { faseDi } from '../../lib/match-center-core';
 import { useDatiPartita } from '../../lib/fanplay';
 import { useCronacaDi } from '../../lib/live';
 import { etichettaFase } from '../../lib/live-core';
+import { useDati } from '../../lib/bundle-remoto';
 
 type Tab = 'formazione' | 'gioco' | 'eventi' | 'dati';
 
 export default function MatchDetail() {
+  useDati();
   // `tab` permette di aprire la scheda gia sulla sezione giusta: il richiamo
   // delle pagelle in home portava qui ma sulla formazione, e bisognava
   // cercarla a mano proprio nel momento in cui uno vuole solo votare

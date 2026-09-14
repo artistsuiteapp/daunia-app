@@ -18,6 +18,7 @@ import {
   cancellaAccount, caricaAvatar, esci, leggiProfilo, rimuoviAvatar,
   salvaProfilo, useSessione, type Profilo,
 } from '../lib/auth';
+import { useDati } from '../lib/bundle-remoto';
 
 /**
  * Profilo.
@@ -27,6 +28,7 @@ import {
  * profilo. Al contrario resterebbe scritto un indirizzo che non esiste.
  */
 export default function ProfiloSchermata() {
+  useDati();
   // sul web il ritaglio lo facciamo noi: expo-image-picker sa ritagliare solo
   // sulle app native, e oggi l'app si usa dal browser
   const [daRitagliare, setDaRitagliare] = useState<string | null>(null);

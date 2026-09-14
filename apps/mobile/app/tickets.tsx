@@ -11,6 +11,7 @@ import { brand } from '../theme/brand';
 import { colors, space, type } from '../theme/tokens';
 import { thousands } from '../lib/format';
 import { FOGGIA, nextHomeMatch, tickets } from '../lib/data';
+import { useDati } from '../lib/bundle-remoto';
 
 /**
  * Biglietti.
@@ -29,6 +30,7 @@ import { FOGGIA, nextHomeMatch, tickets } from '../lib/data';
  * tengono all'incirca, e il link a chi vende davvero.
  */
 export default function Tickets() {
+  useDati();
   const gutter = useGutter();
   const match = nextHomeMatch();
 

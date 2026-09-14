@@ -10,8 +10,10 @@ import { colors, space, type } from '../theme/tokens';
 import { thousands } from '../lib/format';
 import { FOGGIA, foggiaRow, meta, playedTrend, recentForm, seasonRecord, standings } from '../lib/data';
 import { usePartite, useStatistiche } from '../lib/partita-corrente';
+import { useDati } from '../lib/bundle-remoto';
 
 export default function Stats() {
+  useDati();
   const gutter = useGutter();
   /*
    * I numeri comprendono la partita appena finita, anche se l'archivio non l'ha

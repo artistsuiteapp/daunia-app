@@ -7,6 +7,7 @@ import { colors, radius, space, type } from '../../theme/tokens';
 import { usePartite } from '../../lib/partita-corrente';
 import { shortDate } from '../../lib/format';
 import { useArchivioPagelle } from '../../lib/archivio';
+import { useDati } from '../../lib/bundle-remoto';
 
 /**
  * Le pagelle di tutte le partite giocate.
@@ -22,6 +23,7 @@ import { useArchivioPagelle } from '../../lib/archivio';
  * "com'e' andata?" prima di "chi e' andato bene?".
  */
 export default function ArchivioPagelle() {
+  useDati();
   const gutter = useGutter();
   // comprese quelle appena finite: vedi lib/partita-corrente.ts
   const { partite: tutte } = usePartite();

@@ -11,6 +11,7 @@ import { colors, radius, space, type } from '../../theme/tokens';
 import { puoModerare, useRuolo } from '../../lib/moderazione';
 import { quanteSegnalazioniAperte } from '../../lib/pannello';
 import { usePresenza } from '../../lib/presenza';
+import { useDati } from '../../lib/bundle-remoto';
 
 /**
  * Il pannello.
@@ -30,6 +31,7 @@ import { usePresenza } from '../../lib/presenza';
  * il tasto e sotto ogni messaggio.
  */
 export default function Pannello() {
+  useDati();
   const ruolo = useRuolo();
   const gutter = useGutter();
   const { presenti, quanti } = usePresenza();

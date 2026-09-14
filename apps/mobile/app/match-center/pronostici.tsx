@@ -10,6 +10,7 @@ import { matchById, nextMatch } from '../../lib/data';
 import { shortDate } from '../../lib/format';
 import { useSessione } from '../../lib/auth';
 import { useMieiPronostici, type MioPronostico } from '../../lib/pronostici';
+import { useDati } from '../../lib/bundle-remoto';
 
 /**
  * I miei pronostici, e come sono andati.
@@ -21,6 +22,7 @@ import { useMieiPronostici, type MioPronostico } from '../../lib/pronostici';
  * punti sta a destra, piccolo, perche' e' la conseguenza e non la storia.
  */
 export default function MieiPronostici() {
+  useDati();
   const gutter = useGutter();
   const { utente } = useSessione();
   const { righe, striscia, caricato, chiusi, presi, esatti } = useMieiPronostici();

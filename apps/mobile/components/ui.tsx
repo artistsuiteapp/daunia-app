@@ -1,5 +1,4 @@
 import { Fragment, ReactNode, RefObject, useEffect, useMemo, useRef, useState } from 'react';
-import { useDati } from '../lib/bundle-remoto';
 import {
   Animated, LayoutChangeEvent, PanResponder, Platform, Pressable, ScrollView,
   StyleSheet, Text, View, ViewStyle,
@@ -36,11 +35,18 @@ export function Screen({
   riferimento?: RefObject<ScrollView | null>;
 }) {
   /*
-   * Sta qui e non nelle singole schermate: quando arriva un bundle nuovo
-   * devono ridisegnarsi tutte, e una che se ne dimentica mostrerebbe numeri
-   * diversi da quella accanto.
+   * `useDati()` NON sta qui, e il 12 settembre ci stava.
+   *
+   * Sembrava il posto giusto: tutte le schermate passano da Screen. Ma i dati li
+   * legge la schermata che sta sopra (gli articoli, le partite, la rosa), e li
+   * passa gia calcolati come figli. All'arrivo di un bundle nuovo si ridisegnava
+   * solo Screen, con gli stessi figli di prima: dati nuovi in memoria, schermata
+   * vecchia davanti agli occhi, e la differenza visibile solo uscendo e
+   * rientrando -- cioe proprio come si controlla dopo una correzione.
+   *
+   * Ogni schermata in `app/` chiama `useDati()` da se, e
+   * `test/schermate-aggiornate.test.ts` fallisce se una se ne dimentica.
    */
-  useDati();
   const insets = useSafeInsets();
   const keyboard = useKeyboardInset();
   // Sotto: la barra delle schede galleggia sopra il contenuto, e con la tastiera

@@ -11,6 +11,7 @@ import { colors, radius, space, type } from '../theme/tokens';
 import { continuaComeOspite } from '../lib/ospite';
 import { useSessione } from '../lib/auth';
 import { foggiaRow, nextMatch } from '../lib/data';
+import { useDati } from '../lib/bundle-remoto';
 
 /**
  * Prima schermata.
@@ -24,6 +25,7 @@ import { foggiaRow, nextMatch } from '../lib/data';
  * iscriversi chiude e non torna.
  */
 export default function Benvenuto() {
+  useDati();
   const gutter = useGutter();
   const sessione = useSessione();
   const { height } = useWindowDimensions();

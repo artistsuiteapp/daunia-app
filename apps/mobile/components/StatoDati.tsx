@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import { meta } from '../lib/data';
+import { esitoDownload } from '../lib/bundle-remoto';
 import { freschezza } from '../lib/freschezza-core.ts';
 import { colors, radius, space, type } from '../theme/tokens';
 
@@ -15,6 +16,11 @@ import { colors, radius, space, type } from '../theme/tokens';
  *
  * L'ora si ricalcola da sola ogni minuto: senza, uno che tiene l'app aperta
  * durante la partita continuerebbe a leggere il numero di quando l'ha aperta.
+ *
+ * Quando i dati sono fermi dice anche perche, se lo sa: "scartato" vuol dire
+ * che il file e arrivato e l'app l'ha rifiutato, cioe un guasto nostro. Dal 13
+ * al 14 settembre succedeva a ogni apertura e l'unico sintomo erano le notizie
+ * vecchie. Sta anche in cima alle Notizie, che e dove ci si accorge del guasto.
  */
 export function StatoDati() {
   const [adesso, setAdesso] = useState(() => Date.now());
@@ -28,6 +34,10 @@ export function StatoDati() {
   if (f.stato === 'fresco') return null;
 
   const rotto = f.stato === 'fermo' || f.stato === 'ignoto';
+  const ultimo = esitoDownload();
+  const perche = ultimo?.esito === 'scartato'
+    ? ` L'ultimo aggiornamento e arrivato ma e stato scartato: ${ultimo.motivo}.`
+    : ultimo?.esito === 'senza rete' ? ' Ultimo tentativo senza rete.' : '';
 
   return (
     <View style={[styles.riga, rotto && styles.rigaRotta]}>
@@ -36,7 +46,7 @@ export function StatoDati() {
         size={16}
         color={rotto ? '#E8C547' : colors.textDim}
       />
-      <Text style={[styles.testo, rotto && styles.testoRotto]}>{f.testo}</Text>
+      <Text style={[styles.testo, rotto && styles.testoRotto]}>{f.testo}{perche}</Text>
     </View>
   );
 }

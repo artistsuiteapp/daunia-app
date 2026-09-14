@@ -27,7 +27,7 @@ import { AppState } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { applicaBundle, meta, versioneDati } from './data';
-import { daSostituire, istante, valido } from './bundle-remoto-core.ts';
+import { daSostituire, istante, leggiRisposta } from './bundle-remoto-core.ts';
 
 /**
  * Il bundle nel ramo principale del repo pubblico.
@@ -44,14 +44,34 @@ const CASSETTO = 'daunia.bundle.v1';
 /** Oltre questo, si rinuncia: allo stadio la rete o va o non va, e non si aspetta. */
 const PAZIENZA = 12_000;
 
-/** Il bundle sta sotto il mezzo mega: oltre i cinque non e piu lui. */
-const TETTO = 5 * 1024 * 1024;
-
 let inCorso: Promise<boolean> | null = null;
 const ascoltatori = new Set<() => void>();
 
 function avvisa() {
   for (const f of ascoltatori) f();
+}
+
+/**
+ * Com'e andato l'ultimo tentativo di prendere i dati freschi.
+ *
+ * Esiste perche questo difetto si e ripetuto sei volte, e ogni volta lo si e
+ * scoperto guardando le notizie ferme, cioe nel modo piu lento. Il profilo lo
+ * mostra: "scartato" con il motivo e un guasto nostro, "senza rete" no.
+ */
+export type EsitoDownload = {
+  quando: number;
+  esito: 'applicato' | 'gia aggiornati' | 'scartato' | 'senza rete';
+  motivo?: string;
+};
+
+let ultimoEsito: EsitoDownload | null = null;
+
+function segna(e: Omit<EsitoDownload, 'quando'>) {
+  ultimoEsito = { quando: Date.now(), ...e };
+}
+
+export function esitoDownload(): EsitoDownload | null {
+  return ultimoEsito;
 }
 
 /**
@@ -96,23 +116,18 @@ export async function scarica(): Promise<boolean> {
     const timer = setTimeout(() => taglia.abort(), PAZIENZA);
     try {
       const r = await fetch(`${SORGENTE}?t=${Date.now()}`, { signal: taglia.signal });
-      if (!r.ok) return false;
 
       /*
-       * Si guarda cosa e arrivato prima di leggerlo tutto.
-       *
-       * Il portale di una rete wifi risponde 200 con una pagina HTML, e senza
-       * questo controllo la si scaricherebbe intera per poi buttarla. Il tetto
-       * sulla dimensione serve al caso peggiore: il corpo viene tenuto in
-       * memoria una volta per leggerlo e una seconda per salvarlo nel telefono.
+       * Cosa e arrivato lo decide `leggiRisposta`, sotto test, e non piu il tipo
+       * dichiarato dal server: GitHub dichiara i .json come text/plain, e per un
+       * giorno intero ogni download e stato buttato senza dirlo a nessuno.
        */
-      const tipo = r.headers.get("content-type") ?? "";
-      if (!tipo.includes("json")) return false;
-      const quanto = Number(r.headers.get("content-length") ?? 0);
-      if (quanto > TETTO) return false;
-
-      const arrivato = (await r.json()) as unknown;
-      if (!valido(arrivato)) return false;
+      const letta = await leggiRisposta(r);
+      if ('motivo' in letta) {
+        segna({ esito: 'scartato', motivo: letta.motivo });
+        return false;
+      }
+      const arrivato = letta.bundle;
 
       /*
        * Si applica prima e si salva dopo.
@@ -121,11 +136,19 @@ export async function scarica(): Promise<boolean> {
        * telefono e verrebbe riprovato a ogni avvio: il guasto durerebbe piu
        * della causa che lo ha prodotto.
        */
-      const messo = forse(arrivato);
+      let messo = false;
+      try {
+        messo = forse(arrivato);
+      } catch {
+        segna({ esito: 'scartato', motivo: 'dati che l app non sa applicare' });
+        return false;
+      }
+      segna({ esito: messo ? 'applicato' : 'gia aggiornati' });
       if (messo) await AsyncStorage.setItem(CASSETTO, JSON.stringify(arrivato)).catch(() => {});
       return messo;
     } catch {
       /* senza rete si resta su quello che si ha: e il caso normale allo stadio */
+      segna({ esito: 'senza rete' });
       return false;
     } finally {
       clearTimeout(timer);

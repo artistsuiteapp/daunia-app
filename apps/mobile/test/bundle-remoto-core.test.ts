@@ -82,3 +82,61 @@ test('senza news, stadio o statistiche il bundle non passa', () => {
     assert.equal(valido(rotto), false, `manca ${campo}`);
   }
 });
+
+/*
+ * La risposta di GitHub com'e davvero.
+ *
+ * Dal 13 al 14 settembre l'app ha scartato ogni bundle scaricato: un controllo
+ * voleva "json" nel tipo della risposta, e raw.githubusercontent.com serve ogni
+ * file come text/plain. Download riuscito, dati buttati, nessun errore. Le
+ * intestazioni qui sotto sono copiate da una risposta vera del 14 settembre.
+ */
+import { leggiRisposta, TETTO } from '../lib/bundle-remoto-core.ts';
+
+const rispostaFinta = (tipo: string | null, corpo: unknown, extra: { ok?: boolean; lunghezza?: string | null } = {}) => ({
+  ok: extra.ok ?? true,
+  headers: { get: (n: string) => (n.toLowerCase() === 'content-type' ? tipo : n.toLowerCase() === 'content-length' ? (extra.lunghezza ?? null) : null) },
+  json: async () => {
+    if (typeof corpo === 'string') return JSON.parse(corpo);
+    return corpo;
+  },
+});
+
+test('il bundle servito da GitHub come text/plain si accetta', async () => {
+  const r = rispostaFinta('text/plain; charset=utf-8', buono('2026-09-14T18:41:01.204Z'), { lunghezza: '240145' });
+  const esito = await leggiRisposta(r);
+  assert.ok('bundle' in esito, `scartato: ${'motivo' in esito ? esito.motivo : ''}`);
+});
+
+test('il portale di una rete wifi si scarta senza leggerlo, e si dice perche', async () => {
+  const esito = await leggiRisposta(rispostaFinta('text/html; charset=UTF-8', '<html>accedi</html>'));
+  assert.deepEqual(esito, { motivo: 'pagina web invece dei dati' });
+});
+
+test('un file troppo grande, una risposta di errore o un json che non e un bundle si scartano', async () => {
+  assert.deepEqual(await leggiRisposta(rispostaFinta('text/plain', {}, { lunghezza: String(TETTO + 1) })), { motivo: 'file troppo grande' });
+  assert.deepEqual(await leggiRisposta(rispostaFinta('text/plain', {}, { ok: false })), { motivo: 'risposta di errore' });
+  assert.deepEqual(await leggiRisposta(rispostaFinta('text/plain', { meta: {} })), { motivo: 'non e un bundle' });
+  assert.deepEqual(await leggiRisposta(rispostaFinta('text/plain', '{troncato')), { motivo: 'file illeggibile' });
+});
+
+/*
+ * Il file vero, letto come lo legge l'app.
+ *
+ * Non basta che le regole siano giuste in astratto: il bundle che l'ingest
+ * committa deve passare da `leggiRisposta` con le intestazioni con cui GitHub
+ * lo serve davvero. Se un giorno cambia la forma dei dati o le regole
+ * dell'app, questo test lo dice prima dei telefoni.
+ */
+import { readFileSync } from 'node:fs';
+
+test('il bundle committato passa da leggiRisposta con le intestazioni vere di GitHub', async () => {
+  const testo = readFileSync(new URL('../../../data/bundle.json', import.meta.url), 'utf8');
+  const r = {
+    ok: true,
+    headers: { get: (n: string) => (n.toLowerCase() === 'content-type' ? 'text/plain; charset=utf-8' : n.toLowerCase() === 'content-length' ? String(Buffer.byteLength(testo)) : null) },
+    json: async () => JSON.parse(testo),
+  };
+  const esito = await leggiRisposta(r);
+  assert.ok('bundle' in esito, `l'app scarterebbe i dati veri: ${'motivo' in esito ? esito.motivo : ''}`);
+});

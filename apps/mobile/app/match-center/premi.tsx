@@ -13,6 +13,7 @@ import { shortDate } from '../../lib/format';
 import { caricaMvpPartita, classificaMvp, useFanplay } from '../../lib/fanplay';
 import { statoMigliore } from '../../lib/premi-core';
 import { fineVera } from '../../lib/live';
+import { useDati } from '../../lib/bundle-remoto';
 
 /**
  * I premi: il migliore della partita e il migliore del mese.
@@ -25,6 +26,7 @@ import { fineVera } from '../../lib/live';
  * Senza quelle due righe scritte sopra, un premio che sparisce sembra un guasto.
  */
 export default function Premi() {
+  useDati();
   const gutter = useGutter();
   useFanplay();
 

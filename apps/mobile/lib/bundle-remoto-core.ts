@@ -88,3 +88,50 @@ export function daSostituire(attuale: number, arrivato: unknown): boolean {
   if (!valido(arrivato)) return false;
   return istante(arrivato) > attuale;
 }
+
+/** Il bundle sta sotto il mezzo mega: oltre i cinque non e piu lui. */
+export const TETTO = 5 * 1024 * 1024;
+
+/** Quel poco di una risposta HTTP che serve per decidere. */
+export type RispostaMinima = {
+  ok: boolean;
+  headers: { get(nome: string): string | null };
+  json(): Promise<unknown>;
+};
+
+/**
+ * Legge una risposta e dice se contiene un bundle, o perche no.
+ *
+ * NON SI GUARDA CHE IL TIPO DICA "JSON".
+ *
+ * raw.githubusercontent.com serve ogni file come `text/plain; charset=utf-8`,
+ * anche i .json. Il 13 settembre qui era entrato un controllo che pretendeva
+ * "json" nel tipo, pensato contro il portale delle reti wifi: da quel momento
+ * ogni download riusciva e veniva buttato. L'app restava ai dati del giorno in
+ * cui era stata compilata, notizie comprese, e niente lo diceva. Era la sesta
+ * volta che "le notizie non si aggiornano".
+ *
+ * Il portale di una rete wifi si riconosce dal fatto che manda una pagina web:
+ * quella si scarta prima di leggerla. Tutto il resto lo decide il contenuto,
+ * con `valido()`, che e l'unico controllo che non dipende da come un server
+ * sceglie di etichettare i file.
+ *
+ * Il motivo dello scarto torna indietro apposta: un rifiuto senza motivo e
+ * esattamente il guasto muto che ha fatto ripetere questo difetto sei volte.
+ */
+export async function leggiRisposta(r: RispostaMinima): Promise<{ bundle: unknown } | { motivo: string }> {
+  if (!r.ok) return { motivo: 'risposta di errore' };
+  const tipo = (r.headers.get('content-type') ?? '').toLowerCase();
+  if (tipo.includes('html')) return { motivo: 'pagina web invece dei dati' };
+  const quanto = Number(r.headers.get('content-length') ?? 0);
+  if (Number.isFinite(quanto) && quanto > TETTO) return { motivo: 'file troppo grande' };
+
+  let arrivato: unknown;
+  try {
+    arrivato = await r.json();
+  } catch {
+    return { motivo: 'file illeggibile' };
+  }
+  if (!valido(arrivato)) return { motivo: 'non e un bundle' };
+  return { bundle: arrivato };
+}
