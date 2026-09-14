@@ -857,7 +857,19 @@ async function giro(primo: boolean): Promise<{ risposta: Record<string, unknown>
    * il punteggio scritto resta com'e. Un `null` da una fonte dal vivo non vuol
    * dire "zero a zero", vuol dire "adesso non lo so".
    */
-  const letture = [tabellone, punteggioLsa, daEventi].filter((x): x is Punteggio => x !== null);
+  /*
+   * Un giro senza live-score-api non dimentica quello che aveva contato.
+   *
+   * Con la fonte degli eventi giu, restava il solo TheSportsDB: una sua
+   * lettura sbagliata a 0-0 cancellava il gol dal tabellone, e al giro dopo lo
+   * stesso gol sembrava nuovo e suonava di nuovo. L'ultimo conteggio resta
+   * valido finche la fonte non torna a parlare: i gol annullati sono rari, le
+   * letture sbagliate no.
+   */
+  const ultimoConteggio: Punteggio | null = !lettura && riga.casa_af !== null && riga.casa_af !== undefined
+    && riga.ospiti_af !== null && riga.ospiti_af !== undefined
+    ? { casa: Number(riga.casa_af), ospiti: Number(riga.ospiti_af) } : null;
+  const letture = [tabellone, punteggioLsa, daEventi, ultimoConteggio].filter((x): x is Punteggio => x !== null);
   const mostrato: Punteggio | null = letture.length
     ? { casa: Math.max(...letture.map((x) => x.casa)), ospiti: Math.max(...letture.map((x) => x.ospiti)) }
     : null;

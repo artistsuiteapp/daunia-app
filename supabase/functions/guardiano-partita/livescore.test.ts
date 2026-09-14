@@ -227,6 +227,7 @@ test('il minuto di live-score-api perde il "+" del recupero, che l app sa far av
   assert.equal(minutoDaLsa('34'), '34');
   assert.equal(minutoDaLsa('45+'), '45');
   assert.equal(minutoDaLsa('90+'), '90');
+  assert.equal(minutoDaLsa("67'"), '67');
   assert.equal(minutoDaLsa('HT'), null);
   assert.equal(minutoDaLsa(''), null);
 });
