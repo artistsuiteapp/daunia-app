@@ -30,7 +30,7 @@ import { useDati } from '../../lib/bundle-remoto';
  * cui due foggiani di Bologna si accorgono l'uno dell'altro.
  */
 export default function Trasferte() {
-  useDati();
+  const versione = useDati();
   const gutter = useGutter();
   const ospite = useOspite();
 
@@ -39,7 +39,8 @@ export default function Trasferte() {
       .filter((m) => m.status !== 'finished' && !m.foggiaHome && m.kickoff)
       .sort((a, b) => Date.parse(a.kickoff!) - Date.parse(b.kickoff!))
       .slice(0, 8),
-    [],
+    // la versione dei dati: senza, l'elenco restava quello del primo disegno per tutta la vita dell'app
+    [versione],
   );
 
   useTrasferte(fuori.map((m) => m.id));

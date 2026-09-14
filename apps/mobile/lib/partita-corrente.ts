@@ -3,6 +3,7 @@ import type { Match, TeamStats } from '@satanelli/core';
 
 import { matches, stats as statsArchivio } from './data';
 import { useLive, liveDi, useGolVivo } from './live';
+import { useDati } from './bundle-remoto';
 import { fondi, ultimaGiocata, conLaPartitaNuova } from './partita-corrente-core.ts';
 
 /**
@@ -40,6 +41,14 @@ export function usePartite(): {
 } {
   const live = useLive();
   const gol = useGolVivo();
+  /*
+   * La versione dei dati sta nelle dipendenze.
+   *
+   * Senza, il calendario restava quello del primo disegno: arrivava il bundle
+   * nuovo, la schermata si ridisegnava, e questa memoria restituiva le partite
+   * di prima. Partite, Home, Statistiche e Match Center passano tutte da qui.
+   */
+  const versione = useDati();
 
   return useMemo(() => {
     const seguita = quale(live);
@@ -63,7 +72,7 @@ export function usePartite(): {
       inCorso: aggiornata.status === 'live' ? aggiornata : null,
       fusa: aggiornata !== seguita,
     };
-  }, [live, gol]);
+  }, [live, gol, versione]);
 }
 
 /** Solo l'ultima giocata, per chi non ha bisogno del resto. */
@@ -83,6 +92,7 @@ export function useUltimaPartita(): Match | null {
  */
 export function useStatistiche(): { stats: TeamStats; nuova: Match | null } {
   const { partite } = usePartite();
+  const versione = useDati();
 
   return useMemo(() => {
     const ultima = ultimaGiocata(partite);
@@ -93,5 +103,5 @@ export function useStatistiche(): { stats: TeamStats; nuova: Match | null } {
     if (giaContata) return { stats: statsArchivio, nuova: null };
 
     return { stats: conLaPartitaNuova(statsArchivio, ultima), nuova: ultima };
-  }, [partite]);
+  }, [partite, versione]);
 }

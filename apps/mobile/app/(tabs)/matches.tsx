@@ -6,6 +6,7 @@ import { MatchListRow } from '../../components/MatchCard';
 import { space } from '../../theme/tokens';
 import { FOGGIA, meta } from '../../lib/data';
 import { usePartite } from '../../lib/partita-corrente';
+import { inOrdineDiCalendario } from '../../lib/partita-corrente-core';
 import { useDati } from '../../lib/bundle-remoto';
 
 type Tab = 'prossime' | 'giocate' | 'tutte';
@@ -25,7 +26,7 @@ export default function Matches() {
   const list = useMemo(() => {
     const quando = (m: (typeof partite)[number]) => Date.parse(m.kickoff ?? '') || 0;
     if (tab === 'prossime') {
-      return partite.filter((m) => m.status !== 'finished').sort((a, b) => quando(a) - quando(b));
+      return inOrdineDiCalendario(partite.filter((m) => m.status !== 'finished'));
     }
     if (tab === 'giocate') {
       return partite.filter((m) => m.status === 'finished').sort((a, b) => quando(b) - quando(a));
