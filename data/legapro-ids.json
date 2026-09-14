@@ -229,6 +229,11 @@
       "ospiti": "ASD Pineto Calcio"
     },
     {
+      "id": "burpupd22tllwp2p132mtq2vo",
+      "casa": "US Sambenedettese",
+      "ospiti": "Forli FC"
+    },
+    {
       "id": "brren6cj5ue0mlt0vetxie1p0",
       "casa": "Grosseto",
       "ospiti": "Spezia Calcio"
@@ -237,11 +242,6 @@
       "id": "btgz2tbmb0ejb2oejbq7z9p1w",
       "casa": "Perugia Calcio Spa",
       "ospiti": "AS Ostiamare Lido Calcio"
-    },
-    {
-      "id": "burpupd22tllwp2p132mtq2vo",
-      "casa": "US Sambenedettese",
-      "ospiti": "Forli FC"
     },
     {
       "id": "bt1kfgkfjs17gbjfcpnm2jaj8",
@@ -259,11 +259,6 @@
       "ospiti": "Vado FC 1913"
     },
     {
-      "id": "byb1fhmpf4l822beztmd05d78",
-      "casa": "SEF Torres Sassari",
-      "ospiti": "US Sambenedettese"
-    },
-    {
       "id": "bwl0fb8qgmy1dfyzexhjxde6s",
       "casa": "AS Ostiamare Lido Calcio",
       "ospiti": "Grosseto"
@@ -274,9 +269,9 @@
       "ospiti": "Latina Calcio"
     },
     {
-      "id": "bxyqliisctxcemos9e26a48ic",
-      "casa": "Spezia Calcio",
-      "ospiti": "Campobasso FC"
+      "id": "byb1fhmpf4l822beztmd05d78",
+      "casa": "SEF Torres Sassari",
+      "ospiti": "US Sambenedettese"
     },
     {
       "id": "bx9v7ug0ax8vdo2eu3tp4gems",
@@ -289,14 +284,14 @@
       "ospiti": "Delfino Pescara"
     },
     {
+      "id": "bxyqliisctxcemos9e26a48ic",
+      "casa": "Spezia Calcio",
+      "ospiti": "Campobasso FC"
+    },
+    {
       "id": "bvjk984848lldb40pgup7rd3o",
       "casa": "Atalanta BC",
       "ospiti": "Guidonia Montecelio 1937 FC"
-    },
-    {
-      "id": "byngd34ozwqle7wyu2w4386j8",
-      "casa": "Vis Pesaro 1898",
-      "ospiti": "Perugia Calcio Spa"
     },
     {
       "id": "bw8ixnh5nm1mdsoxvg3mkqkgk",
@@ -304,9 +299,9 @@
       "ospiti": "AC Reggiana"
     },
     {
-      "id": "bzohqfrhg8zs4d2shucasby8k",
-      "casa": "Guidonia Montecelio 1937 FC",
-      "ospiti": "US Pianese"
+      "id": "byngd34ozwqle7wyu2w4386j8",
+      "casa": "Vis Pesaro 1898",
+      "ospiti": "Perugia Calcio Spa"
     },
     {
       "id": "byzucsl0wksya8dfv0bi6axhw",
@@ -319,19 +314,24 @@
       "ospiti": "Forli FC"
     },
     {
+      "id": "bzohqfrhg8zs4d2shucasby8k",
+      "casa": "Guidonia Montecelio 1937 FC",
+      "ospiti": "US Pianese"
+    },
+    {
       "id": "c23o0wnvzr6xbgsqadl23xrtg",
       "casa": "Vis Pesaro 1898",
       "ospiti": "AS Ostiamare Lido Calcio"
     },
     {
-      "id": "c1rb6mntpu9700oe92pwa9q1g",
-      "casa": "US Sambenedettese",
-      "ospiti": "Spezia Calcio"
-    },
-    {
       "id": "bzc8s1pecgljajwi1ibkui4no",
       "casa": "Grosseto",
       "ospiti": "SEF Torres Sassari"
+    },
+    {
+      "id": "c1rb6mntpu9700oe92pwa9q1g",
+      "casa": "US Sambenedettese",
+      "ospiti": "Spezia Calcio"
     },
     {
       "id": "c127boztzkw4ouk0ix3i48u1g",
@@ -354,19 +354,14 @@
       "ospiti": "ASD Pineto Calcio"
     },
     {
-      "id": "c5jqzc3lwn9a69dladplx6oes",
-      "casa": "Vado FC 1913",
-      "ospiti": "Campobasso FC"
-    },
-    {
       "id": "c2fzu8iqtkvw7p0bvf1utg5qs",
       "casa": "Atalanta BC",
       "ospiti": "Delfino Pescara"
     },
     {
-      "id": "c4uxyaxr4lqpi9i6gw3x2pjpw",
-      "casa": "Spezia Calcio",
-      "ospiti": "US Livorno 1915"
+      "id": "c5jqzc3lwn9a69dladplx6oes",
+      "casa": "Vado FC 1913",
+      "ospiti": "Campobasso FC"
     },
     {
       "id": "c45z1fbaikdwoxj2604lfx79w",
@@ -374,14 +369,19 @@
       "ospiti": "US Sambenedettese"
     },
     {
+      "id": "c4uxyaxr4lqpi9i6gw3x2pjpw",
+      "casa": "Spezia Calcio",
+      "ospiti": "US Livorno 1915"
+    },
+    {
       "id": "c3h4h8qyslqsown74jf1rpxqs",
       "casa": "Guidonia Montecelio 1937 FC",
       "ospiti": "AC Reggiana"
     },
     {
-      "id": "c34t0syxjdmi4hh22xe4ivz84",
-      "casa": "AS Gubbio",
-      "ospiti": "Latina Calcio"
+      "id": "c3thp2q5mrslaab9ut0ac6f4k",
+      "casa": "US Pianese",
+      "ospiti": "Grosseto"
     },
     {
       "id": "c2secruk1yr5uvu3ul2w7vllg",
@@ -389,9 +389,9 @@
       "ospiti": "Vis Pesaro 1898"
     },
     {
-      "id": "c3thp2q5mrslaab9ut0ac6f4k",
-      "casa": "US Pianese",
-      "ospiti": "Grosseto"
+      "id": "c34t0syxjdmi4hh22xe4ivz84",
+      "casa": "AS Gubbio",
+      "ospiti": "Latina Calcio"
     },
     {
       "id": "c4ib5mhnb80uhgk10ouydi6fo",
