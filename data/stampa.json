@@ -27,6 +27,28 @@
   ],
   "articoli": [
     {
+      "id": "foggiacalciomania-511343c756",
+      "testata": "foggiacalciomania",
+      "titolo": "Giudice sportivo: Foggia nessuna ammenda e squalifica",
+      "sommario": "Il Giudice Sportivo, Dott. Stefano Palazzi, assistito da Irene Papi e dal Rappresentante dell’A.I.A. Sig. Silvano Torrini, nella seduta del 13 settembre 2026 ha adottato le…",
+      "url": "https://foggiacalciomania.com/news-foggia-calcio/giudice-sportivo/giudice-sportivo-foggia-nessuna-ammenda-e-squalifica-3/",
+      "data": "2026-09-14T12:29:01.000Z",
+      "autore": "Redazione FCM 24 ore",
+      "categoria": "Giudice sportivo",
+      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2018/06/giudice-sportivo.jpg"
+    },
+    {
+      "id": "foggiacalciomania-a5a9a761ed",
+      "testata": "foggiacalciomania",
+      "titolo": "Foggia-Savoia dirige Giovanni Castellano di Nichelino",
+      "sommario": "Sarà il signor Castellano della sezione A.I.A di Nichelino che dirigerà la gara Foggia-Savoia in programma domani sera alle ore 21.00 Questi i direttori di gara chiamati a…",
+      "url": "https://foggiacalciomania.com/news-foggia-calcio/designazioni/foggia-savoia-dirige-giovanni-castellano-di-nichelino/",
+      "data": "2026-09-14T12:23:20.000Z",
+      "autore": "Redazione FCM 24 ore",
+      "categoria": "Designazioni",
+      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2014/09/arbitro-pallone.jpg"
+    },
+    {
       "id": "calciofoggia-6ceee0c1c5",
       "testata": "calciofoggia",
       "titolo": "Giovanni Castellano di Nichelino dirige Foggia-Savoia",
@@ -203,28 +225,6 @@
       "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Monopoli-Foggia-2.jpg"
     },
     {
-      "id": "foggiacalciomania-a78b7c034e",
-      "testata": "foggiacalciomania",
-      "titolo": "Un Foggia lento e prevedibile perde anche con il Monopoli (1-0)",
-      "sommario": "Squadra che non crea occasioni non segna. Squadra che non segna non vince. Possiamo sintetizzarla così la condizione del Foggia con il Monopoli. Lento, prevedibile, gioco in…",
-      "url": "https://foggiacalciomania.com/news-foggia-calcio/la-cronaca/un-foggia-lento-e-prevedibile-perde-anche-con-il-monopoli-1-0/",
-      "data": "2026-09-12T18:04:36.000Z",
-      "autore": "Roberto Parisi",
-      "categoria": "La Cronaca",
-      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Monopoli-Foggia-3.jpg"
-    },
-    {
-      "id": "foggiacalciomania-155accad75",
-      "testata": "foggiacalciomania",
-      "titolo": "Diretta: Monopoli-Foggia 1 – 0 Foggia seconda sconfitta consecutiva",
-      "sommario": "Il Foggia di mister Auteri esce sconfitto dal San Nicola, è bastato un gol di Capone per regalare i tre punti al Monopoli. Ora martedi il Savoia allo Zaccheria. | L'articolo…",
-      "url": "https://foggiacalciomania.com/news-foggia-calcio/diretta-monopoli-foggia-0-0-formazioni-ufficiali/",
-      "data": "2026-09-12T15:30:34.000Z",
-      "autore": "Redazione FCM 24 ore",
-      "categoria": "News Calcio Foggia 1920",
-      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2023/03/rete-foggia.jpg"
-    },
-    {
       "id": "calciofoggia-5eca8d5c30",
       "testata": "calciofoggia",
       "titolo": "Monopoli-Foggia 1-0 (risultato finale)",
@@ -335,5 +335,5 @@
       "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0088-scaled.jpg"
     }
   ],
-  "aggiornatoIl": "2026-09-14T12:40:49.738Z"
+  "aggiornatoIl": "2026-09-14T13:00:56.669Z"
 }
