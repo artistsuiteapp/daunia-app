@@ -609,11 +609,14 @@
   {
     "id": "wp-2026-2027-005",
     "kickoff": "2026-09-15T19:00:00.000Z",
-    "status": "scheduled",
+    "status": "finished",
     "matchday": 5,
     "competition": "Serie C",
     "season": "2026-2027",
-    "score": null,
+    "score": {
+      "home": 0,
+      "away": 0
+    },
     "venue": "Stadio Pino Zaccheria",
     "city": "Foggia",
     "attendance": null,
@@ -623,6 +626,76 @@
     "foggiaResult": null,
     "reportUrl": "https://www.transfermarkt.it/spielbericht/index/spielbericht/4979204",
     "source": "wikipedia",
+    "cards": [
+      {
+        "minute": 15,
+        "player": "M. Noce",
+        "side": "away",
+        "rosso": false
+      },
+      {
+        "minute": 45,
+        "player": "C. Fabriani",
+        "side": "away",
+        "rosso": false
+      },
+      {
+        "minute": 70,
+        "player": "S. Iob",
+        "side": "away",
+        "rosso": false
+      }
+    ],
+    "subs": [
+      {
+        "minute": 46,
+        "esce": "F. Scotti",
+        "entra": "P. Yeboah",
+        "side": "away"
+      },
+      {
+        "minute": 63,
+        "esce": "M. Ravasio",
+        "entra": "P. Luciani",
+        "side": "home"
+      },
+      {
+        "minute": 63,
+        "esce": "F. Zuccon",
+        "entra": "M. Coulibaly",
+        "side": "home"
+      },
+      {
+        "minute": 63,
+        "esce": "G. Panico",
+        "entra": "Y. Merdji",
+        "side": "home"
+      },
+      {
+        "minute": 63,
+        "esce": "A. Nepi",
+        "entra": "A. Gemello",
+        "side": "away"
+      },
+      {
+        "minute": 77,
+        "esce": "H. Haoudi",
+        "entra": "I. Toure",
+        "side": "home"
+      },
+      {
+        "minute": 83,
+        "esce": "D. Portanova",
+        "entra": "A. Martina",
+        "side": "away"
+      },
+      {
+        "minute": 89,
+        "esce": "F. Petito",
+        "entra": "M. Bigonzoni",
+        "side": "home"
+      }
+    ],
     "home": {
       "id": "foggia",
       "name": "CALCIO FOGGIA 1920",
@@ -635,7 +708,7 @@
       "shortName": "Savoia",
       "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2026/09/Coat_of_arms_of_the_Duchy_of_Savoy_XV-XVI_century.svg"
     },
-    "ticketUrl": "https://calciofoggia1920.vivaticket.it/"
+    "ticketUrl": null
   },
   {
     "id": "wp-2026-2027-006",
