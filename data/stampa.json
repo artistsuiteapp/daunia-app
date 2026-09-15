@@ -27,10 +27,21 @@
   ],
   "articoli": [
     {
+      "id": "foggiacalciomania-a3cca170d4",
+      "testata": "foggiacalciomania",
+      "titolo": "Diretta: Foggia-Savoia 0 – 0 Formazioni ufficiali",
+      "sommario": "| Foggia-Savoia 0 – 0 | Rete: | Foggia (4-2-3-1): Saro; Todisco, Berra, Seck, Smeraldi; Gallo, Zuccon; Petito, Panico, Haoudi; Ravasio A disposizione: Marfella, Testa, Di…",
+      "url": "https://foggiacalciomania.com/news-foggia-calcio/diretta-foggia-savoia-0-0-ore-2100/",
+      "data": "2026-09-15T18:02:31.000Z",
+      "autore": "Redazione FCM 24 ore",
+      "categoria": "News Calcio Foggia 1920",
+      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2023/03/rete-foggia.jpg"
+    },
+    {
       "id": "calciofoggia-a61663a2e7",
       "testata": "calciofoggia",
-      "titolo": "Foggia-Savoia",
-      "sommario": "Formazioni ufficiali Foggia: (in attesa di comunicazione) All.: Gaetano Auteri Savoia: (in attesa di comunicazione) All.: Alessandro Formisano Prepartita Allo stadio “Pino…",
+      "titolo": "Foggia-Savoia (formazioni ufficiali)",
+      "sommario": "Formazioni ufficiali Foggia: Saro, Todisco, Seck, Gallo, Petito, Zuccon, Haoudi, Panico, Berra, Smeraldi, Ravasio All.: Gaetano Auteri Savoia: Leonardo, Alfieri, Meola, Scotti…",
       "url": "https://www.calciofoggia.it/foggia-savoia-campionato-2026-2027/",
       "data": "2026-09-15T18:00:36.000Z",
       "autore": "Armando Borrelli",
@@ -225,17 +236,6 @@
       "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/08/Foggia-2026-7.jpeg"
     },
     {
-      "id": "foggiacalciomania-f771fa6a0d",
-      "testata": "foggiacalciomania",
-      "titolo": "Lo Zac su Monopoli-Foggia, sfoglia il giornale gratuitamente.",
-      "sommario": "Puoi sfogliare gratuitamente il giornale cliccando QUI Oppure clicca qui sotto per scaricare il Pdf del giornale: LO ZAC 12 SETTEMBRE 2026 L'articolo Lo Zac su Monopoli-Foggia…",
-      "url": "https://foggiacalciomania.com/news-foggia-calcio/lo-zac-su-monopoli-foggia-sfoglia-il-giornale-gratuitamente/",
-      "data": "2026-09-13T08:21:14.000Z",
-      "autore": "Roberto Parisi",
-      "categoria": "News Calcio Foggia 1920",
-      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/page_1-1.png"
-    },
-    {
       "id": "calciofoggia-0dac970f64",
       "testata": "calciofoggia",
       "titolo": "il punto sulla 4° giornata",
@@ -335,5 +335,5 @@
       "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0088-scaled.jpg"
     }
   ],
-  "aggiornatoIl": "2026-09-15T18:01:05.934Z"
+  "aggiornatoIl": "2026-09-15T18:20:57.581Z"
 }
