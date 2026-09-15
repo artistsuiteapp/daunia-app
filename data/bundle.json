@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-15T19:01:04.567Z",
+    "generatedAt": "2026-09-15T19:21:14.169Z",
     "season": "2026-2027",
     "competition": "Serie C",
     "sources": {
@@ -4826,6 +4826,132 @@
           }
         ]
       }
+    },
+    "wp-2026-2027-005": {
+      "casa": {
+        "squadra": "FOGGIA",
+        "modulo": "4-3-3",
+        "allenatore": "Auteri Gaetano",
+        "giocatori": [
+          {
+            "numero": 22,
+            "nome": "Saro Gianluca",
+            "ruolo": "Portiere"
+          },
+          {
+            "numero": 2,
+            "nome": "Todisco Gianmarco",
+            "ruolo": "Difensore"
+          },
+          {
+            "numero": 32,
+            "nome": "Smeraldi Andrea",
+            "ruolo": "Difensore"
+          },
+          {
+            "numero": 21,
+            "nome": "Berra Filippo",
+            "ruolo": "Difensore"
+          },
+          {
+            "numero": 3,
+            "nome": "Seck Mohamed",
+            "ruolo": "Difensore"
+          },
+          {
+            "numero": 4,
+            "nome": "Gallo Andrea",
+            "ruolo": "Centrocampista"
+          },
+          {
+            "numero": 14,
+            "nome": "Zuccon Federico",
+            "ruolo": "Centrocampista"
+          },
+          {
+            "numero": 16,
+            "nome": "Haoudi Hamza",
+            "ruolo": "Centrocampista"
+          },
+          {
+            "numero": 91,
+            "nome": "Ravasio Mario",
+            "ruolo": "Attaccante"
+          },
+          {
+            "numero": 11,
+            "nome": "Petito Francesco Pio",
+            "ruolo": "Attaccante"
+          },
+          {
+            "numero": 17,
+            "nome": "Panico Giuseppe Antonio",
+            "ruolo": "Attaccante"
+          }
+        ]
+      },
+      "ospiti": {
+        "squadra": "SAVOIA",
+        "modulo": "3-4-1-2",
+        "allenatore": "Formisano Alessandro Vittorio",
+        "giocatori": [
+          {
+            "numero": 22,
+            "nome": "Leonardo Matteo Michele",
+            "ruolo": "Portiere"
+          },
+          {
+            "numero": 35,
+            "nome": "Portanova Denis",
+            "ruolo": "Difensore"
+          },
+          {
+            "numero": 26,
+            "nome": "Noce Mario",
+            "ruolo": "Difensore"
+          },
+          {
+            "numero": 30,
+            "nome": "Fabriani Cristian",
+            "ruolo": "Difensore"
+          },
+          {
+            "numero": 24,
+            "nome": "Iob Simone",
+            "ruolo": "Centrocampista"
+          },
+          {
+            "numero": 27,
+            "nome": "Cozzoli Francesco",
+            "ruolo": "Centrocampista"
+          },
+          {
+            "numero": 14,
+            "nome": "Tumbarello Giorgio",
+            "ruolo": "Centrocampista"
+          },
+          {
+            "numero": 6,
+            "nome": "Alfieri Vincenzo",
+            "ruolo": "Centrocampista"
+          },
+          {
+            "numero": 8,
+            "nome": "Meola Francesco",
+            "ruolo": "Centrocampista"
+          },
+          {
+            "numero": 9,
+            "nome": "Scotti Filippo",
+            "ruolo": "Attaccante"
+          },
+          {
+            "numero": 90,
+            "nome": "Nepi Alessio",
+            "ruolo": "Attaccante"
+          }
+        ]
+      }
     }
   },
   "divietiProposti": [],
@@ -4860,7 +4986,7 @@
       {
         "id": "foggiacalciomania-a3cca170d4",
         "testata": "foggiacalciomania",
-        "titolo": "Diretta: Foggia-Savoia 0 – 0 Formazioni ufficiali",
+        "titolo": "Diretta: Foggia-Savoia 0 – 0 Primo tempo in corso",
         "sommario": "| Foggia-Savoia 0 – 0 | Rete: | Foggia (4-2-3-1): Saro; Todisco, Berra, Seck, Smeraldi; Gallo, Zuccon; Petito, Panico, Haoudi; Ravasio A disposizione: Marfella, Testa, Di…",
         "url": "https://foggiacalciomania.com/news-foggia-calcio/diretta-foggia-savoia-0-0-ore-2100/",
         "data": "2026-09-15T18:02:31.000Z",
@@ -4872,7 +4998,7 @@
         "id": "calciofoggia-a61663a2e7",
         "testata": "calciofoggia",
         "titolo": "Foggia-Savoia 0-0 (primo tempo in corso)",
-        "sommario": "Primo tempo in corso 1′ – Comincia il primo tempo di Foggia-Savoia. Formazioni ufficiali Foggia: Saro, Todisco, Seck, Gallo, Petito, Zuccon, Haoudi, Panico, Berra, Smeraldi…",
+        "sommario": "Primo tempo in corso 20′ – Ripartenza Foggia con Petito che sbaglia la misura del cross, regalando il pallone al portiere ospite. 17′ – Secondo angolo Foggia: i rossoneri fanno…",
         "url": "https://www.calciofoggia.it/foggia-savoia-campionato-2026-2027/",
         "data": "2026-09-15T18:00:36.000Z",
         "autore": "Armando Borrelli",
@@ -5166,6 +5292,6 @@
         "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0088-scaled.jpg"
       }
     ],
-    "aggiornatoIl": "2026-09-15T19:01:00.039Z"
+    "aggiornatoIl": "2026-09-15T19:20:55.057Z"
   }
 }
