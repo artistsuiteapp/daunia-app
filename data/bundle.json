@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-15T11:40:54.320Z",
+    "generatedAt": "2026-09-15T12:02:06.852Z",
     "season": "2026-2027",
     "competition": "Serie C",
     "sources": {
@@ -18,14 +18,12 @@
       "Anno corretto su Wikipedia per Foggia-Altamura: 2025-08-16 -> 2026-08-16.",
       "Nessuno stemma per \"Inter U23\": il sito del club non ha mai incontrato questa squadra.",
       "Solo 2 giocatori su 23 hanno la foto: la rosa sul sito del club e ferma alla stagione precedente.",
-      "Il negozio non ha restituito prodotti: la sezione shop resta vuota.",
       "Campo spostato 2026-09-12 Monopoli-Foggia: da \"Stadio San Nicola\" a \"Stadio San Nicola\".",
       "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
       "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
       "API-Football rosa: Your account is suspended, check on https://dashboard.api-football.com.",
       "Trasferta a Inter U23 fra meno di una settimana e nessuna notizia sul divieto: controlla a mano, potrebbe essersi rotto il riconoscimento.",
-      "Lega Pro: Foggia-Altamura e' finita da ore e non ha un id nel calendario della Lega: la formazione non entrera' mai nell'archivio",
-      "Stampa, CalcioFoggia.it: HTTP 415 su https://www.calciofoggia.it/feed/"
+      "Lega Pro: Foggia-Altamura e' finita da ore e non ha un id nel calendario della Lega: la formazione non entrera' mai nell'archivio"
     ]
   },
   "teams": [
@@ -3070,8 +3068,583 @@
     ]
   },
   "shop": {
-    "products": [],
-    "categories": []
+    "products": [
+      {
+        "id": "shop-15560",
+        "name": "TUTA RAPPRESENTANZA RED",
+        "price": 110,
+        "regularPrice": 110,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_5-scaled.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_5-scaled.jpg",
+          "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_17-scaled.jpg"
+        ],
+        "category": "Tute",
+        "categorySlug": "tute",
+        "url": "https://calciofoggia1920.store/prodotto/tuta-rappresentanza-red/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15551",
+        "name": "TUTA RAPPRESENTANZA BLACK",
+        "price": 110,
+        "regularPrice": 110,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_4-scaled.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_4-scaled.jpg",
+          "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_17-scaled.jpg"
+        ],
+        "category": "Tute",
+        "categorySlug": "tute",
+        "url": "https://calciofoggia1920.store/prodotto/tuta-rappresentanza-black/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15519",
+        "name": "MAGLIA GARA THIRD",
+        "price": 85,
+        "regularPrice": 85,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-06-scaled.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-06-scaled.jpg",
+          "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-08-scaled.jpg",
+          "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-07-scaled.jpg",
+          "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-09-scaled.jpg"
+        ],
+        "category": "kit",
+        "categorySlug": "kit",
+        "url": "https://calciofoggia1920.store/prodotto/maglia-gara-third/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15505",
+        "name": "MAGLIA GARA AWAY",
+        "price": 85,
+        "regularPrice": 85,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-01-scaled.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-01-scaled.jpg",
+          "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-02-scaled.jpg",
+          "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-03-scaled.jpg",
+          "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-04-scaled.jpg"
+        ],
+        "category": "kit",
+        "categorySlug": "kit",
+        "url": "https://calciofoggia1920.store/prodotto/maglia-gara-away/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15684",
+        "name": "MAGLIA GARA AWAY BAMBINO/A",
+        "price": 70,
+        "regularPrice": 70,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/09/CF_Away26_JR-01-scaled.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/09/CF_Away26_JR-01-scaled.jpg",
+          "https://calciofoggia1920.store/wp-content/uploads/2026/09/CF_Away26_JR-02-scaled.jpg",
+          "https://calciofoggia1920.store/wp-content/uploads/2026/09/CF_Away26_JR-03-scaled.jpg",
+          "https://calciofoggia1920.store/wp-content/uploads/2026/09/CF_Away26_JR-04-scaled.jpg"
+        ],
+        "category": "Maglie Gara",
+        "categorySlug": "maglie-gara",
+        "url": "https://calciofoggia1920.store/prodotto/maglia-gara-away-bambino-a/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15682",
+        "name": "ZAINO BLU",
+        "price": 55,
+        "regularPrice": 55,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/09/CF_ZainoBlu-scaled.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/09/CF_ZainoBlu-scaled.jpg"
+        ],
+        "category": "Gadget",
+        "categorySlug": "gadget",
+        "url": "https://calciofoggia1920.store/prodotto/zaino-blu/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15679",
+        "name": "ZAINO RED",
+        "price": 55,
+        "regularPrice": 55,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/09/CF_ZainoRed-scaled.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/09/CF_ZainoRed-scaled.jpg"
+        ],
+        "category": "Gadget",
+        "categorySlug": "gadget",
+        "url": "https://calciofoggia1920.store/prodotto/zaino-red/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15549",
+        "name": "ZAINO",
+        "price": 55,
+        "regularPrice": 55,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_19-3-scaled.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_19-3-scaled.jpg"
+        ],
+        "category": "Gadget",
+        "categorySlug": "gadget",
+        "url": "https://calciofoggia1920.store/prodotto/zaino/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15582",
+        "name": "POLO DI RAPPRESENTANZA BLACK",
+        "price": 50,
+        "regularPrice": 50,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/IMG-20260831-WA0021.jpeg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/08/IMG-20260831-WA0021.jpeg"
+        ],
+        "category": "Polo",
+        "categorySlug": "polo",
+        "url": "https://calciofoggia1920.store/prodotto/polo-di-rappresentanza-black/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15541",
+        "name": "POLO DI RAPPRESENTANZA",
+        "price": 50,
+        "regularPrice": 50,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_8-1-scaled.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_8-1-scaled.jpg"
+        ],
+        "category": "Allenamento",
+        "categorySlug": "allenamento",
+        "url": "https://calciofoggia1920.store/prodotto/polo-di-rappresentanza/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15659",
+        "name": "PANTALONE TUTA BAMBINO/A",
+        "price": 45,
+        "regularPrice": 45,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/09/CF_PantTutaBlack_JR-scaled.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/09/CF_PantTutaBlack_JR-scaled.jpg"
+        ],
+        "category": "Tute",
+        "categorySlug": "tute",
+        "url": "https://calciofoggia1920.store/prodotto/pantalone-tuta-bambino-a/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15658",
+        "name": "GIACCA TUTA ROSSA BAMBINO/A",
+        "price": 45,
+        "regularPrice": 45,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/09/CF_GiaccaTutaRed_JR-scaled.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/09/CF_GiaccaTutaRed_JR-scaled.jpg"
+        ],
+        "category": "Tute",
+        "categorySlug": "tute",
+        "url": "https://calciofoggia1920.store/prodotto/giacca-tuta-rossa-bambino-a/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15657",
+        "name": "GIACCA TUTA NERA BAMBINO/A",
+        "price": 45,
+        "regularPrice": 45,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/09/CF_GiaccaTutaBlack_JR-scaled.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/09/CF_GiaccaTutaBlack_JR-scaled.jpg"
+        ],
+        "category": "Tute",
+        "categorySlug": "tute",
+        "url": "https://calciofoggia1920.store/prodotto/giacca-tuta-nera-bambino-a/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15532",
+        "name": "MAGLIA ALLENAMENTO",
+        "price": 30,
+        "regularPrice": 30,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_10-scaled.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_10-scaled.jpg"
+        ],
+        "category": "Allenamento",
+        "categorySlug": "allenamento",
+        "url": "https://calciofoggia1920.store/prodotto/maglia-allenamento/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15526",
+        "name": "PANTALONCINO DA GARA THIRD",
+        "price": 25,
+        "regularPrice": 25,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-10-1-scaled.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-10-1-scaled.jpg"
+        ],
+        "category": "kit",
+        "categorySlug": "kit",
+        "url": "https://calciofoggia1920.store/prodotto/pantaloncino-da-gara-third/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15513",
+        "name": "PANTALONCINO GARA AWAY",
+        "price": 25,
+        "regularPrice": 25,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-05-scaled.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/08/Magliegarastore-05-scaled.jpg"
+        ],
+        "category": "kit",
+        "categorySlug": "kit",
+        "url": "https://calciofoggia1920.store/prodotto/pantaloncino-gara-away/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15494",
+        "name": "PANTALONCINO GARA HOME",
+        "price": 25,
+        "regularPrice": 25,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/IMG-20260911-WA0019.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/08/IMG-20260911-WA0019.jpg"
+        ],
+        "category": "Pantaloncini",
+        "categorySlug": "pantaloncini",
+        "url": "https://calciofoggia1920.store/prodotto/pantaloncino-gara-home/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15539",
+        "name": "CALZA CORTA",
+        "price": 16,
+        "regularPrice": 16,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_32-scaled.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_32-scaled.jpg"
+        ],
+        "category": null,
+        "categorySlug": null,
+        "url": "https://calciofoggia1920.store/prodotto/calza-corta/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15703",
+        "name": "PANTALONCINO GARA AWAY BAMBINO/A",
+        "price": 15,
+        "regularPrice": 15,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/09/CF_PantBlack26_JR-scaled.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/09/CF_PantBlack26_JR-scaled.jpg"
+        ],
+        "category": "Pantaloncini",
+        "categorySlug": "pantaloncini",
+        "url": "https://calciofoggia1920.store/prodotto/pantaloncino-gara-away-bambino-a-copia/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15695",
+        "name": "PANTALONCINO GARA AWAY BAMBINO/A",
+        "price": 15,
+        "regularPrice": 15,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/09/CF_PantWhite26_JR-1-scaled.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/09/CF_PantWhite26_JR-1-scaled.jpg"
+        ],
+        "category": "Pantaloncini",
+        "categorySlug": "pantaloncini",
+        "url": "https://calciofoggia1920.store/prodotto/pantaloncino-gara-away-bambino-a/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15615",
+        "name": "TELO PALESTRA CALCIO FOGGIA",
+        "price": 15,
+        "regularPrice": 15,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/09/IMG-20260910-WA0042.jpeg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/09/IMG-20260910-WA0042.jpeg"
+        ],
+        "category": "Gadget",
+        "categorySlug": "gadget",
+        "url": "https://calciofoggia1920.store/prodotto/telo-palestra-calcio-foggia/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15613",
+        "name": "BORRACCIA CALCIO FOGGIA",
+        "price": 15,
+        "regularPrice": 15,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/09/ProdottiStampaSi-01-scaled.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/09/ProdottiStampaSi-01-scaled.jpg"
+        ],
+        "category": "Gadget",
+        "categorySlug": "gadget",
+        "url": "https://calciofoggia1920.store/prodotto/borraccia-calcio-foggia/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15503",
+        "name": "CALZA HOME",
+        "price": 12,
+        "regularPrice": 12,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_30-scaled.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/08/prodotti_CF26_30-scaled.jpg"
+        ],
+        "category": "Calze",
+        "categorySlug": "calze",
+        "url": "https://calciofoggia1920.store/prodotto/calza-home/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15598",
+        "name": "PORTACHIAVI CALCIO FOGGIA 1920",
+        "price": 5,
+        "regularPrice": 5,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/09/portachiaviFG.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/09/portachiaviFG.jpg"
+        ],
+        "category": "Gadget",
+        "categorySlug": "gadget",
+        "url": "https://calciofoggia1920.store/prodotto/portachiavi-calcio-foggia-1920/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15595",
+        "name": "BRACCIALETTO CALCIO FOGGIA 1920",
+        "price": 3,
+        "regularPrice": 3,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/09/mockup_braccialetti-silicone-foggia_1080x1080.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/09/mockup_braccialetti-silicone-foggia_1080x1080.jpg"
+        ],
+        "category": "Gadget",
+        "categorySlug": "gadget",
+        "url": "https://calciofoggia1920.store/prodotto/braccialetto-calcio-foggia-1920/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15622",
+        "name": "ACCENDINO ANTIVENTO CALCIO FOGGIA",
+        "price": 2.5,
+        "regularPrice": 2.5,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/09/ProdottiStampaSi-04-scaled.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/09/ProdottiStampaSi-04-scaled.jpg"
+        ],
+        "category": "Gadget",
+        "categorySlug": "gadget",
+        "url": "https://calciofoggia1920.store/prodotto/accendino-antivento-calcio-foggia/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15627",
+        "name": "PENNA CALCIO FOGGIA",
+        "price": 2,
+        "regularPrice": 2,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/09/ProdottiStampaSi-06-scaled.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/09/ProdottiStampaSi-06-scaled.jpg"
+        ],
+        "category": "Gadget",
+        "categorySlug": "gadget",
+        "url": "https://calciofoggia1920.store/prodotto/penna-calcio-foggia/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15617",
+        "name": "ACCENDINO FLAMMY",
+        "price": 1.5,
+        "regularPrice": 1.5,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/09/ProdottiStampaSi-05-scaled.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/09/ProdottiStampaSi-05-scaled.jpg"
+        ],
+        "category": "Gadget",
+        "categorySlug": "gadget",
+        "url": "https://calciofoggia1920.store/prodotto/accendino-flammy/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
+        "id": "shop-15623",
+        "name": "MATITA CALCIO FOGGIA",
+        "price": 1,
+        "regularPrice": 1,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/09/ProdottiStampaSi-03-scaled.jpg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/09/ProdottiStampaSi-03-scaled.jpg"
+        ],
+        "category": "Gadget",
+        "categorySlug": "gadget",
+        "url": "https://calciofoggia1920.store/prodotto/matita-calcio-foggia/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      }
+    ],
+    "categories": [
+      {
+        "slug": "gadget",
+        "name": "Gadget",
+        "count": 11
+      },
+      {
+        "slug": "pantaloncini",
+        "name": "Pantaloncini",
+        "count": 5
+      },
+      {
+        "slug": "tute",
+        "name": "Tute",
+        "count": 5
+      },
+      {
+        "slug": "kit",
+        "name": "kit",
+        "count": 4
+      },
+      {
+        "slug": "maglie-gara",
+        "name": "Maglie Gara",
+        "count": 3
+      },
+      {
+        "slug": "allenamento",
+        "name": "Allenamento",
+        "count": 2
+      },
+      {
+        "slug": "calze",
+        "name": "Calze",
+        "count": 1
+      },
+      {
+        "slug": "polo",
+        "name": "Polo",
+        "count": 1
+      }
+    ]
   },
   "tickets": [
     {
@@ -4869,6 +5442,28 @@
         "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/08/789653998_10239616419060783_1138873880567371313_n.jpg"
       },
       {
+        "id": "calciofoggia-fe9aa55e48",
+        "testata": "calciofoggia",
+        "titolo": "Ritorna ‘za Fò: appuntamento alle 21 su FoggiaTV",
+        "sommario": "Ritorna l’appuntamento settimanale con la trasmissione sportiva curata e condotta da Lello Scarano, pronto ad aggiornarvi sulle vicende rossonere. In onda a partire dalle ore…",
+        "url": "https://www.calciofoggia.it/ritorna-za-fo-appuntamento-alle-21-su-foggiatv/",
+        "data": "2026-09-14T17:00:30.000Z",
+        "autore": "Armando Borrelli",
+        "categoria": "FOGGIA CALCIO",
+        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/06/Lello-lancio-zaFo-2026.png"
+      },
+      {
+        "id": "calciofoggia-9e7b078ef9",
+        "testata": "calciofoggia",
+        "titolo": "Casella e Di Pasquale: “Gruppo con ampi margini. Dobbiamo crescere con pazienza e lucidità”",
+        "sommario": "Il direttore sportivo Alex Casella e il capitano Davide Di Pasquale hanno analizzato il momento del Foggia dopo le due sconfitte consecutive, guardando alla prossima sfida…",
+        "url": "https://www.calciofoggia.it/casella-e-di-pasquale-gruppo-con-ampi-margini-dobbiamo-crescere-con-pazienza-e-lucidita/",
+        "data": "2026-09-14T16:32:59.000Z",
+        "autore": "Armando Borrelli",
+        "categoria": "FOGGIA CALCIO",
+        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Screenshot-2026-09-14-alle-18.13.26.png"
+      },
+      {
         "id": "foggiacalciomania-9db2d1da2f",
         "testata": "foggiacalciomania",
         "titolo": "Casella e Di Pasquale spiegano il momento Foggia. “Siamo solo all’inizio”",
@@ -4880,6 +5475,17 @@
         "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/20260914_174251-scaled.jpg"
       },
       {
+        "id": "calciofoggia-37e9e2f3d1",
+        "testata": "calciofoggia",
+        "titolo": "Foggia, presentata la nuova maglia home 2026/27: ritorno alle bande larghe",
+        "sommario": "Prima della consueta conferenza stampa pre-gara contro il Savoia, il Calcio Foggia 1920 ha presentato ufficialmente la nuova maglia home per la stagione 2026/27. A indossarla in…",
+        "url": "https://www.calciofoggia.it/foggia-presentata-la-nuova-maglia-home-2026-27-ritorno-alle-bande-larghe/",
+        "data": "2026-09-14T16:04:25.000Z",
+        "autore": "Armando Borrelli",
+        "categoria": "FOGGIA CALCIO",
+        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Nuova-Maglia-Home-Foggia-2026-27.png"
+      },
+      {
         "id": "foggiacalciomania-19f40e3e0f",
         "testata": "foggiacalciomania",
         "titolo": "Ecco la nuova maglia del Foggia",
@@ -4889,6 +5495,17 @@
         "autore": "Roberto Parisi",
         "categoria": "News Calcio Foggia 1920",
         "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/20260914_174406-scaled.jpg"
+      },
+      {
+        "id": "calciofoggia-b0c7570090",
+        "testata": "calciofoggia",
+        "titolo": "Giudice Sportivo: le decisioni relative alla quarta giornata",
+        "sommario": "Diramato il comunicato del giudice sportivo relativo le gare della quarta giornata di campionato. Clicca qui per leggere il comunicato completo © 2026, CALCIOFOGGIA.IT. Tutti i…",
+        "url": "https://www.calciofoggia.it/giudice-sportivo-le-decisioni-relative-alla-quarta-giornata-2/",
+        "data": "2026-09-14T13:08:10.000Z",
+        "autore": "Mario",
+        "categoria": "CALCIO",
+        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2020/09/Zgiudice-sportivo.png"
       },
       {
         "id": "foggiacalciomania-511343c756",
@@ -4913,6 +5530,17 @@
         "immagine": "https://foggiacalciomania.com/wp-content/uploads/2014/09/arbitro-pallone.jpg"
       },
       {
+        "id": "calciofoggia-6ceee0c1c5",
+        "testata": "calciofoggia",
+        "titolo": "Giovanni Castellano di Nichelino dirige Foggia-Savoia",
+        "sommario": "Sarà il Sig. Giovanni Castellano della sezione di Nichelino a dirigere l'incontro Foggia-Savoia, in programma martedì 15 settembre alle ore 21:00, allo Stadio Pino Zaccheria di…",
+        "url": "https://www.calciofoggia.it/giovanni-castellano-di-nichelino-dirige-foggia-savoia/",
+        "data": "2026-09-14T11:42:57.000Z",
+        "autore": "Fabio Bertazzoli",
+        "categoria": "FOGGIA CALCIO",
+        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Castellano.jpg"
+      },
+      {
         "id": "foggiacalciomania-709ade4ef6",
         "testata": "foggiacalciomania",
         "titolo": "Foggia servirà un nuovo Iemmello contro il Savoia",
@@ -4935,6 +5563,28 @@
         "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Auteri-43.jpeg"
       },
       {
+        "id": "calciofoggia-383734c68e",
+        "testata": "calciofoggia",
+        "titolo": "L’avversario il Savoia",
+        "sommario": "Fondato il 21 novembre 1908 da un gruppo di industriali locali legati al settore molitorio, il Savoia è una delle realtà calcistiche più antiche dell’Italia meridionale. Sotto il…",
+        "url": "https://www.calciofoggia.it/lavversario-il-savoia/",
+        "data": "2026-09-14T10:33:29.000Z",
+        "autore": "Mario Schena",
+        "categoria": "FOGGIA CALCIO",
+        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/images.jpg"
+      },
+      {
+        "id": "calciofoggia-18f0e5adc4",
+        "testata": "calciofoggia",
+        "titolo": "il programma della 5° giornata",
+        "sommario": "La classifica del girone C vede il Sorrento capolista solitario seguito da 4 squadre a 3 punti di distanza. Sul fondo sempre critica la posizione del Crotone fermo all’ultimo…",
+        "url": "https://www.calciofoggia.it/il-programma-della-5-giornata/",
+        "data": "2026-09-14T07:33:27.000Z",
+        "autore": "Mario Schena",
+        "categoria": "SERIE C",
+        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Auteri-al-San-Nicola-di-Bari-contro-il-Monopoli-Foto-Antonellis-Calcio-Foggia-1920.jpeg"
+      },
+      {
         "id": "foggiacalciomania-292572d596",
         "testata": "foggiacalciomania",
         "titolo": "Le pagelle di Monopoli-Foggia. Impegno sicuramente più che sufficiente, ma si raccoglie poco",
@@ -4955,6 +5605,39 @@
         "autore": "Roberto Parisi",
         "categoria": "News Calcio Foggia 1920",
         "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/page_1-1.png"
+      },
+      {
+        "id": "calciofoggia-0dac970f64",
+        "testata": "calciofoggia",
+        "titolo": "il punto sulla 4° giornata",
+        "sommario": "Incredibile ma vero in vetta valla classifica veleggia a punteggio pieno il Sorrento che nel big match della quarta giornata batte l’altra capolista il Picerno che si ferma a 9…",
+        "url": "https://www.calciofoggia.it/il-punto-sulla-4-giornata-2/",
+        "data": "2026-09-13T07:51:29.000Z",
+        "autore": "Mario Schena",
+        "categoria": "SERIE C",
+        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/ddee7a87-3d44-4313-b1e8-6cc34ae311cc.jpeg"
+      },
+      {
+        "id": "calciofoggia-c66a0ef9f4",
+        "testata": "calciofoggia",
+        "titolo": "Gallo: “Ci è mancato qualcosa negli ultimi sedici metri. La squadra non manca mai la prestazione, è solo un momento”",
+        "sommario": "Andrea Gallo, centrocampista del Foggia, ha commentato a caldo la sconfitta di Monopoli, intervistato durante “Direttissima”, in onda su FoggiaTv. «Sicuramente ci è mancato…",
+        "url": "https://www.calciofoggia.it/gallo-ci-e-mancato-qualcosa-negli-ultimi-sedici-metri-la-squadra-non-manca-mai-la-prestazione-e-solo-un-momento/",
+        "data": "2026-09-12T18:56:40.000Z",
+        "autore": "Armando Borrelli",
+        "categoria": "FOGGIA CALCIO",
+        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Gallo.jpg"
+      },
+      {
+        "id": "calciofoggia-9705583e2a",
+        "testata": "calciofoggia",
+        "titolo": "Auteri: “Abbiamo giocato una buona partita, ma non siamo stati risoluti. Peccato, teniamoci la prestazione”",
+        "sommario": "Gaetano Auteri ha analizzato a caldo la sconfitta di Monopoli, riconoscendo il dispiacere ma valorizzando il rendimento complessivo della squadra, nell’intervista durante…",
+        "url": "https://www.calciofoggia.it/auteri-abbiamo-giocato-una-buona-partita-ma-non-siamo-stati-risoluti-peccato-teniamoci-la-prestazione/",
+        "data": "2026-09-12T18:50:06.000Z",
+        "autore": "Armando Borrelli",
+        "categoria": "FOGGIA CALCIO",
+        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Auteri-al-San-Nicola-di-Bari-contro-il-Monopoli-Foto-Antonellis-Calcio-Foggia-1920.jpeg"
       },
       {
         "id": "foggiacalciomania-f20b8f090a",
@@ -5056,6 +5739,6 @@
         "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0088-scaled.jpg"
       }
     ],
-    "aggiornatoIl": "2026-09-15T11:40:49.049Z"
+    "aggiornatoIl": "2026-09-15T12:01:00.829Z"
   }
 }
