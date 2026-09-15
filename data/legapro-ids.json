@@ -14,9 +14,9 @@
       "ospiti": "AC Renate"
     },
     {
-      "id": "57zj3tma4ws73ilxvu9wuvdw4",
-      "casa": "AS Cittadella",
-      "ospiti": "US Pergolettese Crema"
+      "id": "592wbfymwyj18dplz07wwyplg",
+      "casa": "Juventus Next Gen",
+      "ospiti": "Novara FC"
     },
     {
       "id": "59t5mcvw9w6r5m1xr1uxcjlzo",
@@ -24,9 +24,9 @@
       "ospiti": "AC Lumezzane"
     },
     {
-      "id": "592wbfymwyj18dplz07wwyplg",
-      "casa": "Juventus Next Gen",
-      "ospiti": "Novara FC"
+      "id": "57zj3tma4ws73ilxvu9wuvdw4",
+      "casa": "AS Cittadella",
+      "ospiti": "US Pergolettese Crema"
     },
     {
       "id": "58pp4u76dr4520btfabxl1qms",
@@ -54,6 +54,11 @@
       "ospiti": "Dolomiti Bellunesi"
     },
     {
+      "id": "5btec5531sai7eqa3n6zq893o",
+      "casa": "AC Carpi",
+      "ospiti": "Juventus Next Gen"
+    },
+    {
       "id": "5biot0dxrl9ctuft696bz9yj8",
       "casa": "FC Arzignano Valchiampo",
       "ospiti": "Pro Vercelli 1892"
@@ -64,19 +69,14 @@
       "ospiti": "Alcione Milano"
     },
     {
-      "id": "5btec5531sai7eqa3n6zq893o",
-      "casa": "AC Carpi",
-      "ospiti": "Juventus Next Gen"
+      "id": "5daq4qtfc0alh2ztrzkfz30us",
+      "casa": "US Pergolettese Crema",
+      "ospiti": "Union Brescia"
     },
     {
       "id": "5cpck2dqns5pgostcpgxkhzis",
       "casa": "AC Lumezzane",
       "ospiti": "AS Giana Erminio"
-    },
-    {
-      "id": "5daq4qtfc0alh2ztrzkfz30us",
-      "casa": "US Pergolettese Crema",
-      "ospiti": "Union Brescia"
     },
     {
       "id": "5d01anrfvtmwlhsltwd8iq0b8",
@@ -94,14 +94,14 @@
       "ospiti": "Calcio Lecco 1912"
     },
     {
-      "id": "5b7scwu7xfnnvkgvlzhs89tlg",
-      "casa": "US Albinoleffe",
-      "ospiti": "ACD Ospitaletto"
-    },
-    {
       "id": "5dlsoakurdexe07gs528uem8k",
       "casa": "AC Renate",
       "ospiti": "AS Cittadella"
+    },
+    {
+      "id": "5b7scwu7xfnnvkgvlzhs89tlg",
+      "casa": "US Albinoleffe",
+      "ospiti": "ACD Ospitaletto"
     },
     {
       "id": "5e71fgevrngi8633xvbynjsic",
@@ -154,9 +154,9 @@
       "ospiti": "Novara FC"
     },
     {
-      "id": "5icrhmwgxs0lwy23j0o432k9g",
-      "casa": "Calcio Lecco 1912",
-      "ospiti": "AS Giana Erminio"
+      "id": "5hrdyp7345640mp2r9ovsj1g4",
+      "casa": "Dolomiti Bellunesi",
+      "ospiti": "US Albinoleffe"
     },
     {
       "id": "5jtzl0gm299x8qm7t3aidf0no",
@@ -169,9 +169,9 @@
       "ospiti": "AS Cittadella"
     },
     {
-      "id": "5hrdyp7345640mp2r9ovsj1g4",
-      "casa": "Dolomiti Bellunesi",
-      "ospiti": "US Albinoleffe"
+      "id": "5icrhmwgxs0lwy23j0o432k9g",
+      "casa": "Calcio Lecco 1912",
+      "ospiti": "AS Giana Erminio"
     },
     {
       "id": "5j8o5z5x5oqj2hoeq53apmrkk",
