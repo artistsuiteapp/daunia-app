@@ -204,7 +204,7 @@ const golAMano = (lato: 'casa' | 'ospiti', chi: string | null, minuto: number) =
     };
   };
 
-test('col tabellone a mano il punteggio dell amministratore non lo sovrascrive nessuno', async () => {
+test('segno io il gol prima delle fonti, e il tabellone non lo perde', async () => {
   const s = {
     ...SCENARI[0][1],
     // il gol vero lo vede in campo l'amministratore al 6', le fonti solo al 23'
@@ -217,22 +217,73 @@ test('col tabellone a mano il punteggio dell amministratore non lo sovrascrive n
   // il gol vero delle fonti al 23' non deve aggiungersi a quello gia segnato
   assert.ok(dopo.every((f) => (f.casa ?? 0) === 1), 'il gol e stato contato due volte');
 
-  /*
-   * Col tabellone a mano le notifiche dei gol le fa partire solo il pannello.
-   * E la regola: se il guardiano annunciasse anche quelli delle fonti, un gol
-   * annullato tornerebbe a suonare da solo due minuti dopo.
-   */
   const gol = suonate.filter((x) => x.tipo === 'gol' && !x.muta);
-  assert.equal(gol.length, 1, `notifiche di gol: ${gol.map((g) => g.titolo).join(' | ')}`);
   assert.ok(gol[0].titolo.includes('GOL DEL FOGGIA! 1-0'), gol[0].titolo);
   assert.ok(gol[0].testo.includes('Luciani'), gol[0].testo);
   // e arriva subito, non quando lo vedono le fonti
   assert.ok(gol[0].t - (K + 6 * MIN) <= 60_000, `notifica in ritardo di ${secondi(gol[0].t - K - 6 * MIN)} s`);
 
-  // ...ma quello che vedono le fonti resta scritto, per chi sta segnando
+  // quello che vedono le fonti resta scritto, per chi sta segnando
   const tardi = foto.filter((f) => f.t > K + 100 * MIN);
   assert.ok(tardi.some((f) => f.fonti.casa === 1 && f.fonti.ospiti === 1),
     'il punteggio delle fonti non si vede piu da nessuna parte');
+});
+
+test('segno il gol e poi mi addormento: appena le fonti mi raggiungono riprendono loro', async () => {
+  const s = {
+    ...SCENARI[0][1],
+    // un solo tocco al pannello, al 6'. Poi piu niente: nessuno spegne niente
+    pannello: [{ quando: 6 * MIN, fa: golAMano('casa', 'Luciani', 6) }],
+  };
+  const { foto, suonate, primaVolta } = await gioca(s);
+
+  // le fonti vedono lo stesso gol verso il 23': da li il tabellone torna loro
+  const tornato = foto.find((f) => f.t > K + 20 * MIN && !f.aMano);
+  assert.ok(tornato, 'il tabellone e rimasto a mano per tutta la partita');
+  assert.ok(tornato.t < K + 30 * MIN, `ripreso solo al ${secondi(tornato.t - K) / 60} minuto`);
+
+  // e il gol degli avversari al 78' entra da solo, senza che nessuno tocchi niente
+  const pari = primaVolta((f) => f.casa === 1 && f.ospiti === 1);
+  assert.ok(Number.isFinite(pari), 'il gol degli avversari non e mai arrivato sul tabellone');
+  const [, , , secondo] = REALTA.eventi;
+  assert.ok(pari - visibile(secondo.quando, s) <= TETTO,
+    `1-1 in ritardo di ${secondi(pari - visibile(secondo.quando, s))} s`);
+
+  // e suona, come tutti i gol che nessuno ha annunciato
+  assert.ok(suonate.some((x) => x.tipo === 'gol' && !x.muta && /Gol subito/.test(x.titolo)),
+    `notifiche: ${suonate.filter((x) => x.tipo === 'gol').map((x) => x.titolo).join(' | ')}`);
+
+  // e la partita si chiude col risultato vero, non con quello fermo al 6'
+  const chiusa = foto.find((f) => f.finita_il);
+  assert.deepEqual([chiusa?.casa, chiusa?.ospiti], [1, 1]);
+});
+
+test('un gol annullato non torna, ma il lato degli avversari continua ad aggiornarsi', async () => {
+  const s = {
+    ...SCENARI[0][1],
+    pannello: [{
+      // al 30' l'arbitro annulla il gol del 23': le fonti pero continuano a contarlo
+      quando: 30 * MIN,
+      fa: (riga: Record<string, unknown>) => ({
+        manuale: true,
+        manuale_base: { casa: 0, ospiti: 0 },
+        casa: 0,
+        gol: [],
+        annullati: [{ id: 'x23', minuto: '23', chi: 'A. Rossi', nostro: true, lato: 'casa' }],
+      }),
+    }],
+  };
+  const { foto, primaVolta } = await gioca(s);
+
+  const dopo = foto.filter((f) => f.t > K + 31 * MIN && f.t < K + REALTA.fine);
+  assert.ok(dopo.every((f) => (f.casa ?? 0) === 0), 'il gol annullato e tornato sul tabellone');
+  // le fonti intanto continuano a dire 1: e giusto che si veda
+  assert.ok(dopo.some((f) => f.fonti.casa === 1), 'il punteggio delle fonti non si vede');
+
+  // il gol degli avversari al 78' entra lo stesso: quel lato non c'entra con l'annullamento
+  const loro = primaVolta((f) => f.ospiti === 1);
+  assert.ok(Number.isFinite(loro), 'il gol degli avversari non e arrivato');
+  assert.ok(foto.find((f) => f.t >= loro)?.casa === 0, 'insieme al loro gol e tornato anche quello annullato');
 });
 
 test('un gol annullato lo dice, e il punteggio torna indietro', async () => {

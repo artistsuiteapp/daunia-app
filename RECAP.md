@@ -15,7 +15,7 @@ perché, che è la parte che non si ricostruisce leggendo il codice.
 - **Dove gira**: app nativa sull'iPhone, installata con Xcode. Il sito <https://daunia.vercel.app> esiste ancora ma non è più il prodotto: si pubblica solo a mano
 - **Dominio**: `iltifodelladaunia.it`, comprato su IONOS. Vetrina pronta in `sito/index.html`, non ancora pubblicata
 - **Stack**: Expo SDK 57 / React Native 0.86 (iOS, Android e web dallo stesso codice), Supabase, GitHub Actions
-- **Stato**: 547 commit (190 senza gli aggiornamenti automatici dei dati), 47 migrazioni, 39 schermate, **547 test**, guardiano alla versione 41
+- **Stato**: 553 commit (196 senza gli aggiornamenti automatici dei dati), 47 migrazioni, 39 schermate, **554 test**, guardiano alla versione 43
 
 Il repository è pubblico dall'8 settembre, e non è una svista: sui repo pubblici
 i minuti di GitHub Actions sono gratis e illimitati. Sono attivi secret scanning
@@ -203,6 +203,7 @@ Regole scritte dopo averle sbagliate:
 - **La fine si mostra subito, la partita si chiude quando il risultato è sicuro.** Scrivere `finita_il` paga i pronostici una volta sola e per sempre. Si chiude quando le due fonti concordano da 2 minuti, o dopo 5 se ne parla una, o dopo 10 comunque. `finita_il` resta l'istante del fischio. Dopo la chiusura il risultato non si sposta più
 - **La sparizione dalla lista vale come fine solo dopo due ore dal fischio**, e solo se live-score-api non dice che si gioca. Con cento minuti (l'ottantacinquesimo) il guardiano chiudeva partite in corso
 - **Col tabellone a mano acceso il guardiano non tocca punteggio e cronaca.** Continua tutto il resto — minuto, stato, cartellini, cambi, formazioni, notifiche — ma non scrive `casa`, `ospiti` e `gol`, e non annuncia gol che non ha annunciato lui: altrimenti un gol annullato tornerebbe a suonare da solo due minuti dopo. La guardia sta in fondo a `giro()`, in un punto solo, perché sparsa in ogni ramo qualcuno se la dimenticherebbe
+- **Ma comanda solo finché serve: appena le fonti arrivano allo stesso punteggio, riprendono loro.** Senza questa regola uno che segna 1-0 e poi si distrae — o si addormenta, o resta senza batteria — lascia il tabellone fermo a 1-0 per tutta la partita, e la chiusura paga i pronostici su quello. La decisione è **lato per lato** (`chiComanda()` in `punteggio.ts`): sul lato di un gol annullato le fonti riprendono solo se dicono esattamente lo stesso numero, sull'altro basta che siano arrivate. Così un gol annullato non torna, e intanto il gol degli avversari entra lo stesso
 - **L'articolo della diretta si ricorda solo dopo che ha dato le formazioni.** Nel pomeriggio escono altri pezzi che nominano le stesse due squadre (i convocati, la presentazione): ricordarsi il primo che capita vuol dire rileggere per due ore qualcosa che non contiene niente
 
 ### La partita simulata
@@ -300,8 +301,12 @@ minuto lo mette da sé, preso dal tabellone.
 - Poi sveglia il guardiano, che manda la notifica — compresa quella del **gol
   annullato**, che è il motivo per cui questa parte esiste: il telefono ha già
   suonato, e chi lo ha sentito deve sapere che quel gol non c'è più
+- **Si spegne da solo.** Il tabellone a mano comanda finché dice qualcosa che le
+  fonti non sanno ancora; appena arrivano allo stesso punteggio riprendono loro,
+  lato per lato. Non c'è niente da ricordarsi di spegnere, e chi segna un gol e
+  poi si distrae non lascia il tabellone fermo per novanta minuti
 - `manuale` sta sulla riga della partita, quindi **la partita dopo riparte da
-  sola**: non si può dimenticare acceso
+  sola** in ogni caso
 - Quello che vedono le fonti resta scritto in `casa_fonti`/`ospiti_fonti` e
   compare nel pannello ("Le fonti dicono 1-1"): è l'unico modo, per chi segna a
   mano, di accorgersi di un gol che non ha visto
@@ -548,14 +553,17 @@ testate non pubblicano, si torna lì come prima.
 ### Se il dal vivo è in ritardo: il tabellone a mano
 
 Pannello → *Tabellone della partita*. Si preme "GOL FOGGIA", si sceglie il
-marcatore, e il punteggio è su tutti i telefoni nello stesso istante. Da lì in
-poi **comandi tu**: anche i gol degli avversari vanno segnati a mano, perché il
-guardiano smette di toccare il punteggio (altrimenti un gol annullato tornerebbe
-da solo). Sotto il punteggio compare quello che dicono le fonti, per accorgersi
-di un gol sfuggito. "Torna all'automatico" restituisce la partita al guardiano.
+marcatore, e il punteggio è su tutti i telefoni nello stesso istante. Da lì
+comandi tu, **finché le fonti non ti raggiungono**: quando vedono lo stesso
+risultato riprendono loro da sole, e se nel frattempo ti distrai il gol degli
+avversari entra comunque. Sotto il punteggio compare quello che dicono le fonti,
+per accorgersi di un gol sfuggito. "Torna all'automatico" restituisce la partita
+al guardiano subito.
 
 Un gol annullato si toglie con la croce nella cronaca: il punteggio torna
-indietro ovunque e parte la notifica "Gol annullato".
+indietro ovunque e parte la notifica "Gol annullato". Quel lato del campo resta
+tuo finché anche le fonti tolgono il gol; l'altro lato intanto torna automatico
+da solo, quindi un gol degli avversari entra comunque.
 
 ### Dopo la partita: quanto eravamo in ritardo, con i numeri
 

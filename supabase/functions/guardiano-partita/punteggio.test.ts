@@ -1,7 +1,8 @@
 import { strict as assert } from 'node:assert';
 import { test } from 'node:test';
 import {
-  contaGol, concorda, titoloGol, golVero, golDalTabellone, oraItaliana, proteggi, type EventoAF,
+  contaGol, concorda, titoloGol, golVero, golDalTabellone, oraItaliana, proteggi,
+  contaAnnullati, riprendiDalleFonti, chiComanda, punteggioMisto, type EventoAF,
 } from './punteggio.ts';
 
 const FOGGIA = 521;
@@ -289,4 +290,49 @@ test('la cronaca coi nomi tiene i gol che solo il tabellone ha visto', () => {
   // quando gli eventi spiegano anche il secondo gol, la voce del tabellone se ne va
   const tutti = [...daEventi, { minuto: '78', chi: 'B. Verdi', casa: 1, ospiti: 1, nostro: false, fonte: 'eventi' as const }];
   assert.deepEqual(unisciCronaca(tutti, vecchia), tutti);
+});
+
+/* ------------------------------------------------------- il tabellone a mano */
+
+test('le fonti riprendono il tabellone quando arrivano allo stesso punto', () => {
+  const niente = { casa: 0, ospiti: 0 };
+  // ha segnato lui per primo, le fonti sono indietro: comanda ancora lui
+  assert.equal(riprendiDalleFonti({ casa: 1, ospiti: 0 }, { casa: 0, ospiti: 0 }, niente), false);
+  // le fonti hanno visto lo stesso gol: riprendono loro
+  assert.equal(riprendiDalleFonti({ casa: 1, ospiti: 0 }, { casa: 1, ospiti: 0 }, niente), true);
+  // e se nel frattempo ne e arrivato un altro, a maggior ragione
+  assert.equal(riprendiDalleFonti({ casa: 1, ospiti: 0 }, { casa: 1, ospiti: 1 }, niente), true);
+  // senza una delle due letture non si decide niente
+  assert.equal(riprendiDalleFonti(null, { casa: 1, ospiti: 0 }, niente), false);
+  assert.equal(riprendiDalleFonti({ casa: 1, ospiti: 0 }, null, niente), false);
+});
+
+test('dove un gol e stato annullato le fonti riprendono solo se dicono lo stesso numero', () => {
+  const uno = { casa: 1, ospiti: 0 };
+  // le fonti contano ancora il gol annullato: se riprendessero, tornerebbe
+  assert.equal(riprendiDalleFonti({ casa: 0, ospiti: 0 }, { casa: 1, ospiti: 0 }, uno), false);
+  // quando anche loro lo tolgono, si torna all'automatico
+  assert.equal(riprendiDalleFonti({ casa: 0, ospiti: 0 }, { casa: 0, ospiti: 0 }, uno), true);
+  // l'annullamento di un lato non blocca l'altro
+  assert.equal(riprendiDalleFonti({ casa: 0, ospiti: 1 }, { casa: 0, ospiti: 2 }, uno), true);
+});
+
+test('i gol annullati si contano per lato', () => {
+  assert.deepEqual(contaAnnullati([{ lato: 'casa' }, { lato: 'ospiti' }, { lato: 'casa' }]), { casa: 2, ospiti: 1 });
+  assert.deepEqual(contaAnnullati(null), { casa: 0, ospiti: 0 });
+  assert.deepEqual(contaAnnullati([{ minuto: '12' }]), { casa: 0, ospiti: 0 });
+});
+
+test('il lato senza annullamenti torna alle fonti anche se l altro resta a mano', () => {
+  // il gol del Foggia e stato annullato e le fonti lo contano ancora: casa resta a mano.
+  // Gli avversari intanto segnano: quel lato non c'entra niente e deve passare.
+  const comando = chiComanda({ casa: 0, ospiti: 0 }, { casa: 1, ospiti: 1 }, { casa: 1, ospiti: 0 });
+  assert.deepEqual(comando, { casa: 'mano', ospiti: 'fonti' });
+  assert.deepEqual(punteggioMisto({ casa: 0, ospiti: 0 }, { casa: 1, ospiti: 1 }, comando), { casa: 0, ospiti: 1 });
+});
+
+test('senza niente da nessuna delle due parti non si inventa un punteggio', () => {
+  assert.deepEqual(punteggioMisto(null, { casa: 1, ospiti: 0 }, { casa: 'fonti', ospiti: 'fonti' }), { casa: 1, ospiti: 0 });
+  assert.deepEqual(punteggioMisto({ casa: 2, ospiti: 0 }, null, { casa: 'mano', ospiti: 'mano' }), { casa: 2, ospiti: 0 });
+  assert.equal(punteggioMisto(null, null, { casa: 'mano', ospiti: 'mano' }), null);
 });

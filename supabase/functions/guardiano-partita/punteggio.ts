@@ -395,3 +395,91 @@ export function proteggi(
 
   return fuori;
 }
+
+/* ------------------------------------------------------- il tabellone a mano */
+
+/** Quanti gol sono stati annullati, per lato del campo. */
+export function contaAnnullati(annullati: unknown): Punteggio {
+  const righe = Array.isArray(annullati) ? annullati as Array<Record<string, unknown>> : [];
+  return {
+    casa: righe.filter((a) => a?.lato === 'casa').length,
+    ospiti: righe.filter((a) => a?.lato === 'ospiti').length,
+  };
+}
+
+/**
+ * Se le fonti possono riprendersi il tabellone scritto a mano.
+ *
+ * IL PROBLEMA CHE RISOLVE
+ *
+ * Uno segna 1-0 dal pannello e poi si distrae, o si addormenta, o resta senza
+ * batteria. Se il tabellone a mano comandasse fino a quando lo spegne lui, il
+ * gol degli altri al settantesimo non arriverebbe mai -- e la partita si
+ * chiuderebbe con un risultato sbagliato, pagando i pronostici su quello.
+ *
+ * LA REGOLA
+ *
+ * Il tabellone a mano serve a stare avanti alle fonti, non a sostituirle.
+ * Quindi comanda finche dice qualcosa che le fonti non sanno ancora: appena
+ * loro arrivano allo stesso punto, riprendono loro e tutto torna come prima,
+ * senza che nessuno debba ricordarsi di spegnere niente.
+ *
+ * L'ECCEZIONE: I GOL ANNULLATI
+ *
+ * Su un lato dove un gol e stato annullato non basta che le fonti siano
+ * arrivate: devono dire esattamente lo stesso numero. Le fonti un gol
+ * annullato spesso continuano a contarlo per minuti, e riprendere il comando
+ * vorrebbe dire rimetterlo sul tabellone e farlo suonare di nuovo -- che e
+ * esattamente la cosa che il pannello serve a evitare.
+ *
+ * E quando le fonti sono INDIETRO non riprendono: vorrebbe dire cancellare un
+ * gol vero perche una fonte e lenta.
+ */
+export type Comando = { casa: 'mano' | 'fonti'; ospiti: 'mano' | 'fonti' };
+
+/**
+ * Chi comanda, LATO PER LATO.
+ *
+ * I due numeri del punteggio sono indipendenti, e trattarli insieme costava
+ * caro nel caso peggiore: un gol annullato al Foggia teneva a mano anche il
+ * lato degli avversari, quindi un loro gol arrivato mentre nessuno guardava
+ * non entrava piu. Cosi invece il lato dove c'e stato l'annullamento resta di
+ * chi guarda, e l'altro torna alle fonti da solo.
+ */
+export function chiComanda(
+  mano: Punteggio | null,
+  fonti: Punteggio | null,
+  annullati: Punteggio,
+): Comando {
+  const uno = (lato: 'casa' | 'ospiti'): 'mano' | 'fonti' => {
+    if (!mano || !fonti) return 'mano';
+    if (annullati[lato] > 0) return fonti[lato] === mano[lato] ? 'fonti' : 'mano';
+    return fonti[lato] >= mano[lato] ? 'fonti' : 'mano';
+  };
+  return { casa: uno('casa'), ospiti: uno('ospiti') };
+}
+
+/** Vero quando tutto il tabellone e tornato alle fonti: il pannello ha finito. */
+export function riprendiDalleFonti(
+  mano: Punteggio | null,
+  fonti: Punteggio | null,
+  annullati: Punteggio,
+): boolean {
+  if (!mano || !fonti) return false;
+  const c = chiComanda(mano, fonti, annullati);
+  return c.casa === 'fonti' && c.ospiti === 'fonti';
+}
+
+/** Il punteggio da scrivere: da ogni lato quello di chi comanda su quel lato. */
+export function punteggioMisto(
+  mano: Punteggio | null,
+  fonti: Punteggio | null,
+  comando: Comando,
+): Punteggio | null {
+  if (!fonti) return mano;
+  if (!mano) return fonti;
+  return {
+    casa: comando.casa === 'fonti' ? fonti.casa : mano.casa,
+    ospiti: comando.ospiti === 'fonti' ? fonti.ospiti : mano.ospiti,
+  };
+}

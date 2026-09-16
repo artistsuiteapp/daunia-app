@@ -23,6 +23,7 @@ import { formazioniDaDiretta, leggiDiretta, nomeTestata, recuperoDaDiretta, trov
 import {
   contaGol, concorda, titoloGol, golVero, golDalTabellone, minutoStimato, cronologia,
   cartelliniECambi, oraItaliana, proteggi, unisciCronaca, piuAvanti, minutoMigliore,
+  contaAnnullati, riprendiDalleFonti, chiComanda, punteggioMisto,
   type EventoAF, type Punteggio,
 } from './punteggio.ts';
 
@@ -988,9 +989,48 @@ async function giro(primo: boolean): Promise<{ risposta: Record<string, unknown>
     patch.ospiti_fonti = mostrato.ospiti;
   }
 
+  /*
+   * IL PASSAGGIO DI COMANDO: APPENA LE FONTI TI RAGGIUNGONO, RIPRENDONO LORO.
+   *
+   * Il tabellone a mano serve a stare avanti alle fonti di quei due o tre
+   * minuti che ci mettono, non a sostituirle per novanta. Se comandasse finche
+   * qualcuno si ricorda di spegnerlo, uno che segna 1-0 e poi si distrae --
+   * o si addormenta, o resta senza batteria -- lascerebbe il tabellone fermo a
+   * 1-0 per tutta la partita, e la chiusura pagherebbe i pronostici su quello.
+   *
+   * La regola sta in `riprendiDalleFonti()`, dentro punteggio.ts, sotto test:
+   * si riprende quando le fonti sono arrivate almeno dov'era il tabellone a
+   * mano, e sul lato di un gol annullato solo se dicono esattamente lo stesso
+   * numero -- altrimenti quel gol tornerebbe, ed e la cosa che il pannello
+   * serve a evitare.
+   */
+  const scrittoAMano: Punteggio | null = riga.casa === null || riga.casa === undefined
+    || riga.ospiti === null || riga.ospiti === undefined
+    ? null : { casa: Number(riga.casa), ospiti: Number(riga.ospiti) };
+  const comando = chiComanda(scrittoAMano, mostrato, contaAnnullati(riga.annullati));
+  const riprese = aMano && riprendiDalleFonti(scrittoAMano, mostrato, contaAnnullati(riga.annullati));
+  /** vero quando almeno un lato del punteggio e ancora di chi guarda la partita */
+  const comandaIlPannello = aMano && !riprese;
+  if (riprese) {
+    patch.manuale = false;
+    // la base del conto a mano non vale piu: se si riaccende, si riparte da qui
+    patch.manuale_base = null;
+  }
+  /**
+   * Il punteggio da scrivere: da ogni lato quello di chi comanda su quel lato.
+   *
+   * Quasi sempre e tutto delle fonti o tutto del pannello. I due numeri pero
+   * sono indipendenti: col gol del Foggia annullato e le fonti che lo contano
+   * ancora, il lato di casa resta di chi guarda, e intanto un gol degli
+   * avversari entra lo stesso.
+   */
+  const daMostrare = comandaIlPannello
+    ? punteggioMisto(scrittoAMano, mostrato, comando)
+    : mostrato;
+
   if (!riga.inizio_mandato && IN_GIOCO.includes(stato) && !FINITE.includes(stato)) {
     patch.inizio_mandato = true;
-    if (!aMano) patch.gol = [];
+    if (!comandaIlPannello) patch.gol = [];
     avvisi.push({
       tipo: 'inizio', titolo: 'Si comincia', testo: etichetta,
       tag: `inizio-${riga.partita}`, rotta: '/',
@@ -1106,7 +1146,9 @@ async function giro(primo: boolean): Promise<{ risposta: Record<string, unknown>
   // I gol visti dagli eventi: col marcatore, e col punteggio solo se
   // confermato da una seconda fonte.
   const giaDetto = daEventi ? detti.has(`tabellone-${daEventi.casa}-${daEventi.ospiti}`) : false;
-  for (const g of aMano ? [] : nuoviGol) {
+  for (const g of nuoviGol) {
+    // il lato che tiene il pannello lo annuncia il pannello, non le fonti
+    if (comandaIlPannello && comando[g.nostro === inCasa ? 'casa' : 'ospiti'] === 'mano') continue;
     avvisi.push({
       tipo: 'gol',
       titolo: titoloGol(g.nostro, accordo),
@@ -1137,9 +1179,13 @@ async function giro(primo: boolean): Promise<{ risposta: Record<string, unknown>
    * nell'app non c'era. Adesso parte al giro in cui compare; se poi arrivano
    * gli eventi, la loro notifica si riscrive muta sopra questa (`giaDetto`).
    */
-  if (!aMano && !nuoviGol.length && prima && mostrato && !riga.finita_il) {
-    const dal = golDalTabellone(prima, mostrato, inCasa);
-    const firma = `tabellone-${mostrato.casa}-${mostrato.ospiti}`;
+  if (!nuoviGol.length && prima && daMostrare && !riga.finita_il) {
+    /*
+     * Col pannello acceso su un lato, `daMostrare` da quella parte e gia
+     * uguale a `prima`: nessun gol da annunciare, e la guardia non serve.
+     */
+    const dal = golDalTabellone(prima, daMostrare, inCasa);
+    const firma = `tabellone-${daMostrare.casa}-${daMostrare.ospiti}`;
     if (dal && !detti.has(firma)) {
       detti.add(firma);
       const minuto = minutoVero ?? minutoStimato(riga.kickoff, stato, adesso);
@@ -1148,11 +1194,11 @@ async function giro(primo: boolean): Promise<{ risposta: Record<string, unknown>
       // e punteggio si sanno, e sono la meta che serve mentre si gioca.
       patch.gol = [
         ...(((patch.gol ?? riga.gol) ?? []) as unknown[]),
-        { minuto, casa: mostrato.casa, ospiti: mostrato.ospiti, nostro: dal.nostro, fonte: minutoVero ? 'vero' : 'stimato' },
+        { minuto, casa: daMostrare.casa, ospiti: daMostrare.ospiti, nostro: dal.nostro, fonte: minutoVero ? 'vero' : 'stimato' },
       ];
       avvisi.push({
         tipo: 'gol',
-        titolo: `${dal.nostro ? 'GOL DEL FOGGIA!' : 'Gol subito.'} ${mostrato.casa}-${mostrato.ospiti}`,
+        titolo: `${dal.nostro ? 'GOL DEL FOGGIA!' : 'Gol subito.'} ${daMostrare.casa}-${daMostrare.ospiti}`,
         // col minuto vero si scrive secco, con quello stimato si dice "circa"
         testo: minuto
           ? `${minutoVero ? '' : 'Circa '}${minuto}'. Il marcatore non risulta ancora.`
@@ -1266,8 +1312,8 @@ async function giro(primo: boolean): Promise<{ risposta: Record<string, unknown>
      * guardando la partita, vorrebbe dire pagare i pronostici su quello che
      * dice una fonte in ritardo invece che su quello che e successo.
      */
-    const concordi = aMano || dueFonti;
-    finale = aMano ? (prima ?? mostrato) : (dueFonti ? tabellone : (punteggioLsa ?? tabellone ?? mostrato ?? prima));
+    const concordi = comandaIlPannello || dueFonti;
+    finale = comandaIlPannello ? (daMostrare ?? prima) : (dueFonti ? tabellone : (punteggioLsa ?? tabellone ?? mostrato ?? prima));
     if (finale && ((concordi && passati >= CONFERMA_CONCORDI)
         || (unaSola && passati >= CONFERMA_UNA_FONTE)
         || passati >= CONFERMA_MASSIMA)) {
@@ -1329,10 +1375,16 @@ async function giro(primo: boolean): Promise<{ risposta: Record<string, unknown>
    * dimenticarsene. Quello che il pannello ha scritto nella riga resta li
    * finche l'amministratore non spegne.
    */
-  if (aMano) {
-    delete patch.casa;
-    delete patch.ospiti;
+  if (comandaIlPannello) {
+    // la cronaca dei gol resta quella scritta dal pannello
     delete patch.gol;
+    if (daMostrare) {
+      patch.casa = daMostrare.casa;
+      patch.ospiti = daMostrare.ospiti;
+    } else {
+      delete patch.casa;
+      delete patch.ospiti;
+    }
   }
 
   /*
@@ -1352,8 +1404,8 @@ async function giro(primo: boolean): Promise<{ risposta: Record<string, unknown>
    * con i numeri, alla domanda "quanto arrivavamo in ritardo e per colpa di
    * chi": ogni riga dice cosa vedeva ciascuna fonte in quell'istante.
    */
-  const cambiato = stato !== statoPrima
-    || (mostrato && (mostrato.casa !== riga.casa || mostrato.ospiti !== riga.ospiti))
+  const cambiato = riprese || stato !== statoPrima
+    || (daMostrare && (daMostrare.casa !== riga.casa || daMostrare.ospiti !== riga.ospiti))
     || nuoviGol.length > 0 || avvisi.length > 0 || chiusa
     || (Array.isArray(patch.cartellini) && patch.cartellini.length !== (riga.cartellini ?? []).length)
     || (Array.isArray(patch.cambi) && patch.cambi.length !== (riga.cambi ?? []).length);
@@ -1371,6 +1423,8 @@ async function giro(primo: boolean): Promise<{ risposta: Record<string, unknown>
       cartellini: Array.isArray(patch.cartellini) ? patch.cartellini.length : undefined,
       cambi: Array.isArray(patch.cambi) ? patch.cambi.length : undefined,
       chiusa: chiusa || undefined,
+      aMano: comandaIlPannello || undefined,
+      riprese: riprese || undefined,
     }));
   }
 

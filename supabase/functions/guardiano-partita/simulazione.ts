@@ -249,6 +249,7 @@ type Foto = {
   formazione: unknown; finita_il: string | null;
   recupero: number | null;
   fonti: { casa: number | null; ospiti: number | null };
+  aMano: boolean;
 };
 
 export async function gioca(s: Scenario) {
@@ -270,6 +271,7 @@ export async function gioca(s: Scenario) {
         casa: (r.casa_fonti ?? null) as number | null,
         ospiti: (r.ospiti_fonti ?? null) as number | null,
       },
+      aMano: r.manuale === true,
     });
   };
   const db = fintoDb({

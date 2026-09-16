@@ -39,6 +39,14 @@ import { discordanza, elencoMarcatori, latoDi, minutoOra, type Marcatore } from 
  * leggere le fonti e a scrivere minuto, cartellini e cambi, ma il punteggio e
  * i gol restano quelli scritti qui. Cosi un gol annullato resta annullato,
  * invece di tornare da solo due minuti dopo.
+ *
+ * MA SOLO FINCHE SERVE.
+ *
+ * Appena le fonti arrivano allo stesso punteggio riprendono loro, da sole.
+ * Senza questa regola, uno che segna 1-0 e poi si distrae lascerebbe il
+ * tabellone fermo a 1-0 per tutta la partita, e la chiusura pagherebbe i
+ * pronostici su quel risultato. Il lato dove un gol e stato annullato resta a
+ * mano finche anche le fonti lo tolgono: e l'unico modo perche non torni.
  */
 export default function TabelloneAMano() {
   const versione = useDati();
@@ -136,6 +144,26 @@ export default function TabelloneAMano() {
     );
   };
 
+  /*
+   * Spegnere con un gol annullato in sospeso e l'unico modo di farlo tornare.
+   *
+   * Le fonti un gol annullato continuano a contarlo per minuti: restituire il
+   * comando mentre lo contano ancora vuol dire rimetterlo sul tabellone, e far
+   * suonare di nuovo i telefoni.
+   */
+  const tornaAutomatico = () => {
+    const spegni = () => void fai(() => spegniTabellone(partita));
+    if (!riga?.annullati.length) { spegni(); return; }
+    Alert.alert(
+      'Tornare all’automatico?',
+      'Hai annullato un gol. Se le fonti lo contano ancora, tornerà sul tabellone e i telefoni suoneranno di nuovo.',
+      [
+        { text: 'No, resto io' },
+        { text: 'Torna all’automatico', style: 'destructive', onPress: spegni },
+      ],
+    );
+  };
+
   const chiudi = () => {
     Alert.alert(
       'Chiudere la partita?',
@@ -192,11 +220,17 @@ export default function TabelloneAMano() {
           </Text>
         </View>
         {riga?.manuale ? (
-          <Premi onPress={() => void fai(() => spegniTabellone(partita))} etichetta="Torna all'automatico">
+          <Premi onPress={tornaAutomatico} etichetta="Torna all'automatico">
             <Text style={stili.legame}>Torna all’automatico</Text>
           </Premi>
         ) : null}
       </View>
+
+      <Text style={[gutter, stili.spiega]}>
+        {riga?.manuale
+          ? 'Il punteggio è quello che scrivi tu. Appena le fonti arrivano allo stesso risultato riprendono loro, da sole: non devi ricordarti di spegnere niente.'
+          : 'Comanda il guardiano. Segna un gol e da quel momento comandi tu.'}
+      </Text>
 
       {avviso ? (
         <View style={[gutter, stili.avviso]}>
@@ -374,9 +408,10 @@ export default function TabelloneAMano() {
       </View>
 
       <GroupNote>
-        Il tabellone a mano vale solo per questa partita: la prossima riparte da sola con le fonti.
-        Finché è acceso, il guardiano continua a scrivere minuto, cartellini e cambi, ma non tocca
-        più il punteggio.
+        Quello che scrivi qui vale finché le fonti non ti raggiungono: quando vedono lo stesso
+        punteggio riprendono loro, e se nel frattempo ti distrai il gol degli avversari entra
+        comunque. Il lato del campo dove hai annullato un gol resta tuo finché anche le fonti lo
+        tolgono. Minuto, cartellini e cambi continua a scriverli il guardiano in ogni caso.
       </GroupNote>
 
       <ElencoMarcatori
@@ -486,6 +521,7 @@ const stili = StyleSheet.create({
   minutoScelto: { backgroundColor: colors.accent },
   minutoTesto: { ...type.subheadBold, color: colors.text },
 
+  spiega: { ...type.footnote, color: colors.textDim, marginTop: space.sm },
   vuoto: { ...type.subhead, color: colors.textDim, paddingVertical: space.md },
   sottotitolo: { ...type.captionBold, color: colors.textFaint, marginTop: space.md, marginBottom: space.xs },
   voce: {
