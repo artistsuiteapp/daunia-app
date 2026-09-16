@@ -15,7 +15,7 @@ perché, che è la parte che non si ricostruisce leggendo il codice.
 - **Dove gira**: app nativa sull'iPhone, installata con Xcode. Il sito <https://daunia.vercel.app> esiste ancora ma non è più il prodotto: si pubblica solo a mano
 - **Dominio**: `iltifodelladaunia.it`, comprato su IONOS. Vetrina pronta in `sito/index.html`, non ancora pubblicata
 - **Stack**: Expo SDK 57 / React Native 0.86 (iOS, Android e web dallo stesso codice), Supabase, GitHub Actions
-- **Stato**: 553 commit (196 senza gli aggiornamenti automatici dei dati), 47 migrazioni, 39 schermate, **554 test**, guardiano alla versione 43
+- **Stato**: 553 commit (195 senza gli aggiornamenti automatici dei dati), 47 migrazioni, 39 schermate, **554 test**, guardiano alla versione 43
 
 Il repository è pubblico dall'8 settembre, e non è una svista: sui repo pubblici
 i minuti di GitHub Actions sono gratis e illimitati. Sono attivi secret scanning
