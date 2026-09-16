@@ -27,6 +27,17 @@
   ],
   "articoli": [
     {
+      "id": "ilfoggia-5a8eed19a3",
+      "testata": "ilfoggia",
+      "titolo": "Foggia Savoia – 𝗣𝗛𝗢𝗧𝗢 𝗚𝗔𝗟𝗟𝗘𝗥𝗬 📸Potito Chiummarulo",
+      "sommario": "",
+      "url": "https://www.ilfoggia.com/foggia-savoia-%f0%9d%97%a3%f0%9d%97%9b%f0%9d%97%a2%f0%9d%97%a7%f0%9d%97%a2-%f0%9d%97%9a%f0%9d%97%94%f0%9d%97%9f%f0%9d%97%9f%f0%9d%97%98%f0%9d%97%a5%f0%9d%97%ac-%f0%9f%93%b8potito-chiummarulo/",
+      "data": "2026-09-16T00:27:02.000Z",
+      "autore": "Foggia Calcio Movie",
+      "categoria": "Gallery",
+      "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/09/IMG_3687-scaled.jpg"
+    },
+    {
       "id": "foggiacalciomania-269b329061",
       "testata": "foggiacalciomania",
       "titolo": "Lo Zac, il racconto di Foggia-Savoia. Sfoglia il giornale gratuitamente",
@@ -322,18 +333,7 @@
       "autore": "Luciano Gallucci",
       "categoria": "News",
       "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/WhatsApp-Image-2026-08-24-at-23.02.24.jpeg"
-    },
-    {
-      "id": "ilfoggia-ce1f521c90",
-      "testata": "ilfoggia",
-      "titolo": "Promette bene il Foggia nonostante la sconfitta con l’Altamura",
-      "sommario": "",
-      "url": "https://www.ilfoggia.com/promette-bene-il-foggia-nonostante-la-sconfitta-con-laltamura/",
-      "data": "2026-08-17T09:18:34.000Z",
-      "autore": "Foggia Calcio Movie",
-      "categoria": "Gallery",
-      "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0088-scaled.jpg"
     }
   ],
-  "aggiornatoIl": "2026-09-16T00:20:49.445Z"
+  "aggiornatoIl": "2026-09-16T00:40:50.727Z"
 }
