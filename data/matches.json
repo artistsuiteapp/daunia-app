@@ -468,13 +468,13 @@
     },
     "venue": "Stadio San Nicola",
     "city": "Bari",
-    "attendance": null,
+    "attendance": 1500,
     "referee": "Diop",
     "goals": [
       {
         "minute": 36,
         "extra": null,
-        "scorer": "A. Capone",
+        "scorer": "Capone",
         "side": "home",
         "ownGoal": false,
         "penalty": false

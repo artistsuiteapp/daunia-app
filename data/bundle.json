@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-16T13:22:00.761Z",
+    "generatedAt": "2026-09-16T13:41:27.319Z",
     "season": "2026-2027",
     "competition": "Serie C",
     "sources": {
@@ -638,13 +638,13 @@
       },
       "venue": "Stadio San Nicola",
       "city": "Bari",
-      "attendance": null,
+      "attendance": 1500,
       "referee": "Diop",
       "goals": [
         {
           "minute": 36,
           "extra": null,
-          "scorer": "A. Capone",
+          "scorer": "Capone",
           "side": "home",
           "ownGoal": false,
           "penalty": false
@@ -3786,9 +3786,9 @@
         "away": {
           "won": 1,
           "drawn": 0,
-          "lost": 1,
+          "lost": 2,
           "goalsFor": 1,
-          "goalsAgainst": 1
+          "goalsAgainst": 2
         }
       },
       {
@@ -3838,8 +3838,8 @@
       {
         "matchday": 5,
         "venue": "home",
-        "result": null,
-        "position": null
+        "result": "L",
+        "position": 16
       },
       {
         "matchday": 6,
@@ -4051,7 +4051,7 @@
       "biggestWin": "Crotone 0-1 Foggia",
       "worstLoss": "Foggia 0-2 Audace Cerignola",
       "bestPosition": 6,
-      "worstPosition": 14,
+      "worstPosition": 16,
       "byWindow": [
         {
           "label": "1-15'",
@@ -5938,6 +5938,6 @@
         "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/WhatsApp-Image-2026-08-24-at-23.02.24.jpeg"
       }
     ],
-    "aggiornatoIl": "2026-09-16T13:20:53.189Z"
+    "aggiornatoIl": "2026-09-16T13:41:24.782Z"
   }
 }
