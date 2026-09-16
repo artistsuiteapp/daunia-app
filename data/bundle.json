@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-16T09:21:49.081Z",
+    "generatedAt": "2026-09-16T09:40:58.079Z",
     "season": "2026-2027",
     "competition": "Serie C",
     "sources": {
@@ -5056,6 +5056,17 @@
     ],
     "articoli": [
       {
+        "id": "calciofoggia-dbd528e997",
+        "testata": "calciofoggia",
+        "titolo": "il punto sulla 5° di andata",
+        "sommario": "Che il campionato sia iniziato da poco lo dimostra la quinta giornata che mette in evidenza alcune sorprese e forse una sola certezza, quella del Sorrento che veleggia a punteggio…",
+        "url": "https://www.calciofoggia.it/il-punto-sulla-5-di-andata/",
+        "data": "2026-09-16T09:37:49.000Z",
+        "autore": "Mario Schena",
+        "categoria": "SERIE C",
+        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Zuccon-in-azione-contro-il-Savoia-Foto-Antonello-Forcelli.png"
+      },
+      {
         "id": "ilfoggia-5a8eed19a3",
         "testata": "ilfoggia",
         "titolo": "Foggia Savoia – 𝗣𝗛𝗢𝗧𝗢 𝗚𝗔𝗟𝗟𝗘𝗥𝗬 📸Potito Chiummarulo",
@@ -5276,17 +5287,6 @@
         "immagine": "https://www.calciofoggia.it/wp-content/uploads/2020/09/Zgiudice-sportivo.png"
       },
       {
-        "id": "calciofoggia-6ceee0c1c5",
-        "testata": "calciofoggia",
-        "titolo": "Giovanni Castellano di Nichelino dirige Foggia-Savoia",
-        "sommario": "Sarà il Sig. Giovanni Castellano della sezione di Nichelino a dirigere l'incontro Foggia-Savoia, in programma martedì 15 settembre alle ore 21:00, allo Stadio Pino Zaccheria di…",
-        "url": "https://www.calciofoggia.it/giovanni-castellano-di-nichelino-dirige-foggia-savoia/",
-        "data": "2026-09-14T11:42:57.000Z",
-        "autore": "Fabio Bertazzoli",
-        "categoria": "FOGGIA CALCIO",
-        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Castellano.jpg"
-      },
-      {
         "id": "ilfoggia-9f741afccf",
         "testata": "ilfoggia",
         "titolo": "Cosmano Sport Soccer Trani – Risultato parziale",
@@ -5364,6 +5364,6 @@
         "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/WhatsApp-Image-2026-08-24-at-23.02.24.jpeg"
       }
     ],
-    "aggiornatoIl": "2026-09-16T09:20:46.271Z"
+    "aggiornatoIl": "2026-09-16T09:40:48.366Z"
   }
 }
