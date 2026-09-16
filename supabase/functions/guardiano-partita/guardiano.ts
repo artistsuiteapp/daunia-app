@@ -19,6 +19,7 @@ import {
   trovaPartita, leggiPartita, CASA as LSA_CASA, OSPITI as LSA_OSPITI, type LetturaLSA,
 } from './livescore.ts';
 import { ancoraDaGiocare, calendarioDa, daAllineare } from './calendario.ts';
+import { formazioniDaDiretta, leggiDiretta, nomeTestata, recuperoDaDiretta, trovaDiretta } from './cronaca-web.ts';
 import {
   contaGol, concorda, titoloGol, golVero, golDalTabellone, minutoStimato, cronologia,
   cartelliniECambi, oraItaliana, proteggi, unisciCronaca, piuAvanti, minutoMigliore,
@@ -114,6 +115,24 @@ const PAUSA_FORMAZIONI = 15 * MINUTO;
  * sito che non ci deve niente.
  */
 const PAUSA_LEGA = 3 * MINUTO;
+/**
+ * Ogni quanto si guarda la diretta scritta della testata.
+ *
+ * E un sito di giornalisti, non un servizio dati: si bussa piano. Tre minuti
+ * bastano sia per prendere le formazioni dentro la finestra in cui escono, sia
+ * per avere i minuti di recupero mentre il cartello e ancora alzato.
+ */
+const PAUSA_DIRETTA = 3 * MINUTO;
+/**
+ * Da quanto prima del fischio si cerca la diretta.
+ *
+ * La pubblicano circa un'ora prima e ci mettono dentro le formazioni appena le
+ * riceve la sala stampa: la Lega, invece, apre la partita al calcio d'inizio.
+ * Il 15 settembre l'app ha avuto le formazioni con cinquanta minuti di ritardo
+ * proprio per quello.
+ */
+const DIRETTA_PRIMA = 100 * MINUTO;
+
 /**
  * Per quanto si cercano, contando dal calcio d'inizio.
  *
@@ -587,6 +606,18 @@ async function giro(primo: boolean): Promise<{ risposta: Record<string, unknown>
   const detti = new Set<string>((riga.eventi_detti ?? []) as string[]);
   const chiusaIl = riga.finita_il ? Date.parse(riga.finita_il) : NaN;
 
+  /*
+   * Il tabellone a mano: quando e acceso, il punteggio e la cronaca dei gol
+   * sono di chi sta guardando la partita, non delle fonti.
+   *
+   * Il guardiano continua tutto il resto -- minuto, stato, cartellini, cambi,
+   * formazioni, notifiche -- ma non scrive piu ne `casa`, ne `ospiti`, ne
+   * `gol`, e non annuncia gol che non ha annunciato lui. Chi comanda lo dice
+   * la colonna, e la colonna sta sulla riga della partita: quella dopo
+   * riparte da sola.
+   */
+  const aMano = Boolean(riga.manuale);
+
   /** da poco prima del fischio a un quarto d'ora dopo la chiusura: si legge di continuo */
   const caldo = adesso >= t - LSA_PRIMA
     && !(Number.isFinite(chiusaIl) && adesso - chiusaIl > DOPO_LA_CHIUSURA);
@@ -691,16 +722,75 @@ async function giro(primo: boolean): Promise<{ risposta: Record<string, unknown>
         const f = await formazioniDi(idLega);
         if (f) {
           patch.formazione = f;
+          patch.formazioni_mandate = true;
           avvisi.push({
             tipo: 'formazioni',
             titolo: 'Formazioni ufficiali',
-            testo: [f.casa, f.ospiti]
-              .find((c) => /foggia/i.test(c.squadra))
-              ?.giocatori.map((g) => g.nome.split(' ')[0]).join(', ')
-              ?? etichettaDaFormazione(f),
+            testo: nomiDellaFormazione(f),
             tag: `formazioni-${riga.partita}`,
             rotta: '/',
           });
+        }
+      }
+    }
+
+    /*
+     * Le formazioni dalla diretta scritta della testata, un'ora prima.
+     *
+     * La Lega apre la partita al calcio d'inizio: il 15 settembre le
+     * formazioni sono comparse nell'app con cinquanta minuti di ritardo, e per
+     * chi le aspetta sono la cosa che si guarda un'ora prima, non a partita
+     * cominciata. Le testate che seguono il Foggia le pubblicano appena
+     * escono, dentro la diretta scritta.
+     *
+     * Dallo stesso articolo arrivano i minuti di recupero, che nessuna fonte
+     * dal vivo pubblica. Quelli si rileggono mentre si gioca -- ma non quando
+     * comanda il tabellone a mano: li li scrive chi sta guardando.
+     */
+    const statoSalvato = String(riga.stato ?? '');
+    const cercoFormazioni = !riga.formazione && !patch.formazione;
+    const cercoRecupero = !aMano && ['1H', '2H', 'ET'].includes(statoSalvato);
+    const dentroLaFinestra = adesso >= t - DIRETTA_PRIMA && adesso - t < CERCA_FINO_A;
+    const rilettaDaPoco = riga.diretta_il
+      && adesso - Date.parse(riga.diretta_il) < PAUSA_DIRETTA - TOLLERANZA;
+
+    if ((cercoFormazioni || cercoRecupero) && dentroLaFinestra && !rilettaDaPoco) {
+      patch.diretta_il = ora();
+      const [casaN, ospitiN] = String(riga.etichetta ?? '').split(/\s+vs\s+/i);
+      /*
+       * L'articolo giusto si ricorda: "diretta-<testata>-<id>".
+       *
+       * Ma solo dopo che ha dato le formazioni. Nel pomeriggio escono altri
+       * pezzi sulla stessa partita -- i convocati, la presentazione -- e
+       * ricordarsi il primo che capita vorrebbe dire rileggere per due ore
+       * qualcosa che non contiene niente di quello che serve.
+       */
+      const ricordato = [...detti].filter((f) => f.startsWith('diretta-')).pop()
+        ?.slice('diretta-'.length).split('-');
+      let d = ricordato?.length === 2
+        ? await leggiDiretta(Number(ricordato[0]), ricordato[1])
+        : null;
+      if (!d && casaN && ospitiN) d = await trovaDiretta(casaN, ospitiN, t);
+
+      if (d) {
+        if (cercoFormazioni) {
+          const f = formazioniDaDiretta(d.contenuto, casaN, ospitiN);
+          if (f) {
+            detti.add(`diretta-${d.testata}-${d.id}`);
+            patch.formazione = { ...f, fonte: nomeTestata(d.testata) };
+            patch.formazioni_mandate = true;
+            avvisi.push({
+              tipo: 'formazioni',
+              titolo: 'Formazioni ufficiali',
+              testo: nomiDellaFormazione(f),
+              tag: `formazioni-${riga.partita}`,
+              rotta: '/',
+            });
+          }
+        }
+        if (cercoRecupero) {
+          const r = recuperoDaDiretta(d.contenuto, statoSalvato);
+          if (r && r.minuti !== riga.recupero) patch.recupero = r.minuti;
         }
       }
     }
@@ -841,6 +931,18 @@ async function giro(primo: boolean): Promise<{ risposta: Record<string, unknown>
   // a partita chiusa il minuto non vuol dire piu niente: lasciarlo scritto
   // faceva restare "90+8" sotto il punteggio per ore
   patch.minuto = FINITE.includes(stato) ? null : minutoVero;
+  /*
+   * Il recupero vale finche si gioca quel tempo.
+   *
+   * All'intervallo e a partita finita il cartello non c'e piu: lasciarlo
+   * scritto farebbe restare "+5" sotto il punteggio anche il giorno dopo.
+   * Quando comanda il tabellone a mano non si tocca: lo cancella chi l'ha
+   * scritto.
+   */
+  if (!aMano && riga.recupero !== null && riga.recupero !== undefined
+      && !['1H', '2H', 'ET'].includes(stato)) {
+    patch.recupero = null;
+  }
 
   /*
    * IL PUNTEGGIO CHE SI MOSTRA E QUELLO DELLA FONTE PIU SVELTA.
@@ -876,11 +978,16 @@ async function giro(primo: boolean): Promise<{ risposta: Record<string, unknown>
   if (mostrato) {
     patch.casa = mostrato.casa;
     patch.ospiti = mostrato.ospiti;
+    // quello che dicono le fonti si scrive comunque, anche col tabellone a
+    // mano acceso: e l'unico modo, per chi sta segnando, di accorgersi di un
+    // gol che non ha visto
+    patch.casa_fonti = mostrato.casa;
+    patch.ospiti_fonti = mostrato.ospiti;
   }
 
   if (!riga.inizio_mandato && IN_GIOCO.includes(stato) && !FINITE.includes(stato)) {
     patch.inizio_mandato = true;
-    patch.gol = [];
+    if (!aMano) patch.gol = [];
     avvisi.push({
       tipo: 'inizio', titolo: 'Si comincia', testo: etichetta,
       tag: `inizio-${riga.partita}`, rotta: '/',
@@ -996,7 +1103,7 @@ async function giro(primo: boolean): Promise<{ risposta: Record<string, unknown>
   // I gol visti dagli eventi: col marcatore, e col punteggio solo se
   // confermato da una seconda fonte.
   const giaDetto = daEventi ? detti.has(`tabellone-${daEventi.casa}-${daEventi.ospiti}`) : false;
-  for (const g of nuoviGol) {
+  for (const g of aMano ? [] : nuoviGol) {
     avvisi.push({
       tipo: 'gol',
       titolo: titoloGol(g.nostro, accordo),
@@ -1027,7 +1134,7 @@ async function giro(primo: boolean): Promise<{ risposta: Record<string, unknown>
    * nell'app non c'era. Adesso parte al giro in cui compare; se poi arrivano
    * gli eventi, la loro notifica si riscrive muta sopra questa (`giaDetto`).
    */
-  if (!nuoviGol.length && prima && mostrato && !riga.finita_il) {
+  if (!aMano && !nuoviGol.length && prima && mostrato && !riga.finita_il) {
     const dal = golDalTabellone(prima, mostrato, inCasa);
     const firma = `tabellone-${mostrato.casa}-${mostrato.ospiti}`;
     if (dal && !detti.has(firma)) {
@@ -1048,6 +1155,52 @@ async function giro(primo: boolean): Promise<{ risposta: Record<string, unknown>
           ? `${minutoVero ? '' : 'Circa '}${minuto}'. Il marcatore non risulta ancora.`
           : 'Dal tabellone. Il marcatore non risulta ancora.',
         tag: `punteggio-${riga.partita}`,
+        rotta: '/',
+      });
+    }
+  }
+
+  /*
+   * ------------------------------------- i gol segnati a mano, e quelli annullati
+   *
+   * Li scrive il pannello, direttamente nella riga: nell'app compaiono subito,
+   * con Realtime, senza passare da qui. Ma la notifica la manda il guardiano,
+   * che e l'unico che ha le chiavi delle push -- e la manda una volta sola,
+   * perche la firma resta scritta in `eventi_detti`.
+   *
+   * L'annullamento e il motivo per cui questa parte esiste: un gol annullato
+   * dopo che il telefono ha gia suonato va detto, altrimenti la gente resta
+   * convinta di essere in vantaggio.
+   */
+  if (aMano) {
+    for (const g of ((riga.gol ?? []) as Array<Record<string, unknown>>)) {
+      if (g?.fonte !== 'admin' || !g?.id) continue;
+      const firma = `mano-${g.id}`;
+      if (detti.has(firma)) continue;
+      detti.add(firma);
+      const nostro = Boolean(g.nostro);
+      avvisi.push({
+        tipo: 'gol',
+        titolo: `${nostro ? 'GOL DEL FOGGIA!' : 'Gol subito.'} ${g.casa ?? 0}-${g.ospiti ?? 0}`,
+        testo: [g.minuto ? `${g.minuto}'` : null, g.chi].filter(Boolean).join(' ') || etichetta,
+        tag: `punteggio-${riga.partita}`,
+        rotta: '/',
+        // a partita gia annunciata finita un gol in ritardo aggiorna e non suona
+        muta: Boolean(riga.finita_il),
+      });
+    }
+
+    for (const a of ((riga.annullati ?? []) as Array<Record<string, unknown>>)) {
+      if (!a?.id) continue;
+      const firma = `annullato-${a.id}`;
+      if (detti.has(firma)) continue;
+      detti.add(firma);
+      avvisi.push({
+        tipo: 'gol',
+        titolo: `Gol annullato. ${riga.casa ?? 0}-${riga.ospiti ?? 0}`,
+        testo: [a.minuto ? `${a.minuto}'` : null, a.chi, '— il gol non è valido']
+          .filter(Boolean).join(' '),
+        tag: `annullato-${riga.partita}-${a.id}`,
         rotta: '/',
       });
     }
@@ -1100,10 +1253,18 @@ async function giro(primo: boolean): Promise<{ risposta: Record<string, unknown>
   let finale: Punteggio | null = null;
   if (fineVista && !riga.finita_il) {
     const passati = adesso - fischioIl;
-    const concordi = !!tabellone && !!punteggioLsa
+    const dueFonti = !!tabellone && !!punteggioLsa
       && tabellone.casa === punteggioLsa.casa && tabellone.ospiti === punteggioLsa.ospiti;
     const unaSola = !tabellone !== !punteggioLsa;
-    finale = concordi ? tabellone : (punteggioLsa ?? tabellone ?? mostrato ?? prima);
+    /*
+     * Col tabellone a mano il risultato buono e quello scritto nella riga.
+     *
+     * Aspettare che le fonti si mettano d'accordo, quando una persona sta
+     * guardando la partita, vorrebbe dire pagare i pronostici su quello che
+     * dice una fonte in ritardo invece che su quello che e successo.
+     */
+    const concordi = aMano || dueFonti;
+    finale = aMano ? (prima ?? mostrato) : (dueFonti ? tabellone : (punteggioLsa ?? tabellone ?? mostrato ?? prima));
     if (finale && ((concordi && passati >= CONFERMA_CONCORDI)
         || (unaSola && passati >= CONFERMA_UNA_FONTE)
         || passati >= CONFERMA_MASSIMA)) {
@@ -1156,6 +1317,20 @@ async function giro(primo: boolean): Promise<{ risposta: Record<string, unknown>
   }
 
   patch.eventi_detti = [...detti];
+
+  /*
+   * L'ULTIMA PAROLA E DI CHI STA GUARDANDO LA PARTITA.
+   *
+   * Sta qui, in fondo e in un punto solo, invece che sparso in ogni punto in
+   * cui il punteggio si scrive: cosi non c'e un ramo nuovo che possa
+   * dimenticarsene. Quello che il pannello ha scritto nella riga resta li
+   * finche l'amministratore non spegne.
+   */
+  if (aMano) {
+    delete patch.casa;
+    delete patch.ospiti;
+    delete patch.gol;
+  }
 
   /*
    * Prima di scrivere: quello che si sa non si perde.
@@ -1242,6 +1417,17 @@ async function provaDalVivo(squadra: string) {
     },
     lsa,
   };
+}
+
+/** I nomi dell'undici del Foggia, per il testo della notifica. */
+function nomiDellaFormazione(
+  f: { casa: { squadra: string; modulo: string | null; giocatori: Array<{ nome: string }> };
+       ospiti: { squadra: string; modulo: string | null; giocatori: Array<{ nome: string }> } },
+): string {
+  return [f.casa, f.ospiti]
+    .find((c) => /foggia/i.test(c.squadra))
+    ?.giocatori.map((g) => g.nome.split(' ')[0]).join(', ')
+    ?? etichettaDaFormazione(f);
 }
 
 /** Quando il Foggia non si riconosce nei nomi delle squadre, si dice il modulo. */

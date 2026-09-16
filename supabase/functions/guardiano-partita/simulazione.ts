@@ -96,6 +96,17 @@ export type Scenario = {
   tsdbAZero?: { da: number; a: number };
   /** il calcio d'inizio vero arriva dopo quello in calendario */
   ritardoInizio?: number;
+  /** quando la testata pubblica la diretta scritta con le formazioni, dal fischio */
+  direttaApre?: number;
+  /** la testata non pubblica niente */
+  senzaDiretta?: boolean;
+  /**
+   * Quello che l'amministratore fa dal pannello, durante la partita.
+   *
+   * Scrive nella riga come fa la funzione del database, cosi la prova dice se
+   * il guardiano rispetta il tabellone a mano invece che se lo sovrascrive.
+   */
+  pannello?: Array<{ quando: number; fa: (riga: Record<string, unknown>) => Record<string, unknown> }>;
 };
 
 function fonti(s: Scenario, orologio: { t: number }, chiamate: Record<string, number>) {
@@ -124,7 +135,36 @@ function fonti(s: Scenario, orologio: { t: number }, chiamate: Record<string, nu
     scores: { score: `${punteggio(x).casa} - ${punteggio(x).ospiti}` },
   });
 
+  /*
+   * La diretta scritta della testata: un articolo solo, aggiornato per tutta
+   * la partita. Le formazioni ci sono da quando esce, un'ora prima del
+   * fischio; i minuti di recupero compaiono quando il quarto uomo alza il
+   * cartello.
+   */
+  const undici = (p: string) => Array.from({ length: 11 }, (_, i) => `${p} ${i + 1}`).join(', ');
+  const articolo = () => {
+    const x = orologio.t - K - (s.ritardoInizio ?? 0);
+    const cronaca: string[] = [];
+    if (x >= REALTA.fine - 8 * MIN) cronaca.push('90&#8242; &#8211; Cinque minuti di recupero.');
+    if (x >= REALTA.intervallo - 3 * MIN) cronaca.push('45&#8242; &#8211; Due minuti di recupero.');
+    return `<p>${cronaca.join('<br />')}</p><h3>Formazioni ufficiali</h3>`
+      + `<p><strong>Foggia</strong>: ${undici('Foggiano')}<br />All.: Tizio<br />`
+      + `<strong>Savoia</strong>: ${undici('Savoiardo')}<br />All.: Caio</p>`;
+  };
+
   const risposte: Array<[RegExp, (u: URL, init?: RequestInit) => { costo: number; corpo: unknown }]> = [
+    [/(calciofoggia\.it|foggiacalciomania\.com)\/wp-json\/wp\/v2\/posts/, (u) => {
+      const apre = s.senzaDiretta ? Infinity : (s.direttaApre ?? -60 * MIN);
+      const uscita = orologio.t - K >= apre;
+      const titolo = { rendered: 'Foggia-Savoia, la diretta' };
+      if (!/posts\/\d+/.test(u.pathname)) {
+        return { costo: 400, corpo: uscita ? [{ id: 8801, title: titolo }] : [] };
+      }
+      return {
+        costo: 600,
+        corpo: uscita ? { id: 8801, title: titolo, content: { rendered: articolo() } } : null,
+      };
+    }],
     [/thesportsdb\.com\/.*livescore\.php/, () => {
       const x = orologio.t - K - s.ritardoTsdb - (s.ritardoInizio ?? 0);
       const dentro = !s.tsdbSenzaLista && fase(x) !== 'NS' && x < REALTA.fine + 3 * MIN;
@@ -207,6 +247,8 @@ type Foto = {
   cambi: Array<{ minuto: number }>;
   gol: Array<{ chi?: string | null }>;
   formazione: unknown; finita_il: string | null;
+  recupero: number | null;
+  fonti: { casa: number | null; ospiti: number | null };
 };
 
 export async function gioca(s: Scenario) {
@@ -223,6 +265,11 @@ export async function gioca(s: Scenario) {
       gol: (r.gol ?? []) as Foto['gol'],
       formazione: r.formazione ?? null,
       finita_il: (r.finita_il ?? null) as string | null,
+      recupero: (r.recupero ?? null) as number | null,
+      fonti: {
+        casa: (r.casa_fonti ?? null) as number | null,
+        ospiti: (r.ospiti_fonti ?? null) as number | null,
+      },
     });
   };
   const db = fintoDb({
@@ -275,12 +322,21 @@ export async function gioca(s: Scenario) {
       },
     });
 
+    const dalPannello = [...(s.pannello ?? [])].sort((a, b) => a.quando - b.quando);
+
     for (let m = -95; m <= 200; m += 1) {
       // pg_cron parte al secondo zero; la funzione si sveglia qualche decimo dopo
       const sveglia = K + m * MIN + 300 + ((m * 7919) % 500 + 500) % 500;
       // il giro del minuto prima non deve arrivare fin dentro questo
       if (orologio.t > sveglia) sovrapposizioni += 1;
       orologio.t = Math.max(orologio.t, sveglia);
+
+      while (dalPannello.length && orologio.t - K >= dalPannello[0].quando) {
+        const azione = dalPannello.shift()!;
+        const r = db.tabelle.stato_partita.find((x) => x.partita === PARTITA)!;
+        Object.assign(r, azione.fa(r));
+        fotografa();
+      }
       await gestisci(new Request('https://guardiano.test', {
         method: 'POST', headers: { 'x-guardiano': 'segreto' }, body: '{}',
       }));

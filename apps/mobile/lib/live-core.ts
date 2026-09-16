@@ -15,6 +15,15 @@ export type Live = {
   minuto: string | null;
   finita: boolean;
   aggiornato: number;
+  /**
+   * I minuti di recupero annunciati dal quarto uomo.
+   *
+   * Nessuna fonte dal vivo li pubblica: arrivano dalla diretta scritta della
+   * testata, oppure li scrive chi sta seguendo la partita dal pannello.
+   */
+  recupero: number | null;
+  /** vero quando il tabellone lo sta tenendo una persona, non le fonti */
+  aMano: boolean;
 };
 
 export const PRIMA = 10 * 60 * 1000;
@@ -109,6 +118,8 @@ export function leggiEvento(e: unknown, adesso = Date.now()): Live | null {
     minuto: r.strProgress ? String(r.strProgress).trim() || null : null,
     finita: FINITE.includes(s),
     aggiornato: adesso,
+    recupero: numero(r.recupero),
+    aMano: r.manuale === true,
   };
 }
 
@@ -263,7 +274,17 @@ export function etichettaFase(
   const m = minutoCorrente(live.minuto, live.aggiornato, live.stato, adesso)
     ?? minutoStimato(kickoff, live.stato, adesso);
   const nome = live.stato === '1H' ? '1° tempo' : live.stato === '2H' ? '2° tempo' : live.fase;
-  return m === null ? nome : `${nome} · ${m}'`;
+  /*
+   * Il recupero, quando si sa: "2° tempo · 90' +5".
+   *
+   * E la cosa che il tabellone dello stadio ha e l'app non aveva. Cambia cosa
+   * uno pensa guardando il telefono: al 90' in svantaggio, "+5" vuol dire che
+   * c'e ancora tempo. Si scrive solo mentre si gioca quel tempo: il guardiano
+   * lo cancella all'intervallo e a partita finita.
+   */
+  const piu = live.recupero && ['1H', '2H', 'ET'].includes(live.stato) ? ` +${live.recupero}` : '';
+  if (m === null) return piu ? `${nome}${piu}` : nome;
+  return `${nome} · ${m}'${piu}`;
 }
 
 const pulisci = (s: string | null | undefined) =>
@@ -315,15 +336,19 @@ export function orienta(
 const NIENTE_GOL: readonly never[] = [];
 const NIENTE_CARTELLINI: readonly never[] = [];
 const NIENTE_CAMBI: readonly never[] = [];
+const NIENTE_ANNULLATI: readonly never[] = [];
 
-export function cronacaDi<G, C, S>(
+export function cronacaDi<G, C, S, A>(
   vivo: Live | null,
   gol: readonly G[],
   cartellini: readonly C[],
   cambi: readonly S[],
-): { gol: readonly G[]; cartellini: readonly C[]; cambi: readonly S[] } {
+  annullati: readonly A[] = NIENTE_ANNULLATI,
+): { gol: readonly G[]; cartellini: readonly C[]; cambi: readonly S[]; annullati: readonly A[] } {
   if (!vivo) {
-    return { gol: NIENTE_GOL, cartellini: NIENTE_CARTELLINI, cambi: NIENTE_CAMBI };
+    return {
+      gol: NIENTE_GOL, cartellini: NIENTE_CARTELLINI, cambi: NIENTE_CAMBI, annullati: NIENTE_ANNULLATI,
+    };
   }
-  return { gol, cartellini, cambi };
+  return { gol, cartellini, cambi, annullati };
 }

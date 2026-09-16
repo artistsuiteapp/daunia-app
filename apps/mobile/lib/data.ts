@@ -105,8 +105,13 @@ export type ColonnaLega = {
  * l'unica in assoluto che dia anche il modulo e l'allenatore.
  */
 export let formazioniUfficiali = (
-  (base as unknown as { formazioniUfficiali?: Record<string, { casa: ColonnaLega; ospiti: ColonnaLega }> })
-    .formazioniUfficiali ?? {}
+  (base as unknown as {
+    formazioniUfficiali?: Record<string, {
+      casa: ColonnaLega; ospiti: ColonnaLega;
+      /** la testata che l'ha pubblicata, quando non viene dalla Lega */
+      fonte?: string | null;
+    }>;
+  }).formazioniUfficiali ?? {}
 );
 
 export type Prossima = {
