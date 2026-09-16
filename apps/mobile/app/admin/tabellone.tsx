@@ -47,7 +47,7 @@ export default function TabelloneAMano() {
 
   const match = nextMatch();
   const partita = prossima?.eventId ? String(prossima.eventId) : null;
-  const { riga, caricato } = useTabellone(partita);
+  const { riga, caricato, ricarica } = useTabellone(partita);
 
   const [chiSegna, setChiSegna] = useState<'noi' | 'loro' | null>(null);
   const [errore, setErrore] = useState<string | null>(null);
@@ -90,12 +90,20 @@ export default function TabelloneAMano() {
     );
   }
 
+  /*
+   * Dopo ogni comando si rilegge la riga.
+   *
+   * Realtime la porta da solo, e di solito arriva prima; ma qui si sta
+   * scrivendo il risultato per tutti, e un tasto che sembra non aver fatto
+   * niente -- perche il canale e caduto -- si preme una seconda volta.
+   */
   const fai = async (cosa: () => Promise<{ ok: boolean; messaggio: string }>) => {
     setErrore(null);
     setInCorso(true);
     try {
       const esito = await cosa();
       if (!esito.ok) setErrore(esito.messaggio);
+      await ricarica();
     } finally {
       setInCorso(false);
     }
