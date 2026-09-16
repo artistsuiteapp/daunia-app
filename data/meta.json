@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-16T20:20:53.495Z",
+  "generatedAt": "2026-09-16T20:41:55.222Z",
   "season": "2026-2027",
   "competition": "Serie C",
   "sources": {
@@ -17,12 +17,12 @@
     "Anno corretto su Wikipedia per Foggia-Altamura: 2025-08-16 -> 2026-08-16.",
     "Nessuno stemma per \"Inter U23\": il sito del club non ha mai incontrato questa squadra.",
     "Solo 2 giocatori su 23 hanno la foto: la rosa sul sito del club e ferma alla stagione precedente.",
+    "Il negozio non ha restituito prodotti: la sezione shop resta vuota.",
     "Campo spostato 2026-09-12 Monopoli-Foggia: da \"Stadio San Nicola\" a \"Stadio San Nicola\".",
     "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
     "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
     "API-Football rosa: Your account is suspended, check on https://dashboard.api-football.com.",
     "Trasferta a Inter U23 fra meno di una settimana e nessuna notizia sul divieto: controlla a mano, potrebbe essersi rotto il riconoscimento.",
-    "Lega Pro: Foggia-Altamura e' finita da ore e non ha un id nel calendario della Lega: la formazione non entrera' mai nell'archivio",
-    "Stampa, CalcioFoggia.it: HTTP 415 su https://www.calciofoggia.it/feed/"
+    "Lega Pro: Foggia-Altamura e' finita da ore e non ha un id nel calendario della Lega: la formazione non entrera' mai nell'archivio"
   ]
 }
