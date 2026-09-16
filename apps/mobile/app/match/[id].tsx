@@ -39,7 +39,7 @@ export default function MatchDetail() {
   const match = matchById(String(id));
   // la cronologia che il guardiano registra mentre si gioca. Passa per la
   // partita di questa scheda: se non e' quella seguita, le liste sono vuote
-  const { vivo, gol: golVivo, cartellini, cambi } = useCronacaDi(match);
+  const { vivo, gol: golVivo, cartellini, cambi, annullati } = useCronacaDi(match);
 
   /**
    * La cronaca: gol, cartellini e cambi in un elenco solo, in ordine di minuto.
@@ -209,7 +209,9 @@ export default function MatchDetail() {
             {lineup.fonte === 'ufficiale'
               // il modulo adesso e quello vero, pubblicato dalla Lega: la nota
               // diceva ancora che non lo pubblica nessuno
-              ? 'Undici ufficiale e modulo dal sito della Lega Serie C.'
+              ? (lineup.daChi
+                ? `Undici ufficiale e modulo da ${lineup.daChi}, che li pubblica circa un'ora prima del fischio.`
+                : 'Undici ufficiale e modulo dal sito della Lega Serie C.')
               : lineup.fonte === 'ultima'
                 ? `Questo è l'undici sceso in campo il ${lineup.dataUltima ? shortDate(lineup.dataUltima) : 'match precedente'}. Le formazioni ufficiali escono circa un'ora prima del fischio: quando esce, questa si aggiorna da sola.`
                 : 'Nessuna partita in archivio: questa formazione è costruita dalla rosa e va letta come una supposizione.'}
@@ -234,7 +236,7 @@ export default function MatchDetail() {
               ))}
             </View>
           </>
-        ) : (golVivo.length || cartellini.length || cambi.length) ? (
+        ) : (golVivo.length || cartellini.length || cambi.length || annullati.length) ? (
           <>
             <GroupLabel>Cronaca</GroupLabel>
             <View style={gutter}>
@@ -245,13 +247,14 @@ export default function MatchDetail() {
                 */}
               {[
                 ...golVivo.map((g, i) => ({
-                  chiave: `g-${g.minuto}-${i}`,
+                  chiave: `g-${g.id ?? g.minuto}-${i}`,
                   ordine: Number(g.minuto) || 0,
                   nostro: g.nostro,
                   minuto: g.minuto ? `${g.fonte === 'stimato' ? '~' : ''}${g.minuto}'` : '–',
                   testo: g.chi ?? `${g.casa ?? 0}–${g.ospiti ?? 0}`,
                   sotto: 'gol',
                   icona: 'football' as const,
+                  sbarrato: false,
                 })),
                 ...cartellini.map((c, i) => ({
                   chiave: `c-${c.minuto}-${i}`,
@@ -261,6 +264,7 @@ export default function MatchDetail() {
                   testo: c.chi ?? (c.rosso ? 'Espulsione' : 'Ammonizione'),
                   sotto: c.rosso ? 'espulso' : 'ammonito',
                   icona: c.rosso ? ('close-circle' as const) : ('square' as const),
+                  sbarrato: false,
                 })),
                 ...cambi.map((c, i) => ({
                   chiave: `s-${c.minuto}-${i}`,
@@ -270,6 +274,25 @@ export default function MatchDetail() {
                   testo: c.entra ?? c.esce ?? 'Cambio',
                   sotto: c.entra ? `entra al posto di ${c.esce ?? '—'}` : 'esce',
                   icona: 'swap-horizontal' as const,
+                  sbarrato: false,
+                })),
+                /*
+                 * I gol annullati restano scritti, sbarrati.
+                 *
+                 * Toglierli e basta lascerebbe chi guarda col dubbio di essersi
+                 * immaginato l'esultanza: il telefono aveva suonato, il
+                 * punteggio era cambiato, e poi piu niente. Vederlo cancellato
+                 * e la spiegazione.
+                 */
+                ...annullati.map((a, i) => ({
+                  chiave: `x-${a.id ?? i}`,
+                  ordine: Number(a.minuto) || 0,
+                  nostro: Boolean(a.nostro),
+                  minuto: a.minuto ? `${a.minuto}'` : '–',
+                  testo: a.chi ?? 'Gol',
+                  sotto: 'gol annullato',
+                  icona: 'close-circle' as const,
+                  sbarrato: true,
                 })),
               ]
                 .sort((a, b) => a.ordine - b.ordine)
@@ -281,6 +304,7 @@ export default function MatchDetail() {
                     testo={e.testo}
                     sotto={e.sotto}
                     icona={e.icona}
+                    sbarrato={e.sbarrato}
                   />
                 ))}
             </View>
@@ -372,9 +396,11 @@ function Side({ team }: { team: { crest: string | null; shortName: string } }) {
  * `inCasa` e il lato della scheda, non "il Foggia": la colonna di sinistra e
  * sempre la squadra di casa di quella partita, come il punteggio sopra.
  */
-function RigaEvento({ inCasa, minuto, testo, sotto, icona = 'football' }: {
+function RigaEvento({ inCasa, minuto, testo, sotto, icona = 'football', sbarrato = false }: {
   inCasa: boolean; minuto: string; testo: string; sotto?: string;
   icona?: keyof typeof Ionicons.glyphMap;
+  /** il gol annullato si legge ancora, ma si vede che non conta piu */
+  sbarrato?: boolean;
 }) {
   const bolla = (
     <View style={styles.eventBubble}>
@@ -395,7 +421,12 @@ function RigaEvento({ inCasa, minuto, testo, sotto, icona = 'football' }: {
         }
       />
       <View style={{ flexShrink: 1 }}>
-        <Text style={styles.eventName} numberOfLines={2}>{testo}</Text>
+        <Text
+          style={[styles.eventName, sbarrato && { textDecorationLine: 'line-through', color: colors.textDim }]}
+          numberOfLines={2}
+        >
+          {testo}
+        </Text>
         {sotto ? <Text style={styles.eventSotto} numberOfLines={3}>{sotto}</Text> : null}
       </View>
     </View>

@@ -151,3 +151,130 @@ test('le formazioni compaiono entro tre minuti da quando la Lega apre la partita
   const t = primaVolta((f) => Boolean(f.formazione));
   assert.ok(t - (K + s.legaApre) <= 3 * MIN, `formazioni in ritardo di ${secondi(t - K - s.legaApre)} s`);
 });
+
+/* ------------------------------------------- le formazioni e il recupero dal web */
+
+test('le formazioni arrivano prima del fischio, dalla diretta della testata', async () => {
+  const s = SCENARI[0][1];
+  const { primaVolta } = await gioca(s);
+  const t = primaVolta((f) => Boolean(f.formazione));
+  // la testata le pubblica un'ora prima; la Lega apre solo al calcio d'inizio
+  assert.ok(t < K, `formazioni comparse ${secondi(t - K)} s dopo il fischio`);
+  assert.ok(t - (K - 60 * MIN) <= 4 * MIN, `formazioni in ritardo di ${secondi(t - K + 60 * MIN)} s`);
+});
+
+test('senza la diretta della testata si aspetta la Lega, come prima', async () => {
+  const s = { ...SCENARI[0][1], senzaDiretta: true };
+  const { primaVolta } = await gioca(s);
+  const t = primaVolta((f) => Boolean(f.formazione));
+  assert.ok(t >= K, 'formazioni comparse prima del fischio senza averle da nessuno');
+  assert.ok(t - (K + s.legaApre) <= 3 * MIN, `formazioni in ritardo di ${secondi(t - K - s.legaApre)} s`);
+});
+
+test('i minuti di recupero compaiono sul tabellone, e spariscono a tempo finito', async () => {
+  const { foto } = await gioca(SCENARI[0][1]);
+  const primo = foto.find((f) => f.recupero === 2);
+  assert.ok(primo, 'il recupero del primo tempo non e mai comparso');
+  assert.ok(primo.t < K + REALTA.intervallo, 'il recupero e arrivato dopo l intervallo');
+
+  // all'intervallo il cartello non c'e piu
+  const allIntervallo = foto.filter((f) => f.stato === 'HT');
+  assert.ok(allIntervallo.length && allIntervallo.at(-1)!.recupero === null,
+    'il recupero del primo tempo e rimasto scritto all intervallo');
+
+  const ripresa = foto.find((f) => f.recupero === 5);
+  assert.ok(ripresa, 'il recupero della ripresa non e mai comparso');
+  assert.equal(foto.at(-1)!.recupero, null, 'il recupero e rimasto scritto a partita finita');
+});
+
+/* ------------------------------------------------------- il tabellone a mano */
+
+/** Come scrive la funzione del database quando si preme "gol" nel pannello. */
+const golAMano = (lato: 'casa' | 'ospiti', chi: string | null, minuto: number) =>
+  (riga: Record<string, unknown>) => {
+    const casa = (riga.casa as number ?? 0) + (lato === 'casa' ? 1 : 0);
+    const ospiti = (riga.ospiti as number ?? 0) + (lato === 'ospiti' ? 1 : 0);
+    return {
+      manuale: true,
+      casa,
+      ospiti,
+      gol: [...(riga.gol as unknown[] ?? []), {
+        id: `m${minuto}`, minuto: String(minuto), chi, nostro: lato === 'casa', lato, fonte: 'admin', casa, ospiti,
+      }],
+    };
+  };
+
+test('col tabellone a mano il punteggio dell amministratore non lo sovrascrive nessuno', async () => {
+  const s = {
+    ...SCENARI[0][1],
+    // il gol vero lo vede in campo l'amministratore al 6', le fonti solo al 23'
+    pannello: [{ quando: 6 * MIN, fa: golAMano('casa', 'Luciani', 6) }],
+  };
+  const { foto, suonate } = await gioca(s);
+
+  const dopo = foto.filter((f) => f.t > K + 6 * MIN && f.t < K + REALTA.fine);
+  assert.ok(dopo.every((f) => (f.casa ?? 0) >= 1), 'il punteggio a mano e stato cancellato dalle fonti');
+  // il gol vero delle fonti al 23' non deve aggiungersi a quello gia segnato
+  assert.ok(dopo.every((f) => (f.casa ?? 0) === 1), 'il gol e stato contato due volte');
+
+  /*
+   * Col tabellone a mano le notifiche dei gol le fa partire solo il pannello.
+   * E la regola: se il guardiano annunciasse anche quelli delle fonti, un gol
+   * annullato tornerebbe a suonare da solo due minuti dopo.
+   */
+  const gol = suonate.filter((x) => x.tipo === 'gol' && !x.muta);
+  assert.equal(gol.length, 1, `notifiche di gol: ${gol.map((g) => g.titolo).join(' | ')}`);
+  assert.ok(gol[0].titolo.includes('GOL DEL FOGGIA! 1-0'), gol[0].titolo);
+  assert.ok(gol[0].testo.includes('Luciani'), gol[0].testo);
+  // e arriva subito, non quando lo vedono le fonti
+  assert.ok(gol[0].t - (K + 6 * MIN) <= 60_000, `notifica in ritardo di ${secondi(gol[0].t - K - 6 * MIN)} s`);
+
+  // ...ma quello che vedono le fonti resta scritto, per chi sta segnando
+  const tardi = foto.filter((f) => f.t > K + 100 * MIN);
+  assert.ok(tardi.some((f) => f.fonti.casa === 1 && f.fonti.ospiti === 1),
+    'il punteggio delle fonti non si vede piu da nessuna parte');
+});
+
+test('un gol annullato lo dice, e il punteggio torna indietro', async () => {
+  const s = {
+    ...SCENARI[0][1],
+    pannello: [
+      { quando: 6 * MIN, fa: golAMano('casa', 'Luciani', 6) },
+      {
+        quando: 9 * MIN,
+        fa: (riga: Record<string, unknown>) => ({
+          casa: 0,
+          gol: [],
+          annullati: [{ id: 'm6', minuto: '6', chi: 'Luciani', nostro: true, lato: 'casa' }],
+        }),
+      },
+    ],
+  };
+  const { foto, suonate } = await gioca(s);
+
+  const dopo = foto.filter((f) => f.t > K + 10 * MIN && f.t < K + 20 * MIN);
+  assert.ok(dopo.every((f) => (f.casa ?? 0) === 0), 'il gol annullato e tornato sul tabellone');
+
+  const annullo = suonate.find((x) => x.titolo.startsWith('Gol annullato'));
+  assert.ok(annullo, `notifiche: ${suonate.map((x) => x.titolo).join(' | ')}`);
+  assert.ok(annullo.testo.includes('Luciani'), annullo.testo);
+  assert.ok(annullo.t - (K + 9 * MIN) <= 60_000, `annullamento in ritardo di ${secondi(annullo.t - K - 9 * MIN)} s`);
+});
+
+test('a mano si chiude col punteggio dell amministratore, non con quello delle fonti', async () => {
+  const s = {
+    ...SCENARI[0][1],
+    pannello: [
+      { quando: 6 * MIN, fa: golAMano('casa', 'Luciani', 6) },
+      // col tabellone a mano si segna tutto, anche il gol degli altri
+      { quando: 95 * MIN, fa: golAMano('ospiti', null, 78) },
+      { quando: 100 * MIN, fa: golAMano('casa', 'Petito', 82) },
+    ],
+  };
+  const { foto } = await gioca(s);
+  const chiusa = foto.find((f) => f.finita_il);
+  assert.ok(chiusa, 'la partita non si e mai chiusa');
+  // le fonti si fermano a 1-1: il risultato pagato ai pronostici e quello visto dal campo
+  assert.deepEqual([chiusa.casa, chiusa.ospiti], [2, 1]);
+  assert.deepEqual([chiusa.fonti.casa, chiusa.fonti.ospiti], [1, 1]);
+});

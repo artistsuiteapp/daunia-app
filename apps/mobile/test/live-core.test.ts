@@ -25,8 +25,30 @@ test('legge punteggio e fase da lookupevent', () => {
   const l = leggiEvento({ strStatus: '2H', intHomeScore: '2', intAwayScore: '1' }, 1000);
   assert.deepEqual(l, {
     stato: '2H', fase: 'secondo tempo', casa: 2, ospite: 1,
-    minuto: null, finita: false, aggiornato: 1000,
+    minuto: null, finita: false, aggiornato: 1000, recupero: null, aMano: false,
   });
+});
+
+test('il recupero si legge sotto il punteggio, e solo mentre si gioca', () => {
+  const vivo = leggiEvento(
+    { strStatus: '2H', intHomeScore: '1', intAwayScore: '1', strProgress: '90+2', recupero: 5 },
+    Date.parse('2026-09-15T20:45:00Z'),
+  );
+  assert.equal(vivo?.recupero, 5);
+  assert.equal(
+    etichettaFase(vivo, '2026-09-15T19:00:00Z', Date.parse('2026-09-15T20:45:00Z')),
+    "2° tempo · 90+2' +5",
+  );
+
+  // all'intervallo il cartello non c'e piu: non si scrive
+  const pausa = leggiEvento({ strStatus: 'HT', intHomeScore: '1', intAwayScore: '1', recupero: 2 });
+  assert.equal(etichettaFase(pausa, '2026-09-15T19:00:00Z', Date.parse('2026-09-15T19:50:00Z')), 'intervallo');
+});
+
+test('il tabellone tenuto a mano si riconosce', () => {
+  const vivo = leggiEvento({ strStatus: '1H', intHomeScore: '1', intAwayScore: '0', manuale: true });
+  assert.equal(vivo?.aMano, true);
+  assert.equal(leggiEvento({ strStatus: '1H' })?.aMano, false);
 });
 
 test('il minuto vero arriva dalla lista del dal vivo, recupero compreso', () => {

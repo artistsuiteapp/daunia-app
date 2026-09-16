@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Platform } from 'react-native';
+import { Keyboard, Platform } from 'react-native';
 import { useSafeAreaInsets, type EdgeInsets } from 'react-native-safe-area-context';
 
 /**
@@ -64,19 +64,36 @@ export function useSafeInsets(): EdgeInsets {
  * Su iOS la finestra non si accorcia all'apertura della tastiera: si accorcia la
  * parte visibile. Senza questo numero la barra delle schede e il campo di
  * scrittura restano sotto i tasti.
+ *
+ * NELL'APP INSTALLATA QUESTO NUMERO ERA SEMPRE ZERO.
+ *
+ * La misura arrivava da una variabile CSS che scrive `+html.tsx`, cioe solo
+ * dalla versione web: sul telefono non la scriveva nessuno e la funzione
+ * rispondeva zero. Risultato, nella chat della partita: si apriva la tastiera,
+ * il campo di scrittura restava sotto, e chi scriveva non vedeva quello che
+ * stava scrivendo. Su iOS si ascolta `keyboardWillShow`, che arriva con
+ * l'animazione invece che alla fine: cosi il campo sale insieme alla tastiera
+ * e non dopo.
  */
 export function useKeyboardInset(): number {
   const [kb, setKb] = useState(0);
 
   useEffect(() => {
-    if (!isWeb) return;
-    const read = () => setKb(cssPx('--kb'));
-    read();
-    window.addEventListener('appviewport', read);
-    return () => window.removeEventListener('appviewport', read);
+    if (isWeb) {
+      const read = () => setKb(cssPx('--kb'));
+      read();
+      window.addEventListener('appviewport', read);
+      return () => window.removeEventListener('appviewport', read);
+    }
+
+    const apre = Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow';
+    const chiude = Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide';
+    const su = Keyboard.addListener(apre, (e) => setKb(e.endCoordinates?.height ?? 0));
+    const giu = Keyboard.addListener(chiude, () => setKb(0));
+    return () => { su.remove(); giu.remove(); };
   }, []);
 
-  return isWeb ? kb : 0;
+  return kb;
 }
 
 /** true quando la tastiera copre una fetta consistente dello schermo. */

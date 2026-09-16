@@ -20,6 +20,7 @@ import { useSala, manda, cancella, salaAperta, LIMITE } from '../lib/sala';
 import { ioSono } from '../lib/trasferte';
 import { maschera, AVVISO_COPERTO } from '../lib/filtro-core.ts';
 import { useDati } from '../lib/bundle-remoto';
+import { useKeyboardInset } from '../lib/viewport';
 
 /**
  * La chat della partita.
@@ -53,6 +54,20 @@ export default function Live() {
     const t = setTimeout(() => lista.current?.scrollToEnd({ animated: true }), 120);
     return () => clearTimeout(t);
   }, [messaggi.length]);
+
+  /*
+   * Quando si apre la tastiera, l'elenco si accorcia.
+   *
+   * Senza questo gli ultimi messaggi finiscono sotto il campo di scrittura
+   * proprio mentre si risponde: si vede la conversazione di due minuti prima e
+   * bisogna trascinare a mano per tornare in fondo.
+   */
+  const tastiera = useKeyboardInset();
+  useEffect(() => {
+    if (!tastiera) return;
+    const t = setTimeout(() => lista.current?.scrollToEnd({ animated: true }), 80);
+    return () => clearTimeout(t);
+  }, [tastiera]);
 
   const aperta = salaAperta(match?.kickoff);
 

@@ -116,6 +116,15 @@ export type Formazione = {
   fonte: Fonte;
   /** data della partita da cui viene l'undici, quando la fonte e `ultima` */
   dataUltima: string | null;
+  /**
+   * Chi l'ha pubblicata, quando non e la Lega.
+   *
+   * Le formazioni ufficiali escono sui siti delle testate che seguono il
+   * Foggia quasi un'ora prima che la Lega apra la partita. Se l'undici arriva
+   * da li, lo si dice: e giusto verso chi l'ha pubblicato, e a chi legge
+   * spiega perche c'e gia mezz'ora prima del fischio.
+   */
+  daChi?: string | null;
   /** i nomi che la rosa non conosce, mostrati comunque */
   estranei: string[];
 };
@@ -280,6 +289,7 @@ function daLegaPro(matchId: string, viva?: boolean): Formazione | null {
     formation: nostra.modulo ?? FORMATION,
     fonte: 'ufficiale',
     dataUltima: null,
+    daChi: f.fonte ?? null,
     estranei,
   };
 }

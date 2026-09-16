@@ -62,6 +62,14 @@ export default function Pannello() {
       />
 
       <View style={[gutter, { gap: space.md, marginTop: space.sm }]}>
+        {ruolo === 'admin' ? (
+          <Porta
+            icona="football"
+            titolo="Tabellone della partita"
+            sotto="Segna gol e recupero mentre guardi"
+            onPress={() => router.push('/admin/tabellone' as never)}
+          />
+        ) : null}
         <Porta
           icona="flag"
           titolo="Segnalazioni"

@@ -46,6 +46,8 @@ let gol: GolVivo[] = [];
 /** cartellini e cambi della partita in corso: prima si vedevano solo il giorno dopo */
 let cartellini: CartellinoVivo[] = [];
 let cambi: CambioVivo[] = [];
+/** i gol annullati: restano nella cronaca, sbarrati, perche la gente li ha visti */
+let annullati: GolAnnullato[] = [];
 /** l'istante del triplice fischio, che decide quando chiude la chat */
 let finitaIl: string | null = null;
 /**
@@ -112,7 +114,19 @@ export type GolVivo = {
   casa: number | null;
   ospiti: number | null;
   nostro: boolean;
-  fonte?: 'vero' | 'stimato' | 'eventi';
+  fonte?: 'vero' | 'stimato' | 'eventi' | 'admin';
+  /** c'e solo sui gol scritti dal pannello: serve per poterli annullare */
+  id?: string | null;
+  /** da che parte del campo, come l'ha scritto il pannello */
+  lato?: 'casa' | 'ospiti';
+};
+
+/** Un gol tolto dal tabellone: annullato dall'arbitro, o segnato per sbaglio. */
+export type GolAnnullato = {
+  id?: string | null;
+  minuto?: string | null;
+  chi?: string | null;
+  nostro?: boolean;
 };
 
 /** Le colonne che il guardiano tiene aggiornate, tradotte in `Live`. */
@@ -127,6 +141,11 @@ type Riga = {
   cartellini?: CartellinoVivo[] | null;
   cambi?: CambioVivo[] | null;
   formazione?: FormazioneVivo | null;
+  /** i minuti di recupero annunciati: non li pubblica nessuna fonte dal vivo */
+  recupero?: number | null;
+  /** vero quando il tabellone lo sta tenendo un amministratore */
+  manuale?: boolean | null;
+  annullati?: GolAnnullato[] | null;
 };
 
 /** L'undici ufficiale scritto dal guardiano, com'e nel database. */
@@ -134,7 +153,12 @@ export type ColonnaVivo = {
   squadra: string; modulo: string | null; allenatore: string | null;
   giocatori: Array<{ numero: number | null; nome: string; ruolo: string | null }>;
 };
-export type FormazioneVivo = { casa: ColonnaVivo; ospiti: ColonnaVivo };
+export type FormazioneVivo = {
+  casa: ColonnaVivo;
+  ospiti: ColonnaVivo;
+  /** chi l'ha pubblicata, quando non e il sito della Lega: "calciofoggia.it" */
+  fonte?: string | null;
+};
 
 function daRiga(r: Riga | null): Live | null {
   if (!r?.stato) return null;
@@ -146,6 +170,8 @@ function daRiga(r: Riga | null): Live | null {
     intHomeScore: r.casa,
     intAwayScore: r.ospiti,
     strProgress: r.minuto,
+    recupero: r.recupero ?? null,
+    manuale: r.manuale ?? false,
   }, Number.isFinite(scritto) ? scritto : Date.now());
 }
 
@@ -162,6 +188,7 @@ function applica(letto: Live | null, cronologia?: GolVivo[] | null, r?: Riga) {
   if (Array.isArray(cronologia)) gol = cronologia;
   if (Array.isArray(r?.cartellini)) cartellini = r.cartellini;
   if (Array.isArray(r?.cambi)) cambi = r.cambi;
+  if (Array.isArray(r?.annullati)) annullati = r.annullati;
   if (!letto) { if (Array.isArray(cronologia)) annuncia(); return; }
   stato = letto;
   annuncia();
@@ -180,7 +207,7 @@ async function chiediAlDatabase(): Promise<boolean> {
   if (!supabase || !id) return false;
   const { data, error } = await supabase
     .from('stato_partita')
-    .select('stato, casa, ospiti, minuto, gol, cartellini, cambi, aggiornato_il, finita_il, formazione')
+    .select('stato, casa, ospiti, minuto, gol, cartellini, cambi, aggiornato_il, finita_il, formazione, recupero, manuale, annullati')
     .eq('partita', String(id))
     .maybeSingle();
   if (error || !data) return false;
@@ -290,11 +317,13 @@ function avvia() {
   if (id !== seguita) {
     ferma();
     seguita = id;
-    const cera = stato || gol.length || cartellini.length || cambi.length || finitaIl || formazioneVivo;
+    const cera = stato || gol.length || cartellini.length || cambi.length || annullati.length
+      || finitaIl || formazioneVivo;
     stato = null;
     gol = [];
     cartellini = [];
     cambi = [];
+    annullati = [];
     finitaIl = null;
     formazioneVivo = null;
     cadute = 0;
@@ -400,7 +429,9 @@ export function formazioneDalVivo(): FormazioneVivo | null {
 }
 
 /** Cartellini e cambi della partita in corso, come li scrive il guardiano. */
-export function useCronacaVivo(): { cartellini: CartellinoVivo[]; cambi: CambioVivo[] } {
+export function useCronacaVivo(): {
+  cartellini: CartellinoVivo[]; cambi: CambioVivo[]; annullati: GolAnnullato[];
+} {
   return useSyncExternalStore(
     (f) => {
       ascoltatori = [...ascoltatori, f];
@@ -416,10 +447,13 @@ export function useCronacaVivo(): { cartellini: CartellinoVivo[]; cambi: CambioV
  * l'oggetto a ogni chiamata farebbe girare React all'infinito. Si tiene fermo
  * e si rifa solo quando una delle due liste cambia davvero.
  */
-let cronacaCache: { cartellini: CartellinoVivo[]; cambi: CambioVivo[] } = { cartellini, cambi };
+let cronacaCache: { cartellini: CartellinoVivo[]; cambi: CambioVivo[]; annullati: GolAnnullato[] } = {
+  cartellini, cambi, annullati,
+};
 function cronacaFerma() {
-  if (cronacaCache.cartellini !== cartellini || cronacaCache.cambi !== cambi) {
-    cronacaCache = { cartellini, cambi };
+  if (cronacaCache.cartellini !== cartellini || cronacaCache.cambi !== cambi
+      || cronacaCache.annullati !== annullati) {
+    cronacaCache = { cartellini, cambi, annullati };
   }
   return cronacaCache;
 }
@@ -462,10 +496,11 @@ export function useCronacaDi(match: Match | null | undefined): {
   gol: readonly GolVivo[];
   cartellini: readonly CartellinoVivo[];
   cambi: readonly CambioVivo[];
+  annullati: readonly GolAnnullato[];
 } {
   const vivo = liveDi(match, useLive());
   const tuttiGol = useGolVivo();
   const resto = useCronacaVivo();
-  const filtrata = cronacaDi(vivo, tuttiGol, resto.cartellini, resto.cambi);
+  const filtrata = cronacaDi(vivo, tuttiGol, resto.cartellini, resto.cambi, resto.annullati);
   return { vivo, ...filtrata };
 }
