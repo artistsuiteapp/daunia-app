@@ -27,15 +27,191 @@
   ],
   "articoli": [
     {
+      "id": "ilfoggia-5a8eed19a3",
+      "testata": "ilfoggia",
+      "titolo": "Foggia Savoia – 𝗣𝗛𝗢𝗧𝗢 𝗚𝗔𝗟𝗟𝗘𝗥𝗬 📸Potito Chiummarulo",
+      "sommario": "",
+      "url": "https://www.ilfoggia.com/foggia-savoia-%f0%9d%97%a3%f0%9d%97%9b%f0%9d%97%a2%f0%9d%97%a7%f0%9d%97%a2-%f0%9d%97%9a%f0%9d%97%94%f0%9d%97%9f%f0%9d%97%9f%f0%9d%97%98%f0%9d%97%a5%f0%9d%97%ac-%f0%9f%93%b8potito-chiummarulo/",
+      "data": "2026-09-16T00:27:02.000Z",
+      "autore": "Foggia Calcio Movie",
+      "categoria": "Gallery",
+      "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/09/IMG_3687-scaled.jpg"
+    },
+    {
+      "id": "foggiacalciomania-269b329061",
+      "testata": "foggiacalciomania",
+      "titolo": "Lo Zac, il racconto di Foggia-Savoia. Sfoglia il giornale gratuitamente",
+      "sommario": "Clicca qui per sfogliare il giornale gratuitamente Clicca qui sotto per scaricare il pdf del giornale Lo Zac 15 Settembre 2026. Foggia 0-0 Savoia. Quanti errori L'articolo Lo Zac…",
+      "url": "https://foggiacalciomania.com/news-foggia-calcio/lo-zac-il-racconto-di-foggia-savoia-sfoglia-il-giornale-gratuitamente/",
+      "data": "2026-09-15T22:19:50.000Z",
+      "autore": "Roberto Parisi",
+      "categoria": "News Calcio Foggia 1920",
+      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/page_1-2.png"
+    },
+    {
+      "id": "foggiacalciomania-3cb49d6b50",
+      "testata": "foggiacalciomania",
+      "titolo": "Seck: “Sono contento di essere a Foggia. Mi stanno aiutando a crescere i miei compagni di squadra”",
+      "sommario": "Al termine dello 0-0 contro il Savoia, Seck ha commentato la prestazione della squadra, sottolineando l’importanza del lavoro e dell’aiuto ricevuto dai compagni. Il giocatore…",
+      "url": "https://foggiacalciomania.com/news-foggia-calcio/sala-stampa/seck-sono-contento-di-essere-a-foggia-mi-stanno-aiutando-a-crescere-i-miei-compagni-di-squadra/",
+      "data": "2026-09-15T22:15:57.000Z",
+      "autore": "Roberto Parisi",
+      "categoria": "Sala stampa",
+      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Seck.jpeg"
+    },
+    {
+      "id": "foggiacalciomania-ac315b4496",
+      "testata": "foggiacalciomania",
+      "titolo": "Auteri: “Stiamo crescendo. Presto arriverà continuità di risultati”",
+      "sommario": "Il Foggia non va oltre lo 0-0 contro il Savoia al termine di una gara nella quale i rossoneri hanno creato diverse occasioni senza riuscire a trovare la via del L'articolo Auteri…",
+      "url": "https://foggiacalciomania.com/news-foggia-calcio/sala-stampa/auteri-stiamo-crescendo-presto-arrivera-continuita-di-risultati/",
+      "data": "2026-09-15T22:14:39.000Z",
+      "autore": "Roberto Parisi",
+      "categoria": "Sala stampa",
+      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Auteri-34.jpeg"
+    },
+    {
+      "id": "foggiacalciomania-03b4954663",
+      "testata": "foggiacalciomania",
+      "titolo": "La fotocronaca di Foggia-Savoia",
+      "sommario": "Le foto salienti della gara pareggiata dal Foggia contro il Savoia. Foto scattatate da Monica Carbosiero della redazione di FoggiaCalcioMania. L'articolo La fotocronaca di…",
+      "url": "https://foggiacalciomania.com/news-foggia-calcio/la-fotocronaca-di-foggia-savoia/",
+      "data": "2026-09-15T22:07:41.000Z",
+      "autore": "Redazione FCM 24 ore",
+      "categoria": "News Calcio Foggia 1920",
+      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/WhatsApp-Image-2026-09-15-at-21.23.51-2.jpeg"
+    },
+    {
+      "id": "calciofoggia-c5a7471998",
+      "testata": "calciofoggia",
+      "titolo": "Seck: “Il gruppo ha dato il massimo, i risultati arriveranno. Quando saremo al completo possiamo stare tra i primi sei-sette”",
+      "sommario": "Mohamed Seck, difensore del Foggia, ha commentato a caldo il pareggio a reti inviolate con il Savoia. «Secondo me avremmo meritato di più perché un’altra volta abbiamo dato il…",
+      "url": "https://www.calciofoggia.it/seck-il-gruppo-ha-dato-il-massimo-i-risultati-arriveranno-quando-saremo-al-completo-possiamo-stare-tra-i-primi-sei-sette/",
+      "data": "2026-09-15T21:38:11.000Z",
+      "autore": "Armando Borrelli",
+      "categoria": "FOGGIA CALCIO",
+      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Il-Foggia-in-campo-contro-il-Savoia-Foto-Antonello-Forcelli.png"
+    },
+    {
+      "id": "calciofoggia-5f44ba31df",
+      "testata": "calciofoggia",
+      "titolo": "Risultati, marcatori e classifica 5ª giornata",
+      "sommario": "Il Foggia non riesce a trovare la vittoria allo Zaccheria contro il Savoia: la gara termina 0-0, con i rossoneri che salgono a quota 5 punti. In vetta continua la marcia del…",
+      "url": "https://www.calciofoggia.it/risultati-marcatori-e-classifica-5a-giornata-2/",
+      "data": "2026-09-15T21:32:16.000Z",
+      "autore": "Fabio Bertazzoli",
+      "categoria": "SERIE C",
+      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2025/06/Pallone-Lega-Pro-Decathlon.jpg"
+    },
+    {
+      "id": "foggiacalciomania-1b237ade60",
+      "testata": "foggiacalciomania",
+      "titolo": "Serie C girone C: risultati e marcatori 5a giornata",
+      "sommario": "Il Foggia non sa vincere, contro il Savoia allo Zaccheria termina zero a zero la gara. Sorrento primo solitario, quinta vittoria consecutiva su cinque gare di campionato. Il…",
+      "url": "https://foggiacalciomania.com/news-foggia-calcio/serie-c-girone-c-risultati-e-marcatori-5a-giornata-3/",
+      "data": "2026-09-15T21:31:25.000Z",
+      "autore": "Redazione FCM 24 ore",
+      "categoria": "News Calcio Foggia 1920",
+      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2025/08/palla334567.jpg"
+    },
+    {
+      "id": "calciofoggia-59ebabc470",
+      "testata": "calciofoggia",
+      "titolo": "Mister Auteri: “Avremmo meritato la vittoria, ma non abbiamo finalizzato. Siamo destinati a crescere”",
+      "sommario": "Gaetano Auteri ha analizzato a caldo il pareggio a reti inviolate con il Savoia, riconoscendo il rammarico per il risultato ma valorizzando la prestazione della squadra. «Questo è…",
+      "url": "https://www.calciofoggia.it/mister-auteri-avremmo-meritato-la-vittoria-ma-non-abbiamo-finalizzato-siamo-destinati-a-crescere/",
+      "data": "2026-09-15T21:25:43.000Z",
+      "autore": "Armando Borrelli",
+      "categoria": "FOGGIA CALCIO",
+      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Mister-Auteri-contro-il-Savoia-Foto-Antonello-Forcelli.png"
+    },
+    {
+      "id": "foggiacalciomania-2f5eebede4",
+      "testata": "foggiacalciomania",
+      "titolo": "Le Pagelle di Foggia 0-0 Savoia",
+      "sommario": "Tutto sommato un buon Foggia quello visto allo Zaccheria contro il Savoia, ma stenta a finalizzare le tante occasioni create, con ben tredici tiri, di cui 4 nello specchio della…",
+      "url": "https://foggiacalciomania.com/news-foggia-calcio/pagelle/le-pagelle-di-foggia-0-0-savoia/",
+      "data": "2026-09-15T21:20:01.000Z",
+      "autore": "Roberto Parisi",
+      "categoria": "Pagelle",
+      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Foggia-Savoia-4.jpeg"
+    },
+    {
+      "id": "foggiacalciomania-d4e004d51e",
+      "testata": "foggiacalciomania",
+      "titolo": "Il Foggia proprio non riesce a segnare. Finisce 0-0 contro un Savoia ordinato ma incocludente",
+      "sommario": "Con tutto il volume di gioco prodotto e la spinta offensiva, un’altra squadra avrebbe potuto segnare nel primo tempo almeno tre o quattro reti. Ma questo Foggia proprio non riesce…",
+      "url": "https://foggiacalciomania.com/news-foggia-calcio/la-cronaca/il-foggia-proprio-non-riesce-a-segnare-finisce-0-0-contro-un-savoia-ordinato-ma-incocludente/",
+      "data": "2026-09-15T21:01:45.000Z",
+      "autore": "Roberto Parisi",
+      "categoria": "La Cronaca",
+      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Foggia-Savoia-10.jpeg"
+    },
+    {
+      "id": "foggiacalciomania-a3cca170d4",
+      "testata": "foggiacalciomania",
+      "titolo": "Diretta: Foggia-Savoia 0 – 0 Foggia, un punto e tutti a casa",
+      "sommario": "Il Foggia non sa vincere, il Savoia porta a casa un prezioso punto. I rossoneri ne con Ravasio in avanti e ne con Luciani nella ripresa riescono a segnare un L'articolo Diretta…",
+      "url": "https://foggiacalciomania.com/news-foggia-calcio/diretta-foggia-savoia-0-0-ore-2100/",
+      "data": "2026-09-15T18:02:31.000Z",
+      "autore": "Redazione FCM 24 ore",
+      "categoria": "News Calcio Foggia 1920",
+      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2023/03/rete-foggia.jpg"
+    },
+    {
+      "id": "calciofoggia-a61663a2e7",
+      "testata": "calciofoggia",
+      "titolo": "Foggia-Savoia 0-0 (risultato finale)",
+      "sommario": "Secondo tempo in corso 90’+7 – Triplice fischio allo “Zaccheria”: 0-0 tra Foggia e Savoia, con il Foggia che ci prova ma non sblocca il punteggio. 90’+6 – Tiro-cross di Martina…",
+      "url": "https://www.calciofoggia.it/foggia-savoia-campionato-2026-2027/",
+      "data": "2026-09-15T18:00:36.000Z",
+      "autore": "Armando Borrelli",
+      "categoria": "FOGGIA CALCIO",
+      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Foggia-Savoia.png"
+    },
+    {
+      "id": "foggiacalciomania-6c5ae15ea1",
+      "testata": "foggiacalciomania",
+      "titolo": "Foggia-Savoia: i convocati rossoneri",
+      "sommario": "I convocati per Foggia-Savoia, in programma questa sera alle 21:00. Portieri: Marfella, Saro, Testa Difensori: Todisco, Seck, Di Pasquale, Maestrelli, Berra, Bigonzoni, Smeraldi…",
+      "url": "https://foggiacalciomania.com/news-foggia-calcio/foggia-savoia-i-convocati-rossoneri/",
+      "data": "2026-09-15T15:10:02.000Z",
+      "autore": "Redazione FCM 24 ore",
+      "categoria": "News Calcio Foggia 1920",
+      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/WhatsApp-Image-2026-09-06-at-21.57.58.jpeg"
+    },
+    {
+      "id": "calciofoggia-12a913a32a",
+      "testata": "calciofoggia",
+      "titolo": "Foggia, con il Savoia obiettivo tre punti per riprendere il cammino in campionato",
+      "sommario": "Turno infrasettimanale di campionato questa sera allo Zaccheria e Foggia chiamato a riscattare il doppio passo falso con Cerignola e Monopoli. Non sarà una sfida semplice contro…",
+      "url": "https://www.calciofoggia.it/foggia-con-il-savoia-obiettivo-tre-punti-per-riprendere-il-cammino-in-campionato/",
+      "data": "2026-09-15T12:30:48.000Z",
+      "autore": "Tiziano Errichiello",
+      "categoria": "FOGGIA CALCIO",
+      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Auteri-al-San-Nicola-di-Bari-contro-il-Monopoli-Foto-Antonellis-Calcio-Foggia-1920.jpeg"
+    },
+    {
       "id": "foggiacalciomania-272a9f85b2",
       "testata": "foggiacalciomania",
       "titolo": "Foggia-Savoia: le ultimissime",
-      "sommario": "Domani sera rossoneri in campo contro il Savoia. Auteri dovrebbe presentare la stessa formazione contro il Monopoli, forse Ravasio potrebbe giocare. Queste le formazioni che…",
+      "sommario": "Domani sera rossoneri in campo contro il Savoia. Auteri dovrebbe presentare la stessa formazione contro il Monopoli, forse Ravasio potrebbe giocare nella ripresa. Queste le…",
       "url": "https://foggiacalciomania.com/news-foggia-calcio/ultimissime/foggia-savoia-le-ultimissime/",
       "data": "2026-09-14T18:32:09.000Z",
       "autore": "Redazione FCM 24 ore",
       "categoria": "Ultimissime",
       "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/08/789653998_10239616419060783_1138873880567371313_n.jpg"
+    },
+    {
+      "id": "calciofoggia-fe9aa55e48",
+      "testata": "calciofoggia",
+      "titolo": "Ritorna ‘za Fò: appuntamento alle 21 su FoggiaTV",
+      "sommario": "Ritorna l’appuntamento settimanale con la trasmissione sportiva curata e condotta da Lello Scarano, pronto ad aggiornarvi sulle vicende rossonere. In onda a partire dalle ore…",
+      "url": "https://www.calciofoggia.it/ritorna-za-fo-appuntamento-alle-21-su-foggiatv/",
+      "data": "2026-09-14T17:00:30.000Z",
+      "autore": "Armando Borrelli",
+      "categoria": "FOGGIA CALCIO",
+      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/06/Lello-lancio-zaFo-2026.png"
     },
     {
       "id": "calciofoggia-9e7b078ef9",
@@ -49,17 +225,6 @@
       "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Screenshot-2026-09-14-alle-18.13.26.png"
     },
     {
-      "id": "foggiacalciomania-9db2d1da2f",
-      "testata": "foggiacalciomania",
-      "titolo": "Casella e Di Pasquale spiegano il momento Foggia. “Siamo solo all’inizio”",
-      "sommario": "Alla vigilia della prossima gara, il direttore sportivo Alex Casella e il capitano Davide Di Pasquale hanno fatto il punto sul momento del Foggia, dopo le due sconfitte…",
-      "url": "https://foggiacalciomania.com/news-foggia-calcio/sala-stampa/casella-e-di-pasquale-spiegano-il-momento-foggia-siamo-solo-allinizio/",
-      "data": "2026-09-14T16:25:59.000Z",
-      "autore": "Roberto Parisi",
-      "categoria": "Sala stampa",
-      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/20260914_174251-scaled.jpg"
-    },
-    {
       "id": "calciofoggia-37e9e2f3d1",
       "testata": "calciofoggia",
       "titolo": "Foggia, presentata la nuova maglia home 2026/27: ritorno alle bande larghe",
@@ -69,17 +234,6 @@
       "autore": "Armando Borrelli",
       "categoria": "FOGGIA CALCIO",
       "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Nuova-Maglia-Home-Foggia-2026-27.png"
-    },
-    {
-      "id": "foggiacalciomania-19f40e3e0f",
-      "testata": "foggiacalciomania",
-      "titolo": "Ecco la nuova maglia del Foggia",
-      "sommario": "Il Foggia ha presentato la nuova prima maglia che sarà indossata da domani sera. L'articolo Ecco la nuova maglia del Foggia proviene da Foggiacalciomania.",
-      "url": "https://foggiacalciomania.com/news-foggia-calcio/ecco-la-nuova-maglia-del-foggia/",
-      "data": "2026-09-14T15:49:11.000Z",
-      "autore": "Roberto Parisi",
-      "categoria": "News Calcio Foggia 1920",
-      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/20260914_174406-scaled.jpg"
     },
     {
       "id": "calciofoggia-b0c7570090",
@@ -93,28 +247,6 @@
       "immagine": "https://www.calciofoggia.it/wp-content/uploads/2020/09/Zgiudice-sportivo.png"
     },
     {
-      "id": "foggiacalciomania-511343c756",
-      "testata": "foggiacalciomania",
-      "titolo": "Giudice sportivo: Foggia nessuna ammenda e squalifica",
-      "sommario": "Il Giudice Sportivo, Dott. Stefano Palazzi, assistito da Irene Papi e dal Rappresentante dell’A.I.A. Sig. Silvano Torrini, nella seduta del 13 settembre 2026 ha adottato le…",
-      "url": "https://foggiacalciomania.com/news-foggia-calcio/giudice-sportivo/giudice-sportivo-foggia-nessuna-ammenda-e-squalifica-3/",
-      "data": "2026-09-14T12:29:01.000Z",
-      "autore": "Redazione FCM 24 ore",
-      "categoria": "Giudice sportivo",
-      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2018/06/giudice-sportivo.jpg"
-    },
-    {
-      "id": "foggiacalciomania-a5a9a761ed",
-      "testata": "foggiacalciomania",
-      "titolo": "Foggia-Savoia dirige Giovanni Castellano di Nichelino",
-      "sommario": "Sarà il signor Castellano della sezione A.I.A di Nichelino che dirigerà la gara Foggia-Savoia in programma domani sera alle ore 21.00 Questi i direttori di gara chiamati a…",
-      "url": "https://foggiacalciomania.com/news-foggia-calcio/designazioni/foggia-savoia-dirige-giovanni-castellano-di-nichelino/",
-      "data": "2026-09-14T12:23:20.000Z",
-      "autore": "Redazione FCM 24 ore",
-      "categoria": "Designazioni",
-      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2014/09/arbitro-pallone.jpg"
-    },
-    {
       "id": "calciofoggia-6ceee0c1c5",
       "testata": "calciofoggia",
       "titolo": "Giovanni Castellano di Nichelino dirige Foggia-Savoia",
@@ -124,127 +256,6 @@
       "autore": "Fabio Bertazzoli",
       "categoria": "FOGGIA CALCIO",
       "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Castellano.jpg"
-    },
-    {
-      "id": "foggiacalciomania-709ade4ef6",
-      "testata": "foggiacalciomania",
-      "titolo": "Foggia servirà un nuovo Iemmello contro il Savoia",
-      "sommario": "Ottant’anni fa esatti Foggia-Savoia raggiunse il suo apice d’importanza, perché lo scontro diretto – a differenza di quello che era accaduto prima e di quello che sarebbe successo…",
-      "url": "https://foggiacalciomania.com/news-foggia-calcio/statistiche/foggia-servira-un-nuovo-iemmello-contro-il-savoia/",
-      "data": "2026-09-14T10:57:16.000Z",
-      "autore": "Redazione FCM 24 ore",
-      "categoria": "Statistiche",
-      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2016/05/iemmello88987.jpg"
-    },
-    {
-      "id": "foggiacalciomania-1e02df9792",
-      "testata": "foggiacalciomania",
-      "titolo": "Sono trascorsi dieci anni dall’ultimo incrocio di campionato fra Auteri e il Savoia",
-      "sommario": "Sulla panchina avversaria in questo primo turno infrasettimanale della stagione siederà Alessandro Formisano. Carriera ancora breve quella del coach dei biancoscudati, perché fino…",
-      "url": "https://foggiacalciomania.com/news-foggia-calcio/statistiche/sono-trascorsi-dieci-anni-dallultimo-incrocio-di-campionato-fra-auteri-e-il-savoia/",
-      "data": "2026-09-14T10:55:15.000Z",
-      "autore": "Redazione FCM 24 ore",
-      "categoria": "Statistiche",
-      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Auteri-43.jpeg"
-    },
-    {
-      "id": "calciofoggia-383734c68e",
-      "testata": "calciofoggia",
-      "titolo": "L’avversario il Savoia",
-      "sommario": "Fondato il 21 novembre 1908 da un gruppo di industriali locali legati al settore molitorio, il Savoia è una delle realtà calcistiche più antiche dell’Italia meridionale. Sotto il…",
-      "url": "https://www.calciofoggia.it/lavversario-il-savoia/",
-      "data": "2026-09-14T10:33:29.000Z",
-      "autore": "Mario Schena",
-      "categoria": "FOGGIA CALCIO",
-      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/images.jpg"
-    },
-    {
-      "id": "calciofoggia-18f0e5adc4",
-      "testata": "calciofoggia",
-      "titolo": "il programma della 5° giornata",
-      "sommario": "La classifica del girone C vede il Sorrento capolista solitario seguito da 4 squadre a 3 punti di distanza. Sul fondo sempre critica la posizione del Crotone fermo all’ultimo…",
-      "url": "https://www.calciofoggia.it/il-programma-della-5-giornata/",
-      "data": "2026-09-14T07:33:27.000Z",
-      "autore": "Mario Schena",
-      "categoria": "SERIE C",
-      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Auteri-al-San-Nicola-di-Bari-contro-il-Monopoli-Foto-Antonellis-Calcio-Foggia-1920.jpeg"
-    },
-    {
-      "id": "foggiacalciomania-292572d596",
-      "testata": "foggiacalciomania",
-      "titolo": "Le pagelle di Monopoli-Foggia. Impegno sicuramente più che sufficiente, ma si raccoglie poco",
-      "sommario": "Impegno sicuramente più che sufficiente, ma si raccoglie poco in campo con una manovra che penalizza il rendimento di tutta la squadra. Saro: Nel primo tempo non viene mai…",
-      "url": "https://foggiacalciomania.com/news-foggia-calcio/pagelle/le-pagelle-di-monopoli-foggia-impegno-sicuramente-piu-che-sufficiente-ma-si-raccoglie-poco/",
-      "data": "2026-09-13T15:16:01.000Z",
-      "autore": "Redazione FCM 24 ore",
-      "categoria": "Pagelle",
-      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/08/Foggia-2026-7.jpeg"
-    },
-    {
-      "id": "foggiacalciomania-f771fa6a0d",
-      "testata": "foggiacalciomania",
-      "titolo": "Lo Zac su Monopoli-Foggia, sfoglia il giornale gratuitamente.",
-      "sommario": "Puoi sfogliare gratuitamente il giornale cliccando QUI Oppure clicca qui sotto per scaricare il Pdf del giornale: LO ZAC 12 SETTEMBRE 2026 L'articolo Lo Zac su Monopoli-Foggia…",
-      "url": "https://foggiacalciomania.com/news-foggia-calcio/lo-zac-su-monopoli-foggia-sfoglia-il-giornale-gratuitamente/",
-      "data": "2026-09-13T08:21:14.000Z",
-      "autore": "Roberto Parisi",
-      "categoria": "News Calcio Foggia 1920",
-      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/page_1-1.png"
-    },
-    {
-      "id": "calciofoggia-0dac970f64",
-      "testata": "calciofoggia",
-      "titolo": "il punto sulla 4° giornata",
-      "sommario": "Incredibile ma vero in vetta valla classifica veleggia a punteggio pieno il Sorrento che nel big match della quarta giornata batte l’altra capolista il Picerno che si ferma a 9…",
-      "url": "https://www.calciofoggia.it/il-punto-sulla-4-giornata-2/",
-      "data": "2026-09-13T07:51:29.000Z",
-      "autore": "Mario Schena",
-      "categoria": "SERIE C",
-      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/ddee7a87-3d44-4313-b1e8-6cc34ae311cc.jpeg"
-    },
-    {
-      "id": "calciofoggia-c66a0ef9f4",
-      "testata": "calciofoggia",
-      "titolo": "Gallo: “Ci è mancato qualcosa negli ultimi sedici metri. La squadra non manca mai la prestazione, è solo un momento”",
-      "sommario": "Andrea Gallo, centrocampista del Foggia, ha commentato a caldo la sconfitta di Monopoli, intervistato durante “Direttissima”, in onda su FoggiaTv. «Sicuramente ci è mancato…",
-      "url": "https://www.calciofoggia.it/gallo-ci-e-mancato-qualcosa-negli-ultimi-sedici-metri-la-squadra-non-manca-mai-la-prestazione-e-solo-un-momento/",
-      "data": "2026-09-12T18:56:40.000Z",
-      "autore": "Armando Borrelli",
-      "categoria": "FOGGIA CALCIO",
-      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Gallo.jpg"
-    },
-    {
-      "id": "calciofoggia-9705583e2a",
-      "testata": "calciofoggia",
-      "titolo": "Auteri: “Abbiamo giocato una buona partita, ma non siamo stati risoluti. Peccato, teniamoci la prestazione”",
-      "sommario": "Gaetano Auteri ha analizzato a caldo la sconfitta di Monopoli, riconoscendo il dispiacere ma valorizzando il rendimento complessivo della squadra, nell’intervista durante…",
-      "url": "https://www.calciofoggia.it/auteri-abbiamo-giocato-una-buona-partita-ma-non-siamo-stati-risoluti-peccato-teniamoci-la-prestazione/",
-      "data": "2026-09-12T18:50:06.000Z",
-      "autore": "Armando Borrelli",
-      "categoria": "FOGGIA CALCIO",
-      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Auteri-al-San-Nicola-di-Bari-contro-il-Monopoli-Foto-Antonellis-Calcio-Foggia-1920.jpeg"
-    },
-    {
-      "id": "foggiacalciomania-f20b8f090a",
-      "testata": "foggiacalciomania",
-      "titolo": "Gallo: “Arriveranno anche i risultati”",
-      "sommario": "A parlare per la squadra è Andrea Gallo. “Ci è mancato qualcosa negli ultimi sedici metri, così come la settimana scorsa. La squadra ha dato tutto, gli episodi in questo…",
-      "url": "https://foggiacalciomania.com/news-foggia-calcio/sala-stampa/gallo-arriveranno-anche-i-risultati/",
-      "data": "2026-09-12T18:47:07.000Z",
-      "autore": "Roberto Parisi",
-      "categoria": "Sala stampa",
-      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Gallo.jpeg"
-    },
-    {
-      "id": "calciofoggia-5b4a27f719",
-      "testata": "calciofoggia",
-      "titolo": "Colombo: “Partita di equilibrio, abbiamo capitalizzato l’unica occasione. Foggia ha strutturato una squadra importante”",
-      "sommario": "Alberto Colombo, allenatore del Monopoli, ha commentato a caldo la vittoria contro il Foggia al San Nicola, nell’intervista durante “Direttissima”, in onda su FoggiaTv. «Ormai le…",
-      "url": "https://www.calciofoggia.it/colombo-partita-di-equilibrio-abbiamo-capitalizzato-lunica-occasione-foggia-ha-strutturato-una-squadra-importante/",
-      "data": "2026-09-12T18:44:56.000Z",
-      "autore": "Armando Borrelli",
-      "categoria": "FOGGIA CALCIO",
-      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2024/09/Mister-Colombo-foto-Antonello-Forcelli.jpeg"
     },
     {
       "id": "ilfoggia-9f741afccf",
@@ -322,18 +333,7 @@
       "autore": "Luciano Gallucci",
       "categoria": "News",
       "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/WhatsApp-Image-2026-08-24-at-23.02.24.jpeg"
-    },
-    {
-      "id": "ilfoggia-ce1f521c90",
-      "testata": "ilfoggia",
-      "titolo": "Promette bene il Foggia nonostante la sconfitta con l’Altamura",
-      "sommario": "",
-      "url": "https://www.ilfoggia.com/promette-bene-il-foggia-nonostante-la-sconfitta-con-laltamura/",
-      "data": "2026-08-17T09:18:34.000Z",
-      "autore": "Foggia Calcio Movie",
-      "categoria": "Gallery",
-      "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0088-scaled.jpg"
     }
   ],
-  "aggiornatoIl": "2026-09-14T19:20:51.541Z"
+  "aggiornatoIl": "2026-09-16T05:00:48.890Z"
 }
