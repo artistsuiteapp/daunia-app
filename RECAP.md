@@ -15,7 +15,7 @@ perché, che è la parte che non si ricostruisce leggendo il codice.
 - **Dove gira**: app nativa sull'iPhone, installata con Xcode. Il sito <https://daunia.vercel.app> esiste ancora ma non è più il prodotto: si pubblica solo a mano
 - **Dominio**: `iltifodelladaunia.it`, comprato su IONOS. Vetrina pronta in `sito/index.html`, non ancora pubblicata
 - **Stack**: Expo SDK 57 / React Native 0.86 (iOS, Android e web dallo stesso codice), Supabase, GitHub Actions
-- **Stato**: 395 commit (176 senza gli aggiornamenti automatici dei dati), 46 migrazioni, 38 schermate, **509 test**, guardiano alla versione 39
+- **Stato**: 547 commit (190 senza gli aggiornamenti automatici dei dati), 47 migrazioni, 39 schermate, **547 test**, guardiano alla versione 41
 
 Il repository è pubblico dall'8 settembre, e non è una svista: sui repo pubblici
 i minuti di GitHub Actions sono gratis e illimitati. Sono attivi secret scanning
@@ -106,7 +106,9 @@ avviso tra 1 e 6 ore, un avviso più forte sopra.
 | Calendario, classifica, rosa | Wikipedia, via ingest | 0 |
 | Punteggio, stato e minuto dal vivo | TheSportsDB `livescore.php` (chiave pubblica `123`) **e** live-score-api: nell'app va il più svelto | 0 / prova |
 | Marcatori, cartellini, sostituzioni | **live-score-api** (Serie C = competizione **181**) | prova fino al **~21 settembre** |
-| Formazioni ufficiali e modulo | sito della Lega, endpoint AJAX | 0 |
+| Formazioni ufficiali e modulo | **diretta scritta di calciofoggia.it e foggiacalciomania.com** (circa un'ora prima), poi il sito della Lega | 0 |
+| Minuti di recupero | la stessa diretta scritta, oppure il tabellone a mano | 0 |
+| Punteggio e marcatori, quando comanda il pannello | **chi sta guardando la partita** | 0 |
 | Rassegna stampa | RSS delle tre testate autorizzate | 0 |
 | Stemmi e comunicati | sito del club (WordPress REST) | 0 |
 
@@ -184,7 +186,7 @@ Dentro la finestra:
 
 1. da due minuti prima del fischio a un quarto d'ora dopo la chiusura fa **tre giri al minuto**: il primo risponde a pg_cron, gli altri due restano vivi dopo la risposta (`EdgeRuntime.waitUntil`) a 20 e 40 secondi. Verificato in produzione il 14 settembre
 2. a ogni giro legge **due tabelloni**: `livescore.php` di TheSportsDB e `matches/events` di live-score-api (eventi, punteggio, stato, minuto in una chiamata). L'id della partita su live-score-api si ricorda in `eventi_detti` come `lsa-<id>`
-3. dal calcio d'inizio cerca le formazioni sul sito della Lega ogni 3 minuti (solo nel primo giro: il calendario pesa 4 MB)
+3. da un'ora e quaranta prima del fischio legge la **diretta scritta** di calciofoggia.it e foggiacalciomania.com ogni 3 minuti: da lì arrivano le formazioni (circa un'ora prima) e i minuti di recupero (nessuna fonte dal vivo li pubblica). Dal calcio d'inizio cerca le formazioni anche sul sito della Lega, ogni 3 minuti (solo nel primo giro: il calendario pesa 4 MB)
 4. scrive tutto in `stato_partita`, e l'app lo riceve in tempo reale
 5. manda le notifiche: formazioni, inizio, gol, espulsioni, intervallo, fine, e un'ora prima il promemoria del pronostico (con l'orario, non "manca un'ora")
 6. quando qualcosa cambia scrive una riga `{"diario":"guardiano",...}` nei log della funzione, con quello che vedeva ciascuna fonte in quell'istante
@@ -200,6 +202,8 @@ Regole scritte dopo averle sbagliate:
 - **Nel tabellone dell'app va la fonte più svelta**, lato per lato. Il numero nel *titolo delle notifiche* invece si stampa solo se due fonti concordano. Prima il tabellone restava fermo fino a tre minuti quando le fonti litigavano, cioè al momento del gol
 - **La fine si mostra subito, la partita si chiude quando il risultato è sicuro.** Scrivere `finita_il` paga i pronostici una volta sola e per sempre. Si chiude quando le due fonti concordano da 2 minuti, o dopo 5 se ne parla una, o dopo 10 comunque. `finita_il` resta l'istante del fischio. Dopo la chiusura il risultato non si sposta più
 - **La sparizione dalla lista vale come fine solo dopo due ore dal fischio**, e solo se live-score-api non dice che si gioca. Con cento minuti (l'ottantacinquesimo) il guardiano chiudeva partite in corso
+- **Col tabellone a mano acceso il guardiano non tocca punteggio e cronaca.** Continua tutto il resto — minuto, stato, cartellini, cambi, formazioni, notifiche — ma non scrive `casa`, `ospiti` e `gol`, e non annuncia gol che non ha annunciato lui: altrimenti un gol annullato tornerebbe a suonare da solo due minuti dopo. La guardia sta in fondo a `giro()`, in un punto solo, perché sparsa in ogni ramo qualcuno se la dimenticherebbe
+- **L'articolo della diretta si ricorda solo dopo che ha dato le formazioni.** Nel pomeriggio escono altri pezzi che nominano le stesse due squadre (i convocati, la presentazione): ricordarsi il primo che capita vuol dire rileggere per due ore qualcosa che non contiene niente
 
 ### La partita simulata
 
@@ -281,6 +285,28 @@ Utenti (promuovi, sospendi, revoca), segnalazioni, contenuti nascosti, chi è
 online, numeri dell'app. Il primo account registrato è diventato admin da solo
 (`20260912110000_primo_admin.sql`). Ruoli e sospensioni passano **solo** dalle
 funzioni del pannello: dalla tabella non li può toccare nessuno, nemmeno un admin.
+
+#### Il tabellone a mano (`/admin/tabellone`, solo admin)
+
+Quando un amministratore sta guardando la partita, comanda lui: sa tutto prima
+di qualsiasi fonte. Due tasti grandi (gol nostro, gol loro), l'elenco dei
+marcatori coi titolari di oggi in cima, la croce per annullare un gol, i minuti
+di recupero, la fase di gioco, il triplice fischio. Si usa con una mano sola: il
+minuto lo mette da sé, preso dal tabellone.
+
+- Scrive tutto `tabellone_a_mano()` (`20260916090000_tabellone_a_mano.sql`), che
+  controlla il ruolo e **rifà il conto dei gol da capo** partendo da
+  `manuale_base`: annullare quello del 12esimo sistema anche i due arrivati dopo
+- Poi sveglia il guardiano, che manda la notifica — compresa quella del **gol
+  annullato**, che è il motivo per cui questa parte esiste: il telefono ha già
+  suonato, e chi lo ha sentito deve sapere che quel gol non c'è più
+- `manuale` sta sulla riga della partita, quindi **la partita dopo riparte da
+  sola**: non si può dimenticare acceso
+- Quello che vedono le fonti resta scritto in `casa_fonti`/`ospiti_fonti` e
+  compare nel pannello ("Le fonti dicono 1-1"): è l'unico modo, per chi segna a
+  mano, di accorgersi di un gol che non ha visto
+- A partita chiusa non si tocca più niente: il risultato è già stato pagato ai
+  pronostici
 
 ### Altro
 
@@ -487,53 +513,53 @@ test lo dicono subito.
 
 ## La prossima prova
 
-**Martedì 15 settembre, Foggia–Savoia, 21:00.** Prima partita col guardiano a tre
-giri al minuto, i due tabelloni e la chiusura confermata.
+**Domenica 20 settembre, Inter U23–Foggia, 15:00** (13:00 UTC). Prima partita col
+tabellone a mano, le formazioni dalle testate e il recupero.
 
 ### Prima, sul telefono
 
-Ricompilare l'app (`npm run telefono`, iPhone col cavo e sbloccato): quella
-installata è di prima delle correzioni del 14 al dal vivo. Servono ~8 GB liberi;
-se mancano si svuota `~/Library/Developer/Xcode/DerivedData` (2,4 GB), **mai il
-runtime del simulatore**.
+Ricompilare l'app: `npm run telefono -w apps/mobile` (iPhone col cavo e
+sbloccato). Quella installata è del 15 settembre e **non ha il tabellone a mano,
+il recupero, i gol annullati e la tastiera sistemata nella chat**. Il guardiano
+nuovo invece è già in produzione (versione 41) e la migrazione è applicata:
+formazioni e recupero dalle testate arrivano comunque.
 
-Se non si riesce a ricompilare, il guardiano nuovo funziona lo stesso, ma l'app
-vecchia ha tre difetti: non accende il dal vivo se è già aperta prima delle 20:50,
-smette di ascoltare al triplice fischio, e dopo un'uscita veloce può perdere
-Realtime. Rimedio: chiuderla e riaprirla dopo le 20:50, e di nuovo a fine partita.
+Servono ~8 GB liberi; se mancano si svuota `~/Library/Developer/Xcode/DerivedData`,
+**mai il runtime del simulatore**. La firma con Apple ID gratuito dura 7 giorni:
+l'app installata il 15 scade il 22.
 
-### Alle 18:45, sulle partite del girone delle 18:30
+### Un'ora prima: le formazioni
 
-Crotone–Inter U23, Casertana–Altamura e Picerno–Catania si giocano prima di noi.
-La prova dice cosa vedono le due fonti, senza scrivere e senza avvisare:
-
-```sql
-select net.http_post(
-  url := 'https://idofdpaftnaoyvuplksq.supabase.co/functions/v1/guardiano-partita',
-  headers := jsonb_build_object('Content-Type', 'application/json', 'x-guardiano',
-    (select decrypted_secret from vault.decrypted_secrets where name = 'guardiano_segreto')),
-  body := '{"prova_dal_vivo": "Crotone"}'::jsonb, timeout_milliseconds := 20000);
--- dopo qualche secondo:
-select content from net._http_response order by id desc limit 1;
-```
-
-Tutte e due con punteggio e minuto: bene. `lsa` vuoto: live-score-api non vede
-la Serie C (la prova è scaduta?). `tsdb` vuoto: resta live-score-api da solo, e
-il guardiano regge anche così.
+Escono sulla diretta scritta delle testate circa un'ora prima del fischio, e il
+guardiano le legge ogni 3 minuti. Nell'app compaiono nella scheda partita, con
+scritto da dove vengono. La Lega apre la partita solo al calcio d'inizio: se le
+testate non pubblicano, si torna lì come prima.
 
 ### Durante la partita, in ordine
 
-1. alle 20:00 il promemoria del pronostico, solo a chi non l'ha fatto
-2. alle 20:50 apre la chat
-3. alle 21:00 il pronostico non si può più cambiare
-4. dopo il fischio, entro pochi minuti, le formazioni col modulo
-5. gol, cartellini e cambi in cronaca **entro mezzo minuto** da quando li pubblica la fonte più svelta
+1. un'ora prima, il promemoria del pronostico, solo a chi non l'ha fatto
+2. dieci minuti prima apre la chat
+3. al fischio d'inizio il pronostico non si può più cambiare
+4. gol, cartellini e cambi in cronaca **entro mezzo minuto** da quando li pubblica la fonte più svelta
+5. il recupero compare sotto il punteggio ("2° tempo · 90' +5") quando la diretta scritta lo annuncia, e sparisce a tempo finito
 6. al triplice fischio l'app dice "finita" subito; i punti arrivano **fra 2 e 10 minuti dopo**, quando il risultato è confermato. Non è un guasto
 7. il giorno dopo il risultato è ancora lì, e non torna vuoto
+
+### Se il dal vivo è in ritardo: il tabellone a mano
+
+Pannello → *Tabellone della partita*. Si preme "GOL FOGGIA", si sceglie il
+marcatore, e il punteggio è su tutti i telefoni nello stesso istante. Da lì in
+poi **comandi tu**: anche i gol degli avversari vanno segnati a mano, perché il
+guardiano smette di toccare il punteggio (altrimenti un gol annullato tornerebbe
+da solo). Sotto il punteggio compare quello che dicono le fonti, per accorgersi
+di un gol sfuggito. "Torna all'automatico" restituisce la partita al guardiano.
+
+Un gol annullato si toglie con la croce nella cronaca: il punteggio torna
+indietro ovunque e parte la notifica "Gol annullato".
 
 ### Dopo la partita: quanto eravamo in ritardo, con i numeri
 
 Supabase → Edge Functions → guardiano-partita → Logs, cercando `diario`. Ogni
 riga dice l'ora e cosa vedeva ciascuna fonte. Confrontando con i momenti veri
 (una diretta, Google) si sa se il ritardo è della fonte o nostro. I log gratuiti
-restano circa un giorno: vanno letti entro mercoledì sera.
+restano circa un giorno: vanno letti entro lunedì sera.

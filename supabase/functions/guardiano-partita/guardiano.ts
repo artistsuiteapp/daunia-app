@@ -773,6 +773,9 @@ async function giro(primo: boolean): Promise<{ risposta: Record<string, unknown>
       if (!d && casaN && ospitiN) d = await trovaDiretta(casaN, ospitiN, t);
 
       if (d) {
+        // a partita cominciata l'articolo giusto e questo e basta: si ricorda
+        // subito, cosi il giro dopo non rifa la ricerca nell'elenco
+        if (!cercoFormazioni) detti.add(`diretta-${d.testata}-${d.id}`);
         if (cercoFormazioni) {
           const f = formazioniDaDiretta(d.contenuto, casaN, ospitiN);
           if (f) {
