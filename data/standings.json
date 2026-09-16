@@ -239,23 +239,6 @@
   },
   {
     "position": 15,
-    "teamId": "foggia",
-    "teamName": "Foggia",
-    "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png",
-    "played": 5,
-    "won": 1,
-    "drawn": 2,
-    "lost": 2,
-    "goalsFor": 2,
-    "goalsAgainst": 4,
-    "goalDiff": -2,
-    "points": 5,
-    "penalty": 0,
-    "isFoggia": true,
-    "zone": null
-  },
-  {
-    "position": 16,
     "teamId": "cavese",
     "teamName": "Cavese",
     "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/Cavese_stemma.png",
@@ -269,6 +252,23 @@
     "points": 5,
     "penalty": 0,
     "isFoggia": false,
+    "zone": null
+  },
+  {
+    "position": 16,
+    "teamId": "foggia",
+    "teamName": "Foggia",
+    "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png",
+    "played": 5,
+    "won": 1,
+    "drawn": 2,
+    "lost": 2,
+    "goalsFor": 2,
+    "goalsAgainst": 4,
+    "goalDiff": -2,
+    "points": 5,
+    "penalty": 0,
+    "isFoggia": true,
     "zone": "playout"
   },
   {
