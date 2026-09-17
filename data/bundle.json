@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-17T03:20:56.358Z",
+    "generatedAt": "2026-09-17T03:38:29.130Z",
     "season": "2026-2027",
     "competition": "Serie C",
     "sources": {
@@ -825,14 +825,14 @@
         },
         {
           "minute": 63,
-          "esce": "M. Ravasio",
-          "entra": "P. Luciani",
+          "esce": "F. Zuccon",
+          "entra": "M. Coulibaly",
           "side": "home"
         },
         {
           "minute": 63,
-          "esce": "F. Zuccon",
-          "entra": "M. Coulibaly",
+          "esce": "M. Ravasio",
+          "entra": "P. Luciani",
           "side": "home"
         },
         {
@@ -5938,6 +5938,6 @@
         "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/WhatsApp-Image-2026-08-24-at-23.02.24.jpeg"
       }
     ],
-    "aggiornatoIl": "2026-09-17T03:20:50.893Z"
+    "aggiornatoIl": "2026-09-17T03:38:25.194Z"
   }
 }
