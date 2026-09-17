@@ -5,14 +5,14 @@
   },
   "partite": [
     {
-      "id": "57jmb8zyqg2sf1lmqt2xgfq50",
-      "casa": "Alcione Milano",
-      "ospiti": "AC Renate"
-    },
-    {
       "id": "5ax558jf3tscwdf117617nbpw",
       "casa": "Union Brescia",
       "ospiti": "AC Carpi"
+    },
+    {
+      "id": "57jmb8zyqg2sf1lmqt2xgfq50",
+      "casa": "Alcione Milano",
+      "ospiti": "AC Renate"
     },
     {
       "id": "592wbfymwyj18dplz07wwyplg",
@@ -20,24 +20,24 @@
       "ospiti": "Novara FC"
     },
     {
-      "id": "57zj3tma4ws73ilxvu9wuvdw4",
-      "casa": "AS Cittadella",
-      "ospiti": "US Pergolettese Crema"
-    },
-    {
       "id": "59t5mcvw9w6r5m1xr1uxcjlzo",
       "casa": "ACD Ospitaletto",
       "ospiti": "AC Lumezzane"
     },
     {
-      "id": "59fx90ax6jrvjoec8ayzr3uvo",
-      "casa": "Calcio Lecco 1912",
-      "ospiti": "FC Arzignano Valchiampo"
+      "id": "57zj3tma4ws73ilxvu9wuvdw4",
+      "casa": "AS Cittadella",
+      "ospiti": "US Pergolettese Crema"
     },
     {
       "id": "58pp4u76dr4520btfabxl1qms",
       "casa": "AS Giana Erminio",
       "ospiti": "US Albinoleffe"
+    },
+    {
+      "id": "59fx90ax6jrvjoec8ayzr3uvo",
+      "casa": "Calcio Lecco 1912",
+      "ospiti": "FC Arzignano Valchiampo"
     },
     {
       "id": "5a6q31viixtm961kwhcplvod0",
@@ -60,24 +60,24 @@
       "ospiti": "Juventus Next Gen"
     },
     {
-      "id": "5biot0dxrl9ctuft696bz9yj8",
-      "casa": "FC Arzignano Valchiampo",
-      "ospiti": "Pro Vercelli 1892"
-    },
-    {
       "id": "5cel7wyrh9yualzebu2hyyxw4",
       "casa": "Dolomiti Bellunesi",
       "ospiti": "Alcione Milano"
     },
     {
-      "id": "5cpck2dqns5pgostcpgxkhzis",
-      "casa": "AC Lumezzane",
-      "ospiti": "AS Giana Erminio"
+      "id": "5biot0dxrl9ctuft696bz9yj8",
+      "casa": "FC Arzignano Valchiampo",
+      "ospiti": "Pro Vercelli 1892"
     },
     {
       "id": "5daq4qtfc0alh2ztrzkfz30us",
       "casa": "US Pergolettese Crema",
       "ospiti": "Union Brescia"
+    },
+    {
+      "id": "5cpck2dqns5pgostcpgxkhzis",
+      "casa": "AC Lumezzane",
+      "ospiti": "AS Giana Erminio"
     },
     {
       "id": "5d01anrfvtmwlhsltwd8iq0b8",
@@ -90,14 +90,14 @@
       "ospiti": "ACD Ospitaletto"
     },
     {
-      "id": "5c42ffzacbw1zkjpkqit20ftg",
-      "casa": "Desenzano FC",
-      "ospiti": "AC Trento"
-    },
-    {
       "id": "5dwhoc2jjk3z8ucvmjm8zlses",
       "casa": "Treviso",
       "ospiti": "Calcio Lecco 1912"
+    },
+    {
+      "id": "5c42ffzacbw1zkjpkqit20ftg",
+      "casa": "Desenzano FC",
+      "ospiti": "AC Trento"
     },
     {
       "id": "5dlsoakurdexe07gs528uem8k",
@@ -120,6 +120,11 @@
       "ospiti": "US Pergolettese Crema"
     },
     {
+      "id": "5gv9mnuexa8vukvjwsbhjtudw",
+      "casa": "Union Brescia",
+      "ospiti": "Desenzano FC"
+    },
+    {
       "id": "5esf9qal61vyw8xys8pp8h34k",
       "casa": "AS Cittadella",
       "ospiti": "AC Lumezzane"
@@ -130,9 +135,14 @@
       "ospiti": "FC Arzignano Valchiampo"
     },
     {
-      "id": "5gv9mnuexa8vukvjwsbhjtudw",
-      "casa": "Union Brescia",
-      "ospiti": "Desenzano FC"
+      "id": "5fz3nmeffq8e1ivrhhkixxp1w",
+      "casa": "Pro Vercelli 1892",
+      "ospiti": "US Folgore Caratese"
+    },
+    {
+      "id": "5gknvqyis8hgp3488ew4sxus4",
+      "casa": "AC Trento",
+      "ospiti": "Calcio Lecco 1912"
     },
     {
       "id": "5g9tn6eg7e8o4279k1scm35sk",
@@ -145,14 +155,14 @@
       "ospiti": "Treviso"
     },
     {
-      "id": "5gknvqyis8hgp3488ew4sxus4",
-      "casa": "AC Trento",
-      "ospiti": "Calcio Lecco 1912"
+      "id": "5hgq42axuv6unuq095fqsiplg",
+      "casa": "AC Carpi",
+      "ospiti": "AS Cittadella"
     },
     {
-      "id": "5fz3nmeffq8e1ivrhhkixxp1w",
-      "casa": "Pro Vercelli 1892",
-      "ospiti": "US Folgore Caratese"
+      "id": "5hrdyp7345640mp2r9ovsj1g4",
+      "casa": "Dolomiti Bellunesi",
+      "ospiti": "US Albinoleffe"
     },
     {
       "id": "5icrhmwgxs0lwy23j0o432k9g",
@@ -160,19 +170,9 @@
       "ospiti": "AS Giana Erminio"
     },
     {
-      "id": "5hgq42axuv6unuq095fqsiplg",
-      "casa": "AC Carpi",
-      "ospiti": "AS Cittadella"
-    },
-    {
       "id": "5jtzl0gm299x8qm7t3aidf0no",
       "casa": "Treviso",
       "ospiti": "Pro Vercelli 1892"
-    },
-    {
-      "id": "5hrdyp7345640mp2r9ovsj1g4",
-      "casa": "Dolomiti Bellunesi",
-      "ospiti": "US Albinoleffe"
     },
     {
       "id": "5i1zouk3b753fcrhiwq8idmok",
@@ -190,14 +190,14 @@
       "ospiti": "Juventus Next Gen"
     },
     {
-      "id": "5iy3mb8gch8cbs41ss6vywiz8",
-      "casa": "Novara FC",
-      "ospiti": "US Pergolettese Crema"
-    },
-    {
       "id": "5jjcsye13edcld4cbwbjakjkk",
       "casa": "AC Trento",
       "ospiti": "Union Brescia"
+    },
+    {
+      "id": "5iy3mb8gch8cbs41ss6vywiz8",
+      "casa": "Novara FC",
+      "ospiti": "US Pergolettese Crema"
     },
     {
       "id": "5h62cgfxqrcsp0tcksewie5n8",
