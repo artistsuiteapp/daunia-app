@@ -27,6 +27,17 @@
   ],
   "articoli": [
     {
+      "id": "calciofoggia-a9d170ced8",
+      "testata": "calciofoggia",
+      "titolo": "Giudice Sportivo: le decisioni relative alla quinta giornata",
+      "sommario": "Diramato il comunicato del giudice sportivo relativo le gare della quinta giornata di campionato. Clicca qui per leggere il comunicato completo © 2026, CALCIOFOGGIA.IT. Tutti i…",
+      "url": "https://www.calciofoggia.it/giudice-sportivo-le-decisioni-relative-alla-quinta-giornata-2/",
+      "data": "2026-09-16T21:59:40.000Z",
+      "autore": "Mario",
+      "categoria": "CALCIO",
+      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2020/09/Zgiudice-sportivo.png"
+    },
+    {
       "id": "calciofoggia-dbd528e997",
       "testata": "calciofoggia",
       "titolo": "il punto sulla 5° di andata",
@@ -247,17 +258,6 @@
       "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Nuova-Maglia-Home-Foggia-2026-27.png"
     },
     {
-      "id": "calciofoggia-b0c7570090",
-      "testata": "calciofoggia",
-      "titolo": "Giudice Sportivo: le decisioni relative alla quarta giornata",
-      "sommario": "Diramato il comunicato del giudice sportivo relativo le gare della quarta giornata di campionato. Clicca qui per leggere il comunicato completo © 2026, CALCIOFOGGIA.IT. Tutti i…",
-      "url": "https://www.calciofoggia.it/giudice-sportivo-le-decisioni-relative-alla-quarta-giornata-2/",
-      "data": "2026-09-14T13:08:10.000Z",
-      "autore": "Mario",
-      "categoria": "CALCIO",
-      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2020/09/Zgiudice-sportivo.png"
-    },
-    {
       "id": "ilfoggia-9f741afccf",
       "testata": "ilfoggia",
       "titolo": "Cosmano Sport Soccer Trani – Risultato parziale",
@@ -335,5 +335,5 @@
       "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/WhatsApp-Image-2026-08-24-at-23.02.24.jpeg"
     }
   ],
-  "aggiornatoIl": "2026-09-17T08:00:56.200Z"
+  "aggiornatoIl": "2026-09-17T08:20:45.299Z"
 }
