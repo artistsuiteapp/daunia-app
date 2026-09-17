@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-17T12:21:04.610Z",
+    "generatedAt": "2026-09-17T12:40:55.897Z",
     "season": "2026-2027",
     "competition": "Serie C",
     "sources": {
@@ -22,7 +22,6 @@
       "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
       "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
       "API-Football rosa: Your account is suspended, check on https://dashboard.api-football.com.",
-      "Divieti, FoggiaToday: HTTP 403 su https://www.foggiatoday.it/rss",
       "Trasferta a Inter U23 fra meno di una settimana e nessuna notizia sul divieto: controlla a mano, potrebbe essersi rotto il riconoscimento.",
       "Lega Pro: Foggia-Altamura e' finita da ore e non ha un id nel calendario della Lega: la formazione non entrera' mai nell'archivio"
     ]
@@ -5631,6 +5630,17 @@
     ],
     "articoli": [
       {
+        "id": "calciofoggia-c50ac1f45a",
+        "testata": "calciofoggia",
+        "titolo": "Foggia, dopo cinque giornate i rossoneri in cerca della propria identità",
+        "sommario": "Due punti nelle ultime quattro partite di campionato. Il Foggia che non vince dalla gara di esordio a Crotone. Rossoneri che non segnano da 359 minuti dal gol di Luciani al primo…",
+        "url": "https://www.calciofoggia.it/foggia-dopo-cinque-giornate-i-rossoneri-in-cerca-della-propria-identita/",
+        "data": "2026-09-17T12:25:58.000Z",
+        "autore": "Tiziano Errichiello",
+        "categoria": "FOGGIA CALCIO",
+        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Il-Foggia-in-campo-contro-il-Savoia-Foto-Antonello-Forcelli.png"
+      },
+      {
         "id": "calciofoggia-a9d170ced8",
         "testata": "calciofoggia",
         "titolo": "Giudice Sportivo: le decisioni relative alla quinta giornata",
@@ -5851,17 +5861,6 @@
         "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Screenshot-2026-09-14-alle-18.13.26.png"
       },
       {
-        "id": "calciofoggia-37e9e2f3d1",
-        "testata": "calciofoggia",
-        "titolo": "Foggia, presentata la nuova maglia home 2026/27: ritorno alle bande larghe",
-        "sommario": "Prima della consueta conferenza stampa pre-gara contro il Savoia, il Calcio Foggia 1920 ha presentato ufficialmente la nuova maglia home per la stagione 2026/27. A indossarla in…",
-        "url": "https://www.calciofoggia.it/foggia-presentata-la-nuova-maglia-home-2026-27-ritorno-alle-bande-larghe/",
-        "data": "2026-09-14T16:04:25.000Z",
-        "autore": "Armando Borrelli",
-        "categoria": "FOGGIA CALCIO",
-        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Nuova-Maglia-Home-Foggia-2026-27.png"
-      },
-      {
         "id": "ilfoggia-9f741afccf",
         "testata": "ilfoggia",
         "titolo": "Cosmano Sport Soccer Trani – Risultato parziale",
@@ -5939,6 +5938,6 @@
         "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/WhatsApp-Image-2026-08-24-at-23.02.24.jpeg"
       }
     ],
-    "aggiornatoIl": "2026-09-17T12:21:01.509Z"
+    "aggiornatoIl": "2026-09-17T12:40:45.440Z"
   }
 }
