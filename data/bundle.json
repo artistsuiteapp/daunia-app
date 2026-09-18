@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-18T16:41:29.367Z",
+    "generatedAt": "2026-09-18T17:01:14.627Z",
     "season": "2026-2027",
     "competition": "Serie C",
     "sources": {
@@ -5648,6 +5648,17 @@
     ],
     "articoli": [
       {
+        "id": "calciofoggia-f8701b6cf4",
+        "testata": "calciofoggia",
+        "titolo": "Il girone C dopo sole cinque giornate. Conferme, sorprese e delusioni",
+        "sommario": "Un quarto del girone d’andata è terminato. In questo primo scorcio di campionato diverse sono state le sorprese, tante aspettative non rispettate e colpi di scena uno dopo…",
+        "url": "https://www.calciofoggia.it/il-girone-c-dopo-sole-cinque-giornate-conferme-sorprese-e-delusioni/",
+        "data": "2026-09-18T16:41:30.000Z",
+        "autore": "Calcio Foggia",
+        "categoria": "SERIE C",
+        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Serie-C-Girone-C.jpg"
+      },
+      {
         "id": "ilfoggia-86f6e44909",
         "testata": "ilfoggia",
         "titolo": "…LA MISURA, QUELLA SCONOSCIUTA… / La versione di Rino La Forgia",
@@ -5879,17 +5890,6 @@
         "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Foggia-Savoia.png"
       },
       {
-        "id": "calciofoggia-12a913a32a",
-        "testata": "calciofoggia",
-        "titolo": "Foggia, con il Savoia obiettivo tre punti per riprendere il cammino in campionato",
-        "sommario": "Turno infrasettimanale di campionato questa sera allo Zaccheria e Foggia chiamato a riscattare il doppio passo falso con Cerignola e Monopoli. Non sarà una sfida semplice contro…",
-        "url": "https://www.calciofoggia.it/foggia-con-il-savoia-obiettivo-tre-punti-per-riprendere-il-cammino-in-campionato/",
-        "data": "2026-09-15T12:30:48.000Z",
-        "autore": "Tiziano Errichiello",
-        "categoria": "FOGGIA CALCIO",
-        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Auteri-al-San-Nicola-di-Bari-contro-il-Monopoli-Foto-Antonellis-Calcio-Foggia-1920.jpeg"
-      },
-      {
         "id": "ilfoggia-9f741afccf",
         "testata": "ilfoggia",
         "titolo": "Cosmano Sport Soccer Trani – Risultato parziale",
@@ -5956,6 +5956,6 @@
         "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0804-scaled.jpg"
       }
     ],
-    "aggiornatoIl": "2026-09-18T16:40:50.692Z"
+    "aggiornatoIl": "2026-09-18T17:01:03.960Z"
   }
 }
