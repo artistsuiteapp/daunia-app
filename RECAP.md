@@ -15,7 +15,7 @@ perché, che è la parte che non si ricostruisce leggendo il codice.
 - **Dove gira**: app nativa sull'iPhone, installata con Xcode. Il sito <https://daunia.vercel.app> esiste ancora ma non è più il prodotto: si pubblica solo a mano
 - **Dominio**: `iltifodelladaunia.it`, comprato su IONOS. Vetrina pronta in `sito/index.html`, non ancora pubblicata
 - **Stack**: Expo SDK 57 / React Native 0.86 (iOS, Android e web dallo stesso codice), Supabase, GitHub Actions
-- **Stato**: 553 commit (195 senza gli aggiornamenti automatici dei dati), 47 migrazioni, 39 schermate, **560 test**, guardiano alla versione 43
+- **Stato**: 553 commit (195 senza gli aggiornamenti automatici dei dati), 47 migrazioni, 39 schermate, **560 test**, guardiano alla versione 44
 
 Il repository è pubblico dall'8 settembre, e non è una svista: sui repo pubblici
 i minuti di GitHub Actions sono gratis e illimitati. Sono attivi secret scanning
@@ -528,7 +528,7 @@ tabellone a mano, le formazioni dalle testate e il recupero.
 Ricompilare l'app: `npm run telefono -w apps/mobile` (iPhone col cavo e
 sbloccato). Quella installata è del 15 settembre e **non ha il tabellone a mano,
 il recupero, i gol annullati e la tastiera sistemata nella chat**. Il guardiano
-nuovo invece è già in produzione (versione 41) e la migrazione è applicata:
+nuovo invece è già in produzione (versione 44, dal 18 settembre) e la migrazione è applicata:
 formazioni e recupero dalle testate arrivano comunque.
 
 Servono ~8 GB liberi; se mancano si svuota `~/Library/Developer/Xcode/DerivedData`,
