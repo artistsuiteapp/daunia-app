@@ -27,6 +27,17 @@
   ],
   "articoli": [
     {
+      "id": "ilfoggia-86f6e44909",
+      "testata": "ilfoggia",
+      "titolo": "…LA MISURA, QUELLA SCONOSCIUTA… / La versione di Rino La Forgia",
+      "sommario": "Riprendiamo le nostre considerazioni dopo aver prolungato volutamente la nostra assenza poiché ci siamo messi alla finestra nella posizione dei",
+      "url": "https://www.ilfoggia.com/la-misura-quella-sconosciuta-la-versione-di-rino-la-forgia/",
+      "data": "2026-09-18T14:38:36.000Z",
+      "autore": "La Redazione",
+      "categoria": "Blog",
+      "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/09/IMG_3687-scaled.jpg"
+    },
+    {
       "id": "calciofoggia-8f22d29d91",
       "testata": "calciofoggia",
       "titolo": "Auteri e Berra: “Siamo squadra, i dati lo dicono. Continuiamo a creare, i gol arriveranno”",
@@ -322,18 +333,7 @@
       "autore": "Foggia Calcio Movie",
       "categoria": "Gallery",
       "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0804-scaled.jpg"
-    },
-    {
-      "id": "ilfoggia-2384863344",
-      "testata": "ilfoggia",
-      "titolo": "IL FOGGIA DI AUTERI A CROTONE DIMOSTRA VOGLIA, FORZA E TANTA UMILTA’.",
-      "sommario": "CROTONE-FOGGIA 0-1. BUONA LA PRIMA E SE POI ARRIVASSERO I GIUSTI RINFORZI CHISSA'...",
-      "url": "https://www.ilfoggia.com/il-foggia-di-auteri-a-crotone-dimostra-voglia-forza-e-tanta-umilta/",
-      "data": "2026-08-25T08:22:54.000Z",
-      "autore": "Luciano Gallucci",
-      "categoria": "News",
-      "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/WhatsApp-Image-2026-08-24-at-23.02.24.jpeg"
     }
   ],
-  "aggiornatoIl": "2026-09-18T14:20:46.068Z"
+  "aggiornatoIl": "2026-09-18T14:40:46.519Z"
 }
