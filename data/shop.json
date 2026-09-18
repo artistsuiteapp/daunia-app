@@ -318,6 +318,24 @@
       "source": "shop"
     },
     {
+      "id": "shop-15760",
+      "name": "TELO MARE CALCIO FOGGIA",
+      "price": 20,
+      "regularPrice": 20,
+      "onSale": false,
+      "currency": "EUR",
+      "image": "https://calciofoggia1920.store/wp-content/uploads/2026/09/IMG-20260910-WA0042.jpeg",
+      "images": [
+        "https://calciofoggia1920.store/wp-content/uploads/2026/09/IMG-20260910-WA0042.jpeg"
+      ],
+      "category": "Gadget",
+      "categorySlug": "gadget",
+      "url": "https://calciofoggia1920.store/prodotto/telo-mare-calcio-foggia/",
+      "inStock": true,
+      "description": "",
+      "source": "shop"
+    },
+    {
       "id": "shop-15539",
       "name": "CALZA CORTA",
       "price": 16,
@@ -538,7 +556,7 @@
     {
       "slug": "gadget",
       "name": "Gadget",
-      "count": 11
+      "count": 12
     },
     {
       "slug": "pantaloncini",

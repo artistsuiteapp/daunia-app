@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-18T14:01:04.863Z",
+    "generatedAt": "2026-09-18T14:20:48.341Z",
     "season": "2026-2027",
     "competition": "Serie C",
     "sources": {
@@ -3460,6 +3460,24 @@
         "source": "shop"
       },
       {
+        "id": "shop-15760",
+        "name": "TELO MARE CALCIO FOGGIA",
+        "price": 20,
+        "regularPrice": 20,
+        "onSale": false,
+        "currency": "EUR",
+        "image": "https://calciofoggia1920.store/wp-content/uploads/2026/09/IMG-20260910-WA0042.jpeg",
+        "images": [
+          "https://calciofoggia1920.store/wp-content/uploads/2026/09/IMG-20260910-WA0042.jpeg"
+        ],
+        "category": "Gadget",
+        "categorySlug": "gadget",
+        "url": "https://calciofoggia1920.store/prodotto/telo-mare-calcio-foggia/",
+        "inStock": true,
+        "description": "",
+        "source": "shop"
+      },
+      {
         "id": "shop-15539",
         "name": "CALZA CORTA",
         "price": 16,
@@ -3680,7 +3698,7 @@
       {
         "slug": "gadget",
         "name": "Gadget",
-        "count": 11
+        "count": 12
       },
       {
         "slug": "pantaloncini",
@@ -5938,6 +5956,6 @@
         "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/WhatsApp-Image-2026-08-24-at-23.02.24.jpeg"
       }
     ],
-    "aggiornatoIl": "2026-09-18T14:01:01.915Z"
+    "aggiornatoIl": "2026-09-18T14:20:46.068Z"
   }
 }
