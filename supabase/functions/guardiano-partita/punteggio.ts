@@ -398,9 +398,20 @@ export function proteggi(
 
 /* ------------------------------------------------------- il tabellone a mano */
 
-/** Quanti gol sono stati annullati, per lato del campo. */
-export function contaAnnullati(annullati: unknown): Punteggio {
-  const righe = Array.isArray(annullati) ? annullati as Array<Record<string, unknown>> : [];
+/** La firma, in `eventi_detti`, di un annullamento che le fonti hanno gia tolto. */
+export const annullatoChiuso = (id: unknown) => `annullato-chiuso-${id}`;
+
+/**
+ * Quanti gol annullati sono ancora aperti, per lato del campo.
+ *
+ * Un annullamento si chiude quando le fonti riprendono il tabellone: a quel
+ * punto quel gol l'hanno tolto anche loro. Contarlo ancora voleva dire che, se
+ * il pannello si riaccendeva piu tardi, quel lato restava a mano per sempre e
+ * un gol vero degli avversari non entrava piu.
+ */
+export function contaAnnullati(annullati: unknown, detti: ReadonlySet<string> = new Set()): Punteggio {
+  const righe = (Array.isArray(annullati) ? annullati as Array<Record<string, unknown>> : [])
+    .filter((a) => !(a?.id && detti.has(annullatoChiuso(a.id))));
   return {
     casa: righe.filter((a) => a?.lato === 'casa').length,
     ospiti: righe.filter((a) => a?.lato === 'ospiti').length,
@@ -482,4 +493,20 @@ export function punteggioMisto(
     casa: comando.casa === 'fonti' ? fonti.casa : mano.casa,
     ospiti: comando.ospiti === 'fonti' ? fonti.ospiti : mano.ospiti,
   };
+}
+
+/**
+ * Il punteggio a cui il pannello ha restituito il comando alle fonti.
+ *
+ * Fin li i telefoni li ha gia fatti suonare chi guardava la partita. Se ne
+ * tiene uno solo, l'ultimo: dopo un gol annullato il punteggio puo scendere.
+ */
+export const firmaPassaggio = (p: Punteggio) => `passaggio-${p.casa}-${p.ospiti}`;
+
+export function ultimoPassaggio(detti: Iterable<string>): Punteggio | null {
+  for (const f of detti) {
+    const m = /^passaggio-(\d+)-(\d+)$/.exec(f);
+    if (m) return { casa: Number(m[1]), ospiti: Number(m[2]) };
+  }
+  return null;
 }

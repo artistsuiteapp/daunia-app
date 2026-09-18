@@ -258,6 +258,42 @@ test('segno il gol e poi mi addormento: appena le fonti mi raggiungono riprendon
   assert.deepEqual([chiusa?.casa, chiusa?.ospiti], [1, 1]);
 });
 
+for (const [nome, base] of SCENARI) {
+  test(`${nome}: un gol segnato a mano suona una volta sola, anche quando le fonti lo raggiungono`, async () => {
+    const { suonate } = await gioca({
+      ...base,
+      pannello: [{ quando: 6 * MIN, fa: golAMano('casa', 'Luciani', 6) }],
+    });
+    // il 6' del pannello e il 78' degli avversari: il 23' delle fonti e lo stesso gol del 6'
+    const gol = suonate.filter((x) => x.tipo === 'gol' && !x.muta);
+    assert.equal(gol.length, 2, `notifiche di gol: ${gol.map((g) => `${g.titolo} ${g.testo}`).join(' | ')}`);
+  });
+}
+
+test('un gol annullato e gia ripreso dalle fonti non blocca il tabellone riacceso dopo', async () => {
+  const s = {
+    ...SCENARI[0][1],
+    pannello: [
+      // al 6' un gol degli avversari premuto per sbaglio, tolto al 9': le fonti riprendono
+      { quando: 6 * MIN, fa: golAMano('ospiti', null, 6) },
+      {
+        quando: 9 * MIN,
+        fa: () => ({
+          ospiti: 0,
+          gol: [],
+          annullati: [{ id: 'm6', minuto: '6', chi: null, nostro: false, lato: 'ospiti' }],
+        }),
+      },
+      // al 60' un gol a mano che le fonti non vedranno: il tabellone resta a mano
+      { quando: 60 * MIN, fa: golAMano('casa', 'Petito', 60) },
+    ],
+  };
+  const { foto } = await gioca(s);
+  const chiusa = foto.find((f) => f.finita_il);
+  // il gol degli avversari al 78' deve entrare: l'annullamento del 9' e chiuso da un pezzo
+  assert.deepEqual([chiusa?.casa, chiusa?.ospiti], [2, 1]);
+});
+
 test('un gol annullato non torna, ma il lato degli avversari continua ad aggiornarsi', async () => {
   const s = {
     ...SCENARI[0][1],
