@@ -27,6 +27,39 @@
   ],
   "articoli": [
     {
+      "id": "calciofoggia-c50ac1f45a",
+      "testata": "calciofoggia",
+      "titolo": "Foggia, dopo cinque giornate i rossoneri in cerca della propria identità",
+      "sommario": "Due punti nelle ultime quattro partite di campionato. Il Foggia che non vince dalla gara di esordio a Crotone. Rossoneri che non segnano da 359 minuti dal gol di Luciani al primo…",
+      "url": "https://www.calciofoggia.it/foggia-dopo-cinque-giornate-i-rossoneri-in-cerca-della-propria-identita/",
+      "data": "2026-09-17T12:25:58.000Z",
+      "autore": "Tiziano Errichiello",
+      "categoria": "FOGGIA CALCIO",
+      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Il-Foggia-in-campo-contro-il-Savoia-Foto-Antonello-Forcelli.png"
+    },
+    {
+      "id": "calciofoggia-a9d170ced8",
+      "testata": "calciofoggia",
+      "titolo": "Giudice Sportivo: le decisioni relative alla quinta giornata",
+      "sommario": "Diramato il comunicato del giudice sportivo relativo le gare della quinta giornata di campionato. Clicca qui per leggere il comunicato completo © 2026, CALCIOFOGGIA.IT. Tutti i…",
+      "url": "https://www.calciofoggia.it/giudice-sportivo-le-decisioni-relative-alla-quinta-giornata-2/",
+      "data": "2026-09-16T21:59:40.000Z",
+      "autore": "Mario",
+      "categoria": "CALCIO",
+      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2020/09/Zgiudice-sportivo.png"
+    },
+    {
+      "id": "calciofoggia-dbd528e997",
+      "testata": "calciofoggia",
+      "titolo": "il punto sulla 5° di andata",
+      "sommario": "Che il campionato sia iniziato da poco lo dimostra la quinta giornata che mette in evidenza alcune sorprese e forse una sola certezza, quella del Sorrento che veleggia a punteggio…",
+      "url": "https://www.calciofoggia.it/il-punto-sulla-5-di-andata/",
+      "data": "2026-09-16T09:37:49.000Z",
+      "autore": "Mario Schena",
+      "categoria": "SERIE C",
+      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Zuccon-in-azione-contro-il-Savoia-Foto-Antonello-Forcelli.png"
+    },
+    {
       "id": "ilfoggia-5a8eed19a3",
       "testata": "ilfoggia",
       "titolo": "Foggia Savoia – 𝗣𝗛𝗢𝗧𝗢 𝗚𝗔𝗟𝗟𝗘𝗥𝗬 📸Potito Chiummarulo",
@@ -82,6 +115,28 @@
       "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/WhatsApp-Image-2026-09-15-at-21.23.51-2.jpeg"
     },
     {
+      "id": "calciofoggia-c5a7471998",
+      "testata": "calciofoggia",
+      "titolo": "Seck: “Il gruppo ha dato il massimo, i risultati arriveranno. Quando saremo al completo possiamo stare tra i primi sei-sette”",
+      "sommario": "Mohamed Seck, difensore del Foggia, ha commentato a caldo il pareggio a reti inviolate con il Savoia. «Secondo me avremmo meritato di più perché un’altra volta abbiamo dato il…",
+      "url": "https://www.calciofoggia.it/seck-il-gruppo-ha-dato-il-massimo-i-risultati-arriveranno-quando-saremo-al-completo-possiamo-stare-tra-i-primi-sei-sette/",
+      "data": "2026-09-15T21:38:11.000Z",
+      "autore": "Armando Borrelli",
+      "categoria": "FOGGIA CALCIO",
+      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Il-Foggia-in-campo-contro-il-Savoia-Foto-Antonello-Forcelli.png"
+    },
+    {
+      "id": "calciofoggia-5f44ba31df",
+      "testata": "calciofoggia",
+      "titolo": "Risultati, marcatori e classifica 5ª giornata",
+      "sommario": "Il Foggia non riesce a trovare la vittoria allo Zaccheria contro il Savoia: la gara termina 0-0, con i rossoneri che salgono a quota 5 punti. In vetta continua la marcia del…",
+      "url": "https://www.calciofoggia.it/risultati-marcatori-e-classifica-5a-giornata-2/",
+      "data": "2026-09-15T21:32:16.000Z",
+      "autore": "Fabio Bertazzoli",
+      "categoria": "SERIE C",
+      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2025/06/Pallone-Lega-Pro-Decathlon.jpg"
+    },
+    {
       "id": "foggiacalciomania-1b237ade60",
       "testata": "foggiacalciomania",
       "titolo": "Serie C girone C: risultati e marcatori 5a giornata",
@@ -91,6 +146,17 @@
       "autore": "Redazione FCM 24 ore",
       "categoria": "News Calcio Foggia 1920",
       "immagine": "https://foggiacalciomania.com/wp-content/uploads/2025/08/palla334567.jpg"
+    },
+    {
+      "id": "calciofoggia-59ebabc470",
+      "testata": "calciofoggia",
+      "titolo": "Mister Auteri: “Avremmo meritato la vittoria, ma non abbiamo finalizzato. Siamo destinati a crescere”",
+      "sommario": "Gaetano Auteri ha analizzato a caldo il pareggio a reti inviolate con il Savoia, riconoscendo il rammarico per il risultato ma valorizzando la prestazione della squadra. «Questo è…",
+      "url": "https://www.calciofoggia.it/mister-auteri-avremmo-meritato-la-vittoria-ma-non-abbiamo-finalizzato-siamo-destinati-a-crescere/",
+      "data": "2026-09-15T21:25:43.000Z",
+      "autore": "Armando Borrelli",
+      "categoria": "FOGGIA CALCIO",
+      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Mister-Auteri-contro-il-Savoia-Foto-Antonello-Forcelli.png"
     },
     {
       "id": "foggiacalciomania-2f5eebede4",
@@ -126,6 +192,17 @@
       "immagine": "https://foggiacalciomania.com/wp-content/uploads/2023/03/rete-foggia.jpg"
     },
     {
+      "id": "calciofoggia-a61663a2e7",
+      "testata": "calciofoggia",
+      "titolo": "Foggia-Savoia 0-0 (risultato finale)",
+      "sommario": "Secondo tempo in corso 90’+7 – Triplice fischio allo “Zaccheria”: 0-0 tra Foggia e Savoia, con il Foggia che ci prova ma non sblocca il punteggio. 90’+6 – Tiro-cross di Martina…",
+      "url": "https://www.calciofoggia.it/foggia-savoia-campionato-2026-2027/",
+      "data": "2026-09-15T18:00:36.000Z",
+      "autore": "Armando Borrelli",
+      "categoria": "FOGGIA CALCIO",
+      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Foggia-Savoia.png"
+    },
+    {
       "id": "foggiacalciomania-6c5ae15ea1",
       "testata": "foggiacalciomania",
       "titolo": "Foggia-Savoia: i convocati rossoneri",
@@ -137,6 +214,17 @@
       "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/WhatsApp-Image-2026-09-06-at-21.57.58.jpeg"
     },
     {
+      "id": "calciofoggia-12a913a32a",
+      "testata": "calciofoggia",
+      "titolo": "Foggia, con il Savoia obiettivo tre punti per riprendere il cammino in campionato",
+      "sommario": "Turno infrasettimanale di campionato questa sera allo Zaccheria e Foggia chiamato a riscattare il doppio passo falso con Cerignola e Monopoli. Non sarà una sfida semplice contro…",
+      "url": "https://www.calciofoggia.it/foggia-con-il-savoia-obiettivo-tre-punti-per-riprendere-il-cammino-in-campionato/",
+      "data": "2026-09-15T12:30:48.000Z",
+      "autore": "Tiziano Errichiello",
+      "categoria": "FOGGIA CALCIO",
+      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Auteri-al-San-Nicola-di-Bari-contro-il-Monopoli-Foto-Antonellis-Calcio-Foggia-1920.jpeg"
+    },
+    {
       "id": "foggiacalciomania-272a9f85b2",
       "testata": "foggiacalciomania",
       "titolo": "Foggia-Savoia: le ultimissime",
@@ -146,6 +234,28 @@
       "autore": "Redazione FCM 24 ore",
       "categoria": "Ultimissime",
       "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/08/789653998_10239616419060783_1138873880567371313_n.jpg"
+    },
+    {
+      "id": "calciofoggia-fe9aa55e48",
+      "testata": "calciofoggia",
+      "titolo": "Ritorna ‘za Fò: appuntamento alle 21 su FoggiaTV",
+      "sommario": "Ritorna l’appuntamento settimanale con la trasmissione sportiva curata e condotta da Lello Scarano, pronto ad aggiornarvi sulle vicende rossonere. In onda a partire dalle ore…",
+      "url": "https://www.calciofoggia.it/ritorna-za-fo-appuntamento-alle-21-su-foggiatv/",
+      "data": "2026-09-14T17:00:30.000Z",
+      "autore": "Armando Borrelli",
+      "categoria": "FOGGIA CALCIO",
+      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/06/Lello-lancio-zaFo-2026.png"
+    },
+    {
+      "id": "calciofoggia-9e7b078ef9",
+      "testata": "calciofoggia",
+      "titolo": "Casella e Di Pasquale: “Gruppo con ampi margini. Dobbiamo crescere con pazienza e lucidità”",
+      "sommario": "Il direttore sportivo Alex Casella e il capitano Davide Di Pasquale hanno analizzato il momento del Foggia dopo le due sconfitte consecutive, guardando alla prossima sfida…",
+      "url": "https://www.calciofoggia.it/casella-e-di-pasquale-gruppo-con-ampi-margini-dobbiamo-crescere-con-pazienza-e-lucidita/",
+      "data": "2026-09-14T16:32:59.000Z",
+      "autore": "Armando Borrelli",
+      "categoria": "FOGGIA CALCIO",
+      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Screenshot-2026-09-14-alle-18.13.26.png"
     },
     {
       "id": "ilfoggia-9f741afccf",
@@ -225,5 +335,5 @@
       "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/WhatsApp-Image-2026-08-24-at-23.02.24.jpeg"
     }
   ],
-  "aggiornatoIl": "2026-09-18T02:40:45.281Z"
+  "aggiornatoIl": "2026-09-18T03:01:04.564Z"
 }
