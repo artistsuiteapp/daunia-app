@@ -27,6 +27,28 @@
   ],
   "articoli": [
     {
+      "id": "calciofoggia-8f22d29d91",
+      "testata": "calciofoggia",
+      "titolo": "Auteri e Berra: “Siamo squadra, i dati lo dicono. Continuiamo a creare, i gol arriveranno”",
+      "sommario": "Gaetano Auteri e Filippo Berra hanno affrontato in conferenza stampa il momento del Foggia e la trasferta di domenica contro l’Inter U23. Il mister ha risposto con decisione a chi…",
+      "url": "https://www.calciofoggia.it/auteri-e-berra-siamo-squadra-i-dati-lo-dicono-continuiamo-a-creare-i-gol-arriveranno/",
+      "data": "2026-09-18T11:00:09.000Z",
+      "autore": "Armando Borrelli",
+      "categoria": "FOGGIA CALCIO",
+      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Screenshot-2026-09-18-alle-12.43.41.png"
+    },
+    {
+      "id": "foggiacalciomania-353a4d6400",
+      "testata": "foggiacalciomania",
+      "titolo": "Auteri: “Andremo a imporre il nostro gioco”",
+      "sommario": "Alla vigilia della sfida contro l’Inter U23, mister Gaetano Auteri e Filippo Berra hanno presentato la gara, facendo il punto sul momento della squadra e sul lavoro svolto in…",
+      "url": "https://foggiacalciomania.com/news-foggia-calcio/sala-stampa/auteri-andremo-a-imporre-il-nostro-gioco/",
+      "data": "2026-09-18T10:12:05.000Z",
+      "autore": "Roberto Parisi",
+      "categoria": "Sala stampa",
+      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/IMG-20260918-WA0014.jpg"
+    },
+    {
       "id": "calciofoggia-64576aa5d3",
       "testata": "calciofoggia",
       "titolo": "Andrea Mazzer di Conegliano dirige Inter U23-Foggia",
@@ -214,17 +236,6 @@
       "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Mister-Auteri-contro-il-Savoia-Foto-Antonello-Forcelli.png"
     },
     {
-      "id": "foggiacalciomania-2f5eebede4",
-      "testata": "foggiacalciomania",
-      "titolo": "Le Pagelle di Foggia 0-0 Savoia",
-      "sommario": "Tutto sommato un buon Foggia quello visto allo Zaccheria contro il Savoia, ma stenta a finalizzare le tante occasioni create, con ben tredici tiri, di cui 4 nello specchio della…",
-      "url": "https://foggiacalciomania.com/news-foggia-calcio/pagelle/le-pagelle-di-foggia-0-0-savoia/",
-      "data": "2026-09-15T21:20:01.000Z",
-      "autore": "Roberto Parisi",
-      "categoria": "Pagelle",
-      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Foggia-Savoia-4.jpeg"
-    },
-    {
       "id": "calciofoggia-a61663a2e7",
       "testata": "calciofoggia",
       "titolo": "Foggia-Savoia 0-0 (risultato finale)",
@@ -245,17 +256,6 @@
       "autore": "Tiziano Errichiello",
       "categoria": "FOGGIA CALCIO",
       "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Auteri-al-San-Nicola-di-Bari-contro-il-Monopoli-Foto-Antonellis-Calcio-Foggia-1920.jpeg"
-    },
-    {
-      "id": "calciofoggia-fe9aa55e48",
-      "testata": "calciofoggia",
-      "titolo": "Ritorna ‘za Fò: appuntamento alle 21 su FoggiaTV",
-      "sommario": "Ritorna l’appuntamento settimanale con la trasmissione sportiva curata e condotta da Lello Scarano, pronto ad aggiornarvi sulle vicende rossonere. In onda a partire dalle ore…",
-      "url": "https://www.calciofoggia.it/ritorna-za-fo-appuntamento-alle-21-su-foggiatv/",
-      "data": "2026-09-14T17:00:30.000Z",
-      "autore": "Armando Borrelli",
-      "categoria": "FOGGIA CALCIO",
-      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/06/Lello-lancio-zaFo-2026.png"
     },
     {
       "id": "ilfoggia-9f741afccf",
@@ -335,5 +335,5 @@
       "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/WhatsApp-Image-2026-08-24-at-23.02.24.jpeg"
     }
   ],
-  "aggiornatoIl": "2026-09-18T10:39:33.354Z"
+  "aggiornatoIl": "2026-09-18T11:00:53.346Z"
 }
