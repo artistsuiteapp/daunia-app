@@ -3,6 +3,7 @@ import { test } from 'node:test';
 import {
   contaGol, concorda, titoloGol, golVero, golDalTabellone, oraItaliana, proteggi,
   contaAnnullati, riprendiDalleFonti, chiComanda, punteggioMisto, type EventoAF,
+  annullatoChiuso, firmaPassaggio, ultimoPassaggio,
 } from './punteggio.ts';
 
 const FOGGIA = 521;
@@ -321,6 +322,19 @@ test('i gol annullati si contano per lato', () => {
   assert.deepEqual(contaAnnullati([{ lato: 'casa' }, { lato: 'ospiti' }, { lato: 'casa' }]), { casa: 2, ospiti: 1 });
   assert.deepEqual(contaAnnullati(null), { casa: 0, ospiti: 0 });
   assert.deepEqual(contaAnnullati([{ minuto: '12' }]), { casa: 0, ospiti: 0 });
+});
+
+test('un annullamento gia ripreso dalle fonti non si conta piu', () => {
+  const annullati = [{ id: 'm6', lato: 'ospiti' }, { id: 'm30', lato: 'casa' }, { lato: 'casa' }];
+  const detti = new Set([annullatoChiuso('m6')]);
+  assert.deepEqual(contaAnnullati(annullati, detti), { casa: 2, ospiti: 0 });
+  // senza id non si puo chiudere: resta contato, per prudenza
+  assert.deepEqual(contaAnnullati([{ lato: 'casa' }], new Set([annullatoChiuso(undefined)])), { casa: 1, ospiti: 0 });
+});
+
+test('il passaggio alle fonti si rilegge da eventi_detti', () => {
+  assert.equal(ultimoPassaggio(['gol-6-noi', 'tabellone-1-0']), null);
+  assert.deepEqual(ultimoPassaggio(['gol-6-noi', firmaPassaggio({ casa: 2, ospiti: 1 })]), { casa: 2, ospiti: 1 });
 });
 
 test('il lato senza annullamenti torna alle fonti anche se l altro resta a mano', () => {

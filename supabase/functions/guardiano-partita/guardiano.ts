@@ -24,6 +24,7 @@ import {
   contaGol, concorda, titoloGol, golVero, golDalTabellone, minutoStimato, cronologia,
   cartelliniECambi, oraItaliana, proteggi, unisciCronaca, piuAvanti, minutoMigliore,
   contaAnnullati, riprendiDalleFonti, chiComanda, punteggioMisto,
+  annullatoChiuso, firmaPassaggio, ultimoPassaggio,
   type EventoAF, type Punteggio,
 } from './punteggio.ts';
 
@@ -1007,14 +1008,23 @@ async function giro(primo: boolean): Promise<{ risposta: Record<string, unknown>
   const scrittoAMano: Punteggio | null = riga.casa === null || riga.casa === undefined
     || riga.ospiti === null || riga.ospiti === undefined
     ? null : { casa: Number(riga.casa), ospiti: Number(riga.ospiti) };
-  const comando = chiComanda(scrittoAMano, mostrato, contaAnnullati(riga.annullati));
-  const riprese = aMano && riprendiDalleFonti(scrittoAMano, mostrato, contaAnnullati(riga.annullati));
+  const annullatiAperti = contaAnnullati(riga.annullati, detti);
+  const comando = chiComanda(scrittoAMano, mostrato, annullatiAperti);
+  const riprese = aMano && riprendiDalleFonti(scrittoAMano, mostrato, annullatiAperti);
   /** vero quando almeno un lato del punteggio e ancora di chi guarda la partita */
   const comandaIlPannello = aMano && !riprese;
   if (riprese) {
     patch.manuale = false;
     // la base del conto a mano non vale piu: se si riaccende, si riparte da qui
     patch.manuale_base = null;
+    // i gol annullati fin qui le fonti li hanno tolti: non pesano piu su un
+    // tabellone riacceso dopo
+    for (const a of (riga.annullati ?? []) as Array<Record<string, unknown>>) {
+      if (a?.id) detti.add(annullatoChiuso(a.id));
+    }
+    // fin qui i gol li ha fatti suonare il pannello: vedi `suonatoAMano`
+    for (const f of [...detti]) if (f.startsWith('passaggio-')) detti.delete(f);
+    if (scrittoAMano) detti.add(firmaPassaggio(scrittoAMano));
   }
   /**
    * Il punteggio da scrivere: da ogni lato quello di chi comanda su quel lato.
@@ -1146,9 +1156,24 @@ async function giro(primo: boolean): Promise<{ risposta: Record<string, unknown>
   // I gol visti dagli eventi: col marcatore, e col punteggio solo se
   // confermato da una seconda fonte.
   const giaDetto = daEventi ? detti.has(`tabellone-${daEventi.casa}-${daEventi.ospiti}`) : false;
+  /*
+   * Fin dove i telefoni li ha gia fatti suonare chi guarda la partita.
+   *
+   * Quando le fonti arrivano a un gol segnato dal pannello, il loro evento non
+   * e un gol nuovo: e lo stesso, col nome. Prima suonava una seconda volta, a
+   * ogni gol segnato a mano. Ora si riscrive muto, come fa `giaDetto`. Il
+   * conto e per lato e gol per gol: `contati` e dove arriva quel lato con
+   * quel gol.
+   */
+  const suonatoAMano = aMano ? scrittoAMano : ultimoPassaggio(detti);
+  const latoDelGol = (g: { nostro: boolean }) => (g.nostro === inCasa ? 'casa' : 'ospiti');
+  const contati: Punteggio = { casa: daEventi?.casa ?? 0, ospiti: daEventi?.ospiti ?? 0 };
+  for (const g of nuoviGol) contati[latoDelGol(g)] -= 1;
   for (const g of nuoviGol) {
+    contati[latoDelGol(g)] += 1;
     // il lato che tiene il pannello lo annuncia il pannello, non le fonti
-    if (comandaIlPannello && comando[g.nostro === inCasa ? 'casa' : 'ospiti'] === 'mano') continue;
+    if (comandaIlPannello && comando[latoDelGol(g)] === 'mano') continue;
+    const giaSuonato = !!suonatoAMano && contati[latoDelGol(g)] <= suonatoAMano[latoDelGol(g)];
     avvisi.push({
       tipo: 'gol',
       titolo: titoloGol(g.nostro, accordo),
@@ -1166,7 +1191,7 @@ async function giro(primo: boolean): Promise<{ risposta: Record<string, unknown>
        * A partita chiusa un gol arrivato tardi aggiorna la cronaca, ma non
        * suona: il triplice fischio e gia stato annunciato.
        */
-      muta: giaDetto || Boolean(riga.finita_il),
+      muta: giaDetto || giaSuonato || Boolean(riga.finita_il),
     });
   }
 

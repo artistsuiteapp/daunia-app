@@ -387,8 +387,9 @@ export default function TabelloneAMano() {
         ))}
       </View>
       <GroupNote>
-        Cambia solo il numero, senza toccare i marcatori già scritti. Per togliere un gol con tutto
-        quello che si porta dietro, usa la croce nella cronaca.
+        Cambia solo il numero, senza toccare i marcatori già scritti. Un −1 dura finché le fonti non
+        dicono un numero più alto: per togliere un gol che le fonti contano ancora, usa la croce
+        nella cronaca.
       </GroupNote>
 
       {/* ----------------------------------------------------------- la fine */}

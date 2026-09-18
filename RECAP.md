@@ -15,7 +15,7 @@ perché, che è la parte che non si ricostruisce leggendo il codice.
 - **Dove gira**: app nativa sull'iPhone, installata con Xcode. Il sito <https://daunia.vercel.app> esiste ancora ma non è più il prodotto: si pubblica solo a mano
 - **Dominio**: `iltifodelladaunia.it`, comprato su IONOS. Vetrina pronta in `sito/index.html`, non ancora pubblicata
 - **Stack**: Expo SDK 57 / React Native 0.86 (iOS, Android e web dallo stesso codice), Supabase, GitHub Actions
-- **Stato**: 553 commit (195 senza gli aggiornamenti automatici dei dati), 47 migrazioni, 39 schermate, **554 test**, guardiano alla versione 43
+- **Stato**: 553 commit (195 senza gli aggiornamenti automatici dei dati), 47 migrazioni, 39 schermate, **560 test**, guardiano alla versione 43
 
 Il repository è pubblico dall'8 settembre, e non è una svista: sui repo pubblici
 i minuti di GitHub Actions sono gratis e illimitati. Sono attivi secret scanning
@@ -28,7 +28,7 @@ personali.**
 
 ```bash
 cd ~/dev/daunia-app
-npm test                           # 509 test, compresi gli attacchi al database e la partita simulata
+npm test                           # 560 test, compresi gli attacchi al database e la partita simulata
 npx tsc --noEmit -p apps/mobile    # zero errori
 ```
 
@@ -204,6 +204,8 @@ Regole scritte dopo averle sbagliate:
 - **La sparizione dalla lista vale come fine solo dopo due ore dal fischio**, e solo se live-score-api non dice che si gioca. Con cento minuti (l'ottantacinquesimo) il guardiano chiudeva partite in corso
 - **Col tabellone a mano acceso il guardiano non tocca punteggio e cronaca.** Continua tutto il resto — minuto, stato, cartellini, cambi, formazioni, notifiche — ma non scrive `casa`, `ospiti` e `gol`, e non annuncia gol che non ha annunciato lui: altrimenti un gol annullato tornerebbe a suonare da solo due minuti dopo. La guardia sta in fondo a `giro()`, in un punto solo, perché sparsa in ogni ramo qualcuno se la dimenticherebbe
 - **Ma comanda solo finché serve: appena le fonti arrivano allo stesso punteggio, riprendono loro.** Senza questa regola uno che segna 1-0 e poi si distrae — o si addormenta, o resta senza batteria — lascia il tabellone fermo a 1-0 per tutta la partita, e la chiusura paga i pronostici su quello. La decisione è **lato per lato** (`chiComanda()` in `punteggio.ts`): sul lato di un gol annullato le fonti riprendono solo se dicono esattamente lo stesso numero, sull'altro basta che siano arrivate. Così un gol annullato non torna, e intanto il gol degli avversari entra lo stesso
+- **Quando le fonti raggiungono un gol segnato a mano, non suona una seconda volta.** Fino al 18 settembre ogni gol del pannello suonava due volte: dal pannello, e di nuovo quando arrivava l'evento delle fonti. Ora quel gol si riscrive muto, col nome del marcatore. Il punteggio a cui il pannello ha restituito il comando resta in `eventi_detti` come `passaggio-<casa>-<ospiti>`
+- **Un annullamento conta solo finché le fonti non riprendono il tabellone.** Da lì si segna chiuso (`annullato-chiuso-<id>` in `eventi_detti`). Prima restava contato per tutta la partita: con un gol premuto per sbaglio e tolto al 9', un tabellone riacceso al 60' teneva bloccato quel lato, e il gol vero degli avversari al 78' non entrava più (chiusura 2-0 invece di 2-1)
 - **L'articolo della diretta si ricorda solo dopo che ha dato le formazioni.** Nel pomeriggio escono altri pezzi che nominano le stesse due squadre (i convocati, la presentazione): ricordarsi il primo che capita vuol dire rileggere per due ore qualcosa che non contiene niente
 
 ### La partita simulata
