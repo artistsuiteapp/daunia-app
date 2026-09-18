@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-18T08:40:51.346Z",
+  "generatedAt": "2026-09-18T09:00:54.925Z",
   "season": "2026-2027",
   "competition": "Serie C",
   "sources": {
@@ -22,6 +22,7 @@
     "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
     "API-Football rosa: Your account is suspended, check on https://dashboard.api-football.com.",
     "Trasferta a Inter U23 fra meno di una settimana e nessuna notizia sul divieto: controlla a mano, potrebbe essersi rotto il riconoscimento.",
+    "live-score-api 2026-08-16: HTTP 503",
     "Lega Pro: Foggia-Altamura e' finita da ore e non ha un id nel calendario della Lega: la formazione non entrera' mai nell'archivio"
   ]
 }
