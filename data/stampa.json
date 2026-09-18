@@ -27,6 +27,28 @@
   ],
   "articoli": [
     {
+      "id": "foggiacalciomania-85ba05e00c",
+      "testata": "foggiacalciomania",
+      "titolo": "Giudice sportivo: Foggia nessuna ammenda",
+      "sommario": "Il Giudice Sportivo Sostituto, Avv. Cosimo Taiuti, assistito da Irene Papi e dal Rappresentante dell’A.I.A. Sig. Silvano Torrini, nella seduta del 16 settembre 2026 ha adottato le…",
+      "url": "https://foggiacalciomania.com/news-foggia-calcio/giudice-sportivo/giudice-sportivo-foggia-nessuna-ammenda-8/",
+      "data": "2026-09-18T08:30:02.000Z",
+      "autore": "Redazione FCM 24 ore",
+      "categoria": "Giudice sportivo",
+      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2018/06/giudice-sportivo.jpg"
+    },
+    {
+      "id": "foggiacalciomania-01172b935b",
+      "testata": "foggiacalciomania",
+      "titolo": "InterU23-Foggia dirige Mazzer di Conegliano",
+      "sommario": "Sono state pubblicate le designazioni arbitrali per la terza giornata del campionato di Serie C. Ecco nel dettaglio le scelte relative al girone C: ALTAMURA-PICERNO Fabrizio…",
+      "url": "https://foggiacalciomania.com/news-foggia-calcio/designazioni/interu23-foggia-dirige-mazzer-di-conegliano/",
+      "data": "2026-09-18T08:24:45.000Z",
+      "autore": "Redazione FCM 24 ore",
+      "categoria": "Designazioni",
+      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2016/08/arbitro04.jpg"
+    },
+    {
       "id": "foggiacalciomania-3cf434d68f",
       "testata": "foggiacalciomania",
       "titolo": "Dopo Juventus e Atalanta… per il Foggia ci sarà l’Inter",
@@ -192,28 +214,6 @@
       "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Foggia-Savoia-4.jpeg"
     },
     {
-      "id": "foggiacalciomania-d4e004d51e",
-      "testata": "foggiacalciomania",
-      "titolo": "Il Foggia proprio non riesce a segnare. Finisce 0-0 contro un Savoia ordinato ma incocludente",
-      "sommario": "Con tutto il volume di gioco prodotto e la spinta offensiva, un’altra squadra avrebbe potuto segnare nel primo tempo almeno tre o quattro reti. Ma questo Foggia proprio non riesce…",
-      "url": "https://foggiacalciomania.com/news-foggia-calcio/la-cronaca/il-foggia-proprio-non-riesce-a-segnare-finisce-0-0-contro-un-savoia-ordinato-ma-incocludente/",
-      "data": "2026-09-15T21:01:45.000Z",
-      "autore": "Roberto Parisi",
-      "categoria": "La Cronaca",
-      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Foggia-Savoia-10.jpeg"
-    },
-    {
-      "id": "foggiacalciomania-a3cca170d4",
-      "testata": "foggiacalciomania",
-      "titolo": "Diretta: Foggia-Savoia 0 – 0 Foggia, un punto e tutti a casa",
-      "sommario": "Il Foggia non sa vincere, il Savoia porta a casa un prezioso punto. I rossoneri ne con Ravasio in avanti e ne con Luciani nella ripresa riescono a segnare un L'articolo Diretta…",
-      "url": "https://foggiacalciomania.com/news-foggia-calcio/diretta-foggia-savoia-0-0-ore-2100/",
-      "data": "2026-09-15T18:02:31.000Z",
-      "autore": "Redazione FCM 24 ore",
-      "categoria": "News Calcio Foggia 1920",
-      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2023/03/rete-foggia.jpg"
-    },
-    {
       "id": "calciofoggia-a61663a2e7",
       "testata": "calciofoggia",
       "titolo": "Foggia-Savoia 0-0 (risultato finale)",
@@ -335,5 +335,5 @@
       "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/WhatsApp-Image-2026-08-24-at-23.02.24.jpeg"
     }
   ],
-  "aggiornatoIl": "2026-09-18T08:20:53.758Z"
+  "aggiornatoIl": "2026-09-18T08:40:47.607Z"
 }
