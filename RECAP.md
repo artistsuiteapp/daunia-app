@@ -525,15 +525,17 @@ tabellone a mano, le formazioni dalle testate e il recupero.
 
 ### Prima, sul telefono
 
-Ricompilare l'app: `npm run telefono -w apps/mobile` (iPhone col cavo e
-sbloccato). Quella installata è del 15 settembre e **non ha il tabellone a mano,
-il recupero, i gol annullati e la tastiera sistemata nella chat**. Il guardiano
+Fatto il 18 settembre: l'app installata ha il tabellone a mano, il recupero, i
+gol annullati e la tastiera sistemata nella chat. Per ricompilare:
+`npm run telefono -w apps/mobile`, iPhone col cavo e **sbloccato per tutta la
+compilazione** (bloccato, Xcode non monta l'immagine di sviluppo e dopo qualche
+minuto si ferma con "Timed out waiting for all destinations"). Il guardiano
 nuovo invece è già in produzione (versione 44, dal 18 settembre) e la migrazione è applicata:
 formazioni e recupero dalle testate arrivano comunque.
 
 Servono ~8 GB liberi; se mancano si svuota `~/Library/Developer/Xcode/DerivedData`,
 **mai il runtime del simulatore**. La firma con Apple ID gratuito dura 7 giorni:
-l'app installata il 15 scade il 22.
+l'app installata il 18 scade il 25.
 
 ### Un'ora prima: le formazioni
 
