@@ -27,6 +27,28 @@
   ],
   "articoli": [
     {
+      "id": "foggiacalciomania-3cf434d68f",
+      "testata": "foggiacalciomania",
+      "titolo": "Dopo Juventus e Atalanta… per il Foggia ci sarà l’Inter",
+      "sommario": "Una vittoria, un pareggio, due sconfitte. È questo il bilancio del Foggia contro le squadre B, indicate anche come under 23, militanti nel terzo livello del calcio italiano. Nella…",
+      "url": "https://foggiacalciomania.com/news-foggia-calcio/statistiche/dopo-juventus-e-atalanta-per-il-foggia-ci-sara-linter/",
+      "data": "2026-09-18T08:17:16.000Z",
+      "autore": "Redazione FCM 24 ore",
+      "categoria": "Statistiche",
+      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Foggia-Savoia-11.jpeg"
+    },
+    {
+      "id": "foggiacalciomania-ad79ce90f2",
+      "testata": "foggiacalciomania",
+      "titolo": "Quando Vecchi sfidava il foggia dalla panchina estense",
+      "sommario": "Continua a prolungarsi, giornata dopo giornata, l’elenco delle sfide inedite per mister Gaetano Auteri. Dopo i faccia a faccia con Leandro Greco del Crotone, Serse Cosmi della…",
+      "url": "https://foggiacalciomania.com/news-foggia-calcio/statistiche/quando-vecchi-sfidava-il-foggia-dalla-panchina-estense/",
+      "data": "2026-09-18T08:15:32.000Z",
+      "autore": "Redazione FCM 24 ore",
+      "categoria": "Statistiche",
+      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Auteri-567-2.jpeg"
+    },
+    {
       "id": "calciofoggia-c50ac1f45a",
       "testata": "calciofoggia",
       "titolo": "Foggia, dopo cinque giornate i rossoneri in cerca della propria identità",
@@ -203,17 +225,6 @@
       "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Foggia-Savoia.png"
     },
     {
-      "id": "foggiacalciomania-6c5ae15ea1",
-      "testata": "foggiacalciomania",
-      "titolo": "Foggia-Savoia: i convocati rossoneri",
-      "sommario": "I convocati per Foggia-Savoia, in programma questa sera alle 21:00. Portieri: Marfella, Saro, Testa Difensori: Todisco, Seck, Di Pasquale, Maestrelli, Berra, Bigonzoni, Smeraldi…",
-      "url": "https://foggiacalciomania.com/news-foggia-calcio/foggia-savoia-i-convocati-rossoneri/",
-      "data": "2026-09-15T15:10:02.000Z",
-      "autore": "Redazione FCM 24 ore",
-      "categoria": "News Calcio Foggia 1920",
-      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/WhatsApp-Image-2026-09-06-at-21.57.58.jpeg"
-    },
-    {
       "id": "calciofoggia-12a913a32a",
       "testata": "calciofoggia",
       "titolo": "Foggia, con il Savoia obiettivo tre punti per riprendere il cammino in campionato",
@@ -223,17 +234,6 @@
       "autore": "Tiziano Errichiello",
       "categoria": "FOGGIA CALCIO",
       "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Auteri-al-San-Nicola-di-Bari-contro-il-Monopoli-Foto-Antonellis-Calcio-Foggia-1920.jpeg"
-    },
-    {
-      "id": "foggiacalciomania-272a9f85b2",
-      "testata": "foggiacalciomania",
-      "titolo": "Foggia-Savoia: le ultimissime",
-      "sommario": "Domani sera rossoneri in campo contro il Savoia. Auteri dovrebbe presentare la stessa formazione contro il Monopoli, forse Ravasio potrebbe giocare nella ripresa. Queste le…",
-      "url": "https://foggiacalciomania.com/news-foggia-calcio/ultimissime/foggia-savoia-le-ultimissime/",
-      "data": "2026-09-14T18:32:09.000Z",
-      "autore": "Redazione FCM 24 ore",
-      "categoria": "Ultimissime",
-      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/08/789653998_10239616419060783_1138873880567371313_n.jpg"
     },
     {
       "id": "calciofoggia-fe9aa55e48",
@@ -335,5 +335,5 @@
       "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/WhatsApp-Image-2026-08-24-at-23.02.24.jpeg"
     }
   ],
-  "aggiornatoIl": "2026-09-18T08:01:00.844Z"
+  "aggiornatoIl": "2026-09-18T08:20:53.758Z"
 }
