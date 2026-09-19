@@ -27,6 +27,17 @@
   ],
   "articoli": [
     {
+      "id": "calciofoggia-c95959e5ef",
+      "testata": "calciofoggia",
+      "titolo": "la sesta giornata",
+      "sommario": "La sesta giornata del girone C si disputerà tra sabato e domenica. Sabato 2 gare alle 14.30, 2 alle 17.30 e 3 alle 20.30, altre 3 domenica tra le 14.30 e le 17.30. Il big match…",
+      "url": "https://www.calciofoggia.it/la-sesta-giornata/",
+      "data": "2026-09-19T07:30:36.000Z",
+      "autore": "Mario Schena",
+      "categoria": "SERIE C",
+      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Petito-in-azione-contro-il-Savoia-Foto-Antonello-Forcelli.png"
+    },
+    {
       "id": "calciofoggia-f8701b6cf4",
       "testata": "calciofoggia",
       "titolo": "Il girone C dopo sole cinque giornate. Conferme, sorprese e delusioni",
@@ -258,17 +269,6 @@
       "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Mister-Auteri-contro-il-Savoia-Foto-Antonello-Forcelli.png"
     },
     {
-      "id": "calciofoggia-a61663a2e7",
-      "testata": "calciofoggia",
-      "titolo": "Foggia-Savoia 0-0 (risultato finale)",
-      "sommario": "Secondo tempo in corso 90’+7 – Triplice fischio allo “Zaccheria”: 0-0 tra Foggia e Savoia, con il Foggia che ci prova ma non sblocca il punteggio. 90’+6 – Tiro-cross di Martina…",
-      "url": "https://www.calciofoggia.it/foggia-savoia-campionato-2026-2027/",
-      "data": "2026-09-15T18:00:36.000Z",
-      "autore": "Armando Borrelli",
-      "categoria": "FOGGIA CALCIO",
-      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Foggia-Savoia.png"
-    },
-    {
       "id": "ilfoggia-9f741afccf",
       "testata": "ilfoggia",
       "titolo": "Cosmano Sport Soccer Trani – Risultato parziale",
@@ -335,5 +335,5 @@
       "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0804-scaled.jpg"
     }
   ],
-  "aggiornatoIl": "2026-09-19T07:20:51.276Z"
+  "aggiornatoIl": "2026-09-19T07:40:46.536Z"
 }
