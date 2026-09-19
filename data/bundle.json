@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-19T08:01:08.127Z",
+    "generatedAt": "2026-09-19T08:20:52.364Z",
     "season": "2026-2027",
     "competition": "Serie C",
     "sources": {
@@ -5056,6 +5056,17 @@
     ],
     "articoli": [
       {
+        "id": "calciofoggia-b793332562",
+        "testata": "calciofoggia",
+        "titolo": "L’avversario l’Inter under 23",
+        "sommario": "Il Football Club Internazionale Milano Under-23 , noto come Inter Milan Under-23 o semplicemente Inter U23 , è la squadra riserve dell’Inter fondata nel febbraio 2025, quando il…",
+        "url": "https://www.calciofoggia.it/lavversario-linter-under-23/",
+        "data": "2026-09-19T08:04:07.000Z",
+        "autore": "Mario Schena",
+        "categoria": "FOGGIA CALCIO",
+        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/foto-sito-inter-under-23.webp"
+      },
+      {
         "id": "calciofoggia-c95959e5ef",
         "testata": "calciofoggia",
         "titolo": "la sesta giornata",
@@ -5287,17 +5298,6 @@
         "immagine": "https://foggiacalciomania.com/wp-content/uploads/2025/08/palla334567.jpg"
       },
       {
-        "id": "calciofoggia-59ebabc470",
-        "testata": "calciofoggia",
-        "titolo": "Mister Auteri: “Avremmo meritato la vittoria, ma non abbiamo finalizzato. Siamo destinati a crescere”",
-        "sommario": "Gaetano Auteri ha analizzato a caldo il pareggio a reti inviolate con il Savoia, riconoscendo il rammarico per il risultato ma valorizzando la prestazione della squadra. «Questo è…",
-        "url": "https://www.calciofoggia.it/mister-auteri-avremmo-meritato-la-vittoria-ma-non-abbiamo-finalizzato-siamo-destinati-a-crescere/",
-        "data": "2026-09-15T21:25:43.000Z",
-        "autore": "Armando Borrelli",
-        "categoria": "FOGGIA CALCIO",
-        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Mister-Auteri-contro-il-Savoia-Foto-Antonello-Forcelli.png"
-      },
-      {
         "id": "ilfoggia-9f741afccf",
         "testata": "ilfoggia",
         "titolo": "Cosmano Sport Soccer Trani – Risultato parziale",
@@ -5364,6 +5364,6 @@
         "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0804-scaled.jpg"
       }
     ],
-    "aggiornatoIl": "2026-09-19T08:01:00.450Z"
+    "aggiornatoIl": "2026-09-19T08:20:43.572Z"
   }
 }
