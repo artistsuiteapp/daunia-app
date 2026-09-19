@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-19T14:01:28.054Z",
+    "generatedAt": "2026-09-19T14:20:57.518Z",
     "season": "2026-2027",
     "competition": "Serie C",
     "sources": {
@@ -24,7 +24,6 @@
       "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
       "API-Football rosa: Your account is suspended, check on https://dashboard.api-football.com.",
       "Trasferta a Inter U23 fra meno di una settimana e nessuna notizia sul divieto: controlla a mano, potrebbe essersi rotto il riconoscimento.",
-      "live-score-api eventi 2026-09-15: risposta illeggibile",
       "Lega Pro: Foggia-Altamura e' finita da ore e non ha un id nel calendario della Lega: la formazione non entrera' mai nell'archivio"
     ]
   },
@@ -798,6 +797,76 @@
       "foggiaResult": "D",
       "reportUrl": "https://www.transfermarkt.it/spielbericht/index/spielbericht/4979204",
       "source": "wikipedia",
+      "cards": [
+        {
+          "minute": 15,
+          "player": "M. Noce",
+          "side": "away",
+          "rosso": false
+        },
+        {
+          "minute": 45,
+          "player": "C. Fabriani",
+          "side": "away",
+          "rosso": false
+        },
+        {
+          "minute": 70,
+          "player": "S. Iob",
+          "side": "away",
+          "rosso": false
+        }
+      ],
+      "subs": [
+        {
+          "minute": 46,
+          "esce": "F. Scotti",
+          "entra": "P. Yeboah",
+          "side": "away"
+        },
+        {
+          "minute": 63,
+          "esce": "F. Zuccon",
+          "entra": "M. Coulibaly",
+          "side": "home"
+        },
+        {
+          "minute": 63,
+          "esce": "M. Ravasio",
+          "entra": "P. Luciani",
+          "side": "home"
+        },
+        {
+          "minute": 63,
+          "esce": "G. Panico",
+          "entra": "Y. Merdji",
+          "side": "home"
+        },
+        {
+          "minute": 63,
+          "esce": "A. Nepi",
+          "entra": "A. Gemello",
+          "side": "away"
+        },
+        {
+          "minute": 77,
+          "esce": "H. Haoudi",
+          "entra": "I. Toure",
+          "side": "home"
+        },
+        {
+          "minute": 83,
+          "esce": "D. Portanova",
+          "entra": "A. Martina",
+          "side": "away"
+        },
+        {
+          "minute": 89,
+          "esce": "F. Petito",
+          "entra": "M. Bigonzoni",
+          "side": "home"
+        }
+      ],
       "home": {
         "id": "foggia",
         "name": "CALCIO FOGGIA 1920",
@@ -5295,6 +5364,6 @@
         "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0804-scaled.jpg"
       }
     ],
-    "aggiornatoIl": "2026-09-19T14:01:25.675Z"
+    "aggiornatoIl": "2026-09-19T14:20:52.890Z"
   }
 }
