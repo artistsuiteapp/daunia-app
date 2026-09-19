@@ -510,6 +510,11 @@
       "ospiti": "SEF Torres Sassari"
     },
     {
+      "id": "6pryibaiuukgngmysvpysphw",
+      "casa": "Giugliano Calcio 1928",
+      "ospiti": "FC Scafatese"
+    },
+    {
       "id": "53nxp0srte7lacqe9peb5q1g",
       "casa": "SSC Bari",
       "ospiti": "Cavese 1919"
@@ -520,9 +525,9 @@
       "ospiti": "S.S.D. Casarano Calcio"
     },
     {
-      "id": "6pryibaiuukgngmysvpysphw",
-      "casa": "Giugliano Calcio 1928",
-      "ospiti": "FC Scafatese"
+      "id": "4p1fzrguyz7qd7w6ffykdnv8",
+      "casa": "Audace Cerignola",
+      "ospiti": "Cosenza Calcio"
     },
     {
       "id": "5i49na2qibjqmmoa6x8kg5xw",
@@ -530,9 +535,9 @@
       "ospiti": "SS Barletta"
     },
     {
-      "id": "4p1fzrguyz7qd7w6ffykdnv8",
-      "casa": "Audace Cerignola",
-      "ospiti": "Cosenza Calcio"
+      "id": "5wpj0ynzjc0jfsaeuvzr6xhw",
+      "casa": "Calcio Catania",
+      "ospiti": "Inter Milano"
     },
     {
       "id": "746l7m1kk4zvot5ue2q07pqs",
@@ -540,9 +545,9 @@
       "ospiti": "Savoia 1908"
     },
     {
-      "id": "5wpj0ynzjc0jfsaeuvzr6xhw",
-      "casa": "Calcio Catania",
-      "ospiti": "Inter Milano"
+      "id": "7xndd0e44y7fhkk0yyf2efx0",
+      "casa": "US Salernitana",
+      "ospiti": "ASD Sorrento 1945"
     },
     {
       "id": "6b8r0x460bmia4hqnpp0d9n8",
@@ -555,9 +560,9 @@
       "ospiti": "SS Monopoli"
     },
     {
-      "id": "7xndd0e44y7fhkk0yyf2efx0",
-      "casa": "US Salernitana",
-      "ospiti": "ASD Sorrento 1945"
+      "id": "8l5mg3fzcv9o342y89vm0q38",
+      "casa": "S.S.D. Casarano Calcio",
+      "ospiti": "Giugliano Calcio 1928"
     },
     {
       "id": "8wtgs3c5eub5rwbnwxpik6xg",
@@ -568,11 +573,6 @@
       "id": "89eqg4iab5zvc3z4yctxv66s",
       "casa": "SS Barletta",
       "ospiti": "SSC Bari"
-    },
-    {
-      "id": "8l5mg3fzcv9o342y89vm0q38",
-      "casa": "S.S.D. Casarano Calcio",
-      "ospiti": "Giugliano Calcio 1928"
     },
     {
       "id": "avk3flpwm4jzeiamwbdkfpck",
@@ -600,19 +600,24 @@
       "ospiti": "Team Altamura"
     },
     {
-      "id": "a7xiqxkl51xnbtkfpr8qbqqc",
-      "casa": "SS Monopoli",
-      "ospiti": "Calcio Catania"
-    },
-    {
       "id": "98kwgg6hmkup8ixlur6fvc44",
       "casa": "Cosenza Calcio",
       "ospiti": "Potenza Calcio"
     },
     {
+      "id": "a7xiqxkl51xnbtkfpr8qbqqc",
+      "casa": "SS Monopoli",
+      "ospiti": "Calcio Catania"
+    },
+    {
       "id": "ctxzvj0htq77ui6n879fwhzo",
       "casa": "FC Crotone",
       "ospiti": "SS Barletta"
+    },
+    {
+      "id": "buolpsyjyvo1wu7r3ejml9n8",
+      "casa": "SSC Bari",
+      "ospiti": "S.S.D. Casarano Calcio"
     },
     {
       "id": "e5optkha5vpmy2ag7xvtrwgk",
@@ -623,11 +628,6 @@
       "id": "dhk96j2jszw5rwxmxwi18xsk",
       "casa": "Giugliano Calcio 1928",
       "ospiti": "ASD Sorrento 1945"
-    },
-    {
-      "id": "buolpsyjyvo1wu7r3ejml9n8",
-      "casa": "SSC Bari",
-      "ospiti": "S.S.D. Casarano Calcio"
     },
     {
       "id": "ehcfgsgtwv2vdieyb5wt5kwk",
@@ -660,6 +660,16 @@
       "ospiti": "Inter Milano"
     },
     {
+      "id": "h3ej1f6ixxzg1l3i4vfmsn4k",
+      "casa": "US Salernitana",
+      "ospiti": "Potenza Calcio"
+    },
+    {
+      "id": "fggp98epvhginnzsr2an493o",
+      "casa": "S.S.D. Casarano Calcio",
+      "ospiti": "SS Barletta"
+    },
+    {
       "id": "et4zghhs6czpowrevbhhm4no",
       "casa": "Team Altamura",
       "ospiti": "SSC Bari"
@@ -668,16 +678,6 @@
       "id": "f4uniqz1vut311to960ra2hg",
       "casa": "Audace Cerignola",
       "ospiti": "Giugliano Calcio 1928"
-    },
-    {
-      "id": "fggp98epvhginnzsr2an493o",
-      "casa": "S.S.D. Casarano Calcio",
-      "ospiti": "SS Barletta"
-    },
-    {
-      "id": "h3ej1f6ixxzg1l3i4vfmsn4k",
-      "casa": "US Salernitana",
-      "ospiti": "Potenza Calcio"
     },
     {
       "id": "g3zr9zjxncynypa15uyp4f10",
@@ -695,19 +695,24 @@
       "ospiti": "FC Crotone"
     },
     {
-      "id": "hqzs60llsd285bh45mnf2s5w",
-      "casa": "ASD Sorrento 1945",
-      "ospiti": "AZ Picerno"
-    },
-    {
       "id": "grmfjbiuq1zzl5pyxmry4vf8",
       "casa": "SS Monopoli",
       "ospiti": "Calcio Foggia"
     },
     {
+      "id": "hqzs60llsd285bh45mnf2s5w",
+      "casa": "ASD Sorrento 1945",
+      "ospiti": "AZ Picerno"
+    },
+    {
       "id": "fs4xf0roeb632umntfw4yihg",
       "casa": "Calcio Catania",
       "ospiti": "FC Scafatese"
+    },
+    {
+      "id": "kcx32k2ybl0m4bzkut5l2vpw",
+      "casa": "Giugliano Calcio 1928",
+      "ospiti": "Cosenza Calcio"
     },
     {
       "id": "jpfigoscu5d7e0m2q2eitatw",
@@ -720,19 +725,14 @@
       "ospiti": "Calcio Catania"
     },
     {
-      "id": "kcx32k2ybl0m4bzkut5l2vpw",
-      "casa": "Giugliano Calcio 1928",
-      "ospiti": "Cosenza Calcio"
-    },
-    {
       "id": "j20lbk5bblmfjhfb6rm1f9ck",
       "casa": "Casertana FC",
       "ospiti": "Team Altamura"
     },
     {
-      "id": "iq5o78ndevzaahusikxv8yz8",
-      "casa": "S.S.D. Casarano Calcio",
-      "ospiti": "Audace Cerignola"
+      "id": "l0g5j3n582z1rcht2f2b4ems",
+      "casa": "FC Scafatese",
+      "ospiti": "SS Monopoli"
     },
     {
       "id": "k164ffackxm24dnh3vzcl8gk",
@@ -740,9 +740,9 @@
       "ospiti": "Savoia 1908"
     },
     {
-      "id": "i2o4n4y026sgdsxz7ck8n2tw",
-      "casa": "SSC Bari",
-      "ospiti": "Potenza Calcio"
+      "id": "iq5o78ndevzaahusikxv8yz8",
+      "casa": "S.S.D. Casarano Calcio",
+      "ospiti": "Audace Cerignola"
     },
     {
       "id": "ieda2zsdozi6gheykvdyv2tw",
@@ -750,14 +750,14 @@
       "ospiti": "US Salernitana"
     },
     {
+      "id": "i2o4n4y026sgdsxz7ck8n2tw",
+      "casa": "SSC Bari",
+      "ospiti": "Potenza Calcio"
+    },
+    {
       "id": "jdo145thkcxrd1ef9wqu47pw",
       "casa": "Cavese 1919",
       "ospiti": "ASD Sorrento 1945"
-    },
-    {
-      "id": "l0g5j3n582z1rcht2f2b4ems",
-      "casa": "FC Scafatese",
-      "ospiti": "SS Monopoli"
     },
     {
       "id": "mbcrv17x87a6bt3daq9qygic",
@@ -780,6 +780,11 @@
       "ospiti": "Casertana FC"
     },
     {
+      "id": "lc6n7zxdy35v26ucbcprk1zo",
+      "casa": "Team Altamura",
+      "ospiti": "AZ Picerno"
+    },
+    {
       "id": "lzls6cimbf4k4rqqkd2cv384",
       "casa": "Calcio Catania",
       "ospiti": "SS Barletta"
@@ -788,11 +793,6 @@
       "id": "nmt4fnoq4c6yhvcbtthrgmqc",
       "casa": "US Salernitana",
       "ospiti": "Giugliano Calcio 1928"
-    },
-    {
-      "id": "lc6n7zxdy35v26ucbcprk1zo",
-      "casa": "Team Altamura",
-      "ospiti": "AZ Picerno"
     }
   ]
 }
