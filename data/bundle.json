@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-19T20:40:53.117Z",
+    "generatedAt": "2026-09-19T21:01:06.557Z",
     "season": "2026-2027",
     "competition": "Serie C",
     "sources": {
@@ -23,6 +23,7 @@
       "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
       "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
       "API-Football rosa: Your account is suspended, check on https://dashboard.api-football.com.",
+      "Divieti, FoggiaToday: HTTP 403 su https://www.foggiatoday.it/rss",
       "Trasferta a Inter U23 fra meno di una settimana e nessuna notizia sul divieto: controlla a mano, potrebbe essersi rotto il riconoscimento.",
       "Lega Pro: Foggia-Altamura e' finita da ore e non ha un id nel calendario della Lega: la formazione non entrera' mai nell'archivio"
     ]
@@ -5364,6 +5365,6 @@
         "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0804-scaled.jpg"
       }
     ],
-    "aggiornatoIl": "2026-09-19T20:40:49.995Z"
+    "aggiornatoIl": "2026-09-19T21:01:03.431Z"
   }
 }
