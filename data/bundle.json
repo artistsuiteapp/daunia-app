@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-19T20:34:16.864Z",
+    "generatedAt": "2026-09-19T20:40:53.117Z",
     "season": "2026-2027",
     "competition": "Serie C",
     "sources": {
@@ -2051,8 +2051,8 @@
       "won": 2,
       "drawn": 1,
       "lost": 3,
-      "goalsFor": 9,
-      "goalsAgainst": 7,
+      "goalsFor": 10,
+      "goalsAgainst": 8,
       "goalDiff": 2,
       "points": 7,
       "penalty": 0,
@@ -5364,6 +5364,6 @@
         "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0804-scaled.jpg"
       }
     ],
-    "aggiornatoIl": "2026-09-19T20:20:54.155Z"
+    "aggiornatoIl": "2026-09-19T20:40:49.995Z"
   }
 }
