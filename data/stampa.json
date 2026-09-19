@@ -27,6 +27,17 @@
   ],
   "articoli": [
     {
+      "id": "calciofoggia-6281a3f94b",
+      "testata": "calciofoggia",
+      "titolo": "Casella a Kick Off: “Margini notevoli, serve tempo. Questo gruppo può stare a sinistra della classifica”",
+      "sommario": "Il direttore sportivo Alex Casella è intervenuto ieri sera a Kick Off, la trasmissione condotta da Tiziano Errichiello in onda su FoggiaTv, per analizzare il momento del Foggia…",
+      "url": "https://www.calciofoggia.it/casella-a-kick-off-margini-notevoli-serve-tempo-questo-gruppo-puo-stare-a-sinistra-della-classifica/",
+      "data": "2026-09-19T09:00:17.000Z",
+      "autore": "Armando Borrelli",
+      "categoria": "FOGGIA CALCIO",
+      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/08/Alex-Casella-Foto-Antonello-Forcelli.png"
+    },
+    {
       "id": "calciofoggia-b793332562",
       "testata": "calciofoggia",
       "titolo": "L’avversario l’Inter under 23",
@@ -247,17 +258,6 @@
       "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Il-Foggia-in-campo-contro-il-Savoia-Foto-Antonello-Forcelli.png"
     },
     {
-      "id": "calciofoggia-5f44ba31df",
-      "testata": "calciofoggia",
-      "titolo": "Risultati, marcatori e classifica 5ª giornata",
-      "sommario": "Il Foggia non riesce a trovare la vittoria allo Zaccheria contro il Savoia: la gara termina 0-0, con i rossoneri che salgono a quota 5 punti. In vetta continua la marcia del…",
-      "url": "https://www.calciofoggia.it/risultati-marcatori-e-classifica-5a-giornata-2/",
-      "data": "2026-09-15T21:32:16.000Z",
-      "autore": "Fabio Bertazzoli",
-      "categoria": "SERIE C",
-      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2025/06/Pallone-Lega-Pro-Decathlon.jpg"
-    },
-    {
       "id": "foggiacalciomania-1b237ade60",
       "testata": "foggiacalciomania",
       "titolo": "Serie C girone C: risultati e marcatori 5a giornata",
@@ -335,5 +335,5 @@
       "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0804-scaled.jpg"
     }
   ],
-  "aggiornatoIl": "2026-09-19T09:00:55.800Z"
+  "aggiornatoIl": "2026-09-19T09:20:59.739Z"
 }
