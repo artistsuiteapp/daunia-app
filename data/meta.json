@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-20T17:01:05.938Z",
+  "generatedAt": "2026-09-20T17:22:07.706Z",
   "season": "2026-2027",
   "competition": "Serie C",
   "sources": {
@@ -23,7 +23,6 @@
     "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
     "API-Football rosa: Your account is suspended, check on https://dashboard.api-football.com.",
     "Lega Pro: Inter U23-Foggia e' finita da ore e non ha un id nel calendario della Lega: la formazione non entrera' mai nell'archivio",
-    "Lega Pro: Foggia-Altamura e' finita da ore e non ha un id nel calendario della Lega: la formazione non entrera' mai nell'archivio",
-    "Stampa, CalcioFoggia.it: HTTP 415 su https://www.calciofoggia.it/feed/"
+    "Lega Pro: Foggia-Altamura e' finita da ore e non ha un id nel calendario della Lega: la formazione non entrera' mai nell'archivio"
   ]
 }
