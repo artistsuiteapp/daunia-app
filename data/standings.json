@@ -86,6 +86,23 @@
   },
   {
     "position": 6,
+    "teamId": "inter-u23",
+    "teamName": "Inter U23",
+    "crest": null,
+    "played": 6,
+    "won": 3,
+    "drawn": 1,
+    "lost": 2,
+    "goalsFor": 11,
+    "goalsAgainst": 11,
+    "goalDiff": 0,
+    "points": 10,
+    "penalty": 0,
+    "isFoggia": false,
+    "zone": "playoff"
+  },
+  {
+    "position": 7,
     "teamId": "casarano",
     "teamName": "Casarano",
     "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2019/09/Logo_Casarano-296x300.png",
@@ -102,7 +119,7 @@
     "zone": "playoff"
   },
   {
-    "position": 7,
+    "position": 8,
     "teamId": "az-picerno",
     "teamName": "AZ Picerno",
     "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2021/08/picerno-logo-new-768x923.png",
@@ -119,7 +136,7 @@
     "zone": "playoff"
   },
   {
-    "position": 8,
+    "position": 9,
     "teamId": "salernitana",
     "teamName": "Salernitana",
     "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2025/08/us-salernitana-768x768.png",
@@ -136,7 +153,7 @@
     "zone": "playoff"
   },
   {
-    "position": 9,
+    "position": 10,
     "teamId": "monopoli",
     "teamName": "Monopoli",
     "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/Monopoli_SS_1966_Since_2014-1.png",
@@ -153,7 +170,7 @@
     "zone": "playoff"
   },
   {
-    "position": 10,
+    "position": 11,
     "teamId": "catania",
     "teamName": "Catania",
     "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/catania.png",
@@ -167,10 +184,10 @@
     "points": 7,
     "penalty": 0,
     "isFoggia": false,
-    "zone": "playoff"
+    "zone": null
   },
   {
-    "position": 11,
+    "position": 12,
     "teamId": "barletta",
     "teamName": "Barletta",
     "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2026/09/ssbarletta-443x500.png",
@@ -181,23 +198,6 @@
     "goalsFor": 10,
     "goalsAgainst": 9,
     "goalDiff": 1,
-    "points": 7,
-    "penalty": 0,
-    "isFoggia": false,
-    "zone": null
-  },
-  {
-    "position": 12,
-    "teamId": "inter-u23",
-    "teamName": "Inter U23",
-    "crest": null,
-    "played": 5,
-    "won": 2,
-    "drawn": 1,
-    "lost": 2,
-    "goalsFor": 8,
-    "goalsAgainst": 9,
-    "goalDiff": -1,
     "points": 7,
     "penalty": 0,
     "isFoggia": false,
@@ -276,13 +276,13 @@
     "teamId": "foggia",
     "teamName": "Foggia",
     "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png",
-    "played": 5,
+    "played": 6,
     "won": 1,
     "drawn": 2,
-    "lost": 2,
-    "goalsFor": 2,
-    "goalsAgainst": 4,
-    "goalDiff": -2,
+    "lost": 3,
+    "goalsFor": 4,
+    "goalsAgainst": 7,
+    "goalDiff": -3,
     "points": 5,
     "penalty": 0,
     "isFoggia": true,
