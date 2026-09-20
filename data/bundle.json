@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-20T13:01:13.977Z",
+    "generatedAt": "2026-09-20T13:21:09.762Z",
     "season": "2026-2027",
     "competition": "Serie C",
     "sources": {
@@ -24,7 +24,6 @@
       "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
       "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
       "API-Football rosa: Your account is suspended, check on https://dashboard.api-football.com.",
-      "Divieti, FoggiaToday: HTTP 403 su https://www.foggiatoday.it/rss",
       "Lega Pro: Foggia-Altamura e' finita da ore e non ha un id nel calendario della Lega: la formazione non entrera' mai nell'archivio"
     ]
   },
@@ -5059,8 +5058,8 @@
       {
         "id": "foggiacalciomania-bb908745d3",
         "testata": "foggiacalciomania",
-        "titolo": "Diretta: Inter U23-Foggia 0 – 0 Formazioni ufficiali",
-        "sommario": "| Inter U23-Foggia 0 – 0 | Rete: | Inter U23 (3-4-1-2): Melgrati; Bovio, Garonetti, Jakirovic; Avitabile, Fiordilino, Kaczmarski, Milani; Mancuso; Fumagalli, Lavelli A…",
+        "titolo": "Diretta: Inter U23-Foggia 1 – 1 Primo tempo in corso",
+        "sommario": "| Inter U23-Foggia 1 – 1 | Reti: 3′ Merdji, 5′ Milani| Inter U23 (3-4-1-2): Melgrati; Bovio, Garonetti, Jakirovic; Avitabile, Fiordilino, Kaczmarski, Milani; Mancuso; Fumagalli…",
         "url": "https://foggiacalciomania.com/news-foggia-calcio/diretta-inter-u23-foggia-0-0-ore-1500/",
         "data": "2026-09-20T12:18:34.000Z",
         "autore": "Redazione FCM 24 ore",
@@ -5070,8 +5069,8 @@
       {
         "id": "calciofoggia-29ffa4c1ed",
         "testata": "calciofoggia",
-        "titolo": "Inter U23 – Foggia 0-0 (primo tempo in corso)",
-        "sommario": "Primo tempo 1′ – Inizia il primo tempo di Inter U23-Foggia. Formazioni ufficiali Inter U23: Melgrati, Avitabile, Kaczmarski, Fiordilino, Mancuso, Lavelli, Bovio, Milani…",
+        "titolo": "Inter U23 – Foggia 1-1 (primo tempo in corso)",
+        "sommario": "Primo tempo in corso 17′ – Altro cross di Petito, troppo su Melgrati che fa suo il pallone. 13′ – Sostituzione Foggia: dentro Maestrelli al posto di un infortunato Smeraldi…",
         "url": "https://www.calciofoggia.it/inter-under-23-foggia-campionato-2026-2027/",
         "data": "2026-09-20T12:00:02.000Z",
         "autore": "Armando Borrelli",
@@ -5365,6 +5364,6 @@
         "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0804-scaled.jpg"
       }
     ],
-    "aggiornatoIl": "2026-09-20T13:01:10.242Z"
+    "aggiornatoIl": "2026-09-20T13:20:57.833Z"
   }
 }
