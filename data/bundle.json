@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-20T20:23:57.418Z",
+    "generatedAt": "2026-09-20T20:40:54.298Z",
     "season": "2026-2027",
     "competition": "Serie C",
     "sources": {
@@ -5648,6 +5648,28 @@
     ],
     "articoli": [
       {
+        "id": "foggiacalciomania-752448a72f",
+        "testata": "foggiacalciomania",
+        "titolo": "Serie C girone C: risultati e marcatori 6a giornata",
+        "sommario": "Il Sorrento nonostante la sconfitta casalinga ad opera del Bari resta in testa alla classifica. Domenica i sorrentini saranno di scena a Foggia. Pareggio del Cerignola in casa…",
+        "url": "https://foggiacalciomania.com/news-foggia-calcio/serie-c-girone-c-risultati-e-marcatori-6a-giornata-4/",
+        "data": "2026-09-20T18:06:46.000Z",
+        "autore": "Redazione FCM 24 ore",
+        "categoria": "News Calcio Foggia 1920",
+        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2025/08/palla334567.jpg"
+      },
+      {
+        "id": "foggiacalciomania-d7707a85f4",
+        "testata": "foggiacalciomania",
+        "titolo": "Serie D Girone H: risultati 4a giornata",
+        "sommario": "Martina ko contro la Virtus Francavilla. Ok Turris, Melfi e Manfredonia. SERIE D/H, 4a GIORNATA Gravina-Real Forio 2-2 Ischia-Nardò 1-2 Gladiator-Fidelis Andria 3-1…",
+        "url": "https://foggiacalciomania.com/dilettanti/serie-d-girone-h-risultati-4a-giornata/",
+        "data": "2026-09-20T17:57:05.000Z",
+        "autore": "Redazione FCM 24 ore",
+        "categoria": "Dilettanti",
+        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2025/08/palla334567.jpg"
+      },
+      {
         "id": "calciofoggia-e44d32bf0d",
         "testata": "calciofoggia",
         "titolo": "Risultati, marcatori e classifica 6ª giornata",
@@ -5657,6 +5679,28 @@
         "autore": "Fabio Bertazzoli",
         "categoria": "SERIE C",
         "immagine": "https://www.calciofoggia.it/wp-content/uploads/2025/06/Pallone-Lega-Pro-Decathlon.jpg"
+      },
+      {
+        "id": "foggiacalciomania-be58113830",
+        "testata": "foggiacalciomania",
+        "titolo": "Top & Flop di Inter U23-Foggia",
+        "sommario": "Il Foggia esce sconfitto dallo stadio Ernesto Breda contro l’Inter U23. Passato in vantaggio con Merdji i rossoneri subiscono tre reti, nei minuti di recupero Ravasio accorcia le…",
+        "url": "https://foggiacalciomania.com/news-foggia-calcio/top-flop/top-flop-di-inter-u23-foggia/",
+        "data": "2026-09-20T17:19:59.000Z",
+        "autore": "Redazione FCM 24 ore",
+        "categoria": "Top & Flop",
+        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Inter-3-2-Foggia-2026-1.jpeg"
+      },
+      {
+        "id": "foggiacalciomania-efebbb434e",
+        "testata": "foggiacalciomania",
+        "titolo": "Lo Zac ed il racconto della partita Inter U23-Foggia",
+        "sommario": "Clicca qui per sfogliare gratuitamente il giornale Qui sotto il pdf da scaricare Lo Zac 20 Settembre 2026 L'articolo Lo Zac ed il racconto della partita Inter U23-Foggia proviene…",
+        "url": "https://foggiacalciomania.com/news-foggia-calcio/lo-zac-ed-il-racconto-della-partita-inter-u23-foggia/",
+        "data": "2026-09-20T15:57:33.000Z",
+        "autore": "Roberto Parisi",
+        "categoria": "News Calcio Foggia 1920",
+        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/page_1-3.png"
       },
       {
         "id": "calciofoggia-2402b284cd",
@@ -5670,6 +5714,17 @@
         "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Ravasio-e-Luciani-Foto-Antonellis-Calcio-Foggia-1920.png"
       },
       {
+        "id": "foggiacalciomania-cb9b46a97a",
+        "testata": "foggiacalciomania",
+        "titolo": "Ravasio: “Dispiaciuto per i tanti tifosi al seguito della squadra”",
+        "sommario": "Entra nella fase finale della gara e trova l’occasione per spingere la palla in rete nei minuti di recupero. Troppo tardi per riaprire la partita, ma un segnale positivo per…",
+        "url": "https://foggiacalciomania.com/news-foggia-calcio/sala-stampa/ravasio-dispiaciuto-per-i-tanti-tifosi-al-seguito-della-squadra/",
+        "data": "2026-09-20T15:49:47.000Z",
+        "autore": "Roberto Parisi",
+        "categoria": "Sala stampa",
+        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Inter-3-2-Foggia-2026-5.jpeg"
+      },
+      {
         "id": "calciofoggia-f819641b8f",
         "testata": "calciofoggia",
         "titolo": "Auteri: “Siamo competitivi, usciamo con serenità lavorando sulle negatività”",
@@ -5679,6 +5734,50 @@
         "autore": "Armando Borrelli",
         "categoria": "FOGGIA CALCIO",
         "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Mister-Auteri-contro-il-Savoia-Foto-Antonello-Forcelli.png"
+      },
+      {
+        "id": "foggiacalciomania-05d088fd8c",
+        "testata": "foggiacalciomania",
+        "titolo": "Auteri: “Usciremo da questo periodo”",
+        "sommario": "Il Foggia esce sconfitto per 3-1 dal campo dell’Inter U23. I rossoneri, passati in vantaggio dopo appena tre minuti, non sono riusciti a gestire il risultato e hanno subito la…",
+        "url": "https://foggiacalciomania.com/news-foggia-calcio/sala-stampa/auteri-usciremo-da-questo-periodo/",
+        "data": "2026-09-20T15:45:46.000Z",
+        "autore": "Roberto Parisi",
+        "categoria": "Sala stampa",
+        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Auteri-567-2.jpeg"
+      },
+      {
+        "id": "foggiacalciomania-87526d77cb",
+        "testata": "foggiacalciomania",
+        "titolo": "Le pagelle di Inter U23-Foggia",
+        "sommario": "Saro: Senza colpe nell’occasione della rete del pareggio dell’Inter, così per la seconda rete. Nella ripresa compie due parate importanti che evitano un passivo più pesante. Voto…",
+        "url": "https://foggiacalciomania.com/news-foggia-calcio/pagelle/le-pagelle-di-inter-u23-foggia/",
+        "data": "2026-09-20T15:40:12.000Z",
+        "autore": "Roberto Parisi",
+        "categoria": "Pagelle",
+        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Inter-U23-Foggia-2026-8.jpeg"
+      },
+      {
+        "id": "foggiacalciomania-8cad67e098",
+        "testata": "foggiacalciomania",
+        "titolo": "Foggia, “tutto fumo e niente arrosto”. Altra sconfitta, questa volta in casa dell’Inter U23",
+        "sommario": "Dei 2600 spettatori, la metà del settore ospiti erano foggiani, l’altra metà in tribuna idem. Completamente rossonero lo stadio Breda che ha ospitato una gara sicuramente…",
+        "url": "https://foggiacalciomania.com/news-foggia-calcio/la-cronaca/foggia-tutto-fumo-e-niente-arrosto-altra-sconfitta-questa-volta-in-casa-dellinter-u23/",
+        "data": "2026-09-20T15:11:55.000Z",
+        "autore": "Roberto Parisi",
+        "categoria": "La Cronaca",
+        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Inter-3-2-Foggia-2026-2.jpeg"
+      },
+      {
+        "id": "foggiacalciomania-bb908745d3",
+        "testata": "foggiacalciomania",
+        "titolo": "Diretta: Inter U23-Foggia 3 – 2 Vincono i nerazzurri, Foggia non pervenuto",
+        "sommario": "Nulla da fare il Foggia porta a casa zero punti, inutile il gol di Ravasio nei minuti di repure, ora domenica prossima arriva allo Zaccheria il Sorrento capolista. | Inter…",
+        "url": "https://foggiacalciomania.com/news-foggia-calcio/diretta-inter-u23-foggia-0-0-ore-1500/",
+        "data": "2026-09-20T12:18:34.000Z",
+        "autore": "Redazione FCM 24 ore",
+        "categoria": "News Calcio Foggia 1920",
+        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/04/rete.jpg"
       },
       {
         "id": "calciofoggia-29ffa4c1ed",
@@ -5701,6 +5800,17 @@
         "autore": "Tiziano Errichiello",
         "categoria": "FOGGIA CALCIO",
         "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/stadio-breda-di-sesto-san-giovanni.jpg"
+      },
+      {
+        "id": "foggiacalciomania-4b6df65c18",
+        "testata": "foggiacalciomania",
+        "titolo": "Inter U23-Foggia: le ultimissime",
+        "sommario": "Rossoneri domani in campo alle ore 15:00, l’Inter U23, allo Stadio Ernesto Breda di Sesto San Giovanni. Saranno assenti nel Foggia Demeter, Oviszach e Del Sole. Queste probabili…",
+        "url": "https://foggiacalciomania.com/news-foggia-calcio/ultimissime/inter-u23-foggia-le-ultimissime/",
+        "data": "2026-09-19T16:17:08.000Z",
+        "autore": "Redazione FCM 24 ore",
+        "categoria": "Ultimissime",
+        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/WhatsApp-Image-2026-09-06-at-21.57.58.jpeg"
       },
       {
         "id": "calciofoggia-6281a3f94b",
@@ -5846,6 +5956,6 @@
         "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0804-scaled.jpg"
       }
     ],
-    "aggiornatoIl": "2026-09-20T20:20:43.266Z"
+    "aggiornatoIl": "2026-09-20T20:40:46.300Z"
   }
 }
