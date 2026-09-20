@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-20T15:41:05.361Z",
+    "generatedAt": "2026-09-20T16:01:26.431Z",
     "season": "2026-2027",
     "competition": "Serie C",
     "sources": {
@@ -23,6 +23,7 @@
       "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
       "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
       "API-Football rosa: Your account is suspended, check on https://dashboard.api-football.com.",
+      "Lega Pro: Inter U23-Foggia e' finita da ore e non ha un id nel calendario della Lega: la formazione non entrera' mai nell'archivio",
       "Lega Pro: Foggia-Altamura e' finita da ore e non ha un id nel calendario della Lega: la formazione non entrera' mai nell'archivio"
     ]
   },
@@ -5648,6 +5649,61 @@
     ],
     "articoli": [
       {
+        "id": "foggiacalciomania-d152b83b44",
+        "testata": "foggiacalciomania",
+        "titolo": "Lo Zac ed il racconto della partita Inter U23-Foggia",
+        "sommario": "Clicca qui per sfogliare gratuitamente il giornale Qui sotto il pdf da scaricare Lo Zac 20 Settembre 2026 L'articolo Lo Zac ed il racconto della partita Inter U23-Foggia proviene…",
+        "url": "https://foggiacalciomania.com/news-foggia-calcio/ultimissime/lo-zac-ed-il-racconto-della-partita-inter-u23-foggia/",
+        "data": "2026-09-20T15:57:33.000Z",
+        "autore": "Roberto Parisi",
+        "categoria": "News Calcio Foggia 1920",
+        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/page_1-3.png"
+      },
+      {
+        "id": "calciofoggia-2402b284cd",
+        "testata": "calciofoggia",
+        "titolo": "Ravasio: “Abbiamo fatto una buona partita, ma dobbiamo essere più cattivi. I gol arriveranno”",
+        "sommario": "Mario Ravasio, autore di uno dei gol del Foggia, ha commentato a caldo la sconfitta per 3-2 sul campo dell’Inter U23 nel corso di “Direttissima”, la trasmissione condotta da…",
+        "url": "https://www.calciofoggia.it/ravasio-abbiamo-fatto-una-buona-partita-ma-dobbiamo-essere-piu-cattivi-i-gol-arriveranno/",
+        "data": "2026-09-20T15:52:27.000Z",
+        "autore": "Armando Borrelli",
+        "categoria": "FOGGIA CALCIO",
+        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Ravasio-e-Luciani-Foto-Antonellis-Calcio-Foggia-1920.png"
+      },
+      {
+        "id": "foggiacalciomania-cb9b46a97a",
+        "testata": "foggiacalciomania",
+        "titolo": "Ravasio: “Dispiaciuto per i tanti tifosi al seguito della squadra”",
+        "sommario": "Entra nella fase finale della gara e trova l’occasione per spingere la palla in rete nei minuti di recupero. Troppo tardi per riaprire la partita, ma un segnale positivo per…",
+        "url": "https://foggiacalciomania.com/news-foggia-calcio/sala-stampa/ravasio-dispiaciuto-per-i-tanti-tifosi-al-seguito-della-squadra/",
+        "data": "2026-09-20T15:49:47.000Z",
+        "autore": "Roberto Parisi",
+        "categoria": "Sala stampa",
+        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Inter-3-2-Foggia-2026-5.jpeg"
+      },
+      {
+        "id": "calciofoggia-f819641b8f",
+        "testata": "calciofoggia",
+        "titolo": "Auteri: “Siamo competitivi, usciamo con serenità lavorando sulle negatività”",
+        "sommario": "Gaetano Auteri, durante “Direttissima” la trasmissione di FoggiaTv condotta da Tiziano Errichiello, ha analizzato a caldo la sconfitta per 3-2 sul campo dell’Inter U23…",
+        "url": "https://www.calciofoggia.it/auteri-siamo-competitivi-usciamo-con-serenita-lavorando-sulle-negativita/",
+        "data": "2026-09-20T15:46:26.000Z",
+        "autore": "Armando Borrelli",
+        "categoria": "FOGGIA CALCIO",
+        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Mister-Auteri-contro-il-Savoia-Foto-Antonello-Forcelli.png"
+      },
+      {
+        "id": "foggiacalciomania-05d088fd8c",
+        "testata": "foggiacalciomania",
+        "titolo": "Auteri: “Usciremo da questo periodo”",
+        "sommario": "Il Foggia esce sconfitto per 3-1 dal campo dell’Inter U23. I rossoneri, passati in vantaggio dopo appena tre minuti, non sono riusciti a gestire il risultato e hanno subito la…",
+        "url": "https://foggiacalciomania.com/news-foggia-calcio/sala-stampa/auteri-usciremo-da-questo-periodo/",
+        "data": "2026-09-20T15:45:46.000Z",
+        "autore": "Roberto Parisi",
+        "categoria": "Sala stampa",
+        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Auteri-567-2.jpeg"
+      },
+      {
         "id": "foggiacalciomania-87526d77cb",
         "testata": "foggiacalciomania",
         "titolo": "Le pagelle di Inter U23-Foggia",
@@ -5655,7 +5711,7 @@
         "url": "https://foggiacalciomania.com/news-foggia-calcio/pagelle/le-pagelle-di-inter-u23-foggia/",
         "data": "2026-09-20T15:40:12.000Z",
         "autore": "Roberto Parisi",
-        "categoria": "News Calcio Foggia 1920",
+        "categoria": "Pagelle",
         "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Inter-U23-Foggia-2026-8.jpeg"
       },
       {
@@ -5824,50 +5880,6 @@
         "immagine": "https://foggiacalciomania.com/wp-content/uploads/2016/08/arbitro04.jpg"
       },
       {
-        "id": "foggiacalciomania-3cf434d68f",
-        "testata": "foggiacalciomania",
-        "titolo": "Dopo Juventus e Atalanta… per il Foggia ci sarà l’Inter",
-        "sommario": "Una vittoria, un pareggio, due sconfitte. È questo il bilancio del Foggia contro le squadre B, indicate anche come under 23, militanti nel terzo livello del calcio italiano. Nella…",
-        "url": "https://foggiacalciomania.com/news-foggia-calcio/statistiche/dopo-juventus-e-atalanta-per-il-foggia-ci-sara-linter/",
-        "data": "2026-09-18T08:17:16.000Z",
-        "autore": "Redazione FCM 24 ore",
-        "categoria": "Statistiche",
-        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Foggia-Savoia-11.jpeg"
-      },
-      {
-        "id": "foggiacalciomania-ad79ce90f2",
-        "testata": "foggiacalciomania",
-        "titolo": "Quando Vecchi sfidava il foggia dalla panchina estense",
-        "sommario": "Continua a prolungarsi, giornata dopo giornata, l’elenco delle sfide inedite per mister Gaetano Auteri. Dopo i faccia a faccia con Leandro Greco del Crotone, Serse Cosmi della…",
-        "url": "https://foggiacalciomania.com/news-foggia-calcio/statistiche/quando-vecchi-sfidava-il-foggia-dalla-panchina-estense/",
-        "data": "2026-09-18T08:15:32.000Z",
-        "autore": "Redazione FCM 24 ore",
-        "categoria": "Statistiche",
-        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Auteri-567-2.jpeg"
-      },
-      {
-        "id": "calciofoggia-c50ac1f45a",
-        "testata": "calciofoggia",
-        "titolo": "Foggia, dopo cinque giornate i rossoneri in cerca della propria identità",
-        "sommario": "Due punti nelle ultime quattro partite di campionato. Il Foggia che non vince dalla gara di esordio a Crotone. Rossoneri che non segnano da 359 minuti dal gol di Luciani al primo…",
-        "url": "https://www.calciofoggia.it/foggia-dopo-cinque-giornate-i-rossoneri-in-cerca-della-propria-identita/",
-        "data": "2026-09-17T12:25:58.000Z",
-        "autore": "Tiziano Errichiello",
-        "categoria": "FOGGIA CALCIO",
-        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Il-Foggia-in-campo-contro-il-Savoia-Foto-Antonello-Forcelli.png"
-      },
-      {
-        "id": "calciofoggia-a9d170ced8",
-        "testata": "calciofoggia",
-        "titolo": "Giudice Sportivo: le decisioni relative alla quinta giornata",
-        "sommario": "Diramato il comunicato del giudice sportivo relativo le gare della quinta giornata di campionato. Clicca qui per leggere il comunicato completo © 2026, CALCIOFOGGIA.IT. Tutti i…",
-        "url": "https://www.calciofoggia.it/giudice-sportivo-le-decisioni-relative-alla-quinta-giornata-2/",
-        "data": "2026-09-16T21:59:40.000Z",
-        "autore": "Mario",
-        "categoria": "CALCIO",
-        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2020/09/Zgiudice-sportivo.png"
-      },
-      {
         "id": "ilfoggia-5a8eed19a3",
         "testata": "ilfoggia",
         "titolo": "Foggia Savoia – 𝗣𝗛𝗢𝗧𝗢 𝗚𝗔𝗟𝗟𝗘𝗥𝗬 📸Potito Chiummarulo",
@@ -5877,17 +5889,6 @@
         "autore": "Foggia Calcio Movie",
         "categoria": "Gallery",
         "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/09/IMG_3687-scaled.jpg"
-      },
-      {
-        "id": "foggiacalciomania-269b329061",
-        "testata": "foggiacalciomania",
-        "titolo": "Lo Zac, il racconto di Foggia-Savoia. Sfoglia il giornale gratuitamente",
-        "sommario": "Clicca qui per sfogliare il giornale gratuitamente Clicca qui sotto per scaricare il pdf del giornale Lo Zac 15 Settembre 2026. Foggia 0-0 Savoia. Quanti errori L'articolo Lo Zac…",
-        "url": "https://foggiacalciomania.com/news-foggia-calcio/lo-zac-il-racconto-di-foggia-savoia-sfoglia-il-giornale-gratuitamente/",
-        "data": "2026-09-15T22:19:50.000Z",
-        "autore": "Roberto Parisi",
-        "categoria": "News Calcio Foggia 1920",
-        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/page_1-2.png"
       },
       {
         "id": "ilfoggia-9f741afccf",
@@ -5956,6 +5957,6 @@
         "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0804-scaled.jpg"
       }
     ],
-    "aggiornatoIl": "2026-09-20T15:41:00.325Z"
+    "aggiornatoIl": "2026-09-20T16:01:09.499Z"
   }
 }
