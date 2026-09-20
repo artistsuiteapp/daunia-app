@@ -27,6 +27,17 @@
   ],
   "articoli": [
     {
+      "id": "foggiacalciomania-752448a72f",
+      "testata": "foggiacalciomania",
+      "titolo": "Serie C girone C: risultati e marcatori 6a giornata",
+      "sommario": "Il Sorrento nonostante la sconfitta casalinga ad opera del Bari resta in testa alla classifica. Domenica i sorrentini saranno di scena a Foggia. Pareggio del Cerignola in casa…",
+      "url": "https://foggiacalciomania.com/news-foggia-calcio/serie-c-girone-c-risultati-e-marcatori-6a-giornata-4/",
+      "data": "2026-09-20T18:06:46.000Z",
+      "autore": "Redazione FCM 24 ore",
+      "categoria": "News Calcio Foggia 1920",
+      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2025/08/palla334567.jpg"
+    },
+    {
       "id": "foggiacalciomania-d7707a85f4",
       "testata": "foggiacalciomania",
       "titolo": "Serie D Girone H: risultati 4a giornata",
@@ -36,17 +47,6 @@
       "autore": "Redazione FCM 24 ore",
       "categoria": "Dilettanti",
       "immagine": "https://foggiacalciomania.com/wp-content/uploads/2025/08/palla334567.jpg"
-    },
-    {
-      "id": "calciofoggia-e44d32bf0d",
-      "testata": "calciofoggia",
-      "titolo": "Risultati, marcatori e classifica 6ª giornata",
-      "sommario": "Il Foggia esce sconfitto per 3-2 dal confronto con l’Inter U23 allo stadio Ernesto Breda di Sesto San Giovanni. In vetta alla classifica resta il Sorrento, nonostante la sconfitta…",
-      "url": "https://www.calciofoggia.it/risultati-marcatori-e-classifica-6a-giornata/",
-      "data": "2026-09-20T17:44:23.000Z",
-      "autore": "Fabio Bertazzoli",
-      "categoria": "SERIE C",
-      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2025/06/Pallone-Lega-Pro-Decathlon.jpg"
     },
     {
       "id": "foggiacalciomania-be58113830",
@@ -71,17 +71,6 @@
       "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/page_1-3.png"
     },
     {
-      "id": "calciofoggia-2402b284cd",
-      "testata": "calciofoggia",
-      "titolo": "Ravasio: “Abbiamo fatto una buona partita, ma dobbiamo essere più cattivi. I gol arriveranno”",
-      "sommario": "Mario Ravasio, autore di uno dei gol del Foggia, ha commentato a caldo la sconfitta per 3-2 sul campo dell’Inter U23 nel corso di “Direttissima”, la trasmissione condotta da…",
-      "url": "https://www.calciofoggia.it/ravasio-abbiamo-fatto-una-buona-partita-ma-dobbiamo-essere-piu-cattivi-i-gol-arriveranno/",
-      "data": "2026-09-20T15:52:27.000Z",
-      "autore": "Armando Borrelli",
-      "categoria": "FOGGIA CALCIO",
-      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Ravasio-e-Luciani-Foto-Antonellis-Calcio-Foggia-1920.png"
-    },
-    {
       "id": "foggiacalciomania-cb9b46a97a",
       "testata": "foggiacalciomania",
       "titolo": "Ravasio: “Dispiaciuto per i tanti tifosi al seguito della squadra”",
@@ -91,17 +80,6 @@
       "autore": "Roberto Parisi",
       "categoria": "Sala stampa",
       "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Inter-3-2-Foggia-2026-5.jpeg"
-    },
-    {
-      "id": "calciofoggia-f819641b8f",
-      "testata": "calciofoggia",
-      "titolo": "Auteri: “Siamo competitivi, usciamo con serenità lavorando sulle negatività”",
-      "sommario": "Gaetano Auteri, durante “Direttissima” la trasmissione di FoggiaTv condotta da Tiziano Errichiello, ha analizzato a caldo la sconfitta per 3-2 sul campo dell’Inter U23…",
-      "url": "https://www.calciofoggia.it/auteri-siamo-competitivi-usciamo-con-serenita-lavorando-sulle-negativita/",
-      "data": "2026-09-20T15:46:26.000Z",
-      "autore": "Armando Borrelli",
-      "categoria": "FOGGIA CALCIO",
-      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Mister-Auteri-contro-il-Savoia-Foto-Antonello-Forcelli.png"
     },
     {
       "id": "foggiacalciomania-05d088fd8c",
@@ -148,28 +126,6 @@
       "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/04/rete.jpg"
     },
     {
-      "id": "calciofoggia-29ffa4c1ed",
-      "testata": "calciofoggia",
-      "titolo": "Inter U23 – Foggia 3-2 (risultato finale)",
-      "sommario": "Secondo tempo 90’+7 – Inutile il forcing finale del Foggia. termina 3-2 al “Breda”, con l’Inter U23 che sfrutta al massimo tutti gli errori dei rossoneri. 90’+4 – GOL FOGGIA! 3-2!…",
-      "url": "https://www.calciofoggia.it/inter-under-23-foggia-campionato-2026-2027/",
-      "data": "2026-09-20T12:00:02.000Z",
-      "autore": "Armando Borrelli",
-      "categoria": "FOGGIA CALCIO",
-      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Inter-U23-Foggia.png"
-    },
-    {
-      "id": "calciofoggia-ef3527f4c7",
-      "testata": "calciofoggia",
-      "titolo": "Foggia, è il momento di cambiare marcia. Al “Breda” migliaia di foggiani pronti a sostenere i rossoneri",
-      "sommario": "E’ il momento di cambiare marcia. Al “Breda” di Sesto San Giovanni il Foggia va a caccia di una vittoria che manca dalla prima giornata quando con un gol di Petito i rossoneri…",
-      "url": "https://www.calciofoggia.it/foggia-e-il-momento-di-cambiare-marcia-al-breda-migliaia-di-foggiani-pronti-a-sostenere-i-rossoneri/",
-      "data": "2026-09-20T09:15:43.000Z",
-      "autore": "Tiziano Errichiello",
-      "categoria": "FOGGIA CALCIO",
-      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/stadio-breda-di-sesto-san-giovanni.jpg"
-    },
-    {
       "id": "foggiacalciomania-4b6df65c18",
       "testata": "foggiacalciomania",
       "titolo": "Inter U23-Foggia: le ultimissime",
@@ -181,50 +137,6 @@
       "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/WhatsApp-Image-2026-09-06-at-21.57.58.jpeg"
     },
     {
-      "id": "calciofoggia-6281a3f94b",
-      "testata": "calciofoggia",
-      "titolo": "Casella a Kick Off: “Margini notevoli, serve tempo. Questo gruppo può stare a sinistra della classifica”",
-      "sommario": "Il direttore sportivo Alex Casella è intervenuto ieri sera a Kick Off, la trasmissione condotta da Tiziano Errichiello in onda su FoggiaTv, per analizzare il momento del Foggia…",
-      "url": "https://www.calciofoggia.it/casella-a-kick-off-margini-notevoli-serve-tempo-questo-gruppo-puo-stare-a-sinistra-della-classifica/",
-      "data": "2026-09-19T09:00:17.000Z",
-      "autore": "Armando Borrelli",
-      "categoria": "FOGGIA CALCIO",
-      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/08/Alex-Casella-Foto-Antonello-Forcelli.png"
-    },
-    {
-      "id": "calciofoggia-b793332562",
-      "testata": "calciofoggia",
-      "titolo": "L’avversario l’Inter under 23",
-      "sommario": "Il Football Club Internazionale Milano Under-23 , noto come Inter Milan Under-23 o semplicemente Inter U23 , è la squadra riserve dell’Inter fondata nel febbraio 2025, quando il…",
-      "url": "https://www.calciofoggia.it/lavversario-linter-under-23/",
-      "data": "2026-09-19T08:04:07.000Z",
-      "autore": "Mario Schena",
-      "categoria": "FOGGIA CALCIO",
-      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/foto-sito-inter-under-23.webp"
-    },
-    {
-      "id": "calciofoggia-c95959e5ef",
-      "testata": "calciofoggia",
-      "titolo": "la sesta giornata",
-      "sommario": "La sesta giornata del girone C si disputerà tra sabato e domenica. Sabato 2 gare alle 14.30, 2 alle 17.30 e 3 alle 20.30, altre 3 domenica tra le 14.30 e le 17.30. Il big match…",
-      "url": "https://www.calciofoggia.it/la-sesta-giornata/",
-      "data": "2026-09-19T07:30:36.000Z",
-      "autore": "Mario Schena",
-      "categoria": "SERIE C",
-      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Petito-in-azione-contro-il-Savoia-Foto-Antonello-Forcelli.png"
-    },
-    {
-      "id": "calciofoggia-f8701b6cf4",
-      "testata": "calciofoggia",
-      "titolo": "Il girone C dopo sole cinque giornate. Conferme, sorprese e delusioni",
-      "sommario": "Un quarto del girone d’andata è terminato. In questo primo scorcio di campionato diverse sono state le sorprese, tante aspettative non rispettate e colpi di scena uno dopo…",
-      "url": "https://www.calciofoggia.it/il-girone-c-dopo-sole-cinque-giornate-conferme-sorprese-e-delusioni/",
-      "data": "2026-09-18T16:41:30.000Z",
-      "autore": "Calcio Foggia",
-      "categoria": "SERIE C",
-      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Serie-C-Girone-C.jpg"
-    },
-    {
       "id": "ilfoggia-86f6e44909",
       "testata": "ilfoggia",
       "titolo": "…LA MISURA, QUELLA SCONOSCIUTA… / La versione di Rino La Forgia",
@@ -234,28 +146,6 @@
       "autore": "La Redazione",
       "categoria": "Blog",
       "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/09/IMG_3687-scaled.jpg"
-    },
-    {
-      "id": "calciofoggia-8f22d29d91",
-      "testata": "calciofoggia",
-      "titolo": "Auteri e Berra: “Siamo squadra, i dati lo dicono. Continuiamo a creare, i gol arriveranno”",
-      "sommario": "Gaetano Auteri e Filippo Berra hanno affrontato in conferenza stampa il momento del Foggia e la trasferta di domenica contro l’Inter U23. Il mister ha risposto con decisione a chi…",
-      "url": "https://www.calciofoggia.it/auteri-e-berra-siamo-squadra-i-dati-lo-dicono-continuiamo-a-creare-i-gol-arriveranno/",
-      "data": "2026-09-18T11:00:09.000Z",
-      "autore": "Armando Borrelli",
-      "categoria": "FOGGIA CALCIO",
-      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Screenshot-2026-09-18-alle-12.43.41.png"
-    },
-    {
-      "id": "foggiacalciomania-353a4d6400",
-      "testata": "foggiacalciomania",
-      "titolo": "Auteri: “Andremo a imporre il nostro gioco”",
-      "sommario": "Alla vigilia della sfida contro l’Inter U23, mister Gaetano Auteri e Filippo Berra hanno presentato la gara, facendo il punto sul momento della squadra e sul lavoro svolto in…",
-      "url": "https://foggiacalciomania.com/news-foggia-calcio/sala-stampa/auteri-andremo-a-imporre-il-nostro-gioco/",
-      "data": "2026-09-18T10:12:05.000Z",
-      "autore": "Roberto Parisi",
-      "categoria": "Sala stampa",
-      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/IMG-20260918-WA0014.jpg"
     },
     {
       "id": "ilfoggia-5a8eed19a3",
@@ -335,5 +225,5 @@
       "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0804-scaled.jpg"
     }
   ],
-  "aggiornatoIl": "2026-09-20T18:01:12.675Z"
+  "aggiornatoIl": "2026-09-20T18:20:55.717Z"
 }
