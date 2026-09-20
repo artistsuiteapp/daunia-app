@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-20T12:20:55.317Z",
+    "generatedAt": "2026-09-20T12:41:02.030Z",
     "season": "2026-2027",
     "competition": "Serie C",
     "sources": {
@@ -24,6 +24,7 @@
       "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
       "API-Football rosa: Your account is suspended, check on https://dashboard.api-football.com.",
       "Trasferta a Inter U23 fra meno di una settimana e nessuna notizia sul divieto: controlla a mano, potrebbe essersi rotto il riconoscimento.",
+      "Lega Pro: Inter U23-Foggia fra venti minuti e nel calendario non ha ancora un id: le formazioni non arriveranno",
       "Lega Pro: Foggia-Altamura e' finita da ore e non ha un id nel calendario della Lega: la formazione non entrera' mai nell'archivio"
     ]
   },
@@ -5651,8 +5652,8 @@
       {
         "id": "foggiacalciomania-bb908745d3",
         "testata": "foggiacalciomania",
-        "titolo": "Diretta: Inter U23-Foggia 0 – 0 ore 15,00",
-        "sommario": "| Inter U23-Foggia 0 – 0 | Rete: | Inter U23 (): A disposizione: Allenatore: Omar Danesi Foggia (4-3-3): A disposizione: Allenatore: Gaetano Auteri Arbitro: Andrea Mazzer della…",
+        "titolo": "Diretta: Inter U23-Foggia 0 – 0 Formazioni ufficiali",
+        "sommario": "| Inter U23-Foggia 0 – 0 | Rete: | Inter U23 (3-4-1-2): Melgrati; Bovio, Garonetti, Jakirovic; Avitabile, Fiordilino, Kaczmarski, Milani; Mancuso; Fumagalli, Lavelli A…",
         "url": "https://foggiacalciomania.com/news-foggia-calcio/diretta-inter-u23-foggia-0-0-ore-1500/",
         "data": "2026-09-20T12:18:34.000Z",
         "autore": "Redazione FCM 24 ore",
@@ -5957,6 +5958,6 @@
         "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0804-scaled.jpg"
       }
     ],
-    "aggiornatoIl": "2026-09-20T12:20:49.948Z"
+    "aggiornatoIl": "2026-09-20T12:40:59.310Z"
   }
 }
