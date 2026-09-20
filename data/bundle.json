@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-20T12:01:19.653Z",
+    "generatedAt": "2026-09-20T12:20:55.317Z",
     "season": "2026-2027",
     "competition": "Serie C",
     "sources": {
@@ -23,7 +23,6 @@
       "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
       "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
       "API-Football rosa: Your account is suspended, check on https://dashboard.api-football.com.",
-      "Divieti, FoggiaToday: HTTP 403 su https://www.foggiatoday.it/rss",
       "Trasferta a Inter U23 fra meno di una settimana e nessuna notizia sul divieto: controlla a mano, potrebbe essersi rotto il riconoscimento.",
       "Lega Pro: Foggia-Altamura e' finita da ore e non ha un id nel calendario della Lega: la formazione non entrera' mai nell'archivio"
     ]
@@ -5650,10 +5649,21 @@
     ],
     "articoli": [
       {
+        "id": "foggiacalciomania-bb908745d3",
+        "testata": "foggiacalciomania",
+        "titolo": "Diretta: Inter U23-Foggia 0 – 0 ore 15,00",
+        "sommario": "| Inter U23-Foggia 0 – 0 | Rete: | Inter U23 (): A disposizione: Allenatore: Omar Danesi Foggia (4-3-3): A disposizione: Allenatore: Gaetano Auteri Arbitro: Andrea Mazzer della…",
+        "url": "https://foggiacalciomania.com/news-foggia-calcio/diretta-inter-u23-foggia-0-0-ore-1500/",
+        "data": "2026-09-20T12:18:34.000Z",
+        "autore": "Redazione FCM 24 ore",
+        "categoria": "News Calcio Foggia 1920",
+        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/04/rete.jpg"
+      },
+      {
         "id": "calciofoggia-29ffa4c1ed",
         "testata": "calciofoggia",
-        "titolo": "Inter U23 – Foggia",
-        "sommario": "Formazioni ufficiali Inter U23: (in attesa di comunicazione) All.: Stefano Vecchi Foggia: (in attesa di comunicazione) All.: Gaetano Auteri Prepartita Allo stadio “Ernesto Breda”…",
+        "titolo": "Inter U23 – Foggia (formazioni ufficiali)",
+        "sommario": "Formazioni ufficiali Inter U23: Melgrati, Avitabile, Kaczmarski, Fiordilino, Mancuso, Lavelli, Bovio, Milani, Garonetti, Jakirovic, Fumagalli All.: Omar Danesi (Stefano Vecchi…",
         "url": "https://www.calciofoggia.it/inter-under-23-foggia-campionato-2026-2027/",
         "data": "2026-09-20T12:00:02.000Z",
         "autore": "Armando Borrelli",
@@ -5881,17 +5891,6 @@
         "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Auteri-34.jpeg"
       },
       {
-        "id": "foggiacalciomania-03b4954663",
-        "testata": "foggiacalciomania",
-        "titolo": "La fotocronaca di Foggia-Savoia",
-        "sommario": "Le foto salienti della gara pareggiata dal Foggia contro il Savoia. Foto scattatate da Monica Carbosiero della redazione di FoggiaCalcioMania. L'articolo La fotocronaca di…",
-        "url": "https://foggiacalciomania.com/news-foggia-calcio/la-fotocronaca-di-foggia-savoia/",
-        "data": "2026-09-15T22:07:41.000Z",
-        "autore": "Redazione FCM 24 ore",
-        "categoria": "News Calcio Foggia 1920",
-        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/WhatsApp-Image-2026-09-15-at-21.23.51-2.jpeg"
-      },
-      {
         "id": "ilfoggia-9f741afccf",
         "testata": "ilfoggia",
         "titolo": "Cosmano Sport Soccer Trani – Risultato parziale",
@@ -5958,6 +5957,6 @@
         "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0804-scaled.jpg"
       }
     ],
-    "aggiornatoIl": "2026-09-20T12:01:07.712Z"
+    "aggiornatoIl": "2026-09-20T12:20:49.948Z"
   }
 }
