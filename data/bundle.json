@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-20T14:21:00.101Z",
+    "generatedAt": "2026-09-20T14:40:58.106Z",
     "season": "2026-2027",
     "competition": "Serie C",
     "sources": {
@@ -2044,6 +2044,23 @@
     },
     {
       "position": 9,
+      "teamId": "monopoli",
+      "teamName": "Monopoli",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/Monopoli_SS_1966_Since_2014-1.png",
+      "played": 6,
+      "won": 2,
+      "drawn": 2,
+      "lost": 2,
+      "goalsFor": 5,
+      "goalsAgainst": 4,
+      "goalDiff": 1,
+      "points": 8,
+      "penalty": 0,
+      "isFoggia": false,
+      "zone": "playoff"
+    },
+    {
+      "position": 10,
       "teamId": "catania",
       "teamName": "Catania",
       "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/catania.png",
@@ -2054,23 +2071,6 @@
       "goalsFor": 10,
       "goalsAgainst": 8,
       "goalDiff": 2,
-      "points": 7,
-      "penalty": 0,
-      "isFoggia": false,
-      "zone": "playoff"
-    },
-    {
-      "position": 10,
-      "teamId": "monopoli",
-      "teamName": "Monopoli",
-      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/Monopoli_SS_1966_Since_2014-1.png",
-      "played": 5,
-      "won": 2,
-      "drawn": 1,
-      "lost": 2,
-      "goalsFor": 3,
-      "goalsAgainst": 2,
-      "goalDiff": 1,
       "points": 7,
       "penalty": 0,
       "isFoggia": false,
@@ -2234,14 +2234,14 @@
       "teamId": "crotone",
       "teamName": "Crotone",
       "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2022/08/crotone.png",
-      "played": 5,
+      "played": 6,
       "won": 0,
-      "drawn": 2,
+      "drawn": 3,
       "lost": 3,
-      "goalsFor": 3,
-      "goalsAgainst": 7,
+      "goalsFor": 5,
+      "goalsAgainst": 9,
       "goalDiff": -4,
-      "points": -4,
+      "points": -3,
       "penalty": -6,
       "isFoggia": false,
       "zone": "relegation"
@@ -5058,8 +5058,8 @@
       {
         "id": "foggiacalciomania-bb908745d3",
         "testata": "foggiacalciomania",
-        "titolo": "Diretta: Inter U23-Foggia 2 – 1 Secondo tempo in corso",
-        "sommario": "| Inter U23-Foggia 2 – 1 | Reti: 3′ Merdji, 5′ Milani, 45+2′ Fumagalli| Inter U23 (3-4-1-2): Melgrati; Bovio, Garonetti, Jakirovic; Avitabile, Fiordilino, Kaczmarski, Milani…",
+        "titolo": "Diretta: Inter U23-Foggia 3 – 1 Secondo tempo in corso",
+        "sommario": "| Inter U23-Foggia 3 – 1 | Reti: 3′ Merdji, 5′ Milani, 45+2′ Fumagalli, 64′ Avitabile| Inter U23 (3-4-1-2): Melgrati; Bovio, Garonetti (70′ Donato), Jakirovic (70′ Re Cecconi)…",
         "url": "https://foggiacalciomania.com/news-foggia-calcio/diretta-inter-u23-foggia-0-0-ore-1500/",
         "data": "2026-09-20T12:18:34.000Z",
         "autore": "Redazione FCM 24 ore",
@@ -5069,8 +5069,8 @@
       {
         "id": "calciofoggia-29ffa4c1ed",
         "testata": "calciofoggia",
-        "titolo": "Inter U23 – Foggia 2-1 (secondo tempo in corso)",
-        "sommario": "Secondo tempo in corso 57′ – Decisione finale: niente calcio di rigore. 56′ – Auteri si gioca la carta FVS per chiedere il calcio di rigore. Garonetti sembra colpire con i…",
+        "titolo": "Inter U23 – Foggia 3-1 (secondo tempo in corso)",
+        "sommario": "Secondo tempo in corso 76′ – Ammonito Panico. 75′ – Cross molto impreciso di Panico, fotografia del momento del Foggia in questa fase della partita. 70′ – Doppia sostituzione…",
         "url": "https://www.calciofoggia.it/inter-under-23-foggia-campionato-2026-2027/",
         "data": "2026-09-20T12:00:02.000Z",
         "autore": "Armando Borrelli",
@@ -5364,6 +5364,6 @@
         "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0804-scaled.jpg"
       }
     ],
-    "aggiornatoIl": "2026-09-20T14:20:56.283Z"
+    "aggiornatoIl": "2026-09-20T14:40:54.311Z"
   }
 }
