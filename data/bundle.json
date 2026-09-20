@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-20T17:41:01.415Z",
+    "generatedAt": "2026-09-20T18:01:22.837Z",
     "season": "2026-2027",
     "competition": "Serie C",
     "sources": {
@@ -23,6 +23,7 @@
       "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
       "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
       "API-Football rosa: Your account is suspended, check on https://dashboard.api-football.com.",
+      "Divieti, FoggiaToday: HTTP 403 su https://www.foggiatoday.it/rss",
       "Lega Pro: Inter U23-Foggia e' finita da ore e non ha un id nel calendario della Lega: la formazione non entrera' mai nell'archivio",
       "Lega Pro: Foggia-Altamura e' finita da ore e non ha un id nel calendario della Lega: la formazione non entrera' mai nell'archivio"
     ]
@@ -1942,6 +1943,23 @@
     },
     {
       "position": 3,
+      "teamId": "potenza",
+      "teamName": "Potenza",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/potenza-1.png",
+      "played": 6,
+      "won": 4,
+      "drawn": 1,
+      "lost": 1,
+      "goalsFor": 13,
+      "goalsAgainst": 8,
+      "goalDiff": 5,
+      "points": 13,
+      "penalty": 0,
+      "isFoggia": false,
+      "zone": "playoff"
+    },
+    {
+      "position": 4,
       "teamId": "casertana",
       "teamName": "Casertana",
       "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/casertana.png",
@@ -1958,7 +1976,7 @@
       "zone": "playoff"
     },
     {
-      "position": 4,
+      "position": 5,
       "teamId": "audace-cerignola",
       "teamName": "Audace Cerignola",
       "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2019/09/LOGO-CERIGNOLA-296x300.png",
@@ -1969,23 +1987,6 @@
       "goalsFor": 10,
       "goalsAgainst": 5,
       "goalDiff": 5,
-      "points": 10,
-      "penalty": 0,
-      "isFoggia": false,
-      "zone": "playoff"
-    },
-    {
-      "position": 5,
-      "teamId": "potenza",
-      "teamName": "Potenza",
-      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/potenza-1.png",
-      "played": 5,
-      "won": 3,
-      "drawn": 1,
-      "lost": 1,
-      "goalsFor": 9,
-      "goalsAgainst": 6,
-      "goalDiff": 3,
       "points": 10,
       "penalty": 0,
       "isFoggia": false,
@@ -2163,23 +2164,6 @@
     },
     {
       "position": 16,
-      "teamId": "cavese",
-      "teamName": "Cavese",
-      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/Cavese_stemma.png",
-      "played": 5,
-      "won": 1,
-      "drawn": 2,
-      "lost": 2,
-      "goalsFor": 6,
-      "goalsAgainst": 8,
-      "goalDiff": -2,
-      "points": 5,
-      "penalty": 0,
-      "isFoggia": false,
-      "zone": "playout"
-    },
-    {
-      "position": 17,
       "teamId": "foggia",
       "teamName": "Foggia",
       "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2017/01/foggia.png",
@@ -2193,6 +2177,23 @@
       "points": 5,
       "penalty": 0,
       "isFoggia": true,
+      "zone": "playout"
+    },
+    {
+      "position": 17,
+      "teamId": "cavese",
+      "teamName": "Cavese",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/Cavese_stemma.png",
+      "played": 6,
+      "won": 1,
+      "drawn": 2,
+      "lost": 3,
+      "goalsFor": 8,
+      "goalsAgainst": 12,
+      "goalDiff": -4,
+      "points": 5,
+      "penalty": 0,
+      "isFoggia": false,
       "zone": "playout"
     },
     {
@@ -5649,6 +5650,28 @@
     ],
     "articoli": [
       {
+        "id": "foggiacalciomania-d7707a85f4",
+        "testata": "foggiacalciomania",
+        "titolo": "Serie D Girone H: risultati 4a giornata",
+        "sommario": "Martina ko contro la Virtus Francavilla. Ok Turris, Melfi e Manfredonia. SERIE D/H, 4a GIORNATA Gravina-Real Forio 2-2 Ischia-Nardò 1-2 Gladiator-Fidelis Andria 3-1…",
+        "url": "https://foggiacalciomania.com/dilettanti/serie-d-girone-h-risultati-4a-giornata/",
+        "data": "2026-09-20T17:57:05.000Z",
+        "autore": "Redazione FCM 24 ore",
+        "categoria": "Dilettanti",
+        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2025/08/palla334567.jpg"
+      },
+      {
+        "id": "calciofoggia-e44d32bf0d",
+        "testata": "calciofoggia",
+        "titolo": "Risultati, marcatori e classifica 6ª giornata",
+        "sommario": "Il Foggia esce sconfitto per 3-2 dal confronto con l’Inter U23 allo stadio Ernesto Breda di Sesto San Giovanni. In vetta alla classifica resta il Sorrento, nonostante la sconfitta…",
+        "url": "https://www.calciofoggia.it/risultati-marcatori-e-classifica-6a-giornata/",
+        "data": "2026-09-20T17:44:23.000Z",
+        "autore": "Fabio Bertazzoli",
+        "categoria": "SERIE C",
+        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2025/06/Pallone-Lega-Pro-Decathlon.jpg"
+      },
+      {
         "id": "foggiacalciomania-be58113830",
         "testata": "foggiacalciomania",
         "titolo": "Top & Flop di Inter U23-Foggia",
@@ -5858,28 +5881,6 @@
         "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/IMG-20260918-WA0014.jpg"
       },
       {
-        "id": "calciofoggia-64576aa5d3",
-        "testata": "calciofoggia",
-        "titolo": "Andrea Mazzer di Conegliano dirige Inter U23-Foggia",
-        "sommario": "Sarà il Sig. Andrea Mazzer della sezione di Conegliano a dirigere l'incontro Inter U23-Foggia, in programma domenica 20 settembre alle ore 15:00, allo Stadio Ernesto Breda di…",
-        "url": "https://www.calciofoggia.it/andrea-mazzer-di-conegliano-dirige-inter-u23-foggia/",
-        "data": "2026-09-18T10:00:33.000Z",
-        "autore": "Fabio Bertazzoli",
-        "categoria": "FOGGIA CALCIO",
-        "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Mazzer.png"
-      },
-      {
-        "id": "foggiacalciomania-85ba05e00c",
-        "testata": "foggiacalciomania",
-        "titolo": "Giudice sportivo: Foggia nessuna ammenda",
-        "sommario": "Il Giudice Sportivo Sostituto, Avv. Cosimo Taiuti, assistito da Irene Papi e dal Rappresentante dell’A.I.A. Sig. Silvano Torrini, nella seduta del 16 settembre 2026 ha adottato le…",
-        "url": "https://foggiacalciomania.com/news-foggia-calcio/giudice-sportivo/giudice-sportivo-foggia-nessuna-ammenda-8/",
-        "data": "2026-09-18T08:30:02.000Z",
-        "autore": "Redazione FCM 24 ore",
-        "categoria": "Giudice sportivo",
-        "immagine": "https://foggiacalciomania.com/wp-content/uploads/2018/06/giudice-sportivo.jpg"
-      },
-      {
         "id": "ilfoggia-5a8eed19a3",
         "testata": "ilfoggia",
         "titolo": "Foggia Savoia – 𝗣𝗛𝗢𝗧𝗢 𝗚𝗔𝗟𝗟𝗘𝗥𝗬 📸Potito Chiummarulo",
@@ -5957,6 +5958,6 @@
         "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0804-scaled.jpg"
       }
     ],
-    "aggiornatoIl": "2026-09-20T17:40:56.488Z"
+    "aggiornatoIl": "2026-09-20T18:01:12.675Z"
   }
 }
