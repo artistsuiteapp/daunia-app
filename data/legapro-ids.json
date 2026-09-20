@@ -545,6 +545,11 @@
       "ospiti": "Latina Calcio"
     },
     {
+      "id": "c9p88x90vkr8ubfmtpe0m2jo4",
+      "casa": "Campobasso FC",
+      "ospiti": "ASD Pineto Calcio"
+    },
+    {
       "id": "7j3ay1iwt8y7eocv8e8h7504",
       "casa": "Potenza Calcio",
       "ospiti": "S.S.D. Casarano Calcio"
@@ -838,6 +843,11 @@
       "id": "mn0m4omapjiz4neasockwbh0",
       "casa": "Inter Milano",
       "ospiti": "Calcio Foggia"
+    },
+    {
+      "id": "nayv8a80mtmhms9ty14jgfmc",
+      "casa": "Potenza Calcio",
+      "ospiti": "Cavese 1919"
     }
   ]
 }

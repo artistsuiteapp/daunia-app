@@ -27,10 +27,32 @@
   ],
   "articoli": [
     {
+      "id": "foggiacalciomania-87526d77cb",
+      "testata": "foggiacalciomania",
+      "titolo": "Le pagelle di Inter U23-Foggia",
+      "sommario": "Saro: Senza colpe nell’occasione della rete del pareggio dell’Inter, così per la seconda rete. Nella ripresa compie due parate importanti che evitano un passivo più pesante. Voto…",
+      "url": "https://foggiacalciomania.com/news-foggia-calcio/pagelle/le-pagelle-di-inter-u23-foggia/",
+      "data": "2026-09-20T15:40:12.000Z",
+      "autore": "Roberto Parisi",
+      "categoria": "News Calcio Foggia 1920",
+      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Inter-U23-Foggia-2026-8.jpeg"
+    },
+    {
+      "id": "foggiacalciomania-8cad67e098",
+      "testata": "foggiacalciomania",
+      "titolo": "Foggia, “tutto fumo e niente arrosto”. Altra sconfitta, questa volta in casa dell’Inter U23",
+      "sommario": "Dei 2600 spettatori, la metà del settore ospiti erano foggiani, l’altra metà in tribuna idem. Completamente rossonero lo stadio Breda che ha ospitato una gara sicuramente…",
+      "url": "https://foggiacalciomania.com/news-foggia-calcio/la-cronaca/foggia-tutto-fumo-e-niente-arrosto-altra-sconfitta-questa-volta-in-casa-dellinter-u23/",
+      "data": "2026-09-20T15:11:55.000Z",
+      "autore": "Roberto Parisi",
+      "categoria": "La Cronaca",
+      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Inter-3-2-Foggia-2026-2.jpeg"
+    },
+    {
       "id": "foggiacalciomania-bb908745d3",
       "testata": "foggiacalciomania",
-      "titolo": "Diretta: Inter U23-Foggia 3 – 1 Secondo tempo in corso",
-      "sommario": "| Inter U23-Foggia 3 – 1 | Reti: 3′ Merdji, 5′ Milani, 45+2′ Fumagalli, 64′ Avitabile| Inter U23 (3-4-1-2): Melgrati; Bovio, Garonetti (70′ Donato), Jakirovic (70′ Re Cecconi)…",
+      "titolo": "Diretta: Inter U23-Foggia 3 – 2 Vincono i nerazzurri, Foggia non pervenuto",
+      "sommario": "Nulla da fare il Foggia porta a casa zero punti, inutile il gol di Ravasio nei minuti di repure, ora domenica prossima arriva allo Zaccheria il Sorrento capolista. | Inter…",
       "url": "https://foggiacalciomania.com/news-foggia-calcio/diretta-inter-u23-foggia-0-0-ore-1500/",
       "data": "2026-09-20T12:18:34.000Z",
       "autore": "Redazione FCM 24 ore",
@@ -247,28 +269,6 @@
       "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/page_1-2.png"
     },
     {
-      "id": "foggiacalciomania-3cb49d6b50",
-      "testata": "foggiacalciomania",
-      "titolo": "Seck: “Sono contento di essere a Foggia. Mi stanno aiutando a crescere i miei compagni di squadra”",
-      "sommario": "Al termine dello 0-0 contro il Savoia, Seck ha commentato la prestazione della squadra, sottolineando l’importanza del lavoro e dell’aiuto ricevuto dai compagni. Il giocatore…",
-      "url": "https://foggiacalciomania.com/news-foggia-calcio/sala-stampa/seck-sono-contento-di-essere-a-foggia-mi-stanno-aiutando-a-crescere-i-miei-compagni-di-squadra/",
-      "data": "2026-09-15T22:15:57.000Z",
-      "autore": "Roberto Parisi",
-      "categoria": "Sala stampa",
-      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Seck.jpeg"
-    },
-    {
-      "id": "foggiacalciomania-ac315b4496",
-      "testata": "foggiacalciomania",
-      "titolo": "Auteri: “Stiamo crescendo. Presto arriverà continuità di risultati”",
-      "sommario": "Il Foggia non va oltre lo 0-0 contro il Savoia al termine di una gara nella quale i rossoneri hanno creato diverse occasioni senza riuscire a trovare la via del L'articolo Auteri…",
-      "url": "https://foggiacalciomania.com/news-foggia-calcio/sala-stampa/auteri-stiamo-crescendo-presto-arrivera-continuita-di-risultati/",
-      "data": "2026-09-15T22:14:39.000Z",
-      "autore": "Roberto Parisi",
-      "categoria": "Sala stampa",
-      "immagine": "https://foggiacalciomania.com/wp-content/uploads/2026/09/Auteri-34.jpeg"
-    },
-    {
       "id": "ilfoggia-9f741afccf",
       "testata": "ilfoggia",
       "titolo": "Cosmano Sport Soccer Trani – Risultato parziale",
@@ -335,5 +335,5 @@
       "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0804-scaled.jpg"
     }
   ],
-  "aggiornatoIl": "2026-09-20T15:17:02.290Z"
+  "aggiornatoIl": "2026-09-20T15:41:00.325Z"
 }
