@@ -27,6 +27,17 @@
   ],
   "articoli": [
     {
+      "id": "calciofoggia-29ffa4c1ed",
+      "testata": "calciofoggia",
+      "titolo": "Inter U23 – Foggia",
+      "sommario": "Formazioni ufficiali Inter U23: (in attesa di comunicazione) All.: Stefano Vecchi Foggia: (in attesa di comunicazione) All.: Gaetano Auteri Prepartita Allo stadio “Ernesto Breda”…",
+      "url": "https://www.calciofoggia.it/inter-under-23-foggia-campionato-2026-2027/",
+      "data": "2026-09-20T12:00:02.000Z",
+      "autore": "Armando Borrelli",
+      "categoria": "FOGGIA CALCIO",
+      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Inter-U23-Foggia.png"
+    },
+    {
       "id": "calciofoggia-ef3527f4c7",
       "testata": "calciofoggia",
       "titolo": "Foggia, è il momento di cambiare marcia. Al “Breda” migliaia di foggiani pronti a sostenere i rossoneri",
@@ -203,17 +214,6 @@
       "immagine": "https://www.calciofoggia.it/wp-content/uploads/2020/09/Zgiudice-sportivo.png"
     },
     {
-      "id": "calciofoggia-dbd528e997",
-      "testata": "calciofoggia",
-      "titolo": "il punto sulla 5° di andata",
-      "sommario": "Che il campionato sia iniziato da poco lo dimostra la quinta giornata che mette in evidenza alcune sorprese e forse una sola certezza, quella del Sorrento che veleggia a punteggio…",
-      "url": "https://www.calciofoggia.it/il-punto-sulla-5-di-andata/",
-      "data": "2026-09-16T09:37:49.000Z",
-      "autore": "Mario Schena",
-      "categoria": "SERIE C",
-      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Zuccon-in-azione-contro-il-Savoia-Foto-Antonello-Forcelli.png"
-    },
-    {
       "id": "ilfoggia-5a8eed19a3",
       "testata": "ilfoggia",
       "titolo": "Foggia Savoia – 𝗣𝗛𝗢𝗧𝗢 𝗚𝗔𝗟𝗟𝗘𝗥𝗬 📸Potito Chiummarulo",
@@ -335,5 +335,5 @@
       "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0804-scaled.jpg"
     }
   ],
-  "aggiornatoIl": "2026-09-20T11:40:53.060Z"
+  "aggiornatoIl": "2026-09-20T12:01:07.712Z"
 }
