@@ -285,14 +285,14 @@
       "ospiti": "AS Ostiamare Lido Calcio"
     },
     {
-      "id": "burpupd22tllwp2p132mtq2vo",
-      "casa": "US Sambenedettese",
-      "ospiti": "Forli FC"
-    },
-    {
       "id": "brren6cj5ue0mlt0vetxie1p0",
       "casa": "Grosseto",
       "ospiti": "Spezia Calcio"
+    },
+    {
+      "id": "burpupd22tllwp2p132mtq2vo",
+      "casa": "US Sambenedettese",
+      "ospiti": "Forli FC"
     },
     {
       "id": "bt1kfgkfjs17gbjfcpnm2jaj8",
@@ -325,11 +325,6 @@
       "ospiti": "Latina Calcio"
     },
     {
-      "id": "bx9v7ug0ax8vdo2eu3tp4gems",
-      "casa": "ASD Pineto Calcio",
-      "ospiti": "US Livorno 1915"
-    },
-    {
       "id": "bxyqliisctxcemos9e26a48ic",
       "casa": "Spezia Calcio",
       "ospiti": "Campobasso FC"
@@ -338,6 +333,11 @@
       "id": "bvw3skhouua0kurdbep2qqsr8",
       "casa": "Forli FC",
       "ospiti": "Delfino Pescara"
+    },
+    {
+      "id": "bx9v7ug0ax8vdo2eu3tp4gems",
+      "casa": "ASD Pineto Calcio",
+      "ospiti": "US Livorno 1915"
     },
     {
       "id": "bvjk984848lldb40pgup7rd3o",
@@ -355,9 +355,9 @@
       "ospiti": "AC Reggiana"
     },
     {
-      "id": "bzohqfrhg8zs4d2shucasby8k",
-      "casa": "Guidonia Montecelio 1937 FC",
-      "ospiti": "US Pianese"
+      "id": "byzucsl0wksya8dfv0bi6axhw",
+      "casa": "Campobasso FC",
+      "ospiti": "AS Gubbio"
     },
     {
       "id": "c010adw8qlf5gqd14btodgdn8",
@@ -365,9 +365,9 @@
       "ospiti": "Forli FC"
     },
     {
-      "id": "byzucsl0wksya8dfv0bi6axhw",
-      "casa": "Campobasso FC",
-      "ospiti": "AS Gubbio"
+      "id": "bzohqfrhg8zs4d2shucasby8k",
+      "casa": "Guidonia Montecelio 1937 FC",
+      "ospiti": "US Pianese"
     },
     {
       "id": "c23o0wnvzr6xbgsqadl23xrtg",
@@ -385,6 +385,11 @@
       "ospiti": "SEF Torres Sassari"
     },
     {
+      "id": "c0ddpra1jeik6j860w4s7bhuc",
+      "casa": "US Livorno 1915",
+      "ospiti": "Atalanta BC"
+    },
+    {
       "id": "c1ev6qkz4rz5sij75zaconcb8",
       "casa": "AC Reggiana",
       "ospiti": "Vado FC 1913"
@@ -395,19 +400,9 @@
       "ospiti": "Ravenna FC 1913"
     },
     {
-      "id": "c0ddpra1jeik6j860w4s7bhuc",
-      "casa": "US Livorno 1915",
-      "ospiti": "Atalanta BC"
-    },
-    {
       "id": "c0pubun153ptjh54af621c9w4",
       "casa": "Perugia Calcio Spa",
       "ospiti": "ASD Pineto Calcio"
-    },
-    {
-      "id": "c5jqzc3lwn9a69dladplx6oes",
-      "casa": "Vado FC 1913",
-      "ospiti": "Campobasso FC"
     },
     {
       "id": "c2fzu8iqtkvw7p0bvf1utg5qs",
@@ -415,9 +410,14 @@
       "ospiti": "Delfino Pescara"
     },
     {
-      "id": "c4uxyaxr4lqpi9i6gw3x2pjpw",
-      "casa": "Spezia Calcio",
-      "ospiti": "US Livorno 1915"
+      "id": "c5jqzc3lwn9a69dladplx6oes",
+      "casa": "Vado FC 1913",
+      "ospiti": "Campobasso FC"
+    },
+    {
+      "id": "c45z1fbaikdwoxj2604lfx79w",
+      "casa": "ASD Pineto Calcio",
+      "ospiti": "US Sambenedettese"
     },
     {
       "id": "c3h4h8qyslqsown74jf1rpxqs",
@@ -425,9 +425,14 @@
       "ospiti": "AC Reggiana"
     },
     {
-      "id": "c45z1fbaikdwoxj2604lfx79w",
-      "casa": "ASD Pineto Calcio",
-      "ospiti": "US Sambenedettese"
+      "id": "c4uxyaxr4lqpi9i6gw3x2pjpw",
+      "casa": "Spezia Calcio",
+      "ospiti": "US Livorno 1915"
+    },
+    {
+      "id": "c34t0syxjdmi4hh22xe4ivz84",
+      "casa": "AS Gubbio",
+      "ospiti": "Latina Calcio"
     },
     {
       "id": "c2secruk1yr5uvu3ul2w7vllg",
@@ -440,11 +445,6 @@
       "ospiti": "Grosseto"
     },
     {
-      "id": "c34t0syxjdmi4hh22xe4ivz84",
-      "casa": "AS Gubbio",
-      "ospiti": "Latina Calcio"
-    },
-    {
       "id": "c4ib5mhnb80uhgk10ouydi6fo",
       "casa": "Ravenna FC 1913",
       "ospiti": "Perugia Calcio Spa"
@@ -455,29 +455,9 @@
       "ospiti": "AS Ostiamare Lido Calcio"
     },
     {
-      "id": "c7yzl4z1ujydwkzq0za43z1n8",
-      "casa": "ASD Pineto Calcio",
-      "ospiti": "Forli FC"
-    },
-    {
-      "id": "c5w5k7x7pnx8pe55g9hpx7ztg",
-      "casa": "Grosseto",
-      "ospiti": "Campobasso FC"
-    },
-    {
       "id": "c8bfpzn5a4yp65bos355h9kpg",
       "casa": "US Sambenedettese",
       "ospiti": "Atalanta BC"
-    },
-    {
-      "id": "c6xfsnan1xwk8ll12rukdtq1g",
-      "casa": "AS Ostiamare Lido Calcio",
-      "ospiti": "Ravenna FC 1913"
-    },
-    {
-      "id": "c8ny4qfq4jxq8s9r3bj1uhbf8",
-      "casa": "SEF Torres Sassari",
-      "ospiti": "US Pianese"
     },
     {
       "id": "c68ncndpj6iksp1xi71er00lw",
@@ -485,9 +465,24 @@
       "ospiti": "Guidonia Montecelio 1937 FC"
     },
     {
-      "id": "c79zob9isv9m3ueqnyw2k90d0",
-      "casa": "Perugia Calcio Spa",
-      "ospiti": "Spezia Calcio"
+      "id": "c5w5k7x7pnx8pe55g9hpx7ztg",
+      "casa": "Grosseto",
+      "ospiti": "Campobasso FC"
+    },
+    {
+      "id": "c8ny4qfq4jxq8s9r3bj1uhbf8",
+      "casa": "SEF Torres Sassari",
+      "ospiti": "US Pianese"
+    },
+    {
+      "id": "c6xfsnan1xwk8ll12rukdtq1g",
+      "casa": "AS Ostiamare Lido Calcio",
+      "ospiti": "Ravenna FC 1913"
+    },
+    {
+      "id": "c7yzl4z1ujydwkzq0za43z1n8",
+      "casa": "ASD Pineto Calcio",
+      "ospiti": "Forli FC"
     },
     {
       "id": "c90cy8xat2lq3jmz95zshypec",
@@ -495,19 +490,29 @@
       "ospiti": "AC Reggiana"
     },
     {
-      "id": "c6l1dv8rqycomd9vv31s1zo5w",
-      "casa": "US Livorno 1915",
-      "ospiti": "Vado FC 1913"
-    },
-    {
       "id": "c7mg423ub4mqc7pvc2a19tzis",
       "casa": "Delfino Pescara",
       "ospiti": "AS Gubbio"
     },
     {
+      "id": "c6l1dv8rqycomd9vv31s1zo5w",
+      "casa": "US Livorno 1915",
+      "ospiti": "Vado FC 1913"
+    },
+    {
+      "id": "c79zob9isv9m3ueqnyw2k90d0",
+      "casa": "Perugia Calcio Spa",
+      "ospiti": "Spezia Calcio"
+    },
+    {
       "id": "ca1qci21f3mv5cjvrj9ashhck",
       "casa": "Forli FC",
       "ospiti": "SEF Torres Sassari"
+    },
+    {
+      "id": "7j3ay1iwt8y7eocv8e8h7504",
+      "casa": "Potenza Calcio",
+      "ospiti": "S.S.D. Casarano Calcio"
     },
     {
       "id": "6pryibaiuukgngmysvpysphw",
@@ -518,11 +523,6 @@
       "id": "53nxp0srte7lacqe9peb5q1g",
       "casa": "SSC Bari",
       "ospiti": "Cavese 1919"
-    },
-    {
-      "id": "7j3ay1iwt8y7eocv8e8h7504",
-      "casa": "Potenza Calcio",
-      "ospiti": "S.S.D. Casarano Calcio"
     },
     {
       "id": "4p1fzrguyz7qd7w6ffykdnv8",
@@ -545,6 +545,11 @@
       "ospiti": "Inter Milano"
     },
     {
+      "id": "477k02nj740e264449d041sk",
+      "casa": "Team Altamura",
+      "ospiti": "SS Monopoli"
+    },
+    {
       "id": "7xndd0e44y7fhkk0yyf2efx0",
       "casa": "US Salernitana",
       "ospiti": "ASD Sorrento 1945"
@@ -555,14 +560,14 @@
       "ospiti": "Calcio Foggia"
     },
     {
-      "id": "477k02nj740e264449d041sk",
-      "casa": "Team Altamura",
-      "ospiti": "SS Monopoli"
-    },
-    {
       "id": "8wtgs3c5eub5rwbnwxpik6xg",
       "casa": "Cavese 1919",
       "ospiti": "Audace Cerignola"
+    },
+    {
+      "id": "avk3flpwm4jzeiamwbdkfpck",
+      "casa": "FC Scafatese",
+      "ospiti": "AZ Picerno"
     },
     {
       "id": "89eqg4iab5zvc3z4yctxv66s",
@@ -575,16 +580,6 @@
       "ospiti": "Giugliano Calcio 1928"
     },
     {
-      "id": "avk3flpwm4jzeiamwbdkfpck",
-      "casa": "FC Scafatese",
-      "ospiti": "AZ Picerno"
-    },
-    {
-      "id": "b7aoehrevlpwy3wsz7nh1mok",
-      "casa": "ASD Sorrento 1945",
-      "ospiti": "FC Crotone"
-    },
-    {
       "id": "ajt04rfbdi0r9x34qa3t239w",
       "casa": "Savoia 1908",
       "ospiti": "Casertana FC"
@@ -593,6 +588,11 @@
       "id": "9kdcofwgkjyhcbqz9jthmkgk",
       "casa": "Calcio Foggia",
       "ospiti": "US Salernitana"
+    },
+    {
+      "id": "b7aoehrevlpwy3wsz7nh1mok",
+      "casa": "ASD Sorrento 1945",
+      "ospiti": "FC Crotone"
     },
     {
       "id": "9w6kbhay041pvbe616cjst90",
@@ -615,14 +615,14 @@
       "ospiti": "SS Barletta"
     },
     {
-      "id": "dhk96j2jszw5rwxmxwi18xsk",
-      "casa": "Giugliano Calcio 1928",
-      "ospiti": "ASD Sorrento 1945"
-    },
-    {
       "id": "e5optkha5vpmy2ag7xvtrwgk",
       "casa": "Potenza Calcio",
       "ospiti": "SS Monopoli"
+    },
+    {
+      "id": "dhk96j2jszw5rwxmxwi18xsk",
+      "casa": "Giugliano Calcio 1928",
+      "ospiti": "ASD Sorrento 1945"
     },
     {
       "id": "buolpsyjyvo1wu7r3ejml9n8",
@@ -660,9 +660,9 @@
       "ospiti": "Inter Milano"
     },
     {
-      "id": "et4zghhs6czpowrevbhhm4no",
-      "casa": "Team Altamura",
-      "ospiti": "SSC Bari"
+      "id": "f4uniqz1vut311to960ra2hg",
+      "casa": "Audace Cerignola",
+      "ospiti": "Giugliano Calcio 1928"
     },
     {
       "id": "h3ej1f6ixxzg1l3i4vfmsn4k",
@@ -675,14 +675,9 @@
       "ospiti": "SS Barletta"
     },
     {
-      "id": "f4uniqz1vut311to960ra2hg",
-      "casa": "Audace Cerignola",
-      "ospiti": "Giugliano Calcio 1928"
-    },
-    {
-      "id": "gfpaptmdmhwgxg5v4zg486c4",
-      "casa": "Inter Milano",
-      "ospiti": "Casertana FC"
+      "id": "et4zghhs6czpowrevbhhm4no",
+      "casa": "Team Altamura",
+      "ospiti": "SSC Bari"
     },
     {
       "id": "hf88rg7yzbo8uvh7wwmtg2l0",
@@ -690,19 +685,24 @@
       "ospiti": "FC Crotone"
     },
     {
+      "id": "gfpaptmdmhwgxg5v4zg486c4",
+      "casa": "Inter Milano",
+      "ospiti": "Casertana FC"
+    },
+    {
       "id": "g3zr9zjxncynypa15uyp4f10",
       "casa": "Cosenza Calcio",
       "ospiti": "Cavese 1919"
     },
     {
-      "id": "fs4xf0roeb632umntfw4yihg",
-      "casa": "Calcio Catania",
-      "ospiti": "FC Scafatese"
-    },
-    {
       "id": "grmfjbiuq1zzl5pyxmry4vf8",
       "casa": "SS Monopoli",
       "ospiti": "Calcio Foggia"
+    },
+    {
+      "id": "fs4xf0roeb632umntfw4yihg",
+      "casa": "Calcio Catania",
+      "ospiti": "FC Scafatese"
     },
     {
       "id": "hqzs60llsd285bh45mnf2s5w",
@@ -715,9 +715,9 @@
       "ospiti": "Cosenza Calcio"
     },
     {
-      "id": "konbokmahras7ijso495x638",
-      "casa": "AZ Picerno",
-      "ospiti": "Calcio Catania"
+      "id": "jpfigoscu5d7e0m2q2eitatw",
+      "casa": "FC Crotone",
+      "ospiti": "Inter Milano"
     },
     {
       "id": "j20lbk5bblmfjhfb6rm1f9ck",
@@ -725,14 +725,9 @@
       "ospiti": "Team Altamura"
     },
     {
-      "id": "jpfigoscu5d7e0m2q2eitatw",
-      "casa": "FC Crotone",
-      "ospiti": "Inter Milano"
-    },
-    {
-      "id": "jdo145thkcxrd1ef9wqu47pw",
-      "casa": "Cavese 1919",
-      "ospiti": "ASD Sorrento 1945"
+      "id": "konbokmahras7ijso495x638",
+      "casa": "AZ Picerno",
+      "ospiti": "Calcio Catania"
     },
     {
       "id": "iq5o78ndevzaahusikxv8yz8",
@@ -745,6 +740,16 @@
       "ospiti": "Potenza Calcio"
     },
     {
+      "id": "jdo145thkcxrd1ef9wqu47pw",
+      "casa": "Cavese 1919",
+      "ospiti": "ASD Sorrento 1945"
+    },
+    {
+      "id": "ieda2zsdozi6gheykvdyv2tw",
+      "casa": "SS Barletta",
+      "ospiti": "US Salernitana"
+    },
+    {
       "id": "l0g5j3n582z1rcht2f2b4ems",
       "casa": "FC Scafatese",
       "ospiti": "SS Monopoli"
@@ -753,11 +758,6 @@
       "id": "k164ffackxm24dnh3vzcl8gk",
       "casa": "Calcio Foggia",
       "ospiti": "Savoia 1908"
-    },
-    {
-      "id": "ieda2zsdozi6gheykvdyv2tw",
-      "casa": "SS Barletta",
-      "ospiti": "US Salernitana"
     },
     {
       "id": "mbcrv17x87a6bt3daq9qygic",
@@ -780,6 +780,11 @@
       "ospiti": "Casertana FC"
     },
     {
+      "id": "nmt4fnoq4c6yhvcbtthrgmqc",
+      "casa": "US Salernitana",
+      "ospiti": "Giugliano Calcio 1928"
+    },
+    {
       "id": "lzls6cimbf4k4rqqkd2cv384",
       "casa": "Calcio Catania",
       "ospiti": "SS Barletta"
@@ -788,11 +793,6 @@
       "id": "lc6n7zxdy35v26ucbcprk1zo",
       "casa": "Team Altamura",
       "ospiti": "AZ Picerno"
-    },
-    {
-      "id": "nmt4fnoq4c6yhvcbtthrgmqc",
-      "casa": "US Salernitana",
-      "ospiti": "Giugliano Calcio 1928"
     }
   ]
 }
