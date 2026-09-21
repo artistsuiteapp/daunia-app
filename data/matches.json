@@ -713,18 +713,21 @@
   {
     "id": "wp-2026-2027-006",
     "kickoff": "2026-09-20T13:00:00.000Z",
-    "status": "scheduled",
+    "status": "finished",
     "matchday": 6,
     "competition": "Serie C",
     "season": "2026-2027",
-    "score": null,
+    "score": {
+      "home": 3,
+      "away": 2
+    },
     "venue": "Stadio Ernesto Breda",
     "city": "Sesto San Giovanni",
     "attendance": null,
-    "referee": null,
+    "referee": "Mazzer",
     "goals": [],
     "foggiaHome": false,
-    "foggiaResult": null,
+    "foggiaResult": "L",
     "reportUrl": "https://www.transfermarkt.it/spielbericht/index/spielbericht/4979219",
     "source": "wikipedia",
     "home": {

@@ -27,6 +27,17 @@
   ],
   "articoli": [
     {
+      "id": "calciofoggia-34acedc8ba",
+      "testata": "calciofoggia",
+      "titolo": "Il Commento alla sesta giornata",
+      "sommario": "Sesta giornata che va in archivio certificando la prima sconfitta del Sorrento che cade contro il Bari. I rossoneri recriminano per una sconfitta secondo loro ingiusta, il Bari ne…",
+      "url": "https://www.calciofoggia.it/244877-2/",
+      "data": "2026-09-21T09:54:47.000Z",
+      "autore": "Mario Schena",
+      "categoria": "SERIE C",
+      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/b0a1659f-3ae6-4a91-a244-cbe8b192b53d.jpg"
+    },
+    {
       "id": "foggiacalciomania-752448a72f",
       "testata": "foggiacalciomania",
       "titolo": "Serie C girone C: risultati e marcatori 6a giornata",
@@ -247,17 +258,6 @@
       "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/09/IMG_3687-scaled.jpg"
     },
     {
-      "id": "calciofoggia-8f22d29d91",
-      "testata": "calciofoggia",
-      "titolo": "Auteri e Berra: “Siamo squadra, i dati lo dicono. Continuiamo a creare, i gol arriveranno”",
-      "sommario": "Gaetano Auteri e Filippo Berra hanno affrontato in conferenza stampa il momento del Foggia e la trasferta di domenica contro l’Inter U23. Il mister ha risposto con decisione a chi…",
-      "url": "https://www.calciofoggia.it/auteri-e-berra-siamo-squadra-i-dati-lo-dicono-continuiamo-a-creare-i-gol-arriveranno/",
-      "data": "2026-09-18T11:00:09.000Z",
-      "autore": "Armando Borrelli",
-      "categoria": "FOGGIA CALCIO",
-      "immagine": "https://www.calciofoggia.it/wp-content/uploads/2026/09/Screenshot-2026-09-18-alle-12.43.41.png"
-    },
-    {
       "id": "ilfoggia-5a8eed19a3",
       "testata": "ilfoggia",
       "titolo": "Foggia Savoia – 𝗣𝗛𝗢𝗧𝗢 𝗚𝗔𝗟𝗟𝗘𝗥𝗬 📸Potito Chiummarulo",
@@ -335,5 +335,5 @@
       "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0804-scaled.jpg"
     }
   ],
-  "aggiornatoIl": "2026-09-21T09:40:44.054Z"
+  "aggiornatoIl": "2026-09-21T10:01:01.827Z"
 }

@@ -13,9 +13,9 @@
       "away": {
         "won": 1,
         "drawn": 0,
-        "lost": 2,
-        "goalsFor": 1,
-        "goalsAgainst": 2
+        "lost": 3,
+        "goalsFor": 3,
+        "goalsAgainst": 4
       }
     },
     {
@@ -65,14 +65,14 @@
     {
       "matchday": 5,
       "venue": "home",
-      "result": "L",
+      "result": "D",
       "position": 16
     },
     {
       "matchday": 6,
       "venue": "away",
-      "result": null,
-      "position": null
+      "result": "L",
+      "position": 16
     },
     {
       "matchday": 7,
@@ -268,13 +268,13 @@
     }
   ],
   "derived": {
-    "played": 6,
+    "played": 7,
     "cleanSheets": 2,
     "failedToScore": 3,
-    "goalsFor": 3,
-    "goalsAgainst": 6,
-    "avgGoalsFor": 0.5,
-    "avgGoalsAgainst": 1,
+    "goalsFor": 5,
+    "goalsAgainst": 9,
+    "avgGoalsFor": 0.71,
+    "avgGoalsAgainst": 1.29,
     "biggestWin": "Crotone 0-1 Foggia",
     "worstLoss": "Foggia 0-2 Audace Cerignola",
     "bestPosition": 6,
