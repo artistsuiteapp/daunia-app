@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-21T06:20:52.635Z",
+    "generatedAt": "2026-09-21T06:40:51.661Z",
     "season": "2026-2027",
     "competition": "Serie C",
     "sources": {
@@ -22,7 +22,6 @@
       "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
       "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
       "API-Football rosa: Your account is suspended, check on https://dashboard.api-football.com.",
-      "Divieti, FoggiaToday: HTTP 403 su https://www.foggiatoday.it/rss",
       "Lega Pro: Inter U23-Foggia e' finita da ore e non ha un id nel calendario della Lega: la formazione non entrera' mai nell'archivio",
       "Lega Pro: Foggia-Altamura e' finita da ore e non ha un id nel calendario della Lega: la formazione non entrera' mai nell'archivio"
     ]
@@ -1925,23 +1924,6 @@
     },
     {
       "position": 2,
-      "teamId": "ssc-bari",
-      "teamName": "Ssc Bari",
-      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/822px-SSC_Bari_logo.png",
-      "played": 6,
-      "won": 4,
-      "drawn": 1,
-      "lost": 1,
-      "goalsFor": 9,
-      "goalsAgainst": 4,
-      "goalDiff": 5,
-      "points": 13,
-      "penalty": 0,
-      "isFoggia": false,
-      "zone": "playoff"
-    },
-    {
-      "position": 3,
       "teamId": "potenza",
       "teamName": "Potenza",
       "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/potenza-1.png",
@@ -1951,6 +1933,23 @@
       "lost": 1,
       "goalsFor": 13,
       "goalsAgainst": 8,
+      "goalDiff": 5,
+      "points": 13,
+      "penalty": 0,
+      "isFoggia": false,
+      "zone": "playoff"
+    },
+    {
+      "position": 3,
+      "teamId": "ssc-bari",
+      "teamName": "Ssc Bari",
+      "crest": "https://www.calciofoggia1920.net/wp-content/uploads/2020/09/822px-SSC_Bari_logo.png",
+      "played": 6,
+      "won": 4,
+      "drawn": 1,
+      "lost": 1,
+      "goalsFor": 9,
+      "goalsAgainst": 4,
       "goalDiff": 5,
       "points": 13,
       "penalty": 0,
@@ -5957,6 +5956,6 @@
         "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0804-scaled.jpg"
       }
     ],
-    "aggiornatoIl": "2026-09-21T06:20:49.182Z"
+    "aggiornatoIl": "2026-09-21T06:40:48.855Z"
   }
 }
