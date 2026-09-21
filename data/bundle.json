@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-21T16:40:55.023Z",
+    "generatedAt": "2026-09-21T17:00:57.373Z",
     "season": "2026-2027",
     "competition": "Serie C",
     "sources": {
@@ -22,7 +22,6 @@
       "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
       "API-Football: Your account is suspended, check on https://dashboard.api-football.com.",
       "API-Football rosa: Your account is suspended, check on https://dashboard.api-football.com.",
-      "Divieti, FoggiaToday: HTTP 403 su https://www.foggiatoday.it/rss",
       "Lega Pro: Inter U23-Foggia e' finita da ore e non ha un id nel calendario della Lega: la formazione non entrera' mai nell'archivio",
       "Lega Pro: Foggia-Altamura e' finita da ore e non ha un id nel calendario della Lega: la formazione non entrera' mai nell'archivio"
     ]
@@ -2544,6 +2543,18 @@
   ],
   "news": [
     {
+      "id": "club-18617",
+      "date": "2026-09-21T18:50:58.000Z",
+      "title": "YOUTH RECAP – L’ESORDIO DEI GIOVANI SATANELLI NEI CAMPIONATI",
+      "excerpt": "Si alza il sipario sulla nuova stagione del Settore Giovanile del Calcio Foggia 1920. Un weekend di prime volte e forti emozioni ha inaugurato ufficialmente il cammino dei satanelli nei rispettivi campionati. Ad aprire le danze sono stati i ragazzi della Primavera 3 di mister Pavone, impegnati al “Lucky Park” nella sfida contro il Catania….",
+      "url": "https://www.calciofoggia1920.net/youth-recap-1/",
+      "image": "https://www.calciofoggia1920.net/wp-content/uploads/2026/09/MG_3957-1-768x512.png",
+      "kind": "club",
+      "slug": "youth-recap-1",
+      "body": "Si alza il sipario sulla nuova stagione del Settore Giovanile del Calcio Foggia 1920. Un weekend di prime volte e forti emozioni ha inaugurato ufficialmente il cammino dei satanelli nei rispettivi campionati. Ad aprire le danze sono stati i ragazzi della Primavera 3 di mister Pavone, impegnati al “Lucky Park” nella sfida contro il Catania. Doppio confronto al “D’Achille” di Troia, invece, per le formazioni Under 17 e Under 15, chiamate a superare l’esame Pianese. Ecco il bilancio e l’analisi del fine settimana rossonero. PRIMAVERA 3 | Foggia 3–5 Catania Il Foggia parte subito fortissimo e sblocca il punteggio grazie a una perla di Leonardo Panelli, autore di un bellissimo tiro al volo che non lascia scampo al portiere etneo. Gli ospiti però reagiscono con veemenza, ribaltando il risultato già nel corso della prima frazione e portandosi sull’1-3 con cui si va al riposo. Nella ripresa i rossoneri rientrano in campo con il piglio della grande squadra: è ancora uno scatenato Panelli a suonare la carica. Il numero 7 sigla una straordinaria tripletta personale e trascina i suoi fino al meritato 3-3, approfittando anche di un calcio di rigore fallito dal Catania nel momento di maggiore spinta pugliese. Nel momento di massimo equilibrio, la partita si accende e gira definitivamente: il Catania trova nuovamente il varco per il 3-4, mentre il Foggia resta in dieci uomini a causa dell’espulsione dello stesso Panelli, sanzionato con il doppio giallo (simulazione e successivo fallo di reazione). In inferiorità numerica e scoperti alla ricerca del nuovo pari, i rossoneri incassano nel finale la rete del definitivo 3-5. Resta la grande prova di carattere e la spiccata propensione offensiva, elementi da cui ripartire con determinazione. UNDER 17 | Foggia 2–0 Pianese Esordio perfetto per l’Under 17, che supera la Pianese con un rotondo e meritato 2-0 al termine di una gara mai realmente in discussione. I rossoneri impongono da subito il proprio ritmo, creando occasioni a grappoli (ben tre nitide palle gol nel primo tempo e altre quattro nella ripresa) e concedendo agli ospiti toscani soltanto un paio di conclusioni nello specchio in novanta minuti. A sbloccare il match ci pensa Di Mauro, glaciale nel trasformare un calcio di rigore conquistato con caparbietà. Il raddoppio porta invece la firma di Vinella, autore di una rete da cineteca: approfittando di un’uscita sconsiderata del portiere avversario ben fuori dai propri pali, il talento rossonero fa suo il pallone sulla trequarti e beffa l’estremo difensore con un precisissimo pallonetto. La gara della Pianese si chiude di fatto con l’espulsione per rosso diretto comminata proprio al portiere toscano per un brutto fallo. I rossoneri gestiscono il doppio vantaggio e l’uomo in più con autorevolezza, archiviando la pratica e inaugurando la stagione nel migliore dei modi. UNDER 15 | Foggia 1–0 Pianese Debutto con vittoria anche per l’Under 15 rossonera, che piega la Pianese per 1-0 al termine di una gara intensa, combattuta fino all’ultimo secondo. A decidere l’incontro è una giocata verticale di rara efficacia: rinvio profondo del portiere rossonero, indecisione del difensore centrale avversario e letale ripartenza in campo aperto in due contro uno. La punta foggiana serve l’esterno con tempi perfetti: rientro sul destro e conclusione chirurgica nell’angolino basso dove l’estremo difensore non può arrivare. Nel secondo tempo la gara si complica per via dell’espulsione (doppia ammonizione) tra le fila del Foggia. Costretti all’inferiorità numerica, i giovani rossoneri mettono in campo cuore, organizzazione e spirito di sacrificio, difendendo con le unghie un 1-0 definibile “stretto” per quanto visto in campo, ma di fondamentale importanza per iniziare l’annata con il morale alle stelle. Area Comunicazione Youth Calcio Foggia 1920",
+      "source": "sportspress"
+    },
+    {
       "id": "club-18598",
       "date": "2026-09-18T15:10:21.000Z",
       "title": "INTER U23 – FOGGIA IN DIRETTA RAI",
@@ -3021,18 +3032,6 @@
       "kind": "club",
       "slug": "comunicato-stampa-52",
       "body": "Il Calcio Foggia 1920 congiuntamente con l’amministrazione giudiziaria, condannano con fermezza e senza alcuna ambiguità l’episodio di violenza verificatosi ieri a Monopoli, un fatto grave che nulla ha a che vedere con i valori dello sport e con il modo di vivere il calcio che da sempre contraddistingue la nostra comunità. Il Club intende ribadire con assoluta chiarezza che un risultato sportivo non sufficiente, per quanto possa generare delusione e amarezza, non deve e non può mai sfociare in comportamenti violenti o in atteggiamenti che ledano l’incolumità delle persone e l’immagine dello sport. Il calcio rappresenta passione, appartenenza e identità, ma soprattutto rispetto: rispetto per gli avversari, per i tifosi, per le istituzioni e per tutte le persone che ogni giorno lavorano per rendere possibile lo spettacolo sportivo. Il Calcio Foggia 1920 prende nettamente le distanze da qualsiasi forma di violenza e rinnova il proprio impegno nel promuovere i valori fondanti dello sport. Confidiamo che episodi come quello accaduto restino isolati e che il calcio continui a essere un momento di condivisione e passione vissuto nel pieno rispetto delle regole e delle persone.",
-      "source": "sportspress"
-    },
-    {
-      "id": "club-18179",
-      "date": "2026-04-09T15:39:00.000Z",
-      "title": "FOGGIA-SIRACUSA: INFO SETTORE OSPITI",
-      "excerpt": "Il Calcio Foggia 1920 comunica la messa in vendita dei tagliandi per assistere alla gara Foggia-Siracusa, trentaseiesima giornata del campionato Serie C SKy Wifi – Girone C stagione sportiva 2025/2026, in programma domenica 12 aprile 2026 allo stadio comunale Pino Zaccheria con fischio d’inizio alle ore 14:30. Il costo del biglietto è di euro 10.00 + di diritti…",
-      "url": "https://www.calciofoggia1920.net/foggia-siracusa-info-settore-ospiti/",
-      "image": "https://www.calciofoggia1920.net/wp-content/uploads/2026/04/TICKET-fog-sir-768x432.jpg",
-      "kind": "club",
-      "slug": "foggia-siracusa-info-settore-ospiti",
-      "body": "Il Calcio Foggia 1920 comunica la messa in vendita dei tagliandi per assistere alla gara Foggia-Siracusa, trentaseiesima giornata del campionato Serie C SKy Wifi – Girone C stagione sportiva 2025/2026, in programma domenica 12 aprile 2026 allo stadio comunale Pino Zaccheria con fischio d’inizio alle ore 14:30. Il costo del biglietto è di euro 10.00 + di diritti di prevendita. I tagliandi potranno essere acquistati presso i seguenti punti vendita del circuito di biglietteria VIVATICKET: CONIGLIARO VIAGGI, Viale scala greca, 328 A/B – Siracusa (SR) TABACCHERIA LA PIRA, Via GROTTASANTA, 135-135A – Siracusa (SR) ORTIGIA VIAGGI, ViaLE TICA, 160/A – Siracusa (SR) Bar Sorriso, viale Santa Panagia, 33 – Siracusa (SR) Le vendite sono attive attraverso il circuito online e presso i punti vendita dalle ore 17:00 di giovedì 09 aprile 2026 alle ore 19:00 di sabato 11 aprile 2026. Si comunica, altresì, che per accedere al Settore Ospiti dello stadio comunale Pino Zaccheria, i tagliandi potranno essere acquistati dai residenti nella Provincia di Siracusa solo se titolari di Tessera del Tifoso/Fidelity Card emessa dalla società Siracusa Calcio 1924. L’esibizione della suddetta tessera è obbligatoria anche per l’accesso allo Stadio. Il giorno della gara non sarà possibile acquistare i tagliandi di accesso presso la biglietteria dello Stadio Pino Zaccheria che resterà chiusa. La capienza del Settore Ospiti in occasione di questo incontro sarà di 120 unità Area Comunicazione Calcio Foggia",
       "source": "sportspress"
     }
   ],
@@ -5966,6 +5965,6 @@
         "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0804-scaled.jpg"
       }
     ],
-    "aggiornatoIl": "2026-09-21T16:40:51.395Z"
+    "aggiornatoIl": "2026-09-21T17:00:54.306Z"
   }
 }
