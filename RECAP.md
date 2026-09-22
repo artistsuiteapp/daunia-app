@@ -9,6 +9,37 @@ perché, che è la parte che non si ricostruisce leggendo il codice.
 
 ---
 
+## ⏸ Progetto sospeso dal 22 settembre 2026
+
+Spento tutto quello che gira da solo. Codice, database, account e dati restano
+intatti: niente è stato cancellato.
+
+**Cosa è spento**
+
+- I tre lavori pg_cron su Supabase: `guardiano-partita`, `sveglia-ingest`, `pulisci-eventi` (disattivati, non cancellati)
+- I workflow di GitHub "Aggiorna dati", "Grafica della settimana" e "Pubblica il sito": disattivati da GitHub → Actions, e in più tolti gli orari automatici da `ingest.yml` e `grafica-settimana.yml`
+
+**Cosa significa per l'app**: calendario, classifica, notizie e formazioni restano
+fermi all'ultimo aggiornamento, e durante le partite non c'è dal vivo né notifiche.
+
+**Attenzione a Supabase**: un progetto gratuito senza attività viene messo in
+pausa da Supabase dopo circa una settimana. Si riattiva dal pannello
+(Project → Restore). Controllare che i dati ci siano ancora prima di riaccendere.
+
+**Per riaccendere**
+
+1. Se Supabase ha messo in pausa il progetto, riattivarlo dal pannello
+2. Riattivare i lavori pg_cron:
+   ```bash
+   npx supabase db query --linked "select cron.alter_job(job_id := jobid, active := true) from cron.job where jobname in ('guardiano-partita','sveglia-ingest','pulisci-eventi')"
+   ```
+3. Su GitHub → Actions riattivare i tre workflow ("Enable workflow"), poi rimettere gli orari con `git revert` del commit che li ha tolti (cercarlo con `git log -- .github/workflows/ingest.yml`)
+4. Lanciare a mano un giro di "Aggiorna dati" per avere i dati freschi subito
+5. L'app sull'iPhone scade dopo 7 giorni: ricompilarla con `npm run telefono`
+6. live-score-api: la prova è scaduta il ~21 settembre, senza lo Starter a 11 €/mese mancano marcatori e cartellini
+
+---
+
 ## In due righe
 
 - **Codice**: `~/dev/daunia-app` (percorso completo `/Users/salvatorepapa/dev/daunia-app`), repository **pubblico** `artistsuiteapp/daunia-app`

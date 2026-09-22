@@ -8,8 +8,9 @@ name: Grafica della settimana
 # la spesa la fa il NUMERO di giri. Questo ne fa quattro al mese e dura meno di
 # un minuto, perche non installa l'app intera ma solo la libreria che disegna.
 on:
-  schedule:
-    - cron: '0 7 * * 1'
+  # PROGETTO SOSPESO dal 22 settembre 2026: gli orari automatici sono tolti.
+  # Per riaccendere: ripristinare il blocco schedule da git (git log -- questo file)
+  # e riattivare i lavori pg_cron (vedi RECAP.md, "Sospensione").
   workflow_dispatch:
     inputs:
       corrente:
