@@ -630,14 +630,14 @@
       "ospiti": "Cosenza Calcio"
     },
     {
-      "id": "5wpj0ynzjc0jfsaeuvzr6xhw",
-      "casa": "Calcio Catania",
-      "ospiti": "Inter Milano"
-    },
-    {
       "id": "746l7m1kk4zvot5ue2q07pqs",
       "casa": "AZ Picerno",
       "ospiti": "Savoia 1908"
+    },
+    {
+      "id": "5wpj0ynzjc0jfsaeuvzr6xhw",
+      "casa": "Calcio Catania",
+      "ospiti": "Inter Milano"
     },
     {
       "id": "7xndd0e44y7fhkk0yyf2efx0",
@@ -655,14 +655,9 @@
       "ospiti": "SS Monopoli"
     },
     {
-      "id": "8l5mg3fzcv9o342y89vm0q38",
-      "casa": "S.S.D. Casarano Calcio",
-      "ospiti": "Giugliano Calcio 1928"
-    },
-    {
-      "id": "avk3flpwm4jzeiamwbdkfpck",
-      "casa": "FC Scafatese",
-      "ospiti": "AZ Picerno"
+      "id": "89eqg4iab5zvc3z4yctxv66s",
+      "casa": "SS Barletta",
+      "ospiti": "SSC Bari"
     },
     {
       "id": "8wtgs3c5eub5rwbnwxpik6xg",
@@ -670,9 +665,14 @@
       "ospiti": "Audace Cerignola"
     },
     {
-      "id": "89eqg4iab5zvc3z4yctxv66s",
-      "casa": "SS Barletta",
-      "ospiti": "SSC Bari"
+      "id": "avk3flpwm4jzeiamwbdkfpck",
+      "casa": "FC Scafatese",
+      "ospiti": "AZ Picerno"
+    },
+    {
+      "id": "8l5mg3fzcv9o342y89vm0q38",
+      "casa": "S.S.D. Casarano Calcio",
+      "ospiti": "Giugliano Calcio 1928"
     },
     {
       "id": "ajt04rfbdi0r9x34qa3t239w",
@@ -690,14 +690,14 @@
       "ospiti": "FC Crotone"
     },
     {
-      "id": "a7xiqxkl51xnbtkfpr8qbqqc",
-      "casa": "SS Monopoli",
-      "ospiti": "Calcio Catania"
-    },
-    {
       "id": "98kwgg6hmkup8ixlur6fvc44",
       "casa": "Cosenza Calcio",
       "ospiti": "Potenza Calcio"
+    },
+    {
+      "id": "a7xiqxkl51xnbtkfpr8qbqqc",
+      "casa": "SS Monopoli",
+      "ospiti": "Calcio Catania"
     },
     {
       "id": "9w6kbhay041pvbe616cjst90",
@@ -710,6 +710,11 @@
       "ospiti": "SS Barletta"
     },
     {
+      "id": "e5optkha5vpmy2ag7xvtrwgk",
+      "casa": "Potenza Calcio",
+      "ospiti": "SS Monopoli"
+    },
+    {
       "id": "dhk96j2jszw5rwxmxwi18xsk",
       "casa": "Giugliano Calcio 1928",
       "ospiti": "ASD Sorrento 1945"
@@ -718,11 +723,6 @@
       "id": "buolpsyjyvo1wu7r3ejml9n8",
       "casa": "SSC Bari",
       "ospiti": "S.S.D. Casarano Calcio"
-    },
-    {
-      "id": "e5optkha5vpmy2ag7xvtrwgk",
-      "casa": "Potenza Calcio",
-      "ospiti": "SS Monopoli"
     },
     {
       "id": "ehcfgsgtwv2vdieyb5wt5kwk",
@@ -735,14 +735,14 @@
       "ospiti": "Savoia 1908"
     },
     {
-      "id": "c6cplbqpjpwjnf9fcrj6zbbo",
-      "casa": "Casertana FC",
-      "ospiti": "FC Scafatese"
-    },
-    {
       "id": "d5tul83rsdexxmdvgz8ncmxg",
       "casa": "Calcio Foggia",
       "ospiti": "Audace Cerignola"
+    },
+    {
+      "id": "c6cplbqpjpwjnf9fcrj6zbbo",
+      "casa": "Casertana FC",
+      "ospiti": "FC Scafatese"
     },
     {
       "id": "ci01lddsmjkqr7wsyad8r3f8",
@@ -765,14 +765,14 @@
       "ospiti": "SSC Bari"
     },
     {
-      "id": "f4uniqz1vut311to960ra2hg",
-      "casa": "Audace Cerignola",
-      "ospiti": "Giugliano Calcio 1928"
-    },
-    {
       "id": "h3ej1f6ixxzg1l3i4vfmsn4k",
       "casa": "US Salernitana",
       "ospiti": "Potenza Calcio"
+    },
+    {
+      "id": "f4uniqz1vut311to960ra2hg",
+      "casa": "Audace Cerignola",
+      "ospiti": "Giugliano Calcio 1928"
     },
     {
       "id": "gfpaptmdmhwgxg5v4zg486c4",
@@ -790,11 +790,6 @@
       "ospiti": "FC Crotone"
     },
     {
-      "id": "fs4xf0roeb632umntfw4yihg",
-      "casa": "Calcio Catania",
-      "ospiti": "FC Scafatese"
-    },
-    {
       "id": "grmfjbiuq1zzl5pyxmry4vf8",
       "casa": "SS Monopoli",
       "ospiti": "Calcio Foggia"
@@ -803,6 +798,16 @@
       "id": "hqzs60llsd285bh45mnf2s5w",
       "casa": "ASD Sorrento 1945",
       "ospiti": "AZ Picerno"
+    },
+    {
+      "id": "fs4xf0roeb632umntfw4yihg",
+      "casa": "Calcio Catania",
+      "ospiti": "FC Scafatese"
+    },
+    {
+      "id": "jpfigoscu5d7e0m2q2eitatw",
+      "casa": "FC Crotone",
+      "ospiti": "Inter Milano"
     },
     {
       "id": "j20lbk5bblmfjhfb6rm1f9ck",
@@ -820,29 +825,9 @@
       "ospiti": "Calcio Catania"
     },
     {
-      "id": "jpfigoscu5d7e0m2q2eitatw",
-      "casa": "FC Crotone",
-      "ospiti": "Inter Milano"
-    },
-    {
-      "id": "jdo145thkcxrd1ef9wqu47pw",
-      "casa": "Cavese 1919",
-      "ospiti": "ASD Sorrento 1945"
-    },
-    {
-      "id": "iq5o78ndevzaahusikxv8yz8",
-      "casa": "S.S.D. Casarano Calcio",
-      "ospiti": "Audace Cerignola"
-    },
-    {
       "id": "k164ffackxm24dnh3vzcl8gk",
       "casa": "Calcio Foggia",
       "ospiti": "Savoia 1908"
-    },
-    {
-      "id": "i2o4n4y026sgdsxz7ck8n2tw",
-      "casa": "SSC Bari",
-      "ospiti": "Potenza Calcio"
     },
     {
       "id": "ieda2zsdozi6gheykvdyv2tw",
@@ -850,9 +835,24 @@
       "ospiti": "US Salernitana"
     },
     {
+      "id": "iq5o78ndevzaahusikxv8yz8",
+      "casa": "S.S.D. Casarano Calcio",
+      "ospiti": "Audace Cerignola"
+    },
+    {
       "id": "l0g5j3n582z1rcht2f2b4ems",
       "casa": "FC Scafatese",
       "ospiti": "SS Monopoli"
+    },
+    {
+      "id": "jdo145thkcxrd1ef9wqu47pw",
+      "casa": "Cavese 1919",
+      "ospiti": "ASD Sorrento 1945"
+    },
+    {
+      "id": "i2o4n4y026sgdsxz7ck8n2tw",
+      "casa": "SSC Bari",
+      "ospiti": "Potenza Calcio"
     },
     {
       "id": "mbcrv17x87a6bt3daq9qygic",
@@ -875,9 +875,9 @@
       "ospiti": "Casertana FC"
     },
     {
-      "id": "lzls6cimbf4k4rqqkd2cv384",
-      "casa": "Calcio Catania",
-      "ospiti": "SS Barletta"
+      "id": "nmt4fnoq4c6yhvcbtthrgmqc",
+      "casa": "US Salernitana",
+      "ospiti": "Giugliano Calcio 1928"
     },
     {
       "id": "lc6n7zxdy35v26ucbcprk1zo",
@@ -885,9 +885,9 @@
       "ospiti": "AZ Picerno"
     },
     {
-      "id": "nmt4fnoq4c6yhvcbtthrgmqc",
-      "casa": "US Salernitana",
-      "ospiti": "Giugliano Calcio 1928"
+      "id": "lzls6cimbf4k4rqqkd2cv384",
+      "casa": "Calcio Catania",
+      "ospiti": "SS Barletta"
     },
     {
       "id": "mz2yr7sb72w3l7qgnxudsw0k",
