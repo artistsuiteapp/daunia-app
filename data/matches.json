@@ -226,6 +226,82 @@
     "foggiaResult": "D",
     "reportUrl": "https://www.transfermarkt.it/spielbericht/index/spielbericht/4979183",
     "source": "wikipedia",
+    "cards": [
+      {
+        "minute": 43,
+        "player": "M. Gyabuaa",
+        "side": "away",
+        "rosso": false
+      },
+      {
+        "minute": 45,
+        "player": "M. Tascone",
+        "side": "away",
+        "rosso": false
+      }
+    ],
+    "subs": [
+      {
+        "minute": 41,
+        "esce": "G. Saro",
+        "entra": "D. Marfella",
+        "side": "home"
+      },
+      {
+        "minute": 46,
+        "esce": "I. Achik",
+        "entra": "E. D'Ursi",
+        "side": "away"
+      },
+      {
+        "minute": 46,
+        "esce": "F. Lescano",
+        "entra": "A. La Gumina",
+        "side": "away"
+      },
+      {
+        "minute": 58,
+        "esce": "G. Panico",
+        "entra": "Y. Merdji",
+        "side": "home"
+      },
+      {
+        "minute": 58,
+        "esce": "F. Berra",
+        "entra": "M. Seck",
+        "side": "home"
+      },
+      {
+        "minute": 75,
+        "esce": "M. Gyabuaa",
+        "entra": "R. Di Vico",
+        "side": "away"
+      },
+      {
+        "minute": 81,
+        "esce": "M. Vitale",
+        "entra": "M. Djibril",
+        "side": "away"
+      },
+      {
+        "minute": 86,
+        "esce": "S. Pieraccini",
+        "entra": "R. Zoia",
+        "side": "away"
+      },
+      {
+        "minute": 89,
+        "esce": "A. Gallo",
+        "entra": "M. Bigonzoni",
+        "side": "home"
+      },
+      {
+        "minute": 89,
+        "esce": "F. Petito",
+        "entra": "V. Ngana",
+        "side": "home"
+      }
+    ],
     "home": {
       "id": "foggia",
       "name": "CALCIO FOGGIA 1920",
