@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-22T06:01:08.341Z",
+    "generatedAt": "2026-09-22T06:20:49.518Z",
     "season": "2026-2027",
     "competition": "Serie C",
     "sources": {
@@ -3718,33 +3718,7 @@
         "source": "shop"
       }
     ],
-    "categories": [
-      {
-        "slug": "abbigliamento",
-        "name": "Abbigliamento",
-        "count": 7
-      },
-      {
-        "slug": "gadget",
-        "name": "Gadget",
-        "count": 7
-      },
-      {
-        "slug": "abbigliamento-bambino",
-        "name": "Abbigliamento bambino",
-        "count": 6
-      },
-      {
-        "slug": "kit-gara",
-        "name": "Kit gara",
-        "count": 6
-      },
-      {
-        "slug": "accessori",
-        "name": "Accessori",
-        "count": 5
-      }
-    ]
+    "categories": []
   },
   "tickets": [
     {
@@ -5965,6 +5939,6 @@
         "immagine": "https://www.ilfoggia.com/wp-content/uploads/2026/08/IMG_0804-scaled.jpg"
       }
     ],
-    "aggiornatoIl": "2026-09-22T06:01:06.190Z"
+    "aggiornatoIl": "2026-09-22T06:20:46.897Z"
   }
 }

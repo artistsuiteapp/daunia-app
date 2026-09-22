@@ -573,31 +573,5 @@
       "source": "shop"
     }
   ],
-  "categories": [
-    {
-      "slug": "abbigliamento",
-      "name": "Abbigliamento",
-      "count": 7
-    },
-    {
-      "slug": "gadget",
-      "name": "Gadget",
-      "count": 7
-    },
-    {
-      "slug": "abbigliamento-bambino",
-      "name": "Abbigliamento bambino",
-      "count": 6
-    },
-    {
-      "slug": "kit-gara",
-      "name": "Kit gara",
-      "count": 6
-    },
-    {
-      "slug": "accessori",
-      "name": "Accessori",
-      "count": 5
-    }
-  ]
+  "categories": []
 }
